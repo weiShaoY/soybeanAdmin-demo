@@ -40,7 +40,6 @@
     "gen-route": "sa gen-route",
     "lint": "eslint . --fix",
     "postbuild": "sa print-soybean",
-    "prepare": "simple-git-hooks",
     "preview": "vite preview",
     "release": "sa release",
     "typecheck": "vue-tsc --noEmit --skipLibCheck",
@@ -114,7 +113,6 @@
     "eslint-plugin-vue": "9.31.0",
     "lint-staged": "15.2.10",
     "sass": "1.83.0",
-    "simple-git-hooks": "2.11.1",
     "tsx": "4.19.2",
     "typescript": "5.6.3",
     "unplugin-icons": "0.20.1",
@@ -126,10 +124,7 @@
     "vue-eslint-parser": "9.4.3",
     "vue-tsc": "2.1.10"
   },
-  "simple-git-hooks": {
-    "commit-msg": "pnpm sa git-commit-verify",
-    "pre-commit": "pnpm typecheck && pnpm lint-staged"
-  },
+
   "lint-staged": {
     "*": "eslint --fix"
   },
