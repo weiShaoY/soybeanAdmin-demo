@@ -1,183 +1,181 @@
-/** Header config */
-interface AdminLayoutHeaderConfig {
+/** 头部配置 */
+type AdminLayoutHeaderConfig = {
   /**
-   * Whether header is visible
+   * 头部是否可见
    *
    * @default true
    */
   headerVisible?: boolean;
   /**
-   * Header class
+   * 头部类名
    *
    * @default ''
    */
   headerClass?: string;
   /**
-   * Header height
+   * 头部高度
    *
    * @default 56px
    */
   headerHeight?: number;
-}
+};
 
-/** Tab config */
-interface AdminLayoutTabConfig {
+/** 标签配置 */
+type AdminLayoutTabConfig = {
   /**
-   * Whether tab is visible
+   * 标签是否可见
    *
    * @default true
    */
   tabVisible?: boolean;
   /**
-   * Tab class
+   * 标签类名
    *
    * @default ''
    */
   tabClass?: string;
   /**
-   * Tab height
+   * 标签高度
    *
    * @default 48px
    */
   tabHeight?: number;
-}
+};
 
-/** Sider config */
-interface AdminLayoutSiderConfig {
+/** 侧边栏配置 */
+type AdminLayoutSiderConfig = {
   /**
-   * Whether sider is visible
+   * 侧边栏是否可见
    *
    * @default true
    */
   siderVisible?: boolean;
   /**
-   * Sider class
+   * 侧边栏类名
    *
    * @default ''
    */
   siderClass?: string;
   /**
-   * Mobile sider class
+   * 移动端侧边栏类名
    *
    * @default ''
    */
   mobileSiderClass?: string;
   /**
-   * Sider collapse status
+   * 侧边栏折叠状态
    *
    * @default false
    */
   siderCollapse?: boolean;
   /**
-   * Sider width when collapse is false
+   * 侧边栏在未折叠时的宽度
    *
    * @default '220px'
    */
   siderWidth?: number;
   /**
-   * Sider width when collapse is true
+   * 侧边栏在折叠时的宽度
    *
    * @default '64px'
    */
   siderCollapsedWidth?: number;
-}
+};
 
-/** Content config */
-export interface AdminLayoutContentConfig {
+/** 内容配置 */
+export type AdminLayoutContentConfig = {
   /**
-   * Content class
+   * 内容类名
    *
    * @default ''
    */
   contentClass?: string;
   /**
-   * Whether content is full the page
+   * 内容是否全屏
    *
-   * If true, other elements will be hidden by `display: none`
+   * 如果为 true，其他元素将通过 `display: none` 隐藏
    */
   fullContent?: boolean;
-}
+};
 
-/** Footer config */
-export interface AdminLayoutFooterConfig {
+/** 底部配置 */
+export type AdminLayoutFooterConfig = {
   /**
-   * Whether footer is visible
+   * 底部是否可见
    *
    * @default true
    */
   footerVisible?: boolean;
   /**
-   * Whether footer is fixed
+   * 底部是否固定
    *
    * @default true
    */
   fixedFooter?: boolean;
   /**
-   * Footer class
+   * 底部类名
    *
    * @default ''
    */
   footerClass?: string;
   /**
-   * Footer height
+   * 底部高度
    *
    * @default 48px
    */
   footerHeight?: number;
   /**
-   * Whether footer is on the right side
+   * 底部是否位于右侧
    *
-   * When the layout is vertical, the footer is on the right side
+   * 当布局为垂直时，底部位于右侧
    */
   rightFooter?: boolean;
-}
+};
 
 /**
- * Layout mode
+ * 布局模式
  *
- * - Horizontal
- * - Vertical
+ * - Horizontal: 水平布局
+ * - Vertical: 垂直布局
  */
 export type LayoutMode = 'horizontal' | 'vertical';
 
 /**
- * The scroll mode when content overflow
+ * 内容溢出时的滚动模式
  *
- * - Wrapper: the layout component's wrapper element has a scrollbar
- * - Content: the layout component's content element has a scrollbar
+ * - Wrapper: 布局组件的包装元素有滚动条
+ * - Content: 布局组件的内容元素有滚动条
  *
  * @default 'wrapper'
  */
 export type LayoutScrollMode = 'wrapper' | 'content';
 
-/** Admin layout props */
-export interface AdminLayoutProps
-  extends AdminLayoutHeaderConfig,
-    AdminLayoutTabConfig,
-    AdminLayoutSiderConfig,
-    AdminLayoutContentConfig,
-    AdminLayoutFooterConfig {
+/** 管理布局属性 */
+export type AdminLayoutProps = {
   /**
-   * Layout mode
+   * 布局模式
    *
    * - {@link LayoutMode}
    */
   mode?: LayoutMode;
-  /** Is mobile layout */
+
+  /** 是否为移动端布局 */
   isMobile?: boolean;
+
   /**
-   * Scroll mode
+   * 滚动模式
    *
-   * - {@link ScrollMode}
+   * - {@link LayoutScrollMode}
    */
   scrollMode?: LayoutScrollMode;
+
   /**
-   * The id of the scroll element of the layout
+   * 布局的滚动元素的 ID
    *
-   * It can be used to get the corresponding Dom and scroll it
+   * 可用于获取对应的 Dom 并滚动它
    *
    * @example
-   *   use the default id by import
+   *   使用默认 ID 通过导入
    *   ```ts
    *   import { adminLayoutScrollElId } from '@sa/vue-materials';
    *   ```
@@ -188,107 +186,171 @@ export interface AdminLayoutProps
    * ```
    */
   scrollElId?: string;
-  /** The class of the scroll element */
+  /** 滚动元素的类名 */
   scrollElClass?: string;
-  /** The class of the scroll wrapper element */
+  /** 滚动包装元素的类名 */
   scrollWrapperClass?: string;
   /**
-   * The common class of the layout
+   * 布局的通用类名
    *
-   * Is can be used to configure the transition animation
+   * 可用于配置过渡动画
    *
    * @default 'transition-all-300'
    */
   commonClass?: string;
   /**
-   * Whether fix the header and tab
+   * 是否固定顶部的头部和标签
    *
    * @default true
    */
   fixedTop?: boolean;
   /**
-   * The max z-index of the layout
+   * 布局的最大 z-index
    *
-   * The z-index of Header,Tab,Sider and Footer will not exceed this value
+   * 头部、标签、侧边栏和底部的 z-index 不会超过此值
    */
   maxZIndex?: number;
-}
+} & AdminLayoutHeaderConfig &
+  AdminLayoutTabConfig &
+  AdminLayoutSiderConfig &
+  AdminLayoutContentConfig &
+  AdminLayoutFooterConfig;
 
+/** 将字符串转换为 kebab-case 的类型 */
 type Kebab<S extends string> = S extends Uncapitalize<S> ? S : `-${Uncapitalize<S>}`;
 
+/** 将字符串转换为 kebab-case 的类型 */
 type KebabCase<S extends string> = S extends `${infer Start}${infer End}`
   ? `${Uncapitalize<Start>}${KebabCase<Kebab<End>>}`
   : S;
 
+/** CSS 变量前缀 */
 type Prefix = '--soy-';
 
+/** 布局 CSS 变量属性 */
 export type LayoutCssVarsProps = Pick<
   AdminLayoutProps,
   'headerHeight' | 'tabHeight' | 'siderWidth' | 'siderCollapsedWidth' | 'footerHeight'
 > & {
+  /** 头部 z-index */
   headerZIndex?: number;
+
+  /** 标签 z-index */
   tabZIndex?: number;
+
+  /** 侧边栏 z-index */
   siderZIndex?: number;
+
+  /** 移动端侧边栏 z-index */
   mobileSiderZIndex?: number;
+
+  /** 底部 z-index */
   footerZIndex?: number;
 };
 
+/** 布局 CSS 变量 */
 export type LayoutCssVars = {
   [K in keyof LayoutCssVarsProps as `${Prefix}${KebabCase<K>}`]: string | number;
 };
 
 /**
- * The mode of the tab
+ * 标签模式
  *
- * - Button: button style
- * - Chrome: chrome style
+ * - Button: 按钮样式
+ * - Chrome: Chrome 样式
  *
  * @default chrome
  */
 export type PageTabMode = 'button' | 'chrome';
 
-export interface PageTabProps {
-  /** Whether is dark mode */
+/** 页面标签属性 */
+export type PageTabProps = {
+  /** 是否为暗模式 */
   darkMode?: boolean;
+
   /**
-   * The mode of the tab
+   * 标签模式
    *
-   * - {@link TabMode}
+   * - {@link PageTabMode}
    */
   mode?: PageTabMode;
+
   /**
-   * The common class of the layout
+   * 布局的通用类名
    *
-   * Is can be used to configure the transition animation
+   * 可用于配置过渡动画
    *
    * @default 'transition-all-300'
    */
   commonClass?: string;
-  /** The class of the button tab */
+
+  /** 按钮标签的类名 */
   buttonClass?: string;
-  /** The class of the chrome tab */
+
+  /** Chrome 标签的类名 */
   chromeClass?: string;
-  /** Whether the tab is active */
+
+  /** 标签是否激活 */
   active?: boolean;
-  /** The color of the active tab */
+
+  /** 激活标签的颜色 */
   activeColor?: string;
+
   /**
-   * Whether the tab is closable
+   * 标签是否可关闭
    *
-   * Show the close icon when true
+   * 当为 true 时显示关闭图标
    */
   closable?: boolean;
-}
+};
 
+/** 页面标签 CSS 变量属性 */
 export type PageTabCssVarsProps = {
+  /**
+   * 主颜色
+   *
+   * @default ''
+   */
   primaryColor: string;
+
+  /**
+   * 主颜色 1
+   *
+   * @default ''
+   */
   primaryColor1: string;
+
+  /**
+   * 主颜色 2
+   *
+   * @default ''
+   */
   primaryColor2: string;
+
+  /**
+   * 主颜色不透明度 1
+   *
+   * @default ''
+   */
   primaryColorOpacity1: string;
+
+  /**
+   * 主颜色不透明度 2
+   *
+   * @default ''
+   */
   primaryColorOpacity2: string;
+
+  /**
+   * 主颜色不透明度 3
+   *
+   * @default ''
+   */
   primaryColorOpacity3: string;
 };
 
+/** 页面标签 CSS 变量 */
 export type PageTabCssVars = {
+  /** 根据 `PageTabCssVarsProps` 中的键，通过 `Prefix` 和 `KebabCase` 转换后形成新的键，并且值为 `string` 或 `number` */
   [K in keyof PageTabCssVarsProps as `${Prefix}${KebabCase<K>}`]: string | number;
 };

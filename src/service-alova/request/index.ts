@@ -8,23 +8,27 @@ import featureUsers20241014 from '../mocks/feature-users-20241014';
 import { getAuthorization, handleRefreshToken, showErrorMsg } from './shared';
 import type { RequestInstanceState } from './type';
 
+/** 是否使用 HTTP 代理 */
 const isHttpProxy = import.meta.env.DEV && import.meta.env.VITE_HTTP_PROXY === 'Y';
 const { baseURL } = getServiceBaseURL(import.meta.env, isHttpProxy);
 
+/** 请求实例状态 */
 const state: RequestInstanceState = {
   errMsgStack: []
 };
 const mockAdapter = createAlovaMockAdapter([featureUsers20241014], {
-  // using requestAdapter if not match mock request
+  // 如果请求不匹配 mock 请求则使用 httpAdapter
   httpAdapter: adapterFetch(),
 
-  // response delay time
+  // 响应延迟时间
   delay: 1000,
 
-  // global mock toggle
+  // 全局 mock 开关
   enable: true,
   matchMode: 'methodurl'
 });
+
+/** Alova 请求实例 */
 export const alova = createAlovaRequest(
   {
     baseURL,
@@ -47,8 +51,8 @@ export const alova = createAlovaRequest(
       }
     },
     async isBackendSuccess(response) {
-      // when the backend response code is "0000"(default), it means the request is success
-      // to change this logic by yourself, you can modify the `VITE_SERVICE_SUCCESS_CODE` in `.env` file
+      // 当后端响应代码是 "0000"（默认值）时，表示请求成功
+      // 如果要更改此逻辑，可以修改 `.env` 文件中的 `VITE_SERVICE_SUCCESS_CODE`
       const resp = response.clone();
       const data = await resp.json();
       return String(data.code) === import.meta.env.VITE_SERVICE_SUCCESS_CODE;
@@ -78,19 +82,19 @@ export const alova = createAlovaRequest(
         state.errMsgStack = state.errMsgStack.filter(msg => msg !== message);
       }
 
-      // when the backend response code is in `logoutCodes`, it means the user will be logged out and redirected to login page
+      // 当后端响应代码在 `logoutCodes` 中时，表示用户将被注销并重定向到登录页面
       const logoutCodes = import.meta.env.VITE_SERVICE_LOGOUT_CODES?.split(',') || [];
       if (logoutCodes.includes(responseCode)) {
         handleLogout();
         throw error;
       }
 
-      // when the backend response code is in `modalLogoutCodes`, it means the user will be logged out by displaying a modal
+      // 当后端响应代码在 `modalLogoutCodes` 中时，表示用户将通过显示一个模态框被注销
       const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
       if (modalLogoutCodes.includes(responseCode) && !state.errMsgStack?.includes(message)) {
         state.errMsgStack = [...(state.errMsgStack || []), message];
 
-        // prevent the user from refreshing the page
+        // 防止用户刷新页面
         window.addEventListener('beforeunload', handleLogout);
 
         if (window.$messageBox) {

@@ -1,17 +1,18 @@
 import type { AdminLayoutProps, LayoutCssVars, LayoutCssVarsProps } from '../../types';
 
-/** The id of the scroll element of the layout */
+/** 布局滚动元素的 ID */
 export const LAYOUT_SCROLL_EL_ID = '__SCROLL_EL_ID__';
 
-/** The max z-index of the layout */
+/** 布局的最大 z-index */
 export const LAYOUT_MAX_Z_INDEX = 100;
 
 /**
- * Create layout css vars by css vars props
+ * 通过 css 变量属性创建布局 css 变量
  *
- * @param props Css vars props
+ * @param props Css 变量属性
+ * @returns 布局 css 变量
  */
-function createLayoutCssVarsByCssVarsProps(props: LayoutCssVarsProps) {
+function createLayoutCssVarsByCssVarsProps(props: LayoutCssVarsProps): LayoutCssVars {
   const cssVars: LayoutCssVars = {
     '--soy-header-height': `${props.headerHeight}px`,
     '--soy-header-z-index': props.headerZIndex,
@@ -29,11 +30,12 @@ function createLayoutCssVarsByCssVarsProps(props: LayoutCssVarsProps) {
 }
 
 /**
- * Create layout css vars
+ * 创建布局 css 变量
  *
- * @param props
+ * @param props 布局属性
+ * @returns 布局 css 变量
  */
-export function createLayoutCssVars(props: AdminLayoutProps) {
+export function createLayoutCssVars(props: AdminLayoutProps): LayoutCssVars {
   const {
     mode,
     isMobile,
@@ -46,9 +48,13 @@ export function createLayoutCssVars(props: AdminLayoutProps) {
   } = props;
 
   const headerZIndex = maxZIndex - 3;
+
   const tabZIndex = maxZIndex - 5;
+
   const siderZIndex = mode === 'vertical' || isMobile ? maxZIndex - 1 : maxZIndex - 4;
+
   const mobileSiderZIndex = isMobile ? maxZIndex - 2 : 0;
+
   const footerZIndex = maxZIndex - 5;
 
   const cssProps: LayoutCssVarsProps = {

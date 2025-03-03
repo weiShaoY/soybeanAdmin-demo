@@ -3,41 +3,46 @@ import type { PageTabProps } from '../../types';
 import ChromeTabBg from './chrome-tab-bg.vue';
 import style from './index.module.css';
 
+/** 定义组件名称 */
 defineOptions({
   name: 'ChromeTab'
 });
 
+/** 定义组件的属性 */
 defineProps<PageTabProps>();
 
+/** Slot 函数类型定义 */
 type SlotFn = (props?: Record<string, unknown>) => any;
 
+/** Slots 类型定义 */
 type Slots = {
   /**
    * Slot
    *
-   * The center content of the tab
+   * 标签的中心内容
    */
   default?: SlotFn;
   /**
    * Slot
    *
-   * The left content of the tab
+   * 标签的左侧内容
    */
   prefix?: SlotFn;
   /**
    * Slot
    *
-   * The right content of the tab
+   * 标签的右侧内容
    */
   suffix?: SlotFn;
 };
 
+/** 定义 slots */
 defineSlots<Slots>();
 </script>
 
 <template>
   <div
-    class=":soy: relative inline-flex cursor-pointer items-center justify-center gap-16px whitespace-nowrap px-24px py-6px -mr-18px"
+    class=":soy: relative inline-flex cursor-pointer items-center justify-center gap-[16px] whitespace-nowrap px-[24px] py-[6px] -mr-[18px]"
     :class="[
       style['chrome-tab'],
       { [style['chrome-tab_dark']]: darkMode },
@@ -51,7 +56,7 @@ defineSlots<Slots>();
     <slot name="prefix"></slot>
     <slot></slot>
     <slot name="suffix"></slot>
-    <div class=":soy: absolute right-7px h-16px w-1px bg-#1f2225" :class="[style['chrome-tab-divider']]"></div>
+    <div class=":soy: absolute right-[7px] h-[16px] w-[1px] bg-[#1f2225]" :class="[style['chrome-tab-divider']]"></div>
   </div>
 </template>
 

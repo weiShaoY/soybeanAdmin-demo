@@ -19,5 +19,10 @@
   "prettier.enable": false,
   "typescript.tsdk": "node_modules/typescript/lib",
   "unocss.root": ["./"],
-  "vue.server.hybridMode": true
+  "vue.server.hybridMode": true,
+  "cSpell.ignoreWords": [
+    "Iconify",
+    "alova"
+  ],
+  "i18n-ally.sourceLanguage": "zh-cn"
 }

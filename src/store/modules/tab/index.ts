@@ -23,41 +23,45 @@ import {
   updateTabsByI18nKey
 } from './shared';
 
+/** Tab 状态管理 */
 export const useTabStore = defineStore(SetupStoreId.Tab, () => {
+  /** 路由状态管理 */
   const routeStore = useRouteStore();
+  /** 主题状态管理 */
   const themeStore = useThemeStore();
+  /** 路由跳转工具 */
   const { routerPush } = useRouterPush(false);
 
-  /** Tabs */
+  /** Tab 列表 */
   const tabs = ref<App.Global.Tab[]>([]);
 
-  /** Get active tab */
+  /** 首页 Tab */
   const homeTab = ref<App.Global.Tab>();
 
-  /** Init home tab */
+  /** 初始化首页 Tab */
   function initHomeTab() {
     homeTab.value = getDefaultHomeTab(router, routeStore.routeHome);
   }
 
-  /** Get all tabs */
+  /** 所有 Tab（包括首页 Tab） */
   const allTabs = computed(() => getAllTabs(tabs.value, homeTab.value));
 
-  /** Active tab id */
+  /** 当前激活的 Tab ID */
   const activeTabId = ref<string>('');
 
   /**
-   * Set active tab id
+   * 设置当前激活的 Tab ID
    *
-   * @param id Tab id
+   * @param id Tab ID
    */
   function setActiveTabId(id: string) {
     activeTabId.value = id;
   }
 
   /**
-   * Init tab store
+   * 初始化 Tab 状态管理
    *
-   * @param currentRoute Current route
+   * @param currentRoute 当前路由
    */
   function initTabStore(currentRoute: App.Global.TabRoute) {
     const storageTabs = localStg.get('globalTabs');
@@ -71,10 +75,10 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   * Add tab
+   * 添加 Tab
    *
-   * @param route Tab route
-   * @param active Whether to activate the added tab
+   * @param route 路由信息
+   * @param active 是否激活该 Tab
    */
   function addTab(route: App.Global.TabRoute, active = true) {
     const tab = getTabByRoute(route);
@@ -91,9 +95,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   * Remove tab
+   * 移除 Tab
    *
-   * @param tabId Tab id
+   * @param tabId Tab ID
    */
   async function removeTab(tabId: string) {
     const isRemoveActiveTab = activeTabId.value === tabId;
@@ -116,15 +120,15 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     }
   }
 
-  /** remove active tab */
+  /** 移除当前激活的 Tab */
   async function removeActiveTab() {
     await removeTab(activeTabId.value);
   }
 
   /**
-   * remove tab by route name
+   * 根据路由名称移除 Tab
    *
-   * @param routeName route name
+   * @param routeName 路由名称
    */
   async function removeTabByRouteName(routeName: RouteKey) {
     const tab = findTabByRouteName(routeName, tabs.value);
@@ -134,9 +138,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   * Clear tabs
+   * 清除所有 Tab（排除指定的 Tab）
    *
-   * @param excludes Exclude tab ids
+   * @param excludes 需要排除的 Tab ID 列表
    */
   async function clearTabs(excludes: string[] = []) {
     const remainTabIds = [...getFixedTabIds(tabs.value), ...excludes];
@@ -161,9 +165,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   * Switch route by tab
+   * 根据 Tab 切换路由
    *
-   * @param tab
+   * @param tab Tab 信息
    */
   async function switchRouteByTab(tab: App.Global.Tab) {
     const fail = await routerPush(tab.fullPath);
@@ -173,9 +177,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   * Clear left tabs
+   * 清除左侧 Tab
    *
-   * @param tabId
+   * @param tabId 当前 Tab ID
    */
   async function clearLeftTabs(tabId: string) {
     const tabIds = tabs.value.map(tab => tab.id);
@@ -187,9 +191,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   * Clear right tabs
+   * 清除右侧 Tab
    *
-   * @param tabId
+   * @param tabId 当前 Tab ID
    */
   async function clearRightTabs(tabId: string) {
     const isHomeTab = tabId === homeTab.value?.id;
@@ -207,11 +211,10 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   * Set new label of tab
+   * 设置 Tab 的新标签
    *
-   * @default activeTabId
-   * @param label New tab label
-   * @param tabId Tab id
+   * @param label 新标签
+   * @param tabId Tab ID（默认为当前激活的 Tab ID）
    */
   function setTabLabel(label: string, tabId?: string) {
     const id = tabId || activeTabId.value;
@@ -224,10 +227,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   * Reset tab label
+   * 重置 Tab 的标签
    *
-   * @default activeTabId
-   * @param tabId Tab id
+   * @param tabId Tab ID（默认为当前激活的 Tab ID）
    */
   function resetTabLabel(tabId?: string) {
     const id = tabId || activeTabId.value;
@@ -239,9 +241,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   * Is tab retain
+   * 判断 Tab 是否固定
    *
-   * @param tabId
+   * @param tabId Tab ID
    */
   function isTabRetain(tabId: string) {
     if (tabId === homeTab.value?.id) return true;
@@ -251,7 +253,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     return fixedTabIds.includes(tabId);
   }
 
-  /** Update tabs by locale */
+  /** 根据语言更新 Tab */
   function updateTabsByLocale() {
     tabs.value = updateTabsByI18nKey(tabs.value);
 
@@ -260,37 +262,54 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     }
   }
 
-  /** Cache tabs */
+  /** 缓存 Tab */
   function cacheTabs() {
     if (!themeStore.tab.cache) return;
 
     localStg.set('globalTabs', tabs.value);
   }
 
-  // cache tabs when page is closed or refreshed
+  // 在页面关闭或刷新时缓存 Tab
   useEventListener(window, 'beforeunload', () => {
     cacheTabs();
   });
 
   return {
-    /** All tabs */
+    /** 所有 Tab */
     tabs: allTabs,
+    /** 当前激活的 Tab ID */
     activeTabId,
+    /** 初始化首页 Tab */
     initHomeTab,
+    /** 初始化 Tab 状态管理 */
     initTabStore,
+    /** 添加 Tab */
     addTab,
+    /** 移除 Tab */
     removeTab,
+    /** 移除当前激活的 Tab */
     removeActiveTab,
+    /** 根据路由名称移除 Tab */
     removeTabByRouteName,
+    /** 清除所有 Tab */
     clearTabs,
+    /** 清除左侧 Tab */
     clearLeftTabs,
+    /** 清除右侧 Tab */
     clearRightTabs,
+    /** 根据 Tab 切换路由 */
     switchRouteByTab,
+    /** 设置 Tab 的新标签 */
     setTabLabel,
+    /** 重置 Tab 的标签 */
     resetTabLabel,
+    /** 判断 Tab 是否固定 */
     isTabRetain,
+    /** 根据语言更新 Tab */
     updateTabsByLocale,
+    /** 根据路由获取 Tab ID */
     getTabIdByRoute,
+    /** 缓存 Tab */
     cacheTabs
   };
 });

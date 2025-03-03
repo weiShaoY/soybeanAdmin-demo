@@ -4,9 +4,9 @@ import 'dayjs/locale/en';
 import { localStg } from '@/utils/storage';
 
 /**
- * Set dayjs locale
+ * 设置 dayjs 语言
  *
- * @param lang
+ * @param {App.I18n.LangType} lang 语言类型 默认为中文
  */
 export function setDayjsLocale(lang: App.I18n.LangType = 'zh-CN') {
   const localMap = {

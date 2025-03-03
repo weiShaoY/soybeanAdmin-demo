@@ -1,179 +1,196 @@
 /**
- * Namespace Api
+ * 命名空间 Api
  *
- * All backend api type
+ * 所有后端 API 类型
  */
 declare namespace Api {
   namespace Common {
-    /** common params of paginating */
-    interface PaginatingCommonParams {
-      /** current page number */
+    /** 通用分页参数 */
+    type PaginatingCommonParams = {
+      /** 当前页码 */
       current: number;
-      /** page size */
+      /** 每页大小 */
       size: number;
-      /** total count */
+      /** 总记录数 */
       total: number;
-    }
+    };
 
-    /** common params of paginating query list data */
-    interface PaginatingQueryRecord<T = any> extends PaginatingCommonParams {
+    /** 通用分页查询记录数据 */
+    type PaginatingQueryRecord<T = any> = {
+      /** 记录数组 */
       records: T[];
-    }
+    } & PaginatingCommonParams;
 
-    /** common search params of table */
+    /** 通用表格搜索参数 */
     type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
 
     /**
-     * enable status
+     * 启用状态
      *
-     * - "1": enabled
-     * - "2": disabled
+     * - "1": 启用
+     * - "2": 禁用
      */
     type EnableStatus = '1' | '2';
 
-    /** common record */
+    /** 通用记录 */
     type CommonRecord<T = any> = {
-      /** record id */
+      /** 记录 ID */
       id: number;
-      /** record creator */
+      /** 创建者 */
       createBy: string;
-      /** record create time */
+      /** 创建时间 */
       createTime: string;
-      /** record updater */
+      /** 更新者 */
       updateBy: string;
-      /** record update time */
+      /** 更新时间 */
       updateTime: string;
-      /** record status */
+      /** 状态 */
       status: EnableStatus | undefined;
     } & T;
   }
 
   /**
-   * namespace Auth
+   * 命名空间 Auth
    *
-   * backend api module: "auth"
+   * 后端 API 模块: "auth"
    */
   namespace Auth {
-    interface LoginToken {
+    /** 登录令牌 */
+    type LoginToken = {
+      /** 访问令牌 */
       token: string;
+      /** 刷新令牌 */
       refreshToken: string;
-    }
+    };
 
-    interface UserInfo {
+    /** 用户信息 */
+    type UserInfo = {
+      /** 用户 ID */
       userId: string;
+      /** 用户名 */
       userName: string;
+      /** 角色数组 */
       roles: string[];
+      /** 按钮权限数组 */
       buttons: string[];
-    }
+    };
   }
 
   /**
-   * namespace Route
+   * 命名空间 Route
    *
-   * backend api module: "route"
+   * 后端 API 模块: "route"
    */
   namespace Route {
     type ElegantConstRoute = import('@elegant-router/types').ElegantConstRoute;
 
-    interface MenuRoute extends ElegantConstRoute {
+    /** 菜单路由 */
+    type MenuRoute = {
+      /** 路由 ID */
       id: string;
-    }
+    } & ElegantConstRoute;
 
-    interface UserRoute {
+    /** 用户路由 */
+    type UserRoute = {
+      /** 路由数组 */
       routes: MenuRoute[];
+      /** 首页路由键 */
       home: import('@elegant-router/types').LastLevelRouteKey;
-    }
+    };
   }
 
   /**
-   * namespace SystemManage
+   * 命名空间 SystemManage
    *
-   * backend api module: "systemManage"
+   * 后端 API 模块: "systemManage"
    */
   namespace SystemManage {
+    /** 通用搜索参数 */
     type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
 
-    /** role */
+    /** 角色 */
     type Role = Common.CommonRecord<{
-      /** role name */
+      /** 角色名称 */
       roleName: string;
-      /** role code */
+      /** 角色代码 */
       roleCode: string;
-      /** role description */
+      /** 角色描述 */
       roleDesc: string;
     }>;
 
-    /** role search params */
+    /** 角色搜索参数 */
     type RoleSearchParams = CommonType.RecordNullable<
       Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'status'> & CommonSearchParams
     >;
 
-    /** role list */
+    /** 角色列表 */
     type RoleList = Common.PaginatingQueryRecord<Role>;
 
-    /** all role */
+    /** 所有角色 */
     type AllRole = Pick<Role, 'id' | 'roleName' | 'roleCode'>;
 
     /**
-     * user gender
+     * 用户性别
      *
-     * - "1": "male"
-     * - "2": "female"
+     * - "1": 男
+     * - "2": 女
      */
     type UserGender = '1' | '2';
 
-    /** user */
+    /** 用户 */
     type User = Common.CommonRecord<{
-      /** user name */
+      /** 用户名 */
       userName: string;
-      /** user gender */
+      /** 用户性别 */
       userGender: UserGender | undefined;
-      /** user nick name */
+      /** 用户昵称 */
       nickName: string;
-      /** user phone */
+      /** 用户电话 */
       userPhone: string;
-      /** user email */
+      /** 用户邮箱 */
       userEmail: string;
-      /** user role code collection */
+      /** 用户角色代码集合 */
       userRoles: string[];
     }>;
 
-    /** user search params */
+    /** 用户搜索参数 */
     type UserSearchParams = CommonType.RecordNullable<
       Pick<Api.SystemManage.User, 'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'status'> &
         CommonSearchParams
     >;
 
-    /** user list */
+    /** 用户列表 */
     type UserList = Common.PaginatingQueryRecord<User>;
 
     /**
-     * menu type
+     * 菜单类型
      *
-     * - "1": directory
-     * - "2": menu
+     * - "1": 目录
+     * - "2": 菜单
      */
     type MenuType = '1' | '2';
 
+    /** 菜单按钮 */
     type MenuButton = {
       /**
-       * button code
+       * 按钮代码
        *
-       * it can be used to control the button permission
+       * 可用于控制按钮权限
        */
       code: string;
-      /** button description */
+      /** 按钮描述 */
       desc: string;
     };
 
     /**
-     * icon type
+     * 图标类型
      *
-     * - "1": iconify icon
-     * - "2": local icon
+     * - "1": iconify 图标
+     * - "2": 本地图标
      */
     type IconType = '1' | '2';
 
+    /** 菜单路由属性 */
     type MenuPropsOfRoute = Pick<
       import('vue-router').RouteMeta,
       | 'i18nKey'
@@ -188,37 +205,43 @@ declare namespace Api {
       | 'query'
     >;
 
+    /** 菜单 */
     type Menu = Common.CommonRecord<{
-      /** parent menu id */
+      /** 父菜单 ID */
       parentId: number;
-      /** menu type */
+      /** 菜单类型 */
       menuType: MenuType;
-      /** menu name */
+      /** 菜单名称 */
       menuName: string;
-      /** route name */
+      /** 路由名称 */
       routeName: string;
-      /** route path */
+      /** 路由路径 */
       routePath: string;
-      /** component */
+      /** 组件 */
       component?: string;
-      /** iconify icon name or local icon name */
+      /** iconify 图标名称或本地图标名称 */
       icon: string;
-      /** icon type */
+      /** 图标类型 */
       iconType: IconType;
-      /** buttons */
+      /** 按钮数组 */
       buttons?: MenuButton[] | null;
-      /** children menu */
+      /** 子菜单数组 */
       children?: Menu[] | null;
     }> &
       MenuPropsOfRoute;
 
-    /** menu list */
+    /** 菜单列表 */
     type MenuList = Common.PaginatingQueryRecord<Menu>;
 
+    /** 菜单树 */
     type MenuTree = {
+      /** 菜单 ID */
       id: number;
+      /** 菜单标签 */
       label: string;
+      /** 父菜单 ID */
       pId: number;
+      /** 子菜单数组 */
       children?: MenuTree[];
     };
   }

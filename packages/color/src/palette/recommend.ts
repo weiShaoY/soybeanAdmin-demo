@@ -1,5 +1,3 @@
-import { getColorName, getDeltaE, getHsl, isValidColor, transformHslToHex } from '../shared';
-import { colorPalettes } from '../constant';
 import type {
   ColorPalette,
   ColorPaletteFamily,
@@ -8,10 +6,15 @@ import type {
   ColorPaletteNumber
 } from '../types';
 
+import { colorPalettes } from '../constant';
+
+import { getColorName, getDeltaE, getHsl, isValidColor, transformHslToHex } from '../shared';
+
 /**
- * get recommended color palette by provided color
+ * 根据提供的颜色获取推荐的颜色调色板
  *
- * @param color the provided color
+ * @param color 提供的颜色
+ * @returns 推荐的颜色调色板
  */
 export function getRecommendedColorPalette(color: string) {
   const colorPaletteFamily = getRecommendedColorPaletteFamily(color);
@@ -23,6 +26,7 @@ export function getRecommendedColorPalette(color: string) {
   });
 
   const mainColor = colorMap.get(500)!;
+
   const matchColor = colorPaletteFamily.palettes.find(palette => palette.hex === color)!;
 
   const colorPalette: ColorPaletteMatch = {
@@ -36,10 +40,11 @@ export function getRecommendedColorPalette(color: string) {
 }
 
 /**
- * get recommended palette color by provided color
+ * 根据提供的颜色和调色板编号获取推荐的调色板颜色
  *
- * @param color the provided color
- * @param number the color palette number
+ * @param color 提供的颜色
+ * @param number 调色板编号
+ * @returns 推荐的颜色（HEX）
  */
 export function getRecommendedPaletteColorByNumber(color: string, number: ColorPaletteNumber) {
   const colorPalette = getRecommendedColorPalette(color);
@@ -50,13 +55,14 @@ export function getRecommendedPaletteColorByNumber(color: string, number: ColorP
 }
 
 /**
- * get color palette family by provided color and color name
+ * 根据提供的颜色和颜色名称获取推荐的颜色调色板家族
  *
- * @param color the provided color
+ * @param color 提供的颜色
+ * @returns 推荐的颜色调色板家族
  */
 export function getRecommendedColorPaletteFamily(color: string) {
   if (!isValidColor(color)) {
-    throw new Error('Invalid color, please check color value!');
+    throw new Error('无效的颜色，请检查颜色值！');
   }
 
   let colorName = getColorName(color);
@@ -86,6 +92,7 @@ export function getRecommendedColorPaletteFamily(color: string) {
         const { h: h3, s: s3, l } = getHsl(palette.hex);
 
         const newH = deltaH < 0 ? h3 + deltaH : h3 - deltaH;
+
         const newS = s3 * sRatio;
 
         hexValue = transformHslToHex({
@@ -106,10 +113,11 @@ export function getRecommendedColorPaletteFamily(color: string) {
 }
 
 /**
- * get nearest color palette family
+ * 根据提供的颜色和多个颜色调色板家族，获取最近的颜色调色板家族
  *
- * @param color color
- * @param families color palette families
+ * @param color 提供的颜色
+ * @param families 颜色调色板家族的数组
+ * @returns 最近的颜色调色板家族
  */
 function getNearestColorPaletteFamily(color: string, families: ColorPaletteFamily[]) {
   const familyWithConfig = families.map(family => {
@@ -139,9 +147,11 @@ function getNearestColorPaletteFamily(color: string, families: ColorPaletteFamil
     ...nearestPaletteFamily,
     nearestLightnessPalette: nearestPaletteFamily.palettes.reduce((prev, curr) => {
       const { l: prevLightness } = getHsl(prev.hex);
+
       const { l: currLightness } = getHsl(curr.hex);
 
       const deltaPrev = Math.abs(prevLightness - l);
+
       const deltaCurr = Math.abs(currLightness - l);
 
       return deltaPrev < deltaCurr ? prev : curr;

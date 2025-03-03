@@ -1,25 +1,32 @@
-/** The common type namespace */
+/** 通用类型命名空间 */
 declare namespace CommonType {
-  /** The strategic pattern */
-  interface StrategicPattern {
-    /** The condition */
+  /** 策略模式 */
+  type StrategicPattern = {
+    /** 条件 */
     condition: boolean;
-    /** If the condition is true, then call the action function */
+    /** 如果条件为 true，则调用回调函数 */
     callback: () => void;
-  }
+  };
 
   /**
-   * The option type
+   * 选项类型
    *
-   * @property value: The option value
-   * @property label: The option label
+   * @property value - 选项值
+   * @property label - 选项标签
    */
-  type Option<K = string> = { value: K; label: string };
+  type Option<K = string> = {
+    /** 选项值 */
+    value: K;
+    /** 选项标签 */
+    label: string;
+  };
 
+  /** 是或否 */
   type YesOrNo = 'Y' | 'N';
 
-  /** add null to all properties */
+  /** 将所有属性设置为可为空 */
   type RecordNullable<T> = {
+    /** 属性键 */
     [K in keyof T]?: T[K] | undefined;
   };
 }

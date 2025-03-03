@@ -1,12 +1,14 @@
 import type { ChangelogOption } from '@soybeanjs/changelog';
 
-export interface CliOption {
-  /** The project root directory */
+/** CLI 配置选项 */
+export type CliOption = {
+  /** 项目根目录 */
   cwd: string;
+
   /**
-   * Cleanup dirs
+   * 需要清理的目录或文件路径（支持 Glob 语法）
    *
-   * Glob pattern syntax {@link https://github.com/isaacs/minimatch}
+   * 语法参考 {@link https://github.com/isaacs/minimatch}
    *
    * @default
    * ```json
@@ -14,18 +16,21 @@ export interface CliOption {
    * ```
    */
   cleanupDirs: string[];
+
   /**
-   * Npm-check-updates command args
+   * `npm-check-updates` 的命令参数
    *
    * @default ['--deep', '-u']
    */
   ncuCommandArgs: string[];
+
   /**
-   * Options of generate changelog
+   * 生成 `changelog` 的配置选项
    *
    * @link https://github.com/soybeanjs/changelog
    */
   changelogOptions: Partial<ChangelogOption>;
-  /** The ignore pattern list of git commit verify */
+
+  /** Git 提交验证时的忽略模式列表 */
   gitCommitVerifyIgnores: RegExp[];
-}
+};

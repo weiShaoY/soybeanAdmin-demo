@@ -3,21 +3,24 @@ import { localStg } from '@/utils/storage';
 import { fetchRefreshToken } from '../api';
 import type { RequestInstanceState } from './type';
 
+/**
+ * 获取授权信息
+ *
+ * @returns 授权信息
+ */
 export function getAuthorization() {
   const token = localStg.get('token');
   const Authorization = token ? `Bearer ${token}` : null;
-
   return Authorization;
 }
 
-/** refresh token */
+/** 刷新令牌 */
 export async function handleRefreshToken() {
   const { resetStore } = useAuthStore();
-
   const rToken = localStg.get('refreshToken') || '';
   const refreshTokenMethod = fetchRefreshToken(rToken);
 
-  // set the refreshToken role, so that the request will not be intercepted
+  // 设置 refreshToken 角色，以便请求不会被拦截
   refreshTokenMethod.meta.authRole = 'refreshToken';
 
   try {
@@ -30,6 +33,12 @@ export async function handleRefreshToken() {
   }
 }
 
+/**
+ * 显示错误信息
+ *
+ * @param state 请求实例状态
+ * @param message 错误信息
+ */
 export function showErrorMsg(state: RequestInstanceState, message: string) {
   if (!state.errMsgStack?.length) {
     state.errMsgStack = [];

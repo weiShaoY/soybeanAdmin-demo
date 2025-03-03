@@ -4,10 +4,11 @@ import { $t } from '@/locales';
 import { getRoutePath } from '@/router/elegant/transform';
 
 /**
- * Get all tabs
+ * 获取所有标签页
  *
- * @param tabs Tabs
- * @param homeTab Home tab
+ * @param tabs 标签页数组
+ * @param homeTab 主页标签页
+ * @returns 更新后的标签页数组
  */
 export function getAllTabs(tabs: App.Global.Tab[], homeTab?: App.Global.Tab) {
   if (!homeTab) {
@@ -26,18 +27,20 @@ export function getAllTabs(tabs: App.Global.Tab[], homeTab?: App.Global.Tab) {
 }
 
 /**
- * Is fixed tab
+ * 判断是否为固定标签页
  *
- * @param tab
+ * @param tab 标签页
+ * @returns 是否为固定标签页
  */
 function isFixedTab(tab: App.Global.Tab) {
   return tab.fixedIndex !== undefined && tab.fixedIndex !== null;
 }
 
 /**
- * Get tab id by route
+ * 根据路由获取标签页 ID
  *
- * @param route
+ * @param route 路由
+ * @returns 标签页 ID
  */
 export function getTabIdByRoute(route: App.Global.TabRoute) {
   const { path, query = {}, meta } = route;
@@ -55,9 +58,10 @@ export function getTabIdByRoute(route: App.Global.TabRoute) {
 }
 
 /**
- * Get tab by route
+ * 根据路由获取标签页
  *
- * @param route
+ * @param route 路由
+ * @returns 标签页
  */
 export function getTabByRoute(route: App.Global.TabRoute) {
   const { name, path, fullPath = path, meta } = route;
@@ -85,10 +89,10 @@ export function getTabByRoute(route: App.Global.TabRoute) {
 }
 
 /**
- * The vue router will automatically merge the meta of all matched items, and the icons here may be affected by other
- * matching items, so they need to be processed separately
+ * 获取路由图标
  *
- * @param route
+ * @param route 路由
+ * @returns 图标和本地图标
  */
 export function getRouteIcons(route: App.Global.TabRoute) {
   // Set default value for icon at the beginning
@@ -108,10 +112,11 @@ export function getRouteIcons(route: App.Global.TabRoute) {
 }
 
 /**
- * Get default home tab
+ * 获取默认主页标签页
  *
- * @param router
- * @param homeRouteName routeHome in useRouteStore
+ * @param router 路由器
+ * @param homeRouteName 主页路由名称
+ * @returns 主页标签页
  */
 export function getDefaultHomeTab(router: Router, homeRouteName: LastLevelRouteKey) {
   const homeRoutePath = getRoutePath(homeRouteName);
@@ -135,40 +140,44 @@ export function getDefaultHomeTab(router: Router, homeRouteName: LastLevelRouteK
 }
 
 /**
- * Is tab in tabs
+ * 判断标签页是否在标签页数组中
  *
- * @param tab
- * @param tabs
+ * @param tabId 标签页 ID
+ * @param tabs 标签页数组
+ * @returns 是否在标签页数组中
  */
 export function isTabInTabs(tabId: string, tabs: App.Global.Tab[]) {
   return tabs.some(tab => tab.id === tabId);
 }
 
 /**
- * Filter tabs by id
+ * 根据 ID 过滤标签页
  *
- * @param tabId
- * @param tabs
+ * @param tabId 标签页 ID
+ * @param tabs 标签页数组
+ * @returns 过滤后的标签页数组
  */
 export function filterTabsById(tabId: string, tabs: App.Global.Tab[]) {
   return tabs.filter(tab => tab.id !== tabId);
 }
 
 /**
- * Filter tabs by ids
+ * 根据 ID 数组过滤标签页
  *
- * @param tabIds
- * @param tabs
+ * @param tabIds 标签页 ID 数组
+ * @param tabs 标签页数组
+ * @returns 过滤后的标签页数组
  */
 export function filterTabsByIds(tabIds: string[], tabs: App.Global.Tab[]) {
   return tabs.filter(tab => !tabIds.includes(tab.id));
 }
 
 /**
- * extract tabs by all routes
+ * 根据所有路由提取标签页
  *
- * @param router
- * @param tabs
+ * @param router 路由器
+ * @param tabs 标签页数组
+ * @returns 提取后的标签页数组
  */
 export function extractTabsByAllRoutes(router: Router, tabs: App.Global.Tab[]) {
   const routes = router.getRoutes();
@@ -179,18 +188,20 @@ export function extractTabsByAllRoutes(router: Router, tabs: App.Global.Tab[]) {
 }
 
 /**
- * Get fixed tabs
+ * 获取固定标签页
  *
- * @param tabs
+ * @param tabs 标签页数组
+ * @returns 固定标签页数组
  */
 export function getFixedTabs(tabs: App.Global.Tab[]) {
   return tabs.filter(isFixedTab);
 }
 
 /**
- * Get fixed tab ids
+ * 获取固定标签页 ID
  *
- * @param tabs
+ * @param tabs 标签页数组
+ * @returns 固定标签页 ID 数组
  */
 export function getFixedTabIds(tabs: App.Global.Tab[]) {
   const fixedTabs = getFixedTabs(tabs);
@@ -199,9 +210,10 @@ export function getFixedTabIds(tabs: App.Global.Tab[]) {
 }
 
 /**
- * Update tabs label
+ * 更新标签页标签
  *
- * @param tabs
+ * @param tabs 标签页数组
+ * @returns 更新后的标签页数组
  */
 function updateTabsLabel(tabs: App.Global.Tab[]) {
   const updated = tabs.map(tab => ({
@@ -213,9 +225,10 @@ function updateTabsLabel(tabs: App.Global.Tab[]) {
 }
 
 /**
- * Update tab by i18n key
+ * 根据国际化键更新标签页
  *
- * @param tab
+ * @param tab 标签页
+ * @returns 更新后的标签页
  */
 export function updateTabByI18nKey(tab: App.Global.Tab) {
   const { i18nKey, label } = tab;
@@ -227,19 +240,21 @@ export function updateTabByI18nKey(tab: App.Global.Tab) {
 }
 
 /**
- * Update tabs by i18n key
+ * 根据国际化键更新标签页数组
  *
- * @param tabs
+ * @param tabs 标签页数组
+ * @returns 更新后的标签页数组
  */
 export function updateTabsByI18nKey(tabs: App.Global.Tab[]) {
   return tabs.map(tab => updateTabByI18nKey(tab));
 }
 
 /**
- * find tab by route name
+ * 根据路由名称查找标签页
  *
- * @param name
- * @param tabs
+ * @param name 路由名称
+ * @param tabs 标签页数组
+ * @returns 找到的标签页
  */
 export function findTabByRouteName(name: RouteKey, tabs: App.Global.Tab[]) {
   const routePath = getRoutePath(name);

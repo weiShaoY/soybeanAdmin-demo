@@ -1,42 +1,56 @@
 <script setup lang="ts">
 import { $t } from '@/locales';
 
+/** 定义组件选项 */
 defineOptions({ name: 'TableHeaderOperation' });
 
-interface Props {
+/** 组件属性类型 */
+type Props = {
+  /** 是否禁用删除按钮 */
   disabledDelete?: boolean;
+  /** 加载状态 */
   loading?: boolean;
-}
+};
 
+/** 定义组件属性 */
 defineProps<Props>();
 
-interface Emits {
+/** 组件事件类型 */
+type Emits = {
+  /** 添加事件 */
   (e: 'add'): void;
+  /** 删除事件 */
   (e: 'delete'): void;
+  /** 刷新事件 */
   (e: 'refresh'): void;
-}
+};
 
+/** 定义组件事件 */
 const emit = defineEmits<Emits>();
 
+/** 定义列模型 */
 const columns = defineModel<UI.TableColumnCheck[]>('columns', {
   default: () => []
 });
 
+/** 添加操作 */
 function add() {
   emit('add');
 }
 
+/** 批量删除操作 */
 function batchDelete() {
   emit('delete');
 }
 
+/** 刷新操作 */
 function refresh() {
   emit('refresh');
 }
 </script>
 
 <template>
-  <ElSpace direction="horizontal" wrap justify="end" class="lt-sm:w-200px">
+  <ElSpace direction="horizontal" wrap justify="end" class="lt-sm:w-[200px]">
     <slot name="prefix"></slot>
     <slot name="default">
       <ElButton plain type="primary" @click="add">

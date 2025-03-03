@@ -18,7 +18,10 @@ export default defineConfig(
           ignores: ['/^icon-/']
         }
       ],
-      'unocss/order-attributify': 'off'
+      'unocss/order-attributify': 'off',
+
+      // 强制使用 type 定义对象类型
+      '@typescript-eslint/consistent-type-definitions': ['warn', 'type']
     }
   }
 );

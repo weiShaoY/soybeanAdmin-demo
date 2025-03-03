@@ -68,17 +68,20 @@ echarts.use([
   CanvasRenderer
 ]);
 
-interface ChartHooks {
+type ChartHooks = {
+  /** 渲染图表时的钩子函数 */
   onRender?: (chart: echarts.ECharts) => void | Promise<void>;
+  /** 更新图表时的钩子函数 */
   onUpdated?: (chart: echarts.ECharts) => void | Promise<void>;
+  /** 销毁图表时的钩子函数 */
   onDestroy?: (chart: echarts.ECharts) => void | Promise<void>;
-}
+};
 
 /**
- * use echarts
+ * 使用 ECharts
  *
- * @param optionsFactory echarts options factory function
- * @param darkMode dark mode
+ * @param optionsFactory ECharts 配置工厂函数
+ * @param hooks 图表钩子函数
  */
 export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: ChartHooks = {}) {
   const scope = effectScope();
@@ -112,23 +115,29 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
   } = hooks;
 
   /**
-   * whether can render chart
+   * 是否可以渲染图表
    *
-   * when domRef is ready and initialSize is valid
+   * 当 domRef 准备好且 initialSize 有效时
+   *
+   * @returns 是否可以渲染图表
    */
   function canRender() {
     return domRef.value && initialSize.width > 0 && initialSize.height > 0;
   }
 
-  /** is chart rendered */
+  /**
+   * 图表是否已渲染
+   *
+   * @returns 图表是否已渲染
+   */
   function isRendered() {
     return Boolean(domRef.value && chart);
   }
 
   /**
-   * update chart options
+   * 更新图表选项
    *
-   * @param callback callback function
+   * @param callback 回调函数. Default is `() => chartOptions`. Default is `() => chartOptions`
    */
   async function updateOptions(callback: (opts: T, optsFactory: () => T) => ECOption = () => chartOptions) {
     if (!isRendered()) return;
@@ -146,11 +155,16 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
     await onUpdated?.(chart!);
   }
 
+  /**
+   * 设置图表选项
+   *
+   * @param {T} options 图表选项
+   */
   function setOptions(options: T) {
     chart?.setOption(options);
   }
 
-  /** render chart */
+  /** 渲染图表 */
   async function render() {
     if (!isRendered()) {
       const chartTheme = darkMode.value ? 'dark' : 'light';
@@ -165,12 +179,12 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
     }
   }
 
-  /** resize chart */
+  /** 调整图表大小 */
   function resize() {
     chart?.resize();
   }
 
-  /** destroy chart */
+  /** 销毁图表 */
   async function destroy() {
     if (!chart) return;
 
@@ -179,7 +193,7 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
     chart = null;
   }
 
-  /** change chart theme */
+  /** 更改图表主题 */
   async function changeTheme() {
     await destroy();
     await render();
@@ -187,28 +201,28 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
   }
 
   /**
-   * render chart by size
+   * 根据尺寸渲染图表
    *
-   * @param w width
-   * @param h height
+   * @param w 宽度
+   * @param h 高度
    */
   async function renderChartBySize(w: number, h: number) {
     initialSize.width = w;
     initialSize.height = h;
 
-    // size is abnormal, destroy chart
+    // 尺寸异常，销毁图表
     if (!canRender()) {
       await destroy();
 
       return;
     }
 
-    // resize chart
+    // 调整图表大小
     if (isRendered()) {
       resize();
     }
 
-    // render chart
+    // 渲染图表
     await render();
   }
 

@@ -7,10 +7,10 @@ declare namespace BMap {
 }
 
 declare const TMap: any;
-
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 interface Window {
   /**
-   * make baidu map request under https protocol
+   * 使用 https 协议进行百度地图请求
    *
    * - 0: http
    * - 1: https

@@ -1,32 +1,40 @@
 import type { AnyColor, HsvColor } from 'colord';
-import { getHex, getHsv, isValidColor, mixColor } from '../shared';
+
 import type { ColorIndex } from '../types';
 
-/** Hue step */
+import { getHex, getHsv, isValidColor, mixColor } from '../shared';
+
+/** 色相步进 */
 const hueStep = 2;
-/** Saturation step, light color part */
+
+/** 饱和度步进，浅色部分 */
 const saturationStep = 16;
-/** Saturation step, dark color part */
+
+/** 饱和度步进，深色部分 */
 const saturationStep2 = 5;
-/** Brightness step, light color part */
+
+/** 亮度步进，浅色部分 */
 const brightnessStep1 = 5;
-/** Brightness step, dark color part */
+
+/** 亮度步进，深色部分 */
 const brightnessStep2 = 15;
-/** Light color count, main color up */
+
+/** 浅色数量，主色偏上 */
 const lightColorCount = 5;
-/** Dark color count, main color down */
+
+/** 深色数量，主色偏下 */
 const darkColorCount = 4;
 
 /**
- * Get AntD palette color by index
+ * 根据索引获取 AntD 调色板颜色
  *
- * @param color - Color
- * @param index - The color index of color palette (the main color index is 6)
- * @returns Hex color
+ * @param color - 颜色
+ * @param index - 调色板中的颜色索引（主色索引为 6）
+ * @returns 十六进制颜色
  */
 export function getAntDPaletteColorByIndex(color: AnyColor, index: ColorIndex): string {
   if (!isValidColor(color)) {
-    throw new Error('invalid input color value');
+    throw new Error('无效的输入颜色值');
   }
 
   if (index === 6) {
@@ -34,7 +42,9 @@ export function getAntDPaletteColorByIndex(color: AnyColor, index: ColorIndex): 
   }
 
   const isLight = index < 6;
+
   const hsv = getHsv(color);
+
   const i = isLight ? lightColorCount + 1 - index : index - lightColorCount - 1;
 
   const newHsv: HsvColor = {
@@ -46,27 +56,60 @@ export function getAntDPaletteColorByIndex(color: AnyColor, index: ColorIndex): 
   return getHex(newHsv);
 }
 
-/** Map of dark color index and opacity */
+/** 深色调色板索引与透明度的映射 */
 const darkColorMap = [
-  { index: 7, opacity: 0.15 },
-  { index: 6, opacity: 0.25 },
-  { index: 5, opacity: 0.3 },
-  { index: 5, opacity: 0.45 },
-  { index: 5, opacity: 0.65 },
-  { index: 5, opacity: 0.85 },
-  { index: 5, opacity: 0.9 },
-  { index: 4, opacity: 0.93 },
-  { index: 3, opacity: 0.95 },
-  { index: 2, opacity: 0.97 },
-  { index: 1, opacity: 0.98 }
+  {
+    index: 7,
+    opacity: 0.15
+  },
+  {
+    index: 6,
+    opacity: 0.25
+  },
+  {
+    index: 5,
+    opacity: 0.3
+  },
+  {
+    index: 5,
+    opacity: 0.45
+  },
+  {
+    index: 5,
+    opacity: 0.65
+  },
+  {
+    index: 5,
+    opacity: 0.85
+  },
+  {
+    index: 5,
+    opacity: 0.9
+  },
+  {
+    index: 4,
+    opacity: 0.93
+  },
+  {
+    index: 3,
+    opacity: 0.95
+  },
+  {
+    index: 2,
+    opacity: 0.97
+  },
+  {
+    index: 1,
+    opacity: 0.98
+  }
 ];
 
 /**
- * Get AntD color palette
+ * 获取 AntD 颜色调色板
  *
- * @param color - Color
- * @param darkTheme - Dark theme
- * @param darkThemeMixColor - Dark theme mix color (default: #141414)
+ * @param color - 颜色
+ * @param darkTheme - 是否使用暗色主题
+ * @param darkThemeMixColor - 暗色主题混合颜色（默认：#141414）
  */
 export function getAntDColorPalette(color: AnyColor, darkTheme = false, darkThemeMixColor = '#141414'): string[] {
   const indexes: ColorIndex[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
@@ -87,11 +130,11 @@ export function getAntDColorPalette(color: AnyColor, darkTheme = false, darkThem
 }
 
 /**
- * Get hue
+ * 获取色相
  *
- * @param hsv - Hsv format color
- * @param i - The relative distance from 6
- * @param isLight - Is light color
+ * @param hsv - Hsv 格式颜色
+ * @param i - 相对于 6 的位置
+ * @param isLight - 是否为浅色
  */
 function getHue(hsv: HsvColor, i: number, isLight: boolean) {
   let hue: number;
@@ -116,11 +159,11 @@ function getHue(hsv: HsvColor, i: number, isLight: boolean) {
 }
 
 /**
- * Get saturation
+ * 获取饱和度
  *
- * @param hsv - Hsv format color
- * @param i - The relative distance from 6
- * @param isLight - Is light color
+ * @param hsv - Hsv 格式颜色
+ * @param i - 相对于 6 的位置
+ * @param isLight - 是否为浅色
  */
 function getSaturation(hsv: HsvColor, i: number, isLight: boolean) {
   if (hsv.h === 0 && hsv.s === 0) {
@@ -153,11 +196,11 @@ function getSaturation(hsv: HsvColor, i: number, isLight: boolean) {
 }
 
 /**
- * Get value of hsv
+ * 获取亮度值
  *
- * @param hsv - Hsv format color
- * @param i - The relative distance from 6
- * @param isLight - Is light color
+ * @param hsv - Hsv 格式颜色
+ * @param i - 相对于 6 的位置
+ * @param isLight - 是否为浅色
  */
 function getValue(hsv: HsvColor, i: number, isLight: boolean) {
   let value: number;

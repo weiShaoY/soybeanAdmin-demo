@@ -3,14 +3,18 @@ import { localStg } from '@/utils/storage';
 import { fetchRefreshToken } from '../api';
 import type { RequestInstanceState } from './type';
 
+/**
+ * 获取授权信息
+ *
+ * @returns 授权信息
+ */
 export function getAuthorization() {
   const token = localStg.get('token');
   const Authorization = token ? `Bearer ${token}` : null;
-
   return Authorization;
 }
 
-/** refresh token */
+/** 刷新令牌 */
 async function handleRefreshToken() {
   const { resetStore } = useAuthStore();
 
@@ -23,10 +27,15 @@ async function handleRefreshToken() {
   }
 
   resetStore();
-
   return false;
 }
 
+/**
+ * 处理令牌过期请求
+ *
+ * @param state 请求实例状态
+ * @returns 是否成功
+ */
 export async function handleExpiredRequest(state: RequestInstanceState) {
   if (!state.refreshTokenFn) {
     state.refreshTokenFn = handleRefreshToken();
@@ -41,6 +50,12 @@ export async function handleExpiredRequest(state: RequestInstanceState) {
   return success;
 }
 
+/**
+ * 显示错误信息
+ *
+ * @param state 请求实例状态
+ * @param message 错误信息
+ */
 export function showErrorMsg(state: RequestInstanceState, message: string) {
   if (!state.errMsgStack?.length) {
     state.errMsgStack = [];

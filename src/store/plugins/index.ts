@@ -3,9 +3,9 @@ import { jsonClone } from '@sa/utils';
 import { SetupStoreId } from '@/enum';
 
 /**
- * The plugin reset the state of the store which is written by setup syntax
+ * 插件用于重置使用 setup 语法编写的 store 的状态
  *
- * @param context
+ * @param context Pinia 插件上下文
  */
 export function resetSetupStore(context: PiniaPluginContext) {
   const setupSyntaxIds = Object.values(SetupStoreId) as string[];

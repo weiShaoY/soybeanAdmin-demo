@@ -1,34 +1,34 @@
 import { alova } from '../request';
 
 /**
- * Login
+ * 登录
  *
- * @param userName User name
- * @param password Password
+ * @param userName 用户名
+ * @param password 密码
  */
 export function fetchLogin(userName: string, password: string) {
   return alova.Post<Api.Auth.LoginToken>('/auth/login', { userName, password });
 }
 
-/** Get user info */
+/** 获取用户信息 */
 export function fetchGetUserInfo() {
   return alova.Get<Api.Auth.UserInfo>('/auth/getUserInfo');
 }
 
-/** Send captcha to target phone */
+/** 发送验证码到目标手机 */
 export function sendCaptcha(phone: string) {
   return alova.Post<null>('/auth/sendCaptcha', { phone });
 }
 
-/** Verify captcha */
+/** 验证验证码 */
 export function verifyCaptcha(phone: string, code: string) {
   return alova.Post<null>('/auth/verifyCaptcha', { phone, code });
 }
 
 /**
- * Refresh token
+ * 刷新令牌
  *
- * @param refreshToken Refresh token
+ * @param refreshToken 刷新令牌
  */
 export function fetchRefreshToken(refreshToken: string) {
   return alova.Post<Api.Auth.LoginToken>(
@@ -43,10 +43,10 @@ export function fetchRefreshToken(refreshToken: string) {
 }
 
 /**
- * return custom backend error
+ * 返回自定义后端错误
  *
- * @param code error code
- * @param msg error message
+ * @param code 错误代码
+ * @param msg 错误信息
  */
 export function fetchCustomBackendError(code: string, msg: string) {
   return alova.Get('/auth/error', {

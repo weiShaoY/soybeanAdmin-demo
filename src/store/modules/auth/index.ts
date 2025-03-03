@@ -18,8 +18,10 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const { toLogin, redirectFromLogin } = useRouterPush(false);
   const { loading: loginLoading, startLoading, endLoading } = useLoading();
 
+  /** 用户 token */
   const token = ref(getToken());
 
+  /** 用户信息 */
   const userInfo: Api.Auth.UserInfo = reactive({
     userId: '',
     userName: '',
@@ -27,17 +29,17 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     buttons: []
   });
 
-  /** is super role in static route */
+  /** 是否具有静态超级角色 */
   const isStaticSuper = computed(() => {
     const { VITE_AUTH_ROUTE_MODE, VITE_STATIC_SUPER_ROLE } = import.meta.env;
 
     return VITE_AUTH_ROUTE_MODE === 'static' && userInfo.roles.includes(VITE_STATIC_SUPER_ROLE);
   });
 
-  /** Is login */
+  /** 是否登录 */
   const isLogin = computed(() => Boolean(token.value));
 
-  /** Reset auth store */
+  /** 重置认证存储 */
   async function resetStore() {
     const authStore = useAuthStore();
 
@@ -54,11 +56,11 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   }
 
   /**
-   * Login
+   * 登录
    *
-   * @param userName User name
-   * @param password Password
-   * @param [redirect=true] Whether to redirect after login. Default is `true`
+   * @param userName 用户名
+   * @param password 密码
+   * @param redirect 登录后是否重定向。默认为 `true`. Default is `true`
    */
   async function login(userName: string, password: string, redirect = true) {
     startLoading();
@@ -84,12 +86,17 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     endLoading();
   }
 
+  /**
+   * 通过 token 登录
+   *
+   * @param loginToken 登录 token
+   */
   async function loginByToken(loginToken: Api.Auth.LoginToken) {
-    // 1. stored in the localStorage, the later requests need it in headers
+    // 1. 将 token 存储在本地存储中，以便后续请求需要在 headers 中使用
     localStg.set('token', loginToken.token);
     localStg.set('refreshToken', loginToken.refreshToken);
 
-    // 2. get user info
+    // 2. 获取用户信息
     const pass = await getUserInfo();
 
     if (pass) {
@@ -101,11 +108,16 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     return false;
   }
 
+  /**
+   * 获取用户信息
+   *
+   * @returns 是否获取成功
+   */
   async function getUserInfo() {
     const { data: info, error } = await fetchGetUserInfo();
 
     if (!error) {
-      // update store
+      // 更新存储
       Object.assign(userInfo, info);
 
       return true;
@@ -114,6 +126,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     return false;
   }
 
+  /** 初始化用户信息 */
   async function initUserInfo() {
     const hasToken = getToken();
 

@@ -4,7 +4,13 @@ import type { FormInstance } from 'element-plus';
 import { REG_CODE_SIX, REG_EMAIL, REG_PHONE, REG_PWD, REG_USER_NAME } from '@/constants/reg';
 import { $t } from '@/locales';
 
+/**
+ * 使用表单规则
+ *
+ * @returns {object} 包含表单规则和创建规则的方法
+ */
 export function useFormRules() {
+  /** 模式规则 */
   const patternRules = {
     userName: {
       pattern: REG_USER_NAME,
@@ -33,6 +39,7 @@ export function useFormRules() {
     }
   } satisfies Record<string, App.Global.FormRule>;
 
+  /** 表单规则 */
   const formRules = {
     userName: [createRequiredRule($t('form.userName.required')), patternRules.userName],
     phone: [createRequiredRule($t('form.phone.required')), patternRules.phone],
@@ -41,9 +48,15 @@ export function useFormRules() {
     email: [createRequiredRule($t('form.email.required')), patternRules.email]
   } satisfies Record<string, App.Global.FormRule[]>;
 
-  /** the default required rule */
+  /** 默认必填规则 */
   const defaultRequiredRule = createRequiredRule($t('form.required'));
 
+  /**
+   * 创建必填规则
+   *
+   * @param {string} message 提示信息
+   * @returns {App.Global.FormRule} 必填规则
+   */
   function createRequiredRule(message: string): App.Global.FormRule {
     return {
       required: true,
@@ -51,8 +64,13 @@ export function useFormRules() {
     };
   }
 
-  /** create a rule for confirming the password */
-  function createConfirmPwdRule(pwd: string | Ref<string> | ComputedRef<string>) {
+  /**
+   * 创建确认密码规则
+   *
+   * @param {string | Ref<string> | ComputedRef<string>} pwd 密码
+   * @returns {App.Global.FormRule[]} 确认密码规则
+   */
+  function createConfirmPwdRule(pwd: string | Ref<string> | ComputedRef<string>): App.Global.FormRule[] {
     const confirmPwdRule: App.Global.FormRule[] = [
       { required: true, message: $t('form.confirmPwd.required') },
       {
@@ -78,14 +96,26 @@ export function useFormRules() {
   };
 }
 
+/**
+ * 使用表单
+ *
+ * @returns {object} 包含表单引用和验证方法
+ */
 export function useForm() {
+  /** 表单引用 */
   const formRef = ref<FormInstance | null>(null);
 
-  async function validate() {
+  /**
+   * 验证表单
+   *
+   * @returns {Promise<void>}
+   */
+  async function validate(): Promise<void> {
     await formRef.value?.validate();
   }
 
-  async function restoreValidation() {
+  /** 恢复表单验证 */
+  async function restoreValidation(): Promise<void> {
     formRef.value?.resetFields();
   }
 

@@ -5,6 +5,9 @@
 
 import type { GeneratedRoute } from '@elegant-router/types';
 
+/**
+ *  生成的路由数组
+ */
 export const generatedRoutes: GeneratedRoute[] = [
   {
     name: '403',

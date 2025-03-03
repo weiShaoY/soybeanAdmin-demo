@@ -1,4 +1,5 @@
 declare namespace UI {
+  /** 主题颜色类型 */
   type ThemeColor = 'danger' | 'primary' | 'info' | 'success' | 'warning';
 
   type TableColumnCheck = import('@sa/hooks').TableColumnCheck;
@@ -6,9 +7,9 @@ declare namespace UI {
   type FlatResponseData<T> = import('@sa/axios').FlatResponseData<T>;
 
   /**
-   * the custom column key
+   * 自定义列键
    *
-   * if you want to add a custom column, you should add a key to this type
+   * 如果要添加自定义列，应向此类型添加键
    */
   type CustomColumnKey = 'operate';
 
@@ -25,10 +26,10 @@ declare namespace UI {
   ) => Promise<FlatResponseData<Api.Common.PaginatingQueryRecord<T>>>;
 
   /**
-   * the type of table operation
+   * 表操作的类型
    *
-   * - add: add table item
-   * - edit: edit table item
+   * - add: 添加表项
+   * - edit: 编辑表项
    */
   type TableOperateType = 'add' | 'edit';
 
@@ -39,7 +40,7 @@ declare namespace UI {
     'apiFn' | 'apiParams' | 'columns' | 'immediate'
   > & {
     /**
-     * whether to display the total items count
+     * 是否显示总条目数
      *
      * @default false
      */

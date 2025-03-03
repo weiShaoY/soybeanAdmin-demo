@@ -1,14 +1,48 @@
 import { bgRed, green, red, yellow } from 'kolorist';
 
+/**
+ * 支持的语言类型
+ *
+ * @typedef {'zh-cn' | 'en-us'} Lang
+ */
 export type Lang = 'zh-cn' | 'en-us';
 
+/** 提供不同语言的 Git 提交信息配置 */
 export const locales = {
   'zh-cn': {
+    /**
+     * 提交信息相关提示文本
+     *
+     * @type {object}
+     */
     gitCommitMessages: {
+      /**
+       * 提示用户选择提交类型
+       *
+       * @type {string}
+       */
       types: '请选择提交类型',
+
+      /**
+       * 提示用户选择提交范围
+       *
+       * @type {string}
+       */
       scopes: '请选择提交范围',
+
+      /**
+       * 提示用户输入提交描述，带有破坏性改动标识
+       *
+       * @type {string}
+       */
       description: `请输入描述信息（${yellow('!')}开头表示破坏性改动`
     },
+
+    /**
+     * 提交类型列表
+     *
+     * @type {[string, string][]}
+     */
     gitCommitTypes: [
       ['feat', '新功能'],
       ['feat-wip', '开发中的功能，比如某功能的部分代码'],
@@ -25,6 +59,12 @@ export const locales = {
       ['chore', '没有修改src或测试文件的其他变更'],
       ['revert', '还原先前的提交']
     ] as [string, string][],
+
+    /**
+     * 提交范围列表
+     *
+     * @type {[string, string][]}
+     */
     gitCommitScopes: [
       ['projects', '项目'],
       ['packages', '包'],
@@ -37,16 +77,51 @@ export const locales = {
       ['release', '发布项目新版本'],
       ['other', '其他的变更']
     ] as [string, string][],
+
+    /**
+     * 提交验证错误信息
+     *
+     * @type {string}
+     */
     gitCommitVerify: `${bgRed(' 错误 ')} ${red('git 提交信息必须符合 Conventional Commits 标准!')}\n\n${green(
       '推荐使用命令 `pnpm commit` 生成符合 Conventional Commits 标准的提交信息。\n获取有关 Conventional Commits 的更多信息，请访问此链接: https://conventionalcommits.org'
     )}`
   },
+
   'en-us': {
+    /**
+     * 提交信息相关提示文本
+     *
+     * @type {object}
+     */
     gitCommitMessages: {
+      /**
+       * 提示用户选择提交类型
+       *
+       * @type {string}
+       */
       types: 'Please select a type',
+
+      /**
+       * 提示用户选择提交范围
+       *
+       * @type {string}
+       */
       scopes: 'Please select a scope',
+
+      /**
+       * 提示用户输入提交描述，带有破坏性改动标识
+       *
+       * @type {string}
+       */
       description: `Please enter a description (add prefix ${yellow('!')} to indicate breaking change)`
     },
+
+    /**
+     * 提交类型列表
+     *
+     * @type {[string, string][]}
+     */
     gitCommitTypes: [
       ['feat', 'A new feature'],
       ['feat-wip', 'Features in development, such as partial code for a certain feature'],
@@ -63,6 +138,12 @@ export const locales = {
       ['chore', "Other changes that don't modify src or test files"],
       ['revert', 'Reverts a previous commit']
     ] as [string, string][],
+
+    /**
+     * 提交范围列表
+     *
+     * @type {[string, string][]}
+     */
     gitCommitScopes: [
       ['projects', 'project'],
       ['packages', 'packages'],
@@ -75,6 +156,12 @@ export const locales = {
       ['release', 'release project'],
       ['other', 'other changes']
     ] as [string, string][],
+
+    /**
+     * 提交验证错误信息
+     *
+     * @type {string}
+     */
     gitCommitVerify: `${bgRed(' ERROR ')} ${red('git commit message must match the Conventional Commits standard!')}\n\n${green(
       'Recommended to use the command `pnpm commit` to generate Conventional Commits compliant commit information.\nGet more info about Conventional Commits, follow this link: https://conventionalcommits.org'
     )}`

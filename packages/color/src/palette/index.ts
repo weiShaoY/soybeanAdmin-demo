@@ -1,20 +1,25 @@
 import type { AnyColor } from 'colord';
-import { getHex } from '../shared';
+
 import type { ColorPaletteNumber } from '../types';
-import { getRecommendedColorPalette } from './recommend';
+
+import { getHex } from '../shared';
+
 import { getAntDColorPalette } from './antd';
 
+import { getRecommendedColorPalette } from './recommend';
+
 /**
- * get color palette by provided color
+ * 根据提供的颜色获取颜色调色板
  *
- * @param color
- * @param recommended whether to get recommended color palette (the provided color may not be the main color)
+ * @param color 提供的颜色
+ * @param recommended 是否获取推荐的颜色调色板（提供的颜色可能不是主色）
  */
 export function getColorPalette(color: AnyColor, recommended = false) {
   const colorMap = new Map<ColorPaletteNumber, string>();
 
   if (recommended) {
     const colorPalette = getRecommendedColorPalette(getHex(color));
+
     colorPalette.palettes.forEach(palette => {
       colorMap.set(palette.number, palette.hex);
     });
@@ -32,11 +37,11 @@ export function getColorPalette(color: AnyColor, recommended = false) {
 }
 
 /**
- * get color palette color by number
+ * 根据数字获取颜色调色板中的颜色
  *
- * @param color the provided color
- * @param number the color palette number
- * @param recommended whether to get recommended color palette (the provided color may not be the main color)
+ * @param color 提供的颜色
+ * @param number 颜色调色板的数字
+ * @param recommended 是否获取推荐的颜色调色板（提供的颜色可能不是主色）
  */
 export function getPaletteColorByNumber(color: AnyColor, number: ColorPaletteNumber, recommended = false) {
   const colorMap = getColorPalette(color, recommended);

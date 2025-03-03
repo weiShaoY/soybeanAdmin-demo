@@ -1,58 +1,62 @@
 /**
- * the color palette number
+ * 颜色调色板的编号
  *
- * the main color number is 500
+ * 主色的编号是 500
  */
 export type ColorPaletteNumber = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
 
-/** the color palette */
+/** 颜色调色板 */
 export type ColorPalette = {
-  /** the color hex value */
+  /** 颜色的 HEX 值 */
   hex: string;
+
   /**
-   * the color number
+   * 颜色的编号
    *
    * - 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950
    */
   number: ColorPaletteNumber;
 };
 
-/** the color palette family */
+/** 颜色调色板家族 */
 export type ColorPaletteFamily = {
-  /** the color palette family name */
+  /** 颜色调色板家族名称 */
   name: string;
-  /** the color palettes */
+
+  /** 颜色调色板集合 */
   palettes: ColorPalette[];
 };
 
-/** the color palette with delta */
+/** 带有色差的颜色调色板 */
 export type ColorPaletteWithDelta = ColorPalette & {
-  delta: number;
+  delta: number; // 色差
 };
 
-/** the color palette family with nearest palette */
+/** 带有最近调色板的颜色调色板家族 */
 export type ColorPaletteFamilyWithNearestPalette = ColorPaletteFamily & {
-  nearestPalette: ColorPaletteWithDelta;
-  nearestLightnessPalette: ColorPaletteWithDelta;
+  nearestPalette: ColorPaletteWithDelta; // 最近的调色板
+  nearestLightnessPalette: ColorPaletteWithDelta; // 最近的亮度调色板
 };
 
-/** the color palette match */
+/** 颜色调色板匹配 */
 export type ColorPaletteMatch = ColorPaletteFamily & {
-  /** the color map of the palette */
+  /** 调色板的颜色映射 */
   colorMap: Map<ColorPaletteNumber, ColorPalette>;
+
   /**
-   * the main color of the palette
+   * 调色板的主色
    *
-   * which number is 500
+   * 主色的编号是 500
    */
   main: ColorPalette;
-  /** the match color of the palette */
+
+  /** 调色板的匹配色 */
   match: ColorPalette;
 };
 
 /**
- * The color index of color palette
+ * 颜色调色板的索引
  *
- * From left to right, the color is from light to dark, 6 is main color
+ * 从左到右，颜色从浅到深，第 6 个是主色
  */
 export type ColorIndex = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;

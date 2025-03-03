@@ -1,31 +1,33 @@
-import type { RouteLocationNormalizedLoaded, RouteRecordRaw, _RouteRecordBase } from 'vue-router';
+import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router';
 import type { ElegantConstRoute, LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
 import { $t } from '@/locales';
 import { useSvgIcon } from '@/hooks/common/icon';
 
 /**
- * Filter auth routes by roles
+ * 根据角色过滤权限路由
  *
- * @param routes Auth routes
- * @param roles Roles
+ * @param {ElegantConstRoute[]} routes 权限路由
+ * @param {string[]} roles 角色
+ * @returns {ElegantConstRoute[]} 过滤后的权限路由
  */
 export function filterAuthRoutesByRoles(routes: ElegantConstRoute[], roles: string[]) {
   return routes.flatMap(route => filterAuthRouteByRoles(route, roles));
 }
 
 /**
- * Filter auth route by roles
+ * 根据角色过滤权限路由
  *
- * @param route Auth route
- * @param roles Roles
+ * @param {ElegantConstRoute} route 权限路由
+ * @param {string[]} roles 角色
+ * @returns {ElegantConstRoute[]} 过滤后的权限路由
  */
 function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]): ElegantConstRoute[] {
   const routeRoles = (route.meta && route.meta.roles) || [];
 
-  // if the route's "roles" is empty, then it is allowed to access
+  // 如果路由的 "roles" 为空，则允许访问
   const isEmptyRoles = !routeRoles.length;
 
-  // if the user's role is included in the route's "roles", then it is allowed to access
+  // 如果用户的角色包含在路由的 "roles" 中，则允许访问
   const hasPermission = routeRoles.some(role => roles.includes(role));
 
   const filterRoute = { ...route };
@@ -34,7 +36,7 @@ function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]): Eleg
     filterRoute.children = filterRoute.children.flatMap(item => filterAuthRouteByRoles(item, roles));
   }
 
-  // Exclude the route if it has no children after filtering
+  // 如果过滤后路由没有子路由，则排除该路由
   if (filterRoute.children?.length === 0) {
     return [];
   }
@@ -43,9 +45,10 @@ function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]): Eleg
 }
 
 /**
- * sort route by order
+ * 根据顺序排序路由
  *
- * @param route route
+ * @param {ElegantConstRoute} route 路由
+ * @returns {ElegantConstRoute} 排序后的路由
  */
 function sortRouteByOrder(route: ElegantConstRoute) {
   if (route.children?.length) {
@@ -57,9 +60,10 @@ function sortRouteByOrder(route: ElegantConstRoute) {
 }
 
 /**
- * sort routes by order
+ * 根据顺序排序路由数组
  *
- * @param routes routes
+ * @param {ElegantConstRoute[]} routes 路由数组
+ * @returns {ElegantConstRoute[]} 排序后的路由数组
  */
 export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
   routes.sort((next, prev) => (Number(next.meta?.order) || 0) - (Number(prev.meta?.order) || 0));
@@ -69,9 +73,10 @@ export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
 }
 
 /**
- * Get global menus by auth routes
+ * 根据权限路由获取全局菜单
  *
- * @param routes Auth routes
+ * @param {ElegantConstRoute[]} routes 权限路由
+ * @returns {App.Global.Menu[]} 全局菜单
  */
 export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
   const menus: App.Global.Menu[] = [];
@@ -92,9 +97,10 @@ export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
 }
 
 /**
- * Update locale of global menus
+ * 根据语言更新全局菜单
  *
- * @param menus
+ * @param {App.Global.Menu[]} menus 全局菜单
+ * @returns {App.Global.Menu[]} 更新后的全局菜单
  */
 export function updateLocaleOfGlobalMenus(menus: App.Global.Menu[]) {
   const result: App.Global.Menu[] = [];
@@ -120,9 +126,10 @@ export function updateLocaleOfGlobalMenus(menus: App.Global.Menu[]) {
 }
 
 /**
- * Get global menu by route
+ * 根据路由获取全局菜单
  *
- * @param route
+ * @param {RouteLocationNormalizedLoaded | ElegantConstRoute} route 路由
+ * @returns 全局菜单
  */
 function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | ElegantConstRoute) {
   const { SvgIconVNode } = useSvgIcon();
@@ -145,15 +152,16 @@ function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | Elegant
 }
 
 /**
- * Get cache route names
+ * 获取缓存路由名
  *
- * @param routes Vue routes (two levels)
+ * @param {RouteRecordRaw[]} routes Vue 路由数组（两级）
+ * @returns {LastLevelRouteKey[]} 缓存路由名
  */
 export function getCacheRouteNames(routes: RouteRecordRaw[]) {
   const cacheNames: LastLevelRouteKey[] = [];
 
   routes.forEach(route => {
-    // only get last two level route, which has component
+    // 仅获取具有组件的最后两级路由
     route.children?.forEach(child => {
       if (child.component && child.meta?.keepAlive) {
         cacheNames.push(child.name as LastLevelRouteKey);
@@ -165,20 +173,22 @@ export function getCacheRouteNames(routes: RouteRecordRaw[]) {
 }
 
 /**
- * Is route exist by route name
+ * 根据路由名判断路由是否存在
  *
- * @param routeName
- * @param routes
+ * @param {RouteKey} routeName 路由名
+ * @param {ElegantConstRoute[]} routes 路由数组
+ * @returns {boolean} 路由是否存在
  */
 export function isRouteExistByRouteName(routeName: RouteKey, routes: ElegantConstRoute[]) {
   return routes.some(route => recursiveGetIsRouteExistByRouteName(route, routeName));
 }
 
 /**
- * Recursive get is route exist by route name
+ * 递归判断路由是否存在
  *
- * @param route
- * @param routeName
+ * @param {ElegantConstRoute} route 路由
+ * @param {RouteKey} routeName 路由名
+ * @returns {boolean} 路由是否存在
  */
 function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName: RouteKey) {
   let isExist = route.name === routeName;
@@ -195,10 +205,11 @@ function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName
 }
 
 /**
- * Get selected menu key path
+ * 根据选中菜单键获取选中菜单键路径
  *
- * @param selectedKey
- * @param menus
+ * @param {string} selectedKey 选中菜单键
+ * @param {App.Global.Menu[]} menus 全局菜单
+ * @returns {string[]} 选中菜单键路径
  */
 export function getSelectedMenuKeyPathByKey(selectedKey: string, menus: App.Global.Menu[]) {
   const keyPath: string[] = [];
@@ -219,10 +230,11 @@ export function getSelectedMenuKeyPathByKey(selectedKey: string, menus: App.Glob
 }
 
 /**
- * Find menu path
+ * 查找菜单路径
  *
- * @param targetKey Target menu key
- * @param menu Menu
+ * @param {string} targetKey 目标菜单键
+ * @param {App.Global.Menu} menu 菜单
+ * @returns {string[] | null} 菜单路径
  */
 function findMenuPath(targetKey: string, menu: App.Global.Menu): string[] | null {
   const path: string[] = [];
@@ -255,9 +267,10 @@ function findMenuPath(targetKey: string, menu: App.Global.Menu): string[] | null
 }
 
 /**
- * Transform menu to breadcrumb
+ * 将菜单转换为面包屑
  *
- * @param menu
+ * @param {App.Global.Menu} menu 菜单
+ * @returns {App.Global.Breadcrumb} 面包屑
  */
 function transformMenuToBreadcrumb(menu: App.Global.Menu) {
   const { children, ...rest } = menu;
@@ -274,10 +287,11 @@ function transformMenuToBreadcrumb(menu: App.Global.Menu) {
 }
 
 /**
- * Get breadcrumbs by route
+ * 根据路由获取面包屑
  *
- * @param route
- * @param menus
+ * @param {RouteLocationNormalizedLoaded} route 路由
+ * @param {App.Global.Menu[]} menus 全局菜单
+ * @returns {App.Global.Breadcrumb[]} 面包屑数组
  */
 export function getBreadcrumbsByRoute(
   route: RouteLocationNormalizedLoaded,
@@ -316,10 +330,11 @@ export function getBreadcrumbsByRoute(
 }
 
 /**
- * Transform menu to searchMenus
+ * 将菜单转换为搜索菜单
  *
- * @param menus - menus
- * @param treeMap
+ * @param {App.Global.Menu[]} menus 菜单数组
+ * @param {App.Global.Menu[]} [treeMap=[]] 树形映射. Default is `[]`
+ * @returns {App.Global.Menu[]} 搜索菜单数组
  */
 export function transformMenuToSearchMenus(menus: App.Global.Menu[], treeMap: App.Global.Menu[] = []) {
   if (menus && menus.length === 0) return [];

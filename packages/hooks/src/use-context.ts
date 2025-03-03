@@ -2,11 +2,11 @@ import { inject, provide } from 'vue';
 import type { InjectionKey } from 'vue';
 
 /**
- * Use context
+ * 使用上下文提供和注入功能
  *
  * @example
  *   ```ts
- *   // there are three vue files: A.vue, B.vue, C.vue, and A.vue is the parent component of B.vue and C.vue
+ *   // 有三个 Vue 文件：A.vue, B.vue, C.vue，A.vue 是 B.vue 和 C.vue 的父组件
  *
  *   // context.ts
  *   import { ref } from 'vue';
@@ -38,7 +38,7 @@ import type { InjectionKey } from 'vue';
  *   import { setupStore } from './context';
  *
  *   setupStore();
- *   // const { increment } = setupStore(); // also can control the store in the parent component
+ *   // const { increment } = setupStore(); // 父组件也可以控制 store
  *   </script>
  *   ``` // B.vue
  *   ```vue
@@ -54,12 +54,13 @@ import type { InjectionKey } from 'vue';
  *
  *   // C.vue is same as B.vue
  *
- * @param contextName Context name
- * @param fn Context function
+ * @param contextName 上下文名称
+ * @param fn 上下文函数
  */
 export default function useContext<T extends (...args: any[]) => any>(contextName: string, fn: T) {
   type Context = ReturnType<T>;
 
+  // 创建上下文时获取提供和注入方法
   const { useProvide, useInject: useStore } = createContext<Context>(contextName);
 
   function setupStore(...args: Parameters<T>) {
@@ -68,23 +69,29 @@ export default function useContext<T extends (...args: any[]) => any>(contextNam
   }
 
   return {
-    /** Setup store in the parent component */
+    /** 在父组件中设置 store */
     setupStore,
-    /** Use store in the child component */
+    /** 在子组件中使用 store */
     useStore
   };
 }
 
-/** Create context */
+/** 创建上下文 */
 function createContext<T>(contextName: string) {
   const injectKey: InjectionKey<T> = Symbol(contextName);
 
+  /**
+   * 提供上下文给后代组件
+   *
+   * @param context 上下文数据
+   */
   function useProvide(context: T) {
     provide(injectKey, context);
 
     return context;
   }
 
+  /** 注入上下文到当前组件 */
   function useInject() {
     return inject(injectKey) as T;
   }
