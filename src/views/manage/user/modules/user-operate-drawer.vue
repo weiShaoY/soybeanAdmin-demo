@@ -2,7 +2,6 @@
 import { computed, ref, watch } from 'vue';
 import { useForm, useFormRules } from '@/hooks/common/form';
 import { fetchGetAllRoles } from '@/service/api';
-import { $t } from '@/locales';
 import { enableStatusOptions, userGenderOptions } from '@/constants/business';
 
 defineOptions({ name: 'UserOperateDrawer' });
@@ -31,8 +30,8 @@ const { defaultRequiredRule } = useFormRules();
 
 const title = computed(() => {
   const titles: Record<UI.TableOperateType, string> = {
-    add: $t('page.manage.user.addUser'),
-    edit: $t('page.manage.user.editUser')
+    add: '新增用户',
+    edit: '编辑用户'
   };
   return titles[props.operateType];
 });
@@ -102,7 +101,7 @@ function closeDrawer() {
 async function handleSubmit() {
   await validate();
   // request
-  window.$message?.success($t('common.updateSuccess'));
+  window.$message?.success( '更新成功');
   closeDrawer();
   emit('submitted');
 }
@@ -119,38 +118,38 @@ watch(visible, () => {
 <template>
   <ElDrawer v-model="visible" :title="title" :size="360">
     <ElForm ref="formRef" :model="model" :rules="rules" label-position="top">
-      <ElFormItem :label="$t('page.manage.user.userName')" prop="userName">
-        <ElInput v-model="model.userName" :placeholder="$t('page.manage.user.form.userName')" />
+      <ElFormItem :label="'用户名'" prop="userName">
+        <ElInput v-model="model.userName" :placeholder="'请输入用户名'" />
       </ElFormItem>
-      <ElFormItem :label="$t('page.manage.user.userGender')" prop="userGender">
+      <ElFormItem :label="'性别'" prop="userGender">
         <ElRadioGroup v-model="model.userGender">
-          <ElRadio v-for="item in userGenderOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
+          <ElRadio v-for="item in userGenderOptions" :key="item.value" :value="item.value" :label="item.label" />
         </ElRadioGroup>
       </ElFormItem>
-      <ElFormItem :label="$t('page.manage.user.nickName')" prop="nickName">
-        <ElInput v-model="model.nickName" :placeholder="$t('page.manage.user.form.nickName')" />
+      <ElFormItem :label="'昵称'" prop="nickName">
+        <ElInput v-model="model.nickName" :placeholder="'请输入昵称'" />
       </ElFormItem>
-      <ElFormItem :label="$t('page.manage.user.userPhone')" prop="userPhone">
-        <ElInput v-model="model.userPhone" :placeholder="$t('page.manage.user.form.userPhone')" />
+      <ElFormItem :label="'手机号'" prop="userPhone">
+        <ElInput v-model="model.userPhone" :placeholder="'请输入手机号'" />
       </ElFormItem>
-      <ElFormItem :label="$t('page.manage.user.userEmail')" prop="email">
-        <ElInput v-model="model.userEmail" :placeholder="$t('page.manage.user.form.userEmail')" />
+      <ElFormItem :label="'邮箱'" prop="email">
+        <ElInput v-model="model.userEmail" :placeholder="'请输入邮箱'" />
       </ElFormItem>
-      <ElFormItem :label="$t('page.manage.user.userStatus')" prop="status">
+      <ElFormItem :label="'用户状态'" prop="status">
         <ElRadioGroup v-model="model.status">
-          <ElRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="$t(item.label)" />
+          <ElRadio v-for="item in enableStatusOptions" :key="item.value" :value="item.value" :label="item.label" />
         </ElRadioGroup>
       </ElFormItem>
-      <ElFormItem :label="$t('page.manage.user.userRole')" prop="roles">
-        <ElSelect v-model="model.userRoles" multiple :placeholder="$t('page.manage.user.form.userRole')">
+      <ElFormItem :label="'用户角色'" prop="roles">
+        <ElSelect v-model="model.userRoles" multiple :placeholder="'请选择用户角色'">
           <ElOption v-for="{ label, value } in roleOptions" :key="value" :label="label" :value="value" />
         </ElSelect>
       </ElFormItem>
     </ElForm>
     <template #footer>
       <ElSpace :size="16">
-        <ElButton @click="closeDrawer">{{ $t('common.cancel') }}</ElButton>
-        <ElButton type="primary" @click="handleSubmit">{{ $t('common.confirm') }}</ElButton>
+        <ElButton @click="closeDrawer">取消</ElButton>
+        <ElButton type="primary" @click="handleSubmit">{{ '确认' }}</ElButton>
       </ElSpace>
     </template>
   </ElDrawer>

@@ -10,7 +10,6 @@ import {
 } from './plugins';
 import { setupStore } from './store';
 import { setupRouter } from './router';
-import { setupI18n } from './locales';
 import App from './App.vue';
 
 /** 设置应用程序 */
@@ -39,8 +38,7 @@ async function setupApp() {
   // 设置路由
   await setupRouter(app);
 
-  // 设置国际化
-  setupI18n(app);
+
 
   // 设置应用程序版本通知
   setupAppVersionNotification();

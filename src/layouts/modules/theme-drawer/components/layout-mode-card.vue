@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Placement } from 'element-plus';
 import { themeLayoutModeRecord } from '@/constants/app';
-import { $t } from '@/locales';
 
 defineOptions({ name: 'LayoutModeCard' });
 
@@ -66,20 +65,20 @@ function handleChangeMode(mode: UnionKey.ThemeLayoutMode) {
 </script>
 
 <template>
-  <div class="flex-center flex-wrap gap-x-32px gap-y-16px">
+  <div class="flex justify-center items-center flex-wrap gap-x-[32px] gap-y-[16px]">
     <div
       v-for="(item, key) in layoutConfig"
       :key="key"
-      class="flex cursor-pointer border-2px rounded-6px hover:border-primary"
+      class="flex cursor-pointer border-[2px] rounded-[6px] hover:border-primary"
       :class="[mode === key ? 'border-primary' : 'border-transparent']"
       @click="handleChangeMode(key)"
     >
       <ElTooltip :placement="item.placement">
         <template #content>
-          {{ $t(themeLayoutModeRecord[key]) }}
+          {{ (themeLayoutModeRecord[key]) }}
         </template>
         <div
-          class="h-64px w-96px gap-6px rd-4px p-6px shadow dark:shadow-coolGray-5"
+          class="h-[64px] w-[96px] gap-[6px] rd-[4px] p-[6px] shadow dark:shadow-coolGray-5"
           :class="[key.includes('vertical') ? 'flex' : 'flex-col']"
         >
           <slot :name="key"></slot>

@@ -1,7 +1,6 @@
 import type { TableColumnCheck } from '@sa/hooks';
 import { computed, ref } from 'vue';
 import type { TableColumnCtx } from 'element-plus';
-import { $t } from '@/locales';
 import type { AlovaGenerics, Method } from '~/packages/alova/src';
 
 type TableAlovaApiFn<T = any, R = Api.Common.CommonSearchParams> = (
@@ -26,19 +25,19 @@ export default function useCheckedColumns<A extends TableAlovaApiFn, T = Awaited
       if (column.type === 'selection') {
         checks.push({
           prop: SELECTION_KEY,
-          label: $t('common.check'),
+          label: '勾选',
           checked: true
         });
       } else if (column.type === 'expand') {
         checks.push({
           prop: EXPAND_KEY,
-          label: $t('common.expandColumn'),
+          label:'展开列',
           checked: true
         });
       } else if (column.type === 'index') {
         checks.push({
           prop: INDEX_KEY,
-          label: $t('common.index'),
+          label: '序号',
           checked: true
         });
       } else {

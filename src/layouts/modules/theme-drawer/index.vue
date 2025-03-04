@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useAppStore } from '@/store/modules/app';
-import { $t } from '@/locales';
 import DarkMode from './modules/dark-mode.vue';
 import LayoutMode from './modules/layout-mode.vue';
 import ThemeColor from './modules/theme-color.vue';
@@ -13,7 +12,7 @@ const appStore = useAppStore();
 </script>
 
 <template>
-  <ElDrawer v-model="appStore.themeDrawerVisible" :title="$t('theme.themeDrawerTitle')" :size="360">
+  <ElDrawer v-model="appStore.themeDrawerVisible" :title="'主题配置'" :size="360">
     <DarkMode />
     <LayoutMode />
     <ThemeColor />

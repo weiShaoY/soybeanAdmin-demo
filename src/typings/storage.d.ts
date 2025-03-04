@@ -10,8 +10,6 @@ declare namespace StorageType {
 
   /** 本地存储 */
   type Local = {
-    /** i18n 语言 */
-    lang: App.I18n.LangType;
     /** 令牌 */
     token: string;
     /** 混合菜单固定侧边栏 */

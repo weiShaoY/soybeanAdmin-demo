@@ -1,7 +1,6 @@
 <script setup lang="tsx">
 import { computed, ref, watch } from 'vue';
 import { useForm, useFormRules } from '@/hooks/common/form';
-import { $t } from '@/locales';
 import { enableStatusOptions, menuIconTypeOptions, menuTypeOptions } from '@/constants/business';
 import SvgIcon from '@/components/custom/svg-icon.vue';
 import { getLocalIcons } from '@/utils/icon';
@@ -44,9 +43,9 @@ const { defaultRequiredRule } = useFormRules();
 
 const title = computed(() => {
   const titles: Record<OperateType, string> = {
-    add: $t('page.manage.menu.addMenu'),
-    addChild: $t('page.manage.menu.addChildMenu'),
-    edit: $t('page.manage.menu.editMenu')
+    add:'新增菜单',
+    addChild: '新增子菜单',
+    edit: '编辑菜单'
   };
   return titles[props.operateType];
 });
@@ -59,7 +58,6 @@ type Model = Pick<
   | 'routePath'
   | 'component'
   | 'order'
-  | 'i18nKey'
   | 'icon'
   | 'iconType'
   | 'status'
@@ -91,7 +89,6 @@ function createDefaultModel(): Model {
     component: '',
     layout: '',
     page: '',
-    i18nKey: null,
     icon: '',
     iconType: '1',
     parentId: 0,
@@ -231,13 +228,7 @@ function handleUpdateRoutePathByRouteName() {
   }
 }
 
-function handleUpdateI18nKeyByRouteName() {
-  if (model.value.routeName) {
-    model.value.i18nKey = `route.${model.value.routeName}` as App.I18n.I18nKey;
-  } else {
-    model.value.i18nKey = null;
-  }
-}
+
 
 function getSubmitParams() {
   const { layout, page, pathParam, ...params } = model.value;
@@ -260,7 +251,7 @@ async function handleSubmit() {
   console.log('params: ', params);
 
   // request
-  window.$message?.success($t('common.updateSuccess'));
+  window.$message?.success( '更新成功');
   closeDrawer();
   emit('submitted');
 }
@@ -277,7 +268,6 @@ watch(
   () => model.value.routeName,
   () => {
     handleUpdateRoutePathByRouteName();
-    handleUpdateI18nKeyByRouteName();
   }
 );
 </script>
@@ -288,40 +278,40 @@ watch(
       <ElForm ref="formRef" :model="model" :rules="rules" label-placement="left" :label-width="100">
         <ElRow>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.menuType')" prop="menuType">
+            <ElFormItem :label="'菜单类型'" prop="menuType">
               <ElRadioGroup v-model="model.menuType" :disabled="disabledMenuType">
                 <ElRadio
                   v-for="item in menuTypeOptions"
                   :key="item.value"
                   :value="item.value"
-                  :label="$t(item.label)"
+                  :label="item.label"
                 />
               </ElRadioGroup>
             </ElFormItem>
           </ElCol>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.menuName')" prop="menuName">
-              <ElInput v-model="model.menuName" :placeholder="$t('page.manage.menu.form.menuName')" />
+            <ElFormItem :label="'菜单名称'" prop="menuName">
+              <ElInput v-model="model.menuName" :placeholder="'请输入菜单名称'" />
             </ElFormItem>
           </ElCol>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.routeName')" prop="routeName">
-              <ElInput v-model="model.routeName" :placeholder="$t('page.manage.menu.form.routeName')" />
+            <ElFormItem :label="'路由名称'" prop="routeName">
+              <ElInput v-model="model.routeName" :placeholder="'路由名称'" />
             </ElFormItem>
           </ElCol>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.routePath')" prop="routePath">
-              <ElInput v-model="model.routePath" disabled :placeholder="$t('page.manage.menu.form.routePath')" />
+            <ElFormItem :label="'路由路径'" prop="routePath">
+              <ElInput v-model="model.routePath" disabled :placeholder="'路由路径'" />
             </ElFormItem>
           </ElCol>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.pathParam')" prop="pathParam">
-              <ElInput v-model="model.pathParam" :placeholder="$t('page.manage.menu.form.pathParam')" />
+            <ElFormItem :label="'路径参数'" prop="pathParam">
+              <ElInput v-model="model.pathParam" :placeholder="'路径参数'" />
             </ElFormItem>
           </ElCol>
           <ElCol v-if="showLayout" :span="12">
-            <ElFormItem :label="$t('page.manage.menu.layout')" prop="layout">
-              <ElSelect v-model="model.layout" clearable :placeholder="$t('page.manage.menu.form.layout')">
+            <ElFormItem :label="'布局'" prop="layout">
+              <ElSelect v-model="model.layout" clearable :placeholder="'布局'">
                 <ElOption
                   v-for="{ label, value } in layoutOptions"
                   :key="value"
@@ -332,38 +322,34 @@ watch(
             </ElFormItem>
           </ElCol>
           <ElCol v-if="showPage" :span="12">
-            <ElFormItem :label="$t('page.manage.menu.page')" prop="page">
-              <ElSelect v-model="model.page" clearable :placeholder="$t('page.manage.menu.form.page')">
+            <ElFormItem :label="'页面组件'" prop="page">
+              <ElSelect v-model="model.page" clearable :placeholder="'请选择页面组件'">
                 <ElOption v-for="{ label, value } in pageOptions" :key="value" :label="label" :value="value"></ElOption>
               </ElSelect>
             </ElFormItem>
           </ElCol>
+
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.i18nKey')" prop="i18nKey">
-              <ElInput v-model="model.i18nKey" :placeholder="$t('page.manage.menu.form.i18nKey')" />
+            <ElFormItem :label="'排序'" prop="order">
+              <ElInputNumber v-model="model.order" class="w-full" :placeholder="'排序'" />
             </ElFormItem>
           </ElCol>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.order')" prop="order">
-              <ElInputNumber v-model="model.order" class="w-full" :placeholder="$t('page.manage.menu.form.order')" />
-            </ElFormItem>
-          </ElCol>
-          <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.iconTypeTitle')" prop="iconType">
+            <ElFormItem :label="'图标类型'" prop="iconType">
               <ElRadioGroup v-model="model.iconType">
                 <ElRadio
                   v-for="item in menuIconTypeOptions"
                   :key="item.value"
                   :value="item.value"
-                  :label="$t(item.label)"
+                  :label="item.label"
                 />
               </ElRadioGroup>
             </ElFormItem>
           </ElCol>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.icon')" prop="icon">
+            <ElFormItem :label="'图标'" prop="icon">
               <template v-if="model.iconType === '1'">
-                <ElInput v-model="model.icon" :placeholder="$t('page.manage.menu.form.icon')" class="flex-1">
+                <ElInput v-model="model.icon" :placeholder="'请输入图标'" class="flex-1">
                   <template #suffix>
                     <SvgIcon v-if="model.icon" :icon="model.icon" class="text-icon" />
                   </template>
@@ -372,103 +358,103 @@ watch(
               <template v-if="model.iconType === '2'">
                 <ElSelect
                   v-model="model.icon"
-                  :placeholder="$t('page.manage.menu.form.localIcon')"
+                  :placeholder="'请选择本地图标'"
                   :options="localIconOptions"
                 />
               </template>
             </ElFormItem>
           </ElCol>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.menuStatus')" prop="status">
+            <ElFormItem :label="'菜单状态'" prop="status">
               <ElRadioGroup v-model="model.status">
                 <ElRadio
                   v-for="{ label, value } in enableStatusOptions"
                   :key="value"
                   :value="value"
-                  :label="$t(label)"
+                  :label="label"
                 />
               </ElRadioGroup>
             </ElFormItem>
           </ElCol>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.keepAlive')" prop="keepAlive">
+            <ElFormItem :label="'缓存路由'" prop="keepAlive">
               <ElRadioGroup v-model="model.keepAlive">
-                <ElRadio :value="true" :label="$t('common.yesOrNo.yes')" />
-                <ElRadio :value="false" :label="$t('common.yesOrNo.no')" />
+                <ElRadio :value="true" :label="'是'" />
+                <ElRadio :value="false" :label="'否'" />
               </ElRadioGroup>
             </ElFormItem>
           </ElCol>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.constant')" prop="constant">
+            <ElFormItem :label="'常量路由'" prop="constant">
               <ElRadioGroup v-model="model.constant">
-                <ElRadio :value="true" :label="$t('common.yesOrNo.yes')" />
-                <ElRadio :value="false" :label="$t('common.yesOrNo.no')" />
+                <ElRadio :value="true" :label="'是'" />
+                <ElRadio :value="false" :label="'否'" />
               </ElRadioGroup>
             </ElFormItem>
           </ElCol>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.href')" prop="href">
-              <ElInput v-model="model.href" :placeholder="$t('page.manage.menu.form.href')" />
+            <ElFormItem :label="'外链'" prop="href">
+              <ElInput v-model="model.href" :placeholder="'请输入外链'" />
             </ElFormItem>
           </ElCol>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.hideInMenu')" prop="hideInMenu">
+            <ElFormItem :label="'隐藏菜单'" prop="hideInMenu">
               <ElRadioGroup v-model="model.hideInMenu">
-                <ElRadio :value="true" :label="$t('common.yesOrNo.yes')" />
-                <ElRadio :value="false" :label="$t('common.yesOrNo.no')" />
+                <ElRadio :value="true" :label="'是'" />
+                <ElRadio :value="false" :label="'否'" />
               </ElRadioGroup>
             </ElFormItem>
           </ElCol>
           <ElCol v-if="model.hideInMenu" :span="12">
-            <ElFormItem :label="$t('page.manage.menu.activeMenu')" prop="activeMenu">
+            <ElFormItem :label="'高亮的菜单'" prop="activeMenu">
               <ElSelect
                 v-model="model.activeMenu"
                 :options="pageOptions"
                 clearable
-                :placeholder="$t('page.manage.menu.form.activeMenu')"
+                :placeholder="'请选择高亮的菜单的路由名称'"
               >
                 <ElOption v-for="{ label, value } in pageOptions" :key="value" :label="label" :value="value"></ElOption>
               </ElSelect>
             </ElFormItem>
           </ElCol>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.multiTab')" prop="multiTab">
+            <ElFormItem :label="'支持多页签'" prop="multiTab">
               <ElRadioGroup v-model="model.multiTab">
-                <ElRadio :value="true" :label="$t('common.yesOrNo.yes')" />
-                <ElRadio :value="false" :label="$t('common.yesOrNo.no')" />
+                <ElRadio :value="true" :label="'是'" />
+                <ElRadio :value="false" :label="'否'" />
               </ElRadioGroup>
             </ElFormItem>
           </ElCol>
           <ElCol :span="12">
-            <ElFormItem :label="$t('page.manage.menu.fixedIndexInTab')" prop="fixedIndexInTab">
+            <ElFormItem :label="'固定在页签中的序号'" prop="fixedIndexInTab">
               <ElInputNumber
                 v-model="model.fixedIndexInTab"
                 class="w-full"
                 clearable
-                :placeholder="$t('page.manage.menu.form.fixedIndexInTab')"
+                :placeholder="'请输入固定在页签中的序号'"
               />
             </ElFormItem>
           </ElCol>
           <ElCol :span="24">
-            <ElFormItem :label="$t('page.manage.menu.query')" prop="query">
+            <ElFormItem :label="'路由参数'" prop="query">
               <ElButton v-if="model.query.length === 0" class="w-full border-dashed" @click="addQuery(-1)">
                 <template #icon>
                   <icon-carbon-add class="align-sub text-icon" />
                 </template>
-                <span class="ml-8px">{{ $t('common.add') }}</span>
+                <span class="ml-8px">{{ '新增' }}</span>
               </ElButton>
               <template v-else>
                 <div v-for="(item, index) in model.query" :key="index" class="flex gap-3">
                   <ElCol :span="10">
                     <ElFormItem :prop="['query', index.toString(), 'key']">
-                      <ElInput v-model="item.key" :placeholder="$t('page.manage.menu.form.queryKey')" class="flex-1" />
+                      <ElInput v-model="item.key" :placeholder="'请输入路由参数Key'" class="flex-1" />
                     </ElFormItem>
                   </ElCol>
                   <ElCol :span="10">
                     <ElFormItem :prop="['query', index.toString(), 'value']">
                       <ElInput
                         v-model="item.value"
-                        :placeholder="$t('page.manage.menu.form.queryValue')"
+                        :placeholder="'请输入路由参数Value'"
                         class="flex-1"
                       />
                     </ElFormItem>
@@ -492,12 +478,12 @@ watch(
             </ElFormItem>
           </ElCol>
           <ElCol :span="24">
-            <ElFormItem :label-col="{ span: 4 }" :label="$t('page.manage.menu.button')" prop="buttons">
+            <ElFormItem :label-col="{ span: 4 }" :label="'按钮'" prop="buttons">
               <ElButton v-if="model.buttons.length === 0" class="w-full border-dashed" @click="addButton(-1)">
                 <template #icon>
                   <icon-carbon-add class="align-sub text-icon" />
                 </template>
-                <span class="ml-8px">{{ $t('common.add') }}</span>
+                <span class="ml-8px">{{ '新增' }}</span>
               </ElButton>
               <template v-else>
                 <div v-for="(item, index) in model.buttons" :key="index" class="flex gap-3">
@@ -505,7 +491,7 @@ watch(
                     <ElFormItem :prop="['buttons', index.toString(), 'code']">
                       <ElInput
                         v-model="item.code"
-                        :placeholder="$t('page.manage.menu.form.buttonCode')"
+                        :placeholder="'请输入按钮编码'"
                         class="flex-1"
                       ></ElInput>
                     </ElFormItem>
@@ -514,7 +500,7 @@ watch(
                     <ElFormItem :prop="['buttons', index.toString(), 'desc']">
                       <ElInput
                         v-model="item.desc"
-                        :placeholder="$t('page.manage.menu.form.buttonDesc')"
+                        :placeholder="'请输入按钮描述'"
                         class="flex-1"
                       ></ElInput>
                     </ElFormItem>
@@ -542,8 +528,8 @@ watch(
     </ElScrollbar>
     <template #footer>
       <ElSpace :size="16" class="float-right">
-        <ElButton @click="closeDrawer">{{ $t('common.cancel') }}</ElButton>
-        <ElButton type="primary" @click="handleSubmit">{{ $t('common.confirm') }}</ElButton>
+        <ElButton @click="closeDrawer">取消</ElButton>
+        <ElButton type="primary" @click="handleSubmit">{{ '确认' }}</ElButton>
       </ElSpace>
     </template>
   </ElDialog>

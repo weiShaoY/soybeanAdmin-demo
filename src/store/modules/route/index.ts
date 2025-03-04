@@ -100,10 +100,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     menus.value = getGlobalMenusByAuthRoutes(routes);
   }
 
-  /** 根据语言更新全局菜单 */
-  function updateGlobalMenusByLocale() {
-    menus.value = updateLocaleOfGlobalMenus(menus.value);
-  }
+
 
   /** 缓存路由 */
   const cacheRoutes = ref<RouteKey[]>([]);
@@ -340,7 +337,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     routeHome,
     menus,
     searchMenus,
-    updateGlobalMenusByLocale,
     cacheRoutes,
     excludeCacheRoutes,
     resetRouteCache,

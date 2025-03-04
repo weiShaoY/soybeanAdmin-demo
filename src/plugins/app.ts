@@ -3,7 +3,6 @@ import type { App } from 'vue';
 import { ElButton } from 'element-plus';
 
 import { h } from 'vue';
-import { $t } from '@/locales';
 
 /**
  * 设置 Vue 应用的全局错误处理程序
@@ -50,9 +49,9 @@ export function setupAppVersionNotification() {
 
     /** 显示更新通知 */
     const n = window.$notification!({
-      title: $t('system.updateTitle'),
+      title: '系统版本更新通知',
       message: h('div', {}, [
-        h('p', {}, $t('system.updateContent')),
+        h('p', {}, '检测到系统有新版本发布，是否立即刷新页面？'),
         h(
           'div',
           {
@@ -70,7 +69,7 @@ export function setupAppVersionNotification() {
                   n?.close();
                 }
               },
-              () => $t('system.updateCancel')
+              () => '稍后再说'
             ),
             h(
               ElButton,
@@ -80,7 +79,7 @@ export function setupAppVersionNotification() {
                   location.reload();
                 }
               },
-              () => $t('system.updateConfirm')
+              () => '立即刷新'
             )
           ]
         )

@@ -2,7 +2,6 @@
 import { computed, ref, watch } from 'vue';
 import { useBoolean } from '@sa/hooks';
 import { useForm, useFormRules } from '@/hooks/common/form';
-import { $t } from '@/locales';
 import { enableStatusOptions } from '@/constants/business';
 import MenuAuthModal from './menu-auth-modal.vue';
 import ButtonAuthModal from './button-auth-modal.vue';
@@ -35,8 +34,8 @@ const { bool: buttonAuthVisible, setTrue: openButtonAuthModal } = useBoolean();
 
 const title = computed(() => {
   const titles: Record<UI.TableOperateType, string> = {
-    add: $t('page.manage.role.addRole'),
-    edit: $t('page.manage.role.editRole')
+    add: '新增角色',
+    edit: '编辑角色'
   };
   return titles[props.operateType];
 });
@@ -81,7 +80,7 @@ function closeDrawer() {
 async function handleSubmit() {
   await validate();
   // request
-  window.$message?.success($t('common.updateSuccess'));
+  window.$message?.success( '更新成功');
   closeDrawer();
   emit('submitted');
 }
@@ -97,31 +96,31 @@ watch(visible, () => {
 <template>
   <ElDrawer v-model="visible" :title="title" :size="360">
     <ElForm ref="formRef" :model="model" :rules="rules" label-position="top">
-      <ElFormItem :label="$t('page.manage.role.roleName')" prop="roleName">
-        <ElInput v-model="model.roleName" :placeholder="$t('page.manage.role.form.roleName')" />
+      <ElFormItem :label="'角色名称'" prop="roleName">
+        <ElInput v-model="model.roleName" :placeholder="'请输入角色名称'" />
       </ElFormItem>
-      <ElFormItem :label="$t('page.manage.role.roleCode')" prop="roleCode">
-        <ElInput v-model="model.roleCode" :placeholder="$t('page.manage.role.form.roleCode')" />
+      <ElFormItem :label="'角色编码'" prop="roleCode">
+        <ElInput v-model="model.roleCode" :placeholder="'请输入角色编码'" />
       </ElFormItem>
-      <ElFormItem :label="$t('page.manage.role.roleStatus')" prop="status">
+      <ElFormItem :label="'角色状态'" prop="status">
         <ElRadioGroup v-model="model.status">
-          <ElRadio v-for="{ label, value } in enableStatusOptions" :key="value" :value="value" :label="$t(label)" />
+          <ElRadio v-for="{ label, value } in enableStatusOptions" :key="value" :value="value" :label="label" />
         </ElRadioGroup>
       </ElFormItem>
-      <ElFormItem :label="$t('page.manage.role.roleDesc')" prop="roleDesc">
-        <ElInput v-model="model.roleDesc" :placeholder="$t('page.manage.role.form.roleDesc')" />
+      <ElFormItem :label="'角色描述'" prop="roleDesc">
+        <ElInput v-model="model.roleDesc" :placeholder="'请输入角色描述'" />
       </ElFormItem>
     </ElForm>
     <ElSpace v-if="isEdit">
-      <ElButton @click="openMenuAuthModal">{{ $t('page.manage.role.menuAuth') }}</ElButton>
+      <ElButton @click="openMenuAuthModal">{{ '菜单权限' }}</ElButton>
       <MenuAuthModal v-model:visible="menuAuthVisible" :role-id="roleId" />
-      <ElButton @click="openButtonAuthModal">{{ $t('page.manage.role.buttonAuth') }}</ElButton>
+      <ElButton @click="openButtonAuthModal">{{ '按钮权限' }}</ElButton>
       <ButtonAuthModal v-model:visible="buttonAuthVisible" :role-id="roleId" />
     </ElSpace>
     <template #footer>
       <ElSpace :size="16">
-        <ElButton @click="closeDrawer">{{ $t('common.cancel') }}</ElButton>
-        <ElButton type="primary" @click="handleSubmit">{{ $t('common.confirm') }}</ElButton>
+        <ElButton @click="closeDrawer">取消</ElButton>
+        <ElButton type="primary" @click="handleSubmit">{{ '确认' }}</ElButton>
       </ElSpace>
     </template>
   </ElDrawer>

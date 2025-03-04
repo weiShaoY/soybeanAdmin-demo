@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { $t } from '@/locales';
 import { loginModuleRecord } from '@/constants/app';
 import { useRouterPush } from '@/hooks/common/router';
 import { useForm, useFormRules } from '@/hooks/common/form';
@@ -23,7 +22,6 @@ const model = ref<FormModel>({
 });
 
 const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
-  // inside computed to make locale ref, if not apply i18n, you can define it without computed
   const { formRules } = useFormRules();
 
   return {
@@ -49,19 +47,19 @@ interface Account {
 const accounts = computed<Account[]>(() => [
   {
     key: 'super',
-    label: $t('page.login.pwdLogin.superAdmin'),
+    label: '超级管理员',
     userName: 'Super',
     password: '123456'
   },
   {
     key: 'admin',
-    label: $t('page.login.pwdLogin.admin'),
+    label:'管理员',
     userName: 'Admin',
     password: '123456'
   },
   {
     key: 'user',
-    label: $t('page.login.pwdLogin.user'),
+    label:'普通用户',
     userName: 'User',
     password: '123456'
   }
@@ -75,36 +73,36 @@ async function handleAccountLogin(account: Account) {
 <template>
   <ElForm ref="formRef" :model="model" :rules="rules" size="large" :show-label="false" @keyup.enter="handleSubmit">
     <ElFormItem prop="userName">
-      <ElInput v-model="model.userName" :placeholder="$t('page.login.common.userNamePlaceholder')" />
+      <ElInput v-model="model.userName" :placeholder="'请输入用户名'" />
     </ElFormItem>
     <ElFormItem prop="password">
       <ElInput
         v-model="model.password"
         type="password"
         show-password-on="click"
-        :placeholder="$t('page.login.common.passwordPlaceholder')"
+        :placeholder="'请输入密码'"
       />
     </ElFormItem>
     <ElSpace direction="vertical" :size="24" class="w-full" fill>
       <div class="flex-y-center justify-between">
-        <ElCheckbox>{{ $t('page.login.pwdLogin.rememberMe') }}</ElCheckbox>
+        <ElCheckbox>{{ '记住我' }}</ElCheckbox>
         <ElButton text @click="toggleLoginModule('reset-pwd')">
-          {{ $t('page.login.pwdLogin.forgetPassword') }}
+          {{ '忘记密码？' }}
         </ElButton>
       </div>
       <ElButton type="primary" size="large" round block :loading="authStore.loginLoading" @click="handleSubmit">
-        {{ $t('common.confirm') }}
+        确认
       </ElButton>
-      <div class="flex-y-center justify-between gap-12px">
+      <div class="flex-y-center justify-between gap-[12px]">
         <ElButton class="flex-1" size="default" @click="toggleLoginModule('code-login')">
-          {{ $t(loginModuleRecord['code-login']) }}
+          {{ loginModuleRecord['code-login'] }}
         </ElButton>
         <ElButton class="flex-1" size="default" @click="toggleLoginModule('register')">
-          {{ $t(loginModuleRecord.register) }}
+          {{ loginModuleRecord.register }}
         </ElButton>
       </div>
-      <ElDivider class="text-14px text-#666 !m-0">{{ $t('page.login.pwdLogin.otherAccountLogin') }}</ElDivider>
-      <div class="flex-center gap-12px">
+      <ElDivider class="text-[14px] text-[#666] !m-0">{{ '其他账号登录' }}</ElDivider>
+      <div class="flex justify-center items-center gap-[12px]">
         <ElButton
           v-for="item in accounts"
           :key="item.key"

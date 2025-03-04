@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { $t } from '@/locales';
 import { useThemeStore } from '@/store/modules/theme';
 import {
   resetCacheStrategyOptions,
@@ -23,10 +22,10 @@ const isWrapperScrollMode = computed(() => themeStore.layout.scrollMode === 'wra
 </script>
 
 <template>
-  <ElDivider>{{ $t('theme.pageFunTitle') }}</ElDivider>
-  <TransitionGroup tag="div" name="setting-list" class="flex-col-stretch gap-12px">
-    <SettingItem key="1" :label="$t('theme.resetCacheStrategy.title')">
-      <ElSelect v-model="themeStore.resetCacheStrategy" size="small" class="w-120px">
+  <ElDivider>{{ '页面功能'}}</ElDivider>
+  <TransitionGroup tag="div" name="setting-list" class="flex-col-stretch gap-[12px]">
+    <SettingItem key="1" :label="'重置缓存策略'">
+      <ElSelect v-model="themeStore.resetCacheStrategy" size="small" class="w-[120px]">
         <ElOption
           v-for="{ label, value } in translateOptions(resetCacheStrategyOptions)"
           :key="value"
@@ -35,8 +34,8 @@ const isWrapperScrollMode = computed(() => themeStore.layout.scrollMode === 'wra
         />
       </ElSelect>
     </SettingItem>
-    <SettingItem key="1" :label="$t('theme.scrollMode.title')">
-      <ElSelect v-model="themeStore.layout.scrollMode" size="small" class="w-120px">
+    <SettingItem key="1" :label="'滚动模式'">
+      <ElSelect v-model="themeStore.layout.scrollMode" size="small" class="w-[120px]">
         <ElOption
           v-for="{ label, value } in translateOptions(themeScrollModeOptions)"
           :key="value"
@@ -45,11 +44,11 @@ const isWrapperScrollMode = computed(() => themeStore.layout.scrollMode === 'wra
         />
       </ElSelect>
     </SettingItem>
-    <SettingItem key="1-1" :label="$t('theme.page.animate')">
+    <SettingItem key="1-1" :label="'页面切换动画'">
       <ElSwitch v-model="themeStore.page.animate" />
     </SettingItem>
-    <SettingItem v-if="themeStore.page.animate" key="1-2" :label="$t('theme.page.mode.title')">
-      <ElSelect v-model="themeStore.page.animateMode" size="small" class="w-120px">
+    <SettingItem v-if="themeStore.page.animate" key="1-2" :label="'页面切换动画类型'">
+      <ElSelect v-model="themeStore.page.animateMode" size="small" class="w-[120px]">
         <ElOption
           v-for="{ label, value } in translateOptions(themePageAnimationModeOptions)"
           :key="value"
@@ -58,29 +57,29 @@ const isWrapperScrollMode = computed(() => themeStore.layout.scrollMode === 'wra
         />
       </ElSelect>
     </SettingItem>
-    <SettingItem v-if="isWrapperScrollMode" key="2" :label="$t('theme.fixedHeaderAndTab')">
+    <SettingItem v-if="isWrapperScrollMode" key="2" :label="'固定头部和标签栏'">
       <ElSwitch v-model="themeStore.fixedHeaderAndTab" />
     </SettingItem>
-    <SettingItem key="3" :label="$t('theme.header.height')">
-      <ElInputNumber v-model="themeStore.header.height" size="small" :step="1" class="w-120px" />
+    <SettingItem key="3" :label="'头部高度'">
+      <ElInputNumber v-model="themeStore.header.height" size="small" :step="1" class="w-[120px]" />
     </SettingItem>
-    <SettingItem key="4" :label="$t('theme.header.breadcrumb.visible')">
+    <SettingItem key="4" :label="'显示面包屑'">
       <ElSwitch v-model="themeStore.header.breadcrumb.visible" />
     </SettingItem>
-    <SettingItem v-if="themeStore.header.breadcrumb.visible" key="4-1" :label="$t('theme.header.breadcrumb.showIcon')">
+    <SettingItem v-if="themeStore.header.breadcrumb.visible" key="4-1" :label="'显示面包屑图标'">
       <ElSwitch v-model="themeStore.header.breadcrumb.showIcon" />
     </SettingItem>
-    <SettingItem key="5" :label="$t('theme.tab.visible')">
+    <SettingItem key="5" :label="'显示标签栏'">
       <ElSwitch v-model="themeStore.tab.visible" />
     </SettingItem>
-    <SettingItem v-if="themeStore.tab.visible" key="5-1" :label="$t('theme.tab.cache')">
+    <SettingItem v-if="themeStore.tab.visible" key="5-1" :label="'标签栏信息缓存'">
       <ElSwitch v-model="themeStore.tab.cache" />
     </SettingItem>
-    <SettingItem v-if="themeStore.tab.visible" key="5-2" :label="$t('theme.tab.height')">
-      <ElInputNumber v-model="themeStore.tab.height" size="small" :step="1" class="w-120px" />
+    <SettingItem v-if="themeStore.tab.visible" key="5-2" :label="'标签栏高度'">
+      <ElInputNumber v-model="themeStore.tab.height" size="small" :step="1" class="w-[120px]" />
     </SettingItem>
-    <SettingItem v-if="themeStore.tab.visible" key="5-3" :label="$t('theme.tab.mode.title')">
-      <ElSelect v-model="themeStore.tab.mode" size="small" class="w-120px">
+    <SettingItem v-if="themeStore.tab.visible" key="5-3" :label="'标签栏风格'">
+      <ElSelect v-model="themeStore.tab.mode" size="small" class="w-[120px]">
         <ElOption
           v-for="{ label, value } in translateOptions(themeTabModeOptions)"
           :key="value"
@@ -89,53 +88,51 @@ const isWrapperScrollMode = computed(() => themeStore.layout.scrollMode === 'wra
         />
       </ElSelect>
     </SettingItem>
-    <SettingItem v-if="layoutMode === 'vertical'" key="6-1" :label="$t('theme.sider.width')">
-      <ElInputNumber v-model="themeStore.sider.width" size="small" :step="1" class="w-120px" />
+    <SettingItem v-if="layoutMode === 'vertical'" key="6-1" :label="'侧边栏宽度'">
+      <ElInputNumber v-model="themeStore.sider.width" size="small" :step="1" class="w-[120px]" />
     </SettingItem>
-    <SettingItem v-if="layoutMode === 'vertical'" key="6-2" :label="$t('theme.sider.collapsedWidth')">
-      <ElInputNumber v-model="themeStore.sider.collapsedWidth" size="small" :step="1" class="w-120px" />
+    <SettingItem v-if="layoutMode === 'vertical'" key="6-2" :label="'侧边栏折叠宽度'">
+      <ElInputNumber v-model="themeStore.sider.collapsedWidth" size="small" :step="1" class="w-[120px]" />
     </SettingItem>
-    <SettingItem v-if="isMixLayoutMode" key="6-3" :label="$t('theme.sider.mixWidth')">
-      <ElInputNumber v-model="themeStore.sider.mixWidth" size="small" :step="1" class="w-120px" />
+    <SettingItem v-if="isMixLayoutMode" key="6-3" :label="'混合布局侧边栏宽度'">
+      <ElInputNumber v-model="themeStore.sider.mixWidth" size="small" :step="1" class="w-[120px]" />
     </SettingItem>
-    <SettingItem v-if="isMixLayoutMode" key="6-4" :label="$t('theme.sider.mixCollapsedWidth')">
-      <ElInputNumber v-model="themeStore.sider.mixCollapsedWidth" size="small" :step="1" class="w-120px" />
+    <SettingItem v-if="isMixLayoutMode" key="6-4" :label="'混合布局侧边栏折叠宽度'">
+      <ElInputNumber v-model="themeStore.sider.mixCollapsedWidth" size="small" :step="1" class="w-[120px]" />
     </SettingItem>
-    <SettingItem v-if="layoutMode === 'vertical-mix'" key="6-5" :label="$t('theme.sider.mixChildMenuWidth')">
-      <ElInputNumber v-model="themeStore.sider.mixChildMenuWidth" size="small" :step="1" class="w-120px" />
+    <SettingItem v-if="layoutMode === 'vertical-mix'" key="6-5" :label="'混合布局子菜单宽度'">
+      <ElInputNumber v-model="themeStore.sider.mixChildMenuWidth" size="small" :step="1" class="w-[120px]" />
     </SettingItem>
-    <SettingItem key="7" :label="$t('theme.footer.visible')">
+    <SettingItem key="7" :label="'显示底部'">
       <ElSwitch v-model="themeStore.footer.visible" />
     </SettingItem>
-    <SettingItem v-if="themeStore.footer.visible && isWrapperScrollMode" key="7-1" :label="$t('theme.footer.fixed')">
+    <SettingItem v-if="themeStore.footer.visible && isWrapperScrollMode" key="7-1" :label="'固定底部'">
       <ElSwitch v-model="themeStore.footer.fixed" />
     </SettingItem>
-    <SettingItem v-if="themeStore.footer.visible" key="7-2" :label="$t('theme.footer.height')">
-      <ElInputNumber v-model="themeStore.footer.height" size="small" :step="1" class="w-120px" />
+    <SettingItem v-if="themeStore.footer.visible" key="7-2" :label="'底部高度'">
+      <ElInputNumber v-model="themeStore.footer.height" size="small" :step="1" class="w-[120px]" />
     </SettingItem>
     <SettingItem
       v-if="themeStore.footer.visible && layoutMode === 'horizontal-mix'"
       key="7-3"
-      :label="$t('theme.footer.right')"
+      :label="'底部局右'"
     >
       <ElSwitch v-model="themeStore.footer.right" />
     </SettingItem>
-    <SettingItem key="8" :label="$t('theme.watermark.visible')">
+    <SettingItem key="8" :label="'显示全屏水印'">
       <ElSwitch v-model="themeStore.watermark.visible" />
     </SettingItem>
-    <SettingItem v-if="themeStore.watermark.visible" key="8-1" :label="$t('theme.watermark.text')">
+    <SettingItem v-if="themeStore.watermark.visible" key="8-1" :label="'水印文本'">
       <ElInput
         v-model="themeStore.watermark.text"
         autosize
         type="text"
         size="small"
-        class="w-120px"
+        class="w-[120px]"
         placeholder="SoybeanAdmin"
       />
     </SettingItem>
-    <SettingItem key="9" :label="$t('theme.header.multilingual.visible')">
-      <ElSwitch v-model="themeStore.header.multilingual.visible" />
-    </SettingItem>
+
   </TransitionGroup>
 </template>
 

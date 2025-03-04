@@ -19,7 +19,10 @@ const historyCreatorMap: Record<Env.RouterHistoryMode, (base?: string) => Router
   memory: createMemoryHistory
 };
 
-/** 创建路由实例 */
+
+/**
+ *  创建路由实例
+ */
 export const router = createRouter({
   // 设置路由历史记录
   history: historyCreatorMap[VITE_ROUTER_HISTORY_MODE](VITE_BASE_URL),

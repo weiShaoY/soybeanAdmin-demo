@@ -2,7 +2,6 @@ import { useBoolean } from '@sa/hooks';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 import { jsonClone } from '@sa/utils';
-import { $t } from '@/locales';
 
 type TableData = UI.TableData;
 interface Operations<T> {
@@ -45,7 +44,7 @@ export default function useTableOperate<T extends TableData = TableData>(data: R
     try {
       const rows = checkedRowKeys.value.map(id => getRowByDataId(id)).filter(Boolean);
       await operations.batchDelete?.(rows as T[]);
-      window.$message?.success($t('common.deleteSuccess'));
+      window.$message?.success('删除成功');
       checkedRowKeys.value = [];
     } finally {
       antiBatchDelete();
@@ -59,7 +58,7 @@ export default function useTableOperate<T extends TableData = TableData>(data: R
     if (!row) return;
     try {
       await operations.delete?.(row);
-      window.$message?.success($t('common.deleteSuccess'));
+      window.$message?.success('删除成功');
       checkedRowKeys.value = [];
     } finally {
       antiDelete();

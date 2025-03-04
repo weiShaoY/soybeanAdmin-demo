@@ -2,7 +2,6 @@
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 import { useRouterPush } from '@/hooks/common/router';
-import { $t } from '@/locales';
 
 const route = useRoute();
 const { routerPushByKey } = useRouterPush();
@@ -14,8 +13,8 @@ const routeQuery = computed(() => JSON.stringify(route.query));
   <div>
     <LookForward>
       <div>
-        <ElButton @click="routerPushByKey('function_tab')">{{ $t('page.function.multiTab.backTab') }}</ElButton>
-        <div class="py-24px">{{ $t('page.function.multiTab.routeParam') }}: {{ routeQuery }}</div>
+        <ElButton @click="routerPushByKey('function_tab')">{{ '返回 function_tab' }}</ElButton>
+        <div class="py-[24px]">{{ '路由参数' }}: {{ routeQuery }}</div>
       </div>
     </LookForward>
   </div>

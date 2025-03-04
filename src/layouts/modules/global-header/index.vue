@@ -28,24 +28,18 @@ const { isFullscreen, toggle } = useFullscreen();
 </script>
 
 <template>
-  <DarkModeContainer class="h-full flex-y-center px-12px shadow-header">
+  <DarkModeContainer class="h-full flex-y-center px-[12px] shadow-header">
     <GlobalLogo v-if="showLogo" class="h-full" :style="{ width: themeStore.sider.width + 'px' }" />
     <MenuToggler v-if="showMenuToggler" :collapsed="appStore.siderCollapse" @click="appStore.toggleSiderCollapse" />
     <div v-if="showMenu" :id="GLOBAL_HEADER_MENU_ID" class="h-full flex-y-center flex-1-hidden"></div>
     <div v-else class="h-full flex-y-center flex-1-hidden">
-      <GlobalBreadcrumb v-if="!appStore.isMobile" class="ml-12px" />
+      <GlobalBreadcrumb v-if="!appStore.isMobile" class="ml-[12px]" />
     </div>
     <div class="h-full flex-y-center justify-end">
       <GlobalSearch />
       <div>
         <FullScreen v-if="!appStore.isMobile" :full="isFullscreen" @click="toggle" />
       </div>
-      <LangSwitch
-        v-if="themeStore.header.multilingual.visible"
-        :lang="appStore.locale"
-        :lang-options="appStore.localeOptions"
-        @change-lang="appStore.changeLocale"
-      />
       <ThemeSchemaSwitch
         :theme-schema="themeStore.themeScheme"
         :is-dark="themeStore.darkMode"

@@ -4,7 +4,6 @@ import type { PaginationEmits, PaginationProps } from 'element-plus';
 import { jsonClone } from '@sa/utils';
 import { useBoolean, useHookTable } from '@sa/hooks';
 import { useAppStore } from '@/store/modules/app';
-import { $t } from '@/locales';
 
 /** 移除只读属性类型 */
 type RemoveReadonly<T> = {
@@ -89,19 +88,19 @@ export function useTable<A extends UI.TableApiFn>(config: UI.NaiveTableConfig<A>
         if (column.type === 'selection') {
           checks.push({
             prop: SELECTION_KEY,
-            label: $t('common.check'),
+            label: '勾选',
             checked: true
           });
         } else if (column.type === 'expand') {
           checks.push({
             prop: EXPAND_KEY,
-            label: $t('common.expandColumn'),
+            label: '展开列',
             checked: true
           });
         } else if (column.type === 'index') {
           checks.push({
             prop: INDEX_KEY,
-            label: $t('common.index'),
+            label: '序号',
             checked: true
           });
         } else {
@@ -283,7 +282,7 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
 
   /** 批量删除操作完成后的钩子 */
   async function onBatchDeleted() {
-    window.$message?.success($t('common.deleteSuccess'));
+    window.$message?.success('删除成功');
 
     checkedRowKeys.value = [];
 
@@ -292,7 +291,7 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
 
   /** 删除操作完成后的钩子 */
   async function onDeleted() {
-    window.$message?.success($t('common.deleteSuccess'));
+    window.$message?.success('删除成功');
 
     await getData();
   }

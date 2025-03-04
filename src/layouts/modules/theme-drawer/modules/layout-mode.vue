@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useAppStore } from '@/store/modules/app';
 import { useThemeStore } from '@/store/modules/theme';
-import { $t } from '@/locales';
 import LayoutModeCard from '../components/layout-mode-card.vue';
 import SettingItem from '../components/setting-item.vue';
 
@@ -16,18 +15,18 @@ function handleReverseHorizontalMixChange(value: boolean | string | number) {
 </script>
 
 <template>
-  <ElDivider>{{ $t('theme.layoutMode.title') }}</ElDivider>
+  <ElDivider>{{ '布局模式' }}</ElDivider>
   <LayoutModeCard v-model:mode="themeStore.layout.mode" :disabled="appStore.isMobile">
     <template #vertical>
-      <div class="layout-sider h-full w-18px"></div>
+      <div class="layout-sider h-full w-[18px]"></div>
       <div class="vertical-wrapper">
         <div class="layout-header"></div>
         <div class="layout-main"></div>
       </div>
     </template>
     <template #vertical-mix>
-      <div class="layout-sider h-full w-8px"></div>
-      <div class="layout-sider h-full w-16px"></div>
+      <div class="layout-sider h-full w-[8px]"></div>
+      <div class="layout-sider h-full w-[16px]"></div>
       <div class="vertical-wrapper">
         <div class="layout-header"></div>
         <div class="layout-main"></div>
@@ -42,15 +41,15 @@ function handleReverseHorizontalMixChange(value: boolean | string | number) {
     <template #horizontal-mix>
       <div class="layout-header"></div>
       <div class="horizontal-wrapper">
-        <div class="layout-sider w-18px"></div>
+        <div class="layout-sider w-[18px]"></div>
         <div class="layout-main"></div>
       </div>
     </template>
   </LayoutModeCard>
   <SettingItem
     v-if="themeStore.layout.mode === 'horizontal-mix'"
-    :label="$t('theme.layoutMode.reverseHorizontalMix')"
-    class="mt-16px"
+    :label="'一级菜单与子级菜单位置反转'"
+    class="mt-[16px]"
   >
     <ElSwitch v-model="themeStore.layout.reverseHorizontalMix" @change="handleReverseHorizontalMixChange" />
   </SettingItem>

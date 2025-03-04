@@ -44,6 +44,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
       ...otherColor,
       info: isInfoFollowPrimary ? themeColor : otherColor.info
     };
+    console.log("%c Line:48 🥚 colors", "color:#6ec1c2", colors);
     return colors;
   });
 

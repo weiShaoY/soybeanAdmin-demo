@@ -2,7 +2,13 @@ import { extend } from 'dayjs';
 
 import localeData from 'dayjs/plugin/localeData';
 
-import { setDayjsLocale } from '../locales/dayjs';
+
+
+import { locale } from 'dayjs';
+import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/en';
+
+
 
 /** 配置 Day.js 以支持本地化数据 */
 export function setupDayjs() {
@@ -10,5 +16,5 @@ export function setupDayjs() {
   extend(localeData);
 
   // 设置 Day.js 的本地化语言
-  setDayjsLocale();
+  locale('zh-CN');
 }

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue';
-import { $t } from '@/locales';
 
 defineOptions({ name: 'ButtonAuthModal' });
 
@@ -19,7 +18,7 @@ function closeModal() {
   visible.value = false;
 }
 
-const title = computed(() => $t('common.edit') + $t('page.manage.role.buttonAuth'));
+const title = computed(() => '编辑' + '按钮权限');
 
 type ButtonConfig = {
   id: number;
@@ -68,7 +67,7 @@ function handleSubmit() {
   console.log(checks.value, props.roleId);
   // request
 
-  window.$message?.success?.($t('common.modifySuccess'));
+  window.$message?.success?.('修改成功');
 
   closeModal();
 }
@@ -83,21 +82,21 @@ init();
 </script>
 
 <template>
-  <ElDialog v-model="visible" :title="title" preset="card" class="w-480px">
+  <ElDialog v-model="visible" :title="title" preset="card" class="w-[480px]">
     <ElTree
       v-model:checked-keys="checks"
       :data="tree"
       node-key="id"
       show-checkbox
-      class="h-280px"
+      class="h-[280px]"
       :default-checked-keys="checks"
       @check-change="checkChange"
     />
     <template #footer>
       <ElSpace class="w-full justify-end">
-        <ElButton size="small" class="mt-16px" @click="closeModal">{{ $t('common.cancel') }}</ElButton>
-        <ElButton type="primary" size="small" class="mt-16px" @click="handleSubmit">
-          {{ $t('common.confirm') }}
+        <ElButton size="small" class="mt-[16px]" @click="closeModal">取消</ElButton>
+        <ElButton type="primary" size="small" class="mt-[16px]" @click="handleSubmit">
+         确认
         </ElButton>
       </ElSpace>
     </template>

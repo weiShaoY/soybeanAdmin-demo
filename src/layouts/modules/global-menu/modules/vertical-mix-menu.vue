@@ -8,7 +8,6 @@ import { useAppStore } from '@/store/modules/app';
 import { useThemeStore } from '@/store/modules/theme';
 import { useRouteStore } from '@/store/modules/route';
 import { useRouterPush } from '@/hooks/common/router';
-import { $t } from '@/locales';
 import { GLOBAL_SIDER_MENU_ID } from '@/constants/app';
 import { useMenu, useMixMenuContext } from '../../../context';
 import FirstLevelMenu from '../components/first-level-menu.vue';
@@ -102,8 +101,8 @@ watch(
           :inverted="inverted"
           :style="{ width: showDrawer ? themeStore.sider.mixChildMenuWidth + 'px' : '0px' }"
         >
-          <header class="flex-y-center justify-between px-12px" :style="{ height: themeStore.header.height + 'px' }">
-            <h2 class="text-16px text-primary font-bold">{{ $t('system.title') }}</h2>
+          <header class="flex-y-center justify-between px-[12px]" :style="{ height: themeStore.header.height + 'px' }">
+            <h2 class="text-[16px] text-primary font-bold">{{ 'Soybean 管理系统' }}</h2>
             <PinToggler
               :pin="appStore.mixSiderFixed"
               :class="{ 'text-white:88 !hover:text-white': inverted }"

@@ -3,7 +3,6 @@ import systemLogo from '@/assets/svg-icon/logo.svg?raw';
 
 import { DARK_CLASS } from '@/constants/app';
 
-import { $t } from '@/locales';
 
 import { toggleHtmlClass } from '@/utils/common';
 
@@ -57,7 +56,7 @@ export function setupLoading() {
         ${dot}
       </div>
     </div>
-    <h2 class="text-28px font-500 text-primary">${$t('system.title')}</h2>
+    <h2 class="text-28px font-500 text-primary">Soybean 管理系统</h2>
   </div>`;
 
   /** 获取 `#app` 容器，并插入加载动画 */

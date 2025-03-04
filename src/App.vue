@@ -3,8 +3,7 @@ import { computed } from 'vue';
 import type { WatermarkProps } from 'element-plus';
 import { useAppStore } from './store/modules/app';
 import { useThemeStore } from './store/modules/theme';
-import { UILocales } from './locales/ui';
-
+import zhCn from 'element-plus/es/locale/lang/zh-cn';
 // 组件名称
 defineOptions({
   name: 'App'
@@ -16,10 +15,6 @@ const appStore = useAppStore();
 /** 获取主题状态管理 */
 const themeStore = useThemeStore();
 
-/** 计算当前语言本地化配置 */
-const locale = computed(() => {
-  return UILocales[appStore.locale];
-});
 
 /** 计算水印属性 */
 const watermarkProps = computed<WatermarkProps>(() => {
@@ -40,11 +35,15 @@ const watermarkProps = computed<WatermarkProps>(() => {
     zIndex: 9999
   };
 });
+
+
+
+
 </script>
 
 <template>
   <!-- 全局配置提供器，绑定当前语言 -->
-  <ElConfigProvider :locale="locale">
+  <ElConfigProvider  :locale="zhCn">
     <AppProvider>
       <!-- 水印组件，应用全局水印 -->
       <ElWatermark class="h-full" v-bind="watermarkProps">

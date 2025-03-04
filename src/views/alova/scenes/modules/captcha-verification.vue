@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { actionDelegationMiddleware, useCaptcha, useForm } from '@sa/alova/client';
-import { $t } from '@/locales';
 import { useFormRules, useForm as useUIForm } from '@/hooks/common/form';
 import { sendCaptcha, verifyCaptcha } from '@/service-alova/api';
 
@@ -12,8 +11,8 @@ const { loading, send, countdown } = useCaptcha(sendCaptcha, {
 });
 const label = computed(() => {
   return countdown.value > 0
-    ? $t('page.login.codeLogin.reGetCode', { time: countdown.value })
-    : $t('page.login.codeLogin.getCode');
+    ? `${countdown.value}秒后重新获取`
+    : '获取验证码';
 });
 const {
   form,
@@ -41,18 +40,18 @@ async function handleSubmit() {
   await validate();
   await submit();
   // request
-  window.$message?.success($t('page.login.common.validateSuccess'));
+  window.$message?.success('验证成功');
 }
 </script>
 
 <template>
   <ElForm ref="formRef" :model="form" :rules="rules" size="large" :show-label="false" @keyup.enter="handleSubmit">
     <ElFormItem path="phone">
-      <ElInput v-model="form.phone" :placeholder="$t('page.login.common.phonePlaceholder')" :maxlength="11" />
+      <ElInput v-model="form.phone" :placeholder="'请输入手机号'" :maxlength="11" />
     </ElFormItem>
     <ElFormItem path="code">
-      <div class="w-full flex-y-center gap-16px">
-        <ElInput v-model="form.code" :placeholder="$t('page.login.common.codePlaceholder')" />
+      <div class="w-full flex-y-center gap-[16px]">
+        <ElInput v-model="form.code" :placeholder="'请输入验证码'" />
         <ElButton size="large" :disabled="countdown > 0" :loading="loading" @click="send(form.phone)">
           {{ label }}
         </ElButton>
@@ -60,8 +59,8 @@ async function handleSubmit() {
     </ElFormItem>
     <ElSpace vertical :size="18" class="w-full">
       <ElButton type="primary" size="large" round block :loading="submiting" @click="handleSubmit">
-        {{ $t('common.confirm') }}
-      </ElButton>
+        确认
+        </ElButton>
     </ElSpace>
   </ElForm>
 </template>

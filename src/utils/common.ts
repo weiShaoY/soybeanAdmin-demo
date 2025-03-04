@@ -1,4 +1,3 @@
-import { $t } from '@/locales';
 
 /**
  * 将记录转换为选项
@@ -35,7 +34,7 @@ export function transformRecordToOption<T extends Record<string, string>>(record
 export function translateOptions(options: CommonType.Option<string>[]): CommonType.Option<string>[] {
   return options.map(option => ({
     ...option,
-    label: $t(option.label as App.I18n.I18nKey)
+    label: option.label
   }));
 }
 

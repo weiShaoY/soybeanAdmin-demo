@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, shallowRef, watch } from 'vue';
-import { $t } from '@/locales';
 import { fetchGetAllPages, fetchGetMenuTree } from '@/service/api';
 
 defineOptions({ name: 'MenuAuthModal' });
@@ -20,7 +19,7 @@ function closeModal() {
   visible.value = false;
 }
 
-const title = computed(() => $t('common.edit') + $t('page.manage.role.menuAuth'));
+const title = computed(() => '编辑' + '菜单权限');
 
 const home = shallowRef('');
 
@@ -83,7 +82,7 @@ function handleSubmit() {
   console.log(checks.value, props.roleId);
   // request
 
-  window.$message?.success?.($t('common.modifySuccess'));
+  window.$message?.success?.('修改成功');
 
   closeModal();
 }
@@ -103,10 +102,10 @@ watch(visible, val => {
 </script>
 
 <template>
-  <ElDialog v-model="visible" :title="title" preset="card" class="w-480px">
-    <div class="flex-y-center gap-16px pb-12px">
-      <div>{{ $t('page.manage.menu.home') }}</div>
-      <ElSelect v-model="home" :options="pageSelectOptions" size="small" class="w-160px">
+  <ElDialog v-model="visible" :title="title" preset="card" class="w-[480px]">
+    <div class="flex-y-center gap-[16px] pb-[12px]">
+      <div>首页</div>
+      <ElSelect v-model="home" :options="pageSelectOptions" size="small" class="w-[160px]">
         <ElOption v-for="{ value, label } in pageSelectOptions" :key="value" :value="value" :label="label"></ElOption>
       </ElSelect>
     </div>
@@ -115,17 +114,17 @@ watch(visible, val => {
       :data="tree"
       node-key="id"
       show-checkbox
-      class="h-280px"
+      class="h-[280px]"
       :default-checked-keys="checks"
       @check-change="checkChange"
     />
     <template #footer>
       <ElSpace class="w-full justify-end">
-        <ElButton size="small" class="mt-16px" @click="closeModal">
-          {{ $t('common.cancel') }}
+        <ElButton size="small" class="mt-[16px]" @click="closeModal">
+          取消
         </ElButton>
-        <ElButton type="primary" size="small" class="mt-16px" @click="handleSubmit">
-          {{ $t('common.confirm') }}
+        <ElButton type="primary" size="small" class="mt-[16px]" @click="handleSubmit">
+         确认
         </ElButton>
       </ElSpace>
     </template>

@@ -2,7 +2,6 @@
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useLoading } from '@sa/hooks';
-import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useAuthStore } from '@/store/modules/auth';
 import { useTabStore } from '@/store/modules/tab';
@@ -29,19 +28,19 @@ interface Account {
 const accounts = computed<Account[]>(() => [
   {
     key: 'super',
-    label: $t('page.login.pwdLogin.superAdmin'),
+    label:'超级管理员',
     userName: 'Super',
     password: '123456'
   },
   {
     key: 'admin',
-    label: $t('page.login.pwdLogin.admin'),
+    label: '管理员',
     userName: 'Admin',
     password: '123456'
   },
   {
     key: 'user',
-    label: $t('page.login.pwdLogin.user'),
+    label: '普通用户',
     userName: 'User',
     password: '123456'
   }
@@ -62,14 +61,14 @@ async function handleToggleAccount(account: Account) {
 
 <template>
   <ElSpace direction="vertical" fill :size="16">
-    <ElCard :header="$t('route.function_toggle-auth')" class="card-wrapper">
+    <ElCard :header="'切换权限'" class="card-wrapper">
       <ElDescriptions direction="vertical" border :column="1">
-        <ElDescriptionsItem :label="$t('page.manage.user.userRole')">
+        <ElDescriptionsItem :label="'用户角色'">
           <ElSpace>
             <ElTag v-for="role in authStore.userInfo.roles" :key="role">{{ role }}</ElTag>
           </ElSpace>
         </ElDescriptionsItem>
-        <ElDescriptionsItem ions-item :label="$t('page.function.toggleAuth.toggleAccount')">
+        <ElDescriptionsItem ions-item :label="'切换账号'">
           <ElSpace>
             <ElButton
               v-for="account in accounts"
@@ -84,12 +83,12 @@ async function handleToggleAccount(account: Account) {
         </ElDescriptionsItem>
       </ElDescriptions>
     </ElCard>
-    <ElCard :header="$t('page.function.toggleAuth.authHook')" class="card-wrapper">
+    <ElCard :header="'权限钩子函数 `hasAuth`'" class="card-wrapper">
       <ElSpace>
-        <ElButton v-if="hasAuth('B_CODE1')">{{ $t('page.function.toggleAuth.superAdminVisible') }}</ElButton>
-        <ElButton v-if="hasAuth('B_CODE2')">{{ $t('page.function.toggleAuth.adminVisible') }}</ElButton>
+        <ElButton v-if="hasAuth('B_CODE1')">{{ '超级管理员可见' }}</ElButton>
+        <ElButton v-if="hasAuth('B_CODE2')">{{ '管理员可见' }}</ElButton>
         <ElButton v-if="hasAuth('B_CODE3')">
-          {{ $t('page.function.toggleAuth.adminOrUserVisible') }}
+          管理员和用户可见
         </ElButton>
       </ElSpace>
     </ElCard>

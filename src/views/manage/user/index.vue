@@ -1,7 +1,6 @@
 <script setup lang="tsx">
 import { ElButton, ElPopconfirm, ElTag } from 'element-plus';
 import { fetchGetUserList } from '@/service/api';
-import { $t } from '@/locales';
 import { enableStatusRecord, userGenderRecord } from '@/constants/business';
 import { useTable, useTableOperate } from '@/hooks/common/table';
 import UserOperateDrawer from './modules/user-operate-drawer.vue';
@@ -34,11 +33,11 @@ const {
   },
   columns: () => [
     { type: 'selection', width: 48 },
-    { prop: 'index', label: $t('common.index'), width: 64 },
-    { prop: 'userName', label: $t('page.manage.user.userName'), minWidth: 100 },
+    { prop: 'index', label: '序号', width: 64 },
+    { prop: 'userName', label: '用户名', minWidth: 100 },
     {
       prop: 'userGender',
-      label: $t('page.manage.user.userGender'),
+      label: '性别',
       width: 100,
       formatter: row => {
         if (row.userGender === undefined) {
@@ -50,17 +49,17 @@ const {
           2: 'danger'
         };
 
-        const label = $t(userGenderRecord[row.userGender]);
+        const label = userGenderRecord[row.userGender];
 
         return <ElTag type={tagMap[row.userGender]}>{label}</ElTag>;
       }
     },
-    { prop: 'nickName', label: $t('page.manage.user.nickName'), minWidth: 100 },
-    { prop: 'userPhone', label: $t('page.manage.user.userPhone'), width: 120 },
-    { prop: 'userEmail', label: $t('page.manage.user.userEmail'), minWidth: 200 },
+    { prop: 'nickName', label: '昵称', minWidth: 100 },
+    { prop: 'userPhone', label: '手机号', width: 120 },
+    { prop: 'userEmail', label: '邮箱', minWidth: 200 },
     {
       prop: 'status',
-      label: $t('page.manage.user.userStatus'),
+      label: '用户状态',
       align: 'center',
       formatter: row => {
         if (row.status === undefined) {
@@ -72,25 +71,25 @@ const {
           2: 'warning'
         };
 
-        const label = $t(enableStatusRecord[row.status]);
+        const label = enableStatusRecord[row.status];
 
         return <ElTag type={tagMap[row.status]}>{label}</ElTag>;
       }
     },
     {
       prop: 'operate',
-      label: $t('common.operate'),
+      label: '操作',
       align: 'center',
       formatter: row => (
         <div class="flex-center">
           <ElButton type="primary" plain size="small" onClick={() => edit(row.id)}>
-            {$t('common.edit')}
+            {'编辑'}
           </ElButton>
-          <ElPopconfirm title={$t('common.confirmDelete')} onConfirm={() => handleDelete(row.id)}>
+          <ElPopconfirm title={'确认删除吗？'} onConfirm={() => handleDelete(row.id)}>
             {{
               reference: () => (
                 <ElButton type="danger" plain size="small">
-                  {$t('common.delete')}
+                  {'删除'}
                 </ElButton>
               )
             }}
@@ -140,7 +139,7 @@ function edit(id: number) {
     <ElCard class="sm:flex-1-hidden card-wrapper" body-class="ht50">
       <template #header>
         <div class="flex items-center justify-between">
-          <p>{{ $t('page.manage.user.title') }}</p>
+          <p>{{ '用户列表' }}</p>
           <TableHeaderOperation
             v-model:columns="columnChecks"
             :disabled-delete="checkedRowKeys.length === 0"

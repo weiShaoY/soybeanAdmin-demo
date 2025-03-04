@@ -5,7 +5,6 @@ import { useBoolean } from '@sa/hooks';
 import { ElButton, ElPopconfirm, ElTag } from 'element-plus';
 import { fetchGetAllPages, fetchGetMenuList } from '@/service/api';
 import { useTable, useTableOperate } from '@/hooks/common/table';
-import { $t } from '@/locales';
 import { yesOrNoRecord } from '@/constants/common';
 import { enableStatusRecord, menuTypeRecord } from '@/constants/business';
 import SvgIcon from '@/components/custom/svg-icon.vue';
@@ -19,10 +18,10 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
   apiFn: fetchGetMenuList,
   columns: () => [
     { type: 'selection', width: 48 },
-    { prop: 'id', label: $t('page.manage.menu.id') },
+    { prop: 'id', label: 'ID' },
     {
       prop: 'menuType',
-      label: $t('page.manage.menu.menuType'),
+      label:'菜单类型',
       width: 90,
       formatter: row => {
         const tagMap: Record<Api.SystemManage.MenuType, UI.ThemeColor> = {
@@ -30,26 +29,25 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
           2: 'primary'
         };
 
-        const label = $t(menuTypeRecord[row.menuType]);
+        const label = menuTypeRecord[row.menuType];
 
         return <ElTag type={tagMap[row.menuType]}>{label}</ElTag>;
       }
     },
     {
       prop: 'menuName',
-      label: $t('page.manage.menu.menuName'),
+      label: '菜单名称',
       minWidth: 120,
       formatter: row => {
-        const { i18nKey, menuName } = row;
 
-        const label = i18nKey ? $t(i18nKey) : menuName;
+        const label = menuName;
 
         return <span>{label}</span>;
       }
     },
     {
       prop: 'icon',
-      label: $t('page.manage.menu.icon'),
+      label:'图标',
       width: 100,
       formatter: row => {
         const icon = row.iconType === '1' ? row.icon : undefined;
@@ -63,11 +61,11 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
         );
       }
     },
-    { prop: 'routeName', label: $t('page.manage.menu.routeName'), minWidth: 120 },
-    { prop: 'routePath', label: $t('page.manage.menu.routePath'), minWidth: 120 },
+    { prop: 'routeName', label: '路由名称', minWidth: 120 },
+    { prop: 'routePath', label: '路由路径', minWidth: 120 },
     {
       prop: 'status',
-      label: $t('page.manage.menu.menuStatus'),
+      label: '菜单状态',
       width: 80,
       formatter: row => {
         if (row.status === undefined) {
@@ -79,14 +77,14 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
           2: 'warning'
         };
 
-        const label = $t(enableStatusRecord[row.status]);
+        const label = enableStatusRecord[row.status];
 
         return <ElTag type={tagMap[row.status]}>{label}</ElTag>;
       }
     },
     {
       prop: 'hideInMenu',
-      label: $t('page.manage.menu.hideInMenu'),
+      label:'隐藏菜单',
       width: 80,
       formatter: row => {
         const hide: CommonType.YesOrNo = row.hideInMenu ? 'Y' : 'N';
@@ -96,32 +94,32 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
           N: 'info'
         };
 
-        const label = $t(yesOrNoRecord[hide]);
+        const label = yesOrNoRecord[hide];
 
         return <ElTag type={tagMap[hide]}>{label}</ElTag>;
       }
     },
-    { prop: 'parentId', label: $t('page.manage.menu.parentId'), width: 90 },
-    { prop: 'order', label: $t('page.manage.menu.order'), width: 60 },
+    { prop: 'parentId', label: '父级菜单ID', width: 90 },
+    { prop: 'order', label: '排序', width: 60 },
     {
       prop: 'operate',
-      label: $t('common.operate'),
+      label: '操作',
       width: 230,
       formatter: row => (
         <div class="flex-center justify-end pr-10px">
           {row.menuType === '1' && (
             <ElButton type="primary" plain size="small" onClick={() => handleAddChildMenu(row)}>
-              {$t('page.manage.menu.addChildMenu')}
+              新增子菜单
             </ElButton>
           )}
           <ElButton type="primary" plain size="small" onClick={() => handleEdit(row)}>
-            {$t('common.edit')}
+            {'编辑'}
           </ElButton>
-          <ElPopconfirm title={$t('common.confirmDelete')} onConfirm={() => handleDelete(row.id)}>
+          <ElPopconfirm title={'确认删除吗？'} onConfirm={() => handleDelete(row.id)}>
             {{
               reference: () => (
                 <ElButton type="danger" plain size="small">
-                  {$t('common.delete')}
+                  {'删除'}
                 </ElButton>
               )
             }}
@@ -193,7 +191,7 @@ init();
     <ElCard class="sm:flex-1-hidden card-wrapper" body-class="ht50">
       <template #header>
         <div class="flex items-center justify-between">
-          <p>{{ $t('page.manage.menu.title') }}</p>
+          <p>菜单列表</p>
           <TableHeaderOperation
             v-model:columns="columnChecks"
             :disabled-delete="checkedRowKeys.length === 0"

@@ -193,7 +193,6 @@ declare namespace Api {
     /** 菜单路由属性 */
     type MenuPropsOfRoute = Pick<
       import('vue-router').RouteMeta,
-      | 'i18nKey'
       | 'keepAlive'
       | 'constant'
       | 'order'

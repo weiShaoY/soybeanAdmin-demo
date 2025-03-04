@@ -30,16 +30,16 @@ const toggleStop = () => {
 <template>
   <ElSpace direction="vertical" fill>
     <ElAlert type="info" show-icon>
-      {{ $t('page.alova.scenes.networkRequestTips') }}
+      网络重连后自动请求
     </ElAlert>
     <ElButton type="primary" @click="toggleStop">
       <icon-carbon-play v-if="isStop" class="mr-2" />
       <icon-carbon-stop v-else class="mr-2" />
-      {{ isStop ? $t('page.alova.scenes.startRequest') : $t('page.alova.scenes.stopRequest') }}
+      {{ isStop ? '开始请求' : '停止请求' }}
     </ElButton>
     <ElSpace class="justify-center">
-      <span>{{ $t('page.alova.scenes.refreshTime') }}: {{ data.time || '--' }}</span>
-      <SvgIcon v-if="loading" icon="line-md:loading-twotone-loop" class="text-20px" />
+      <span>{{'更新时间' }}: {{ data.time || '--' }}</span>
+      <SvgIcon v-if="loading" icon="line-md:loading-twotone-loop" class="text-[20px]" />
     </ElSpace>
   </ElSpace>
 </template>

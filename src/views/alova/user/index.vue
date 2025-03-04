@@ -3,7 +3,6 @@ import { ElButton, ElPopconfirm, ElTag } from 'element-plus';
 import { usePagination } from '@sa/alova/client';
 import { ref } from 'vue';
 import { batchDeleteUser, deleteUser, fetchGetUserList } from '@/service-alova/api';
-import { $t } from '@/locales';
 import { enableStatusRecord, userGenderRecord } from '@/constants/business';
 import useCheckedColumns from './hooks/use-checked-columns';
 import useTableOperate from './hooks/use-table-operate';
@@ -73,10 +72,10 @@ function edit(id: number) {
 
 const { columnChecks, columns } = useCheckedColumns<typeof fetchGetUserList>(() => [
   { type: 'selection', width: 48 },
-  { prop: 'userName', label: $t('page.manage.user.userName'), minWidth: 100 },
+  { prop: 'userName', label: '用户名', minWidth: 100 },
   {
     prop: 'userGender',
-    label: $t('page.manage.user.userGender'),
+    label: '性别',
     width: 100,
     formatter: row => {
       if (row.userGender === undefined) {
@@ -88,17 +87,17 @@ const { columnChecks, columns } = useCheckedColumns<typeof fetchGetUserList>(() 
         2: 'danger'
       };
 
-      const label = $t(userGenderRecord[row.userGender]);
+      const label = userGenderRecord[row.userGender];
 
       return <ElTag type={tagMap[row.userGender]}>{label}</ElTag>;
     }
   },
-  { prop: 'nickName', label: $t('page.manage.user.nickName'), minWidth: 100 },
-  { prop: 'userPhone', label: $t('page.manage.user.userPhone'), width: 120 },
-  { prop: 'userEmail', label: $t('page.manage.user.userEmail'), minWidth: 200 },
+  { prop: 'nickName', label: '昵称', minWidth: 100 },
+  { prop: 'userPhone', label: '手机号', width: 120 },
+  { prop: 'userEmail', label: '邮箱', minWidth: 200 },
   {
     prop: 'status',
-    label: $t('page.manage.user.userStatus'),
+    label: '用户状态',
     width: 100,
     formatter: row => {
       if (row.status === undefined) {
@@ -110,25 +109,25 @@ const { columnChecks, columns } = useCheckedColumns<typeof fetchGetUserList>(() 
         2: 'warning'
       };
 
-      const label = $t(enableStatusRecord[row.status]);
+      const label = enableStatusRecord[row.status];
 
       return <ElTag type={tagMap[row.status]}>{label}</ElTag>;
     }
   },
   {
     prop: 'operate',
-    label: $t('common.operate'),
+    label: '操作',
     width: 130,
     formatter: row => (
       <div class="flex-center gap-8px">
         <ElButton type="primary" plain size="small" onClick={() => edit(row.id)}>
-          {$t('common.edit')}
+          {'编辑'}
         </ElButton>
-        <ElPopconfirm title={$t('common.confirmDelete')} onConfirm={() => handleDelete(row.id)}>
+        <ElPopconfirm title={'确认删除吗？'} onConfirm={() => handleDelete(row.id)}>
           {{
             reference: () => (
               <ElButton type="danger" plain size="small">
-                {$t('common.delete')}
+                {'删除'}
               </ElButton>
             )
           }}
@@ -142,7 +141,7 @@ const { columnChecks, columns } = useCheckedColumns<typeof fetchGetUserList>(() 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <UserSearch v-model:model="searchParams" @search="getDataByPage" />
-    <ElCard :header="$t('page.manage.user.title')" class="sm:flex-1-hidden card-wrapper" body-class="ht50">
+    <ElCard :header="'用户列表'" class="sm:flex-1-hidden card-wrapper" body-class="ht50">
       <template #header-extra>
         <TableHeaderOperation
           v-model:columns="columnChecks"

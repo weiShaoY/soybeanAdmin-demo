@@ -6,7 +6,6 @@ import { SetupStoreId } from '@/enum';
 import { useRouterPush } from '@/hooks/common/router';
 import { fetchGetUserInfo, fetchLogin } from '@/service/api';
 import { localStg } from '@/utils/storage';
-import { $t } from '@/locales';
 import { useRouteStore } from '../route';
 import { useTabStore } from '../tab';
 import { clearAuthStorage, getToken } from './shared';
@@ -74,8 +73,8 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
         await redirectFromLogin(redirect);
 
         window.$notification?.success({
-          title: $t('page.login.common.loginSuccess'),
-          message: $t('page.login.common.welcomeBack', { userName: userInfo.userName }),
+          title: '登录成功',
+          message: `欢迎回来，${userInfo.userName}`,
           duration: 4500
         });
       }

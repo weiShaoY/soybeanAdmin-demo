@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { createReusableTemplate } from '@vueuse/core';
-import { $t } from '@/locales';
 
 defineOptions({ name: 'CardData' });
 
@@ -20,7 +19,7 @@ interface CardData {
 const cardData = computed<CardData[]>(() => [
   {
     key: 'visitCount',
-    title: $t('page.home.visitCount'),
+    title: '访问量',
     value: 9725,
     unit: '',
     color: {
@@ -31,7 +30,7 @@ const cardData = computed<CardData[]>(() => [
   },
   {
     key: 'turnover',
-    title: $t('page.home.turnover'),
+    title: '成交额',
     value: 1026,
     unit: '$',
     color: {
@@ -42,7 +41,7 @@ const cardData = computed<CardData[]>(() => [
   },
   {
     key: 'downloadCount',
-    title: $t('page.home.downloadCount'),
+    title: '下载量',
     value: 970925,
     unit: '',
     color: {
@@ -53,7 +52,7 @@ const cardData = computed<CardData[]>(() => [
   },
   {
     key: 'dealCount',
-    title: $t('page.home.dealCount'),
+    title: '成交量',
     value: 9527,
     unit: '',
     color: {
@@ -79,22 +78,22 @@ function getGradientColor(color: CardData['color']) {
   <ElCard class="card-wrapper">
     <!-- define component start: GradientBg -->
     <DefineGradientBg v-slot="{ $slots, gradientColor }">
-      <div class="rd-8px px-16px pb-4px pt-8px text-white" :style="{ backgroundImage: gradientColor }">
+      <div class="rd-[8px] px-[16px] pb-[4px] pt-[8px] text-white" :style="{ backgroundImage: gradientColor }">
         <component :is="$slots.default" />
       </div>
     </DefineGradientBg>
     <!-- define component end: GradientBg -->
     <ElRow :gutter="16">
-      <ElCol v-for="item in cardData" :key="item.key" :lg="6" :md="12" :sm="24" class="my-8px">
+      <ElCol v-for="item in cardData" :key="item.key" :lg="6" :md="12" :sm="24" class="my-[8px]">
         <GradientBg :gradient-color="getGradientColor(item.color)" class="flex-1">
-          <h3 class="text-16px">{{ item.title }}</h3>
-          <div class="flex justify-between pt-12px">
-            <SvgIcon :icon="item.icon" class="text-32px" />
+          <h3 class="text-[16px]">{{ item.title }}</h3>
+          <div class="flex justify-between pt-[12px]">
+            <SvgIcon :icon="item.icon" class="text-[32px]" />
             <CountTo
               :prefix="item.unit"
               :start-value="1"
               :end-value="item.value"
-              class="text-30px text-white dark:text-dark"
+              class="text-[30px] text-white dark:text-dark"
             />
           </div>
         </GradientBg>

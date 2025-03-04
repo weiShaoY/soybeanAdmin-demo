@@ -1,6 +1,5 @@
 import type { Router } from 'vue-router';
 import type { LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
-import { $t } from '@/locales';
 import { getRoutePath } from '@/router/elegant/transform';
 
 /**
@@ -66,12 +65,12 @@ export function getTabIdByRoute(route: App.Global.TabRoute) {
 export function getTabByRoute(route: App.Global.TabRoute) {
   const { name, path, fullPath = path, meta } = route;
 
-  const { title, i18nKey, fixedIndexInTab } = meta;
+  const { title, fixedIndexInTab } = meta;
 
   // Get icon and localIcon from getRouteIcons function
   const { icon, localIcon } = getRouteIcons(route);
 
-  const label = i18nKey ? $t(i18nKey) : title;
+  const label = title ? title : '';
 
   const tab: App.Global.Tab = {
     id: getTabIdByRoute(route),
@@ -82,7 +81,6 @@ export function getTabByRoute(route: App.Global.TabRoute) {
     fixedIndex: fixedIndexInTab,
     icon,
     localIcon,
-    i18nKey
   };
 
   return tab;
@@ -120,11 +118,11 @@ export function getRouteIcons(route: App.Global.TabRoute) {
  */
 export function getDefaultHomeTab(router: Router, homeRouteName: LastLevelRouteKey) {
   const homeRoutePath = getRoutePath(homeRouteName);
-  const i18nLabel = $t(`route.${homeRouteName}`);
+  const label = `route.${homeRouteName}`;
 
   let homeTab: App.Global.Tab = {
     id: getRoutePath(homeRouteName),
-    label: i18nLabel || homeRouteName,
+    label: label || homeRouteName,
     routeKey: homeRouteName,
     routePath: homeRoutePath,
     fullPath: homeRoutePath
@@ -224,30 +222,6 @@ function updateTabsLabel(tabs: App.Global.Tab[]) {
   return updated;
 }
 
-/**
- * 根据国际化键更新标签页
- *
- * @param tab 标签页
- * @returns 更新后的标签页
- */
-export function updateTabByI18nKey(tab: App.Global.Tab) {
-  const { i18nKey, label } = tab;
-
-  return {
-    ...tab,
-    label: i18nKey ? $t(i18nKey) : label
-  };
-}
-
-/**
- * 根据国际化键更新标签页数组
- *
- * @param tabs 标签页数组
- * @returns 更新后的标签页数组
- */
-export function updateTabsByI18nKey(tabs: App.Global.Tab[]) {
-  return tabs.map(tab => updateTabByI18nKey(tab));
-}
 
 /**
  * 根据路由名称查找标签页

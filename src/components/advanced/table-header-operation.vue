@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { $t } from '@/locales';
 
 /** 定义组件选项 */
 defineOptions({ name: 'TableHeaderOperation' });
@@ -57,15 +56,15 @@ function refresh() {
         <template #icon>
           <icon-ic-round-plus class="text-icon" />
         </template>
-        {{ $t('common.add') }}
+        {{ "新增" }}
       </ElButton>
-      <ElPopconfirm :title="$t('common.confirmDelete')" @confirm="batchDelete">
+      <ElPopconfirm :title="'确认删除吗？'" @confirm="batchDelete">
         <template #reference>
           <ElButton type="danger" plain :disabled="disabledDelete">
             <template #icon>
               <icon-ic-round-delete class="text-icon" />
             </template>
-            {{ $t('common.batchDelete') }}
+            {{'批量删除' }}
           </ElButton>
         </template>
       </ElPopconfirm>
@@ -74,7 +73,7 @@ function refresh() {
       <template #icon>
         <icon-mdi-refresh class="text-icon" :class="{ 'animate-spin': loading }" />
       </template>
-      {{ $t('common.refresh') }}
+      {{'刷新' }}
     </ElButton>
     <TableColumnSetting v-model:columns="columns" />
     <slot name="suffix"></slot>

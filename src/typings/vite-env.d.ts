@@ -11,22 +11,29 @@ declare namespace Env {
   type ImportMeta = {
     /** 应用程序的基本 URL */
     readonly VITE_BASE_URL: string;
+
     /** 应用程序的标题 */
     readonly VITE_APP_TITLE: string;
+
     /** 应用程序的描述 */
     readonly VITE_APP_DESC: string;
+
     /** 路由历史模式 */
     readonly VITE_ROUTER_HISTORY_MODE?: RouterHistoryMode;
+
     /** iconify 图标的前缀 */
     readonly VITE_ICON_PREFIX: 'icon';
+
     /**
      * 本地图标的前缀
      *
      * 此前缀以图标前缀开头
      */
     readonly VITE_ICON_LOCAL_PREFIX: 'local-icon';
+
     /** 后端服务基本 URL */
     readonly VITE_SERVICE_BASE_URL: string;
+
     /**
      * 后端服务的成功代码
      *
@@ -41,6 +48,7 @@ declare namespace Env {
      * 使用 "," 分隔多个代码
      */
     readonly VITE_SERVICE_LOGOUT_CODES: string;
+
     /**
      * 后端服务的模态注销代码
      *
@@ -90,8 +98,10 @@ declare namespace Env {
      * Iconify 图标名称
      */
     readonly VITE_MENU_ICON: string;
+
     /** 是否生成 sourcemap */
     readonly VITE_SOURCE_MAP?: CommonType.YesOrNo;
+
     /**
      * Iconify API 提供者 URL
      *
@@ -100,8 +110,10 @@ declare namespace Env {
      * @link https://docs.iconify.design/api/providers.html
      */
     readonly VITE_ICONIFY_URL?: string;
+
     /** 用于区分不同域的存储 */
     readonly VITE_STORAGE_PREFIX?: string;
+
     /** 在配置应用程序打包后是否自动检测更新 */
     readonly VITE_AUTOMATICALLY_DETECT_UPDATE?: CommonType.YesOrNo;
   } & ImportMetaEnv;

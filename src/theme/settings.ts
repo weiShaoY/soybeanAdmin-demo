@@ -28,9 +28,6 @@ export const themeSettings: App.Theme.ThemeSetting = {
       visible: true,
       showIcon: true
     },
-    multilingual: {
-      visible: true
-    }
   },
   tab: {
     visible: true,

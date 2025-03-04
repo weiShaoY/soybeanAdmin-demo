@@ -9,8 +9,6 @@ import {
   cleanup,
   genChangelog,
   generateRoute,
-  gitCommit,
-  gitCommitVerify,
   printSoybean,
   release,
   updatePkg
@@ -22,8 +20,6 @@ import { loadCliOptions } from './config';
 type Command =
   | 'cleanup'
   | 'update-pkg'
-  | 'git-commit'
-  | 'git-commit-verify'
   | 'changelog'
   | 'release'
   | 'gen-route'
@@ -101,18 +97,6 @@ export async function setupCli() {
       desc: '更新 package.json 中的依赖版本',
       action: async () => {
         await updatePkg(cliOptions.ncuCommandArgs);
-      }
-    },
-    'git-commit': {
-      desc: 'git 提交，生成符合 Conventional Commits 标准的提交消息',
-      action: async args => {
-        await gitCommit(args?.lang);
-      }
-    },
-    'git-commit-verify': {
-      desc: '验证 git 提交消息，确保其符合 Conventional Commits 标准',
-      action: async args => {
-        await gitCommitVerify(args?.lang, cliOptions.gitCommitVerifyIgnores);
       }
     },
     changelog: {

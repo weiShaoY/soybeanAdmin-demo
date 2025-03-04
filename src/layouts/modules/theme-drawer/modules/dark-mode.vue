@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import { themeSchemaRecord } from '@/constants/app';
 import { useThemeStore } from '@/store/modules/theme';
-import { $t } from '@/locales';
 import SettingItem from '../components/setting-item.vue';
 
 defineOptions({ name: 'DarkMode' });
@@ -31,26 +30,26 @@ const showSiderInverted = computed(() => !themeStore.darkMode && themeStore.layo
 </script>
 
 <template>
-  <ElDivider>{{ $t('theme.themeSchema.title') }}</ElDivider>
-  <div class="flex-col-stretch gap-16px">
+  <ElDivider>{{ '主题模式'}}</ElDivider>
+  <div class="flex-col-stretch gap-[16px]">
     <div class="i-flex-center">
       <ElTabs v-model="themeStore.themeScheme" type="border-card" class="segment" @tab-change="handleSegmentChange">
         <ElTabPane v-for="(_, key) in themeSchemaRecord" :key="key" :name="key">
           <template #label>
-            <SvgIcon :icon="icons[key]" class="h-23px text-icon-small" />
+            <SvgIcon :icon="icons[key]" class="h-[23px] text-icon-small" />
           </template>
         </ElTabPane>
       </ElTabs>
     </div>
     <Transition name="sider-inverted">
-      <SettingItem v-if="showSiderInverted" :label="$t('theme.sider.inverted')">
+      <SettingItem v-if="showSiderInverted" :label="'深色侧边栏'">
         <ElSwitch v-model="themeStore.sider.inverted" />
       </SettingItem>
     </Transition>
-    <SettingItem :label="$t('theme.grayscale')">
+    <SettingItem :label="'灰色模式'">
       <ElSwitch v-model:model-value="themeStore.grayscale" :update:model-value="handleGrayscaleChange" />
     </SettingItem>
-    <SettingItem :label="$t('theme.colourWeakness')">
+    <SettingItem :label="'色弱模式'">
       <ElSwitch v-model:model-value="themeStore.colourWeakness" :update:model-value="handleColourWeaknessChange" />
     </SettingItem>
   </div>

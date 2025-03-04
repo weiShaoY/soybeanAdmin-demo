@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { $t } from '@/locales';
 import { enableStatusOptions } from '@/constants/business';
 import { translateOptions } from '@/utils/common';
 
@@ -29,22 +28,22 @@ function search() {
 <template>
   <ElCard class="card-wrapper">
     <ElCollapse v-model="activeName">
-      <ElCollapseItem :title="$t('common.search')" name="role-search">
+      <ElCollapseItem :title="'搜索'" name="role-search">
         <ElForm :model="model" label-position="right" :label-width="80">
           <ElRow :gutter="24">
             <ElCol :lg="6" :md="8" :sm="12">
-              <ElFormItem :label="$t('page.manage.role.roleName')" prop="roleName">
-                <ElInput v-model="model.roleName" :placeholder="$t('page.manage.role.form.roleName')" />
+              <ElFormItem :label="'角色名称'" prop="roleName">
+                <ElInput v-model="model.roleName" :placeholder="'请输入角色名称'" />
               </ElFormItem>
             </ElCol>
             <ElCol :lg="6" :md="8" :sm="12">
-              <ElFormItem :label="$t('page.manage.role.roleCode')" prop="roleCode">
-                <ElInput v-model="model.roleCode" :placeholder="$t('page.manage.role.form.roleCode')" />
+              <ElFormItem :label="'角色编码'" prop="roleCode">
+                <ElInput v-model="model.roleCode" :placeholder="'请输入角色编码'" />
               </ElFormItem>
             </ElCol>
             <ElCol :lg="6" :md="8" :sm="12">
-              <ElFormItem :label="$t('page.manage.role.roleStatus')" prop="status">
-                <ElSelect v-model="model.status" :placeholder="$t('page.manage.role.form.roleStatus')" clearable>
+              <ElFormItem :label="'角色状态'" prop="status">
+                <ElSelect v-model="model.status" :placeholder="'请选择角色状态'" clearable>
                   <ElOption
                     v-for="{ label, value } in translateOptions(enableStatusOptions)"
                     :key="value"
@@ -60,13 +59,13 @@ function search() {
                   <template #icon>
                     <icon-ic-round-refresh class="text-icon" />
                   </template>
-                  {{ $t('common.reset') }}
+                  {{ '重置' }}
                 </ElButton>
                 <ElButton type="primary" plain @click="search">
                   <template #icon>
                     <icon-ic-round-search class="text-icon" />
                   </template>
-                  {{ $t('common.search') }}
+                  {{ '搜索' }}
                 </ElButton>
               </ElSpace>
             </ElCol>

@@ -2,7 +2,6 @@ import { createAlovaRequest } from '@sa/alova';
 import { createAlovaMockAdapter } from '@sa/alova/mock';
 import adapterFetch from '@sa/alova/fetch';
 import { useAuthStore } from '@/store/modules/auth';
-import { $t } from '@/locales';
 import { getServiceBaseURL } from '@/utils/service';
 import featureUsers20241014 from '../mocks/feature-users-20241014';
 import { getAuthorization, handleRefreshToken, showErrorMsg } from './shared';
@@ -100,9 +99,9 @@ export const alova = createAlovaRequest(
         if (window.$messageBox) {
           window.$messageBox({
             type: 'error',
-            title: $t('common.error'),
+            title: '错误',
             message,
-            confirmButtonText: $t('common.confirm'),
+            confirmButtonText: '确认',
             closeOnClickModal: false,
             closeOnPressEscape: false,
             callback() {

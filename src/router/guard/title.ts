@@ -1,6 +1,5 @@
 import { useTitle } from '@vueuse/core';
 import type { Router } from 'vue-router';
-import { $t } from '@/locales';
 
 /**
  * 创建文档标题守卫
@@ -10,12 +9,12 @@ import { $t } from '@/locales';
 export function createDocumentTitleGuard(router: Router) {
   router.afterEach(to => {
     /** 路由元信息中的国际化键 */
-    const { i18nKey, title } = to.meta;
+    const { title } = to.meta;
 
     /** 文档标题 */
-    const documentTitle = i18nKey ? $t(i18nKey) : title;
+    const documentTitle = title ? title : '';
 
     // 设置文档标题
-    useTitle(documentTitle);
+    useTitle(documentTitle as string);
   });
 }

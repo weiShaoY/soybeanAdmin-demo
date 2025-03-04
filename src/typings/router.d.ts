@@ -3,19 +3,14 @@ import 'vue-router';
 declare module 'vue-router' {
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   // 路由元信息接口
-  type RouteMeta = {
+  interface RouteMeta {
     /**
      * 路由标题
      *
      * 可用于文档标题中
      */
     title: string;
-    /**
-     * 路由的国际化键值
-     *
-     * 如果设置，将用于i18n，此时title将被忽略
-     */
-    i18nKey?: App.I18n.I18nKey;
+
     /**
      * 路由的角色列表
      *
@@ -63,5 +58,5 @@ declare module 'vue-router' {
     fixedIndexInTab?: number;
     /** 路由查询参数，如果设置的话，点击菜单进入该路由时会自动携带的query参数 */
     query?: { key: string; value: string }[] | null;
-  };
+  }
 }

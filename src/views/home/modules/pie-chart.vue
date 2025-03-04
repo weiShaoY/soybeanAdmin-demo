@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { watch } from 'vue';
-import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useEcharts } from '@/hooks/common/echarts';
 
@@ -22,7 +21,7 @@ const { domRef, updateOptions } = useEcharts(() => ({
   series: [
     {
       color: ['#5da8ff', '#8e9dff', '#fedc69', '#26deca'],
-      name: $t('page.home.schedule'),
+      name: '作息安排',
       type: 'pie',
       radius: ['45%', '75%'],
       avoidLabelOverlap: false,
@@ -56,10 +55,10 @@ async function mockData() {
 
   updateOptions(opts => {
     opts.series[0].data = [
-      { name: $t('page.home.study'), value: 20 },
-      { name: $t('page.home.entertainment'), value: 10 },
-      { name: $t('page.home.work'), value: 40 },
-      { name: $t('page.home.rest'), value: 30 }
+      { name:  '学习', value: 20 },
+      { name: '娱乐', value: 10 },
+      { name: '工作', value: 40 },
+      { name: '休息', value: 30 }
     ];
 
     return opts;
@@ -73,10 +72,10 @@ function updateLocale() {
     opts.series[0].name = originOpts.series[0].name;
 
     opts.series[0].data = [
-      { name: $t('page.home.study'), value: 20 },
-      { name: $t('page.home.entertainment'), value: 10 },
-      { name: $t('page.home.work'), value: 40 },
-      { name: $t('page.home.rest'), value: 30 }
+      { name:  '学习', value: 20 },
+      { name: '娱乐', value: 10 },
+      { name: '工作', value: 40 },
+      { name: '休息', value: 30 }
     ];
 
     return opts;
@@ -100,7 +99,7 @@ init();
 
 <template>
   <ElCard class="card-wrapper">
-    <div ref="domRef" class="h-360px overflow-hidden"></div>
+    <div ref="domRef" class="h-[360px] overflow-hidden"></div>
   </ElCard>
 </template>
 

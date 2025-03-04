@@ -102,7 +102,6 @@ declare module 'vue' {
     'IconMingcute:zoomInLine': typeof import('~icons/mingcute/zoom-in-line')['default']
     'IconMingcute:zoomOutLine': typeof import('~icons/mingcute/zoom-out-line')['default']
     IconUilSearch: typeof import('~icons/uil/search')['default']
-    LangSwitch: typeof import('./../components/common/lang-switch.vue')['default']
     LookForward: typeof import('./../components/custom/look-forward.vue')['default']
     MenuToggler: typeof import('./../components/common/menu-toggler.vue')['default']
     PinToggler: typeof import('./../components/common/pin-toggler.vue')['default']

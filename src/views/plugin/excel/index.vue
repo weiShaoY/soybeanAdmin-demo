@@ -4,7 +4,6 @@ import { utils, writeFile } from 'xlsx';
 import { useTable } from '@/hooks/common/table';
 import { fetchGetUserList } from '@/service/api';
 import { enableStatusRecord, userGenderRecord } from '@/constants/business';
-import { $t } from '@/locales';
 
 defineOptions({ name: 'ExcelPage' });
 
@@ -23,11 +22,11 @@ const { columns, data, loading } = useTable({
   },
   columns: () => [
     { type: 'selection', width: 48 },
-    { prop: 'index', label: $t('common.index'), width: 64 },
-    { prop: 'userName', label: $t('page.manage.user.userName'), minWidth: 100 },
+    { prop: 'index', label: '序号', width: 64 },
+    { prop: 'userName', label: '用户名', minWidth: 100 },
     {
       prop: 'userGender',
-      label: $t('page.manage.user.userGender'),
+      label: '性别',
       width: 100,
       formatter: row => {
         if (row.userGender === undefined) {
@@ -39,17 +38,17 @@ const { columns, data, loading } = useTable({
           2: 'danger'
         };
 
-        const label = $t(userGenderRecord[row.userGender]);
+        const label = userGenderRecord[row.userGender];
 
         return <ElTag type={tagMap[row.userGender]}>{label}</ElTag>;
       }
     },
-    { prop: 'nickName', label: $t('page.manage.user.nickName'), minWidth: 100 },
-    { prop: 'userPhone', label: $t('page.manage.user.userPhone'), width: 120 },
-    { prop: 'userEmail', label: $t('page.manage.user.userEmail'), minWidth: 200 },
+    { prop: 'nickName', label: '昵称', minWidth: 100 },
+    { prop: 'userPhone', label: '手机号', width: 120 },
+    { prop: 'userEmail', label: '邮箱', minWidth: 200 },
     {
       prop: 'status',
-      label: $t('page.manage.user.userStatus'),
+      label: '用户状态',
       width: 100,
       formatter: row => {
         if (row.status === undefined) {
@@ -61,7 +60,7 @@ const { columns, data, loading } = useTable({
           2: 'warning'
         };
 
-        const label = $t(enableStatusRecord[row.status]);
+        const label = enableStatusRecord[row.status];
 
         return <ElTag type={tagMap[row.status]}>{label}</ElTag>;
       }
@@ -110,11 +109,11 @@ function getTableValue(
   }
 
   if (prop === 'status') {
-    return (item.status && $t(enableStatusRecord[item.status])) || undefined;
+    return (item.status && enableStatusRecord[item.status]) || undefined;
   }
 
   if (prop === 'userGender') {
-    return (item.userGender && $t(userGenderRecord[item.userGender])) || undefined;
+    return (item.userGender && userGenderRecord[item.userGender]) || undefined;
   }
 
   if (prop in item) {

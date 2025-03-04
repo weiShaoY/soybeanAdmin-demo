@@ -4,7 +4,6 @@ import type { VNode } from 'vue';
 import { useAuthStore } from '@/store/modules/auth';
 import { useRouterPush } from '@/hooks/common/router';
 import { useSvgIcon } from '@/hooks/common/icon';
-import { $t } from '@/locales';
 
 defineOptions({ name: 'UserAvatar' });
 
@@ -27,12 +26,12 @@ type DropdownOption = {
 const options = computed(() => {
   const opts: DropdownOption[] = [
     {
-      label: $t('common.userCenter'),
+      label: '个人中心',
       key: 'user-center',
       icon: SvgIconVNode({ icon: 'ph:user-circle', fontSize: 18 })
     },
     {
-      label: $t('common.logout'),
+      label:'退出登录',
       key: 'logout',
       icon: SvgIconVNode({ icon: 'ph:sign-out', fontSize: 18 })
     }
@@ -43,9 +42,9 @@ const options = computed(() => {
 
 function logout() {
   window.$messageBox
-    ?.confirm($t('common.logoutConfirm'), $t('common.tip'), {
-      confirmButtonText: $t('common.confirm'),
-      cancelButtonText: $t('common.cancel'),
+    ?.confirm('确认退出登录吗？', '提示', {
+      confirmButtonText: '确认',
+      cancelButtonText:'取消',
       type: 'warning'
     })
     .then(() => {
@@ -65,16 +64,16 @@ function handleDropdown(key: DropdownKey) {
 
 <template>
   <ElButton v-if="!authStore.isLogin" text @click="loginOrRegister">
-    {{ $t('page.login.common.loginOrRegister') }}
+    {{ '登录 / 注册' }}
   </ElButton>
 
-  <ElDropdown class="px-14px" trigger="click" @command="handleDropdown">
+  <ElDropdown class="px-[14px]" trigger="click" @command="handleDropdown">
     <template #dropdown>
       <ElDropdownMenu>
         <ElDropdownItem
           v-for="{ key, label, icon } in options"
           :key="key"
-          class="mx-4px my-1px rounded-6px"
+          class="mx-[4px] my-[1px] rounded-[6px]"
           :icon="icon"
           :command="key"
         >
@@ -83,8 +82,8 @@ function handleDropdown(key: DropdownKey) {
       </ElDropdownMenu>
     </template>
     <div class="flex items-center">
-      <SvgIcon icon="ph:user-circle" class="mr-5px text-icon-large" />
-      <span class="text-16px font-medium">{{ authStore.userInfo.userName }}</span>
+      <SvgIcon icon="ph:user-circle" class="mr-[5px] text-icon-large" />
+      <span class="text-[16px] font-medium">{{ authStore.userInfo.userName }}</span>
     </div>
   </ElDropdown>
 </template>

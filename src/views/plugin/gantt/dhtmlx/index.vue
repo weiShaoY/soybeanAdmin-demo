@@ -45,7 +45,8 @@ function initGantt() {
 
   Object.assign(gantt.config, config);
 
-  gantt.i18n.setLocale('cn');
+
+
   gantt.init(ganttRef.value);
   gantt.parse({ data: ganttTasks });
 

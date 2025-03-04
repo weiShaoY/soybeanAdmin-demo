@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { $t } from '@/locales';
 import { useForm, useFormRules } from '@/hooks/common/form';
 import { enableStatusOptions, userGenderOptions } from '@/constants/business';
 import { translateOptions } from '@/utils/common';
@@ -43,17 +42,17 @@ async function search() {
 <template>
   <ElCard class="card-wrapper">
     <ElCollapse>
-      <ElCollapseItem :title="$t('common.search')" name="user-search">
+      <ElCollapseItem :title="'搜索'" name="user-search">
         <ElForm ref="formRef" :model="model" :rules="rules" label-position="right" :label-width="80">
           <ElRow :gutter="24">
             <ElCol :lg="6" :md="8" :sm="12">
-              <ElFormItem :label="$t('page.manage.user.userName')" prop="userName">
-                <ElInput v-model="model.userName" :placeholder="$t('page.manage.user.form.userName')" />
+              <ElFormItem :label="'用户名'" prop="userName">
+                <ElInput v-model="model.userName" :placeholder="'请输入用户名'" />
               </ElFormItem>
             </ElCol>
-            <ElCol :lg="6" :md="8" :sm="12" :label="$t('page.manage.user.userGender')">
-              <ElFormItem :label="$t('page.manage.user.userGender')" prop="userGender">
-                <ElSelect v-model="model.userGender" clearable :placeholder="$t('page.manage.user.form.userGender')">
+            <ElCol :lg="6" :md="8" :sm="12" :label="'性别'">
+              <ElFormItem :label="'性别'" prop="userGender">
+                <ElSelect v-model="model.userGender" clearable :placeholder="'请选择性别'">
                   <ElOption
                     v-for="(item, idx) in translateOptions(userGenderOptions)"
                     :key="idx"
@@ -64,23 +63,23 @@ async function search() {
               </ElFormItem>
             </ElCol>
             <ElCol :lg="6" :md="8" :sm="12">
-              <ElFormItem :label="$t('page.manage.user.nickName')" prop="nickName">
-                <ElInput v-model="model.nickName" :placeholder="$t('page.manage.user.form.nickName')" />
+              <ElFormItem :label="'昵称'" prop="nickName">
+                <ElInput v-model="model.nickName" :placeholder="'请输入昵称'" />
               </ElFormItem>
             </ElCol>
             <ElCol :lg="6" :md="8" :sm="12">
-              <ElFormItem :label="$t('page.manage.user.userPhone')" prop="userPhone">
-                <ElInput v-model="model.userPhone" :placeholder="$t('page.manage.user.form.userPhone')" />
+              <ElFormItem :label="'手机号'" prop="userPhone">
+                <ElInput v-model="model.userPhone" :placeholder="'请输入手机号'" />
               </ElFormItem>
             </ElCol>
             <ElCol :lg="6" :md="8" :sm="12">
-              <ElFormItem :label="$t('page.manage.user.userEmail')" prop="userEmail">
-                <ElInput v-model="model.userEmail" :placeholder="$t('page.manage.user.form.userEmail')" />
+              <ElFormItem :label="'邮箱'" prop="userEmail">
+                <ElInput v-model="model.userEmail" :placeholder="'请输入邮箱'" />
               </ElFormItem>
             </ElCol>
             <ElCol :lg="6" :md="8" :sm="12">
-              <ElFormItem :label="$t('page.manage.user.userStatus')" prop="userStatus">
-                <ElSelect v-model="model.userGender" clearable :placeholder="$t('page.manage.user.form.userStatus')">
+              <ElFormItem :label="'用户状态'" prop="userStatus">
+                <ElSelect v-model="model.userGender" clearable :placeholder="'请选择用户状态'">
                   <ElOption
                     v-for="{ label, value } in translateOptions(enableStatusOptions)"
                     :key="value"
@@ -96,13 +95,13 @@ async function search() {
                   <template #icon>
                     <icon-ic-round-refresh class="text-icon" />
                   </template>
-                  {{ $t('common.reset') }}
+                  {{ '重置' }}
                 </ElButton>
                 <ElButton type="primary" plain @click="search">
                   <template #icon>
                     <icon-ic-round-search class="text-icon" />
                   </template>
-                  {{ $t('common.search') }}
+                  {{ '搜索' }}
                 </ElButton>
               </ElSpace>
             </ElCol>

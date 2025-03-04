@@ -2,7 +2,6 @@
 import { ElButton, ElPopconfirm, ElTag } from 'element-plus';
 import { fetchGetRoleList } from '@/service/api';
 import { useTable, useTableOperate } from '@/hooks/common/table';
-import { $t } from '@/locales';
 import { enableStatusRecord } from '@/constants/business';
 import RoleOperateDrawer from './modules/role-operate-drawer.vue';
 import RoleSearch from './modules/role-search.vue';
@@ -28,13 +27,13 @@ const {
   },
   columns: () => [
     { type: 'selection', width: 48 },
-    { prop: 'index', label: $t('common.index'), width: 64 },
-    { prop: 'roleName', label: $t('page.manage.role.roleName'), minWidth: 120 },
-    { prop: 'roleCode', label: $t('page.manage.role.roleCode'), minWidth: 120 },
-    { prop: 'roleDesc', label: $t('page.manage.role.roleDesc'), minWidth: 120 },
+    { prop: 'index', label: '序号', width: 64 },
+    { prop: 'roleName', label: '角色名称', minWidth: 120 },
+    { prop: 'roleCode', label: '角色编码', minWidth: 120 },
+    { prop: 'roleDesc', label: '角色描述', minWidth: 120 },
     {
       prop: 'status',
-      label: $t('page.manage.role.roleStatus'),
+      label: '角色状态',
       width: 100,
       formatter: row => {
         if (row.status === undefined) {
@@ -46,25 +45,25 @@ const {
           2: 'warning'
         };
 
-        const label = $t(enableStatusRecord[row.status]);
+        const label = enableStatusRecord[row.status];
 
         return <ElTag type={tagMap[row.status]}>{label}</ElTag>;
       }
     },
     {
       prop: 'operate',
-      label: $t('common.operate'),
+      label: '操作',
       width: 130,
       formatter: row => (
         <div class="flex-center">
           <ElButton type="primary" plain size="small" onClick={() => edit(row.id)}>
-            {$t('common.edit')}
+            {'编辑'}
           </ElButton>
-          <ElPopconfirm title={$t('common.confirmDelete')} onConfirm={() => handleDelete(row.id)}>
+          <ElPopconfirm title={'确认删除吗？'} onConfirm={() => handleDelete(row.id)}>
             {{
               reference: () => (
                 <ElButton type="danger" plain size="small">
-                  {$t('common.delete')}
+                  {'删除'}
                 </ElButton>
               )
             }}
@@ -112,7 +111,7 @@ function edit(id: number) {
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <RoleSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
-    <ElCard :header="$t('page.manage.role.title')" class="sm:flex-1-hidden card-wrapper" body-class="ht50">
+    <ElCard :header="'角色列表'" class="sm:flex-1-hidden card-wrapper" body-class="ht50">
       <template #header-extra>
         <TableHeaderOperation
           v-model:columns="columnChecks"

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useAuthStore } from '@/store/modules/auth';
 
@@ -18,25 +17,25 @@ interface StatisticData {
 }
 
 const statisticData = computed<StatisticData[]>(() => [
-  { id: 0, title: $t('page.home.projectCount'), value: 25 },
-  { id: 1, title: $t('page.home.todo'), value: 4, formatter: (val: number) => `${val}/${16}` },
-  { id: 2, title: $t('page.home.message'), value: 12 }
+  { id: 0, title: '项目数', value: 25 },
+  { id: 1, title: '待办', value: 4, formatter: (val: number) => `${val}/${16}` },
+  { id: 2, title: '消息', value: 12 }
 ]);
 </script>
 
 <template>
   <ElCard class="card-wrapper">
-    <ElRow :gutter="gap" class="px-8px">
+    <ElRow :gutter="gap" class="px-[8px]">
       <ElCol :md="18" :sm="24">
         <div class="flex-y-center">
-          <div class="size-72px shrink-0 overflow-hidden rd-1/2">
+          <div class="size-[72px] shrink-0 overflow-hidden rd-1/2">
             <img src="@/assets/imgs/soybean.jpg" class="size-full" />
           </div>
-          <div class="pl-12px">
-            <h3 class="text-18px font-semibold">
-              {{ $t('page.home.greeting', { userName: authStore.userInfo.userName }) }}
+          <div class="pl-[12px]">
+            <h3 class="text-[18px] font-semibold">
+              {{  `早安，${ authStore.userInfo.userName }, 今天又是充满活力的一天!`  }}
             </h3>
-            <p class="text-#999 leading-30px">{{ $t('page.home.weatherDesc') }}</p>
+            <p class="text-[#999] leading-[30px]">{{ '今日多云转晴，20℃ - 25℃!' }}</p>
           </div>
         </div>
       </ElCol>

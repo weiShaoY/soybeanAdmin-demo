@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import Clipboard from 'clipboard';
-import { $t } from '@/locales';
 import { useThemeStore } from '@/store/modules/theme';
 
 defineOptions({ name: 'ConfigOperation' });
@@ -16,7 +15,7 @@ function initClipboard() {
   const clipboard = new Clipboard(domRef.value);
 
   clipboard.on('success', () => {
-    window.$message?.success($t('theme.configOperation.copySuccessMsg'));
+    window.$message?.success('复制成功，请替换 src/theme/settings.ts 中的变量 themeSettings');
   });
 }
 
@@ -32,7 +31,7 @@ function handleReset() {
   themeStore.resetStore();
 
   setTimeout(() => {
-    window.$message?.success($t('theme.configOperation.resetSuccessMsg'));
+    window.$message?.success('重置成功');
   }, 50);
 }
 
@@ -46,9 +45,9 @@ onMounted(() => {
 <template>
   <div class="w-full flex justify-between">
     <textarea id="themeConfigCopyTarget" v-model="dataClipboardText" class="absolute opacity-0 -z-1" />
-    <ElButton type="danger" plain @click="handleReset">{{ $t('theme.configOperation.resetConfig') }}</ElButton>
+    <ElButton type="danger" plain @click="handleReset">{{ '重置配置' }}</ElButton>
     <div ref="domRef" data-clipboard-target="#themeConfigCopyTarget">
-      <ElButton type="primary">{{ $t('theme.configOperation.copyConfig') }}</ElButton>
+      <ElButton type="primary">{{'复制配置' }}</ElButton>
     </div>
   </div>
 </template>

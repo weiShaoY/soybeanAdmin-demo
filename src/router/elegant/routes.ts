@@ -15,9 +15,9 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.blank$view.403',
     meta: {
       title: '403',
-      i18nKey: 'route.403',
       constant: true,
-      hideInMenu: true
+      hideInMenu: true,
+      i18nKey: 'route.403'
     }
   },
   {
@@ -26,9 +26,9 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.blank$view.404',
     meta: {
       title: '404',
-      i18nKey: 'route.404',
       constant: true,
-      hideInMenu: true
+      hideInMenu: true,
+      i18nKey: 'route.404'
     }
   },
   {
@@ -37,9 +37,9 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.blank$view.500',
     meta: {
       title: '500',
-      i18nKey: 'route.500',
       constant: true,
-      hideInMenu: true
+      hideInMenu: true,
+      i18nKey: 'route.500'
     }
   },
   {
@@ -48,9 +48,9 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base$view.about',
     meta: {
       title: 'about',
-      i18nKey: 'route.about',
       icon: 'fluent:book-information-24-regular',
-      order: 10
+      order: 10,
+      i18nKey: 'route.about'
     }
   },
   {
@@ -59,9 +59,9 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base',
     meta: {
       title: 'alova',
-      i18nKey: 'route.alova',
       icon: 'carbon:http',
-      order: 7
+      order: 7,
+      i18nKey: 'route.alova'
     },
     children: [
       {
@@ -70,8 +70,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.alova_request',
         meta: {
           title: 'alova_request',
-          i18nKey: 'route.alova_request',
-          order: 1
+          order: 1,
+          i18nKey: 'route.alova_request'
         }
       },
       {
@@ -80,9 +80,9 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.alova_scenes',
         meta: {
           title: 'alova_scenes',
-          i18nKey: 'route.alova_scenes',
           icon: 'cbi:scene-dynamic',
-          order: 3
+          order: 3,
+          i18nKey: 'route.alova_scenes'
         }
       },
       {
@@ -91,9 +91,9 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.alova_user',
         meta: {
           title: 'alova_user',
-          i18nKey: 'route.alova_user',
           icon: 'carbon:user-multiple',
-          order: 2
+          order: 2,
+          i18nKey: 'route.alova_user'
         }
       }
     ]
@@ -104,9 +104,9 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base',
     meta: {
       title: 'function',
-      i18nKey: 'route.function',
       icon: 'icon-park-outline:all-application',
-      order: 6
+      order: 6,
+      i18nKey: 'route.function'
     },
     children: [
       {
@@ -114,9 +114,9 @@ export const generatedRoutes: GeneratedRoute[] = [
         path: '/function/hide-child',
         meta: {
           title: 'function_hide-child',
-          i18nKey: 'route.function_hide-child',
           icon: 'material-symbols:filter-list-off',
-          order: 2
+          order: 2,
+          i18nKey: 'route.function_hide-child'
         },
         redirect: '/function/hide-child/one',
         children: [
@@ -126,10 +126,10 @@ export const generatedRoutes: GeneratedRoute[] = [
             component: 'view.function_hide-child_one',
             meta: {
               title: 'function_hide-child_one',
-              i18nKey: 'route.function_hide-child_one',
               icon: 'material-symbols:filter-list-off',
               hideInMenu: true,
-              activeMenu: 'function_hide-child'
+              activeMenu: 'function_hide-child',
+              i18nKey: 'route.function_hide-child_one'
             }
           },
           {
@@ -138,9 +138,9 @@ export const generatedRoutes: GeneratedRoute[] = [
             component: 'view.function_hide-child_three',
             meta: {
               title: 'function_hide-child_three',
-              i18nKey: 'route.function_hide-child_three',
               hideInMenu: true,
-              activeMenu: 'function_hide-child'
+              activeMenu: 'function_hide-child',
+              i18nKey: 'route.function_hide-child_three'
             }
           },
           {
@@ -149,9 +149,9 @@ export const generatedRoutes: GeneratedRoute[] = [
             component: 'view.function_hide-child_two',
             meta: {
               title: 'function_hide-child_two',
-              i18nKey: 'route.function_hide-child_two',
               hideInMenu: true,
-              activeMenu: 'function_hide-child'
+              activeMenu: 'function_hide-child',
+              i18nKey: 'route.function_hide-child_two'
             }
           }
         ]
@@ -162,11 +162,11 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.function_multi-tab',
         meta: {
           title: 'function_multi-tab',
-          i18nKey: 'route.function_multi-tab',
           icon: 'ic:round-tab',
           multiTab: true,
           hideInMenu: true,
-          activeMenu: 'function_tab'
+          activeMenu: 'function_tab',
+          i18nKey: 'route.function_multi-tab'
         }
       },
       {
@@ -175,9 +175,9 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.function_request',
         meta: {
           title: 'function_request',
-          i18nKey: 'route.function_request',
           icon: 'carbon:network-overlay',
-          order: 3
+          order: 3,
+          i18nKey: 'route.function_request'
         }
       },
       {
@@ -186,10 +186,10 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.function_super-page',
         meta: {
           title: 'function_super-page',
-          i18nKey: 'route.function_super-page',
           icon: 'ic:round-supervisor-account',
           order: 5,
-          roles: ['R_SUPER']
+          roles: ['R_SUPER'],
+          i18nKey: 'route.function_super-page'
         }
       },
       {
@@ -198,9 +198,9 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.function_tab',
         meta: {
           title: 'function_tab',
-          i18nKey: 'route.function_tab',
           icon: 'ic:round-tab',
-          order: 1
+          order: 1,
+          i18nKey: 'route.function_tab'
         }
       },
       {
@@ -209,9 +209,9 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.function_toggle-auth',
         meta: {
           title: 'function_toggle-auth',
-          i18nKey: 'route.function_toggle-auth',
           icon: 'ic:round-construction',
-          order: 4
+          order: 4,
+          i18nKey: 'route.function_toggle-auth'
         }
       }
     ]
@@ -222,9 +222,9 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base$view.home',
     meta: {
       title: 'home',
-      i18nKey: 'route.home',
       icon: 'mdi:monitor-dashboard',
-      order: 1
+      order: 1,
+      i18nKey: 'route.home'
     }
   },
   {
@@ -234,10 +234,10 @@ export const generatedRoutes: GeneratedRoute[] = [
     props: true,
     meta: {
       title: 'iframe-page',
-      i18nKey: 'route.iframe-page',
       constant: true,
       hideInMenu: true,
-      keepAlive: true
+      keepAlive: true,
+      i18nKey: 'route.iframe-page'
     }
   },
   {
@@ -247,9 +247,9 @@ export const generatedRoutes: GeneratedRoute[] = [
     props: true,
     meta: {
       title: 'login',
-      i18nKey: 'route.login',
       constant: true,
-      hideInMenu: true
+      hideInMenu: true,
+      i18nKey: 'route.login'
     }
   },
   {
@@ -258,10 +258,10 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base',
     meta: {
       title: 'manage',
-      i18nKey: 'route.manage',
       icon: 'carbon:cloud-service-management',
       order: 9,
-      roles: ['R_ADMIN']
+      roles: ['R_ADMIN'],
+      i18nKey: 'route.manage'
     },
     children: [
       {
@@ -270,11 +270,11 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.manage_menu',
         meta: {
           title: 'manage_menu',
-          i18nKey: 'route.manage_menu',
           icon: 'material-symbols:route',
           order: 3,
           roles: ['R_ADMIN'],
-          keepAlive: true
+          keepAlive: true,
+          i18nKey: 'route.manage_menu'
         }
       },
       {
@@ -283,10 +283,10 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.manage_role',
         meta: {
           title: 'manage_role',
-          i18nKey: 'route.manage_role',
           icon: 'carbon:user-role',
           order: 2,
-          roles: ['R_SUPER']
+          roles: ['R_SUPER'],
+          i18nKey: 'route.manage_role'
         }
       },
       {
@@ -295,10 +295,10 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.manage_user',
         meta: {
           title: 'manage_user',
-          i18nKey: 'route.manage_user',
           icon: 'ic:round-manage-accounts',
           order: 1,
-          roles: ['R_ADMIN']
+          roles: ['R_ADMIN'],
+          i18nKey: 'route.manage_user'
         }
       },
       {
@@ -308,10 +308,10 @@ export const generatedRoutes: GeneratedRoute[] = [
         props: true,
         meta: {
           title: 'manage_user-detail',
-          i18nKey: 'route.manage_user-detail',
           hideInMenu: true,
           roles: ['R_ADMIN'],
-          activeMenu: 'manage_user'
+          activeMenu: 'manage_user',
+          i18nKey: 'route.manage_user-detail'
         }
       }
     ]
@@ -322,8 +322,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base',
     meta: {
       title: 'multi-menu',
-      i18nKey: 'route.multi-menu',
-      order: 8
+      order: 8,
+      i18nKey: 'route.multi-menu'
     },
     children: [
       {
@@ -331,8 +331,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         path: '/multi-menu/first',
         meta: {
           title: 'multi-menu_first',
-          i18nKey: 'route.multi-menu_first',
-          order: 1
+          order: 1,
+          i18nKey: 'route.multi-menu_first'
         },
         children: [
           {
@@ -351,8 +351,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         path: '/multi-menu/second',
         meta: {
           title: 'multi-menu_second',
-          i18nKey: 'route.multi-menu_second',
-          order: 2
+          order: 2,
+          i18nKey: 'route.multi-menu_second'
         },
         children: [
           {
@@ -384,9 +384,9 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base',
     meta: {
       title: '插件示例',
-      i18nKey: 'route.plugin',
       order: 7,
-      icon: 'clarity:plugin-line'
+      icon: 'clarity:plugin-line',
+      i18nKey: 'route.plugin'
     },
     children: [
       {
@@ -395,8 +395,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.plugin_barcode',
         meta: {
           title: 'plugin_barcode',
-          i18nKey: 'route.plugin_barcode',
-          icon: 'ic:round-barcode'
+          icon: 'ic:round-barcode',
+          i18nKey: 'route.plugin_barcode'
         }
       },
       {
@@ -404,8 +404,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         path: '/plugin/charts',
         meta: {
           title: 'plugin_charts',
-          i18nKey: 'route.plugin_charts',
-          icon: 'mdi:chart-areaspline'
+          icon: 'mdi:chart-areaspline',
+          i18nKey: 'route.plugin_charts'
         },
         children: [
           {
@@ -414,8 +414,8 @@ export const generatedRoutes: GeneratedRoute[] = [
             component: 'view.plugin_charts_antv',
             meta: {
               title: 'plugin_charts_antv',
-              i18nKey: 'route.plugin_charts_antv',
-              icon: 'hugeicons:flow-square'
+              icon: 'hugeicons:flow-square',
+              i18nKey: 'route.plugin_charts_antv'
             }
           },
           {
@@ -424,8 +424,8 @@ export const generatedRoutes: GeneratedRoute[] = [
             component: 'view.plugin_charts_echarts',
             meta: {
               title: 'plugin_charts_echarts',
-              i18nKey: 'route.plugin_charts_echarts',
-              icon: 'simple-icons:apacheecharts'
+              icon: 'simple-icons:apacheecharts',
+              i18nKey: 'route.plugin_charts_echarts'
             }
           },
           {
@@ -434,8 +434,8 @@ export const generatedRoutes: GeneratedRoute[] = [
             component: 'view.plugin_charts_vchart',
             meta: {
               title: 'plugin_charts_vchart',
-              i18nKey: 'route.plugin_charts_vchart',
-              localIcon: 'visactor'
+              localIcon: 'visactor',
+              i18nKey: 'route.plugin_charts_vchart'
             }
           }
         ]
@@ -446,8 +446,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.plugin_copy',
         meta: {
           title: 'plugin_copy',
-          i18nKey: 'route.plugin_copy',
-          icon: 'mdi:clipboard-outline'
+          icon: 'mdi:clipboard-outline',
+          i18nKey: 'route.plugin_copy'
         }
       },
       {
@@ -455,8 +455,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         path: '/plugin/editor',
         meta: {
           title: 'plugin_editor',
-          i18nKey: 'route.plugin_editor',
-          icon: 'icon-park-outline:editor'
+          icon: 'icon-park-outline:editor',
+          i18nKey: 'route.plugin_editor'
         },
         children: [
           {
@@ -465,8 +465,8 @@ export const generatedRoutes: GeneratedRoute[] = [
             component: 'view.plugin_editor_markdown',
             meta: {
               title: 'plugin_editor_markdown',
-              i18nKey: 'route.plugin_editor_markdown',
-              icon: 'ri:markdown-line'
+              icon: 'ri:markdown-line',
+              i18nKey: 'route.plugin_editor_markdown'
             }
           },
           {
@@ -475,8 +475,8 @@ export const generatedRoutes: GeneratedRoute[] = [
             component: 'view.plugin_editor_quill',
             meta: {
               title: 'plugin_editor_quill',
-              i18nKey: 'route.plugin_editor_quill',
-              icon: 'mdi:file-document-edit-outline'
+              icon: 'mdi:file-document-edit-outline',
+              i18nKey: 'route.plugin_editor_quill'
             }
           }
         ]
@@ -487,9 +487,9 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.plugin_excel',
         meta: {
           title: 'plugin_excel',
-          i18nKey: 'route.plugin_excel',
           icon: 'ri:file-excel-2-line',
-          keepAlive: true
+          keepAlive: true,
+          i18nKey: 'route.plugin_excel'
         }
       },
       {
@@ -497,8 +497,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         path: '/plugin/gantt',
         meta: {
           title: 'plugin_gantt',
-          i18nKey: 'route.plugin_gantt',
-          icon: 'ant-design:bar-chart-outlined'
+          icon: 'ant-design:bar-chart-outlined',
+          i18nKey: 'route.plugin_gantt'
         },
         children: [
           {
@@ -507,8 +507,8 @@ export const generatedRoutes: GeneratedRoute[] = [
             component: 'view.plugin_gantt_dhtmlx',
             meta: {
               title: 'plugin_gantt_dhtmlx',
-              i18nKey: 'route.plugin_gantt_dhtmlx',
-              icon: 'gridicons:posts'
+              icon: 'gridicons:posts',
+              i18nKey: 'route.plugin_gantt_dhtmlx'
             }
           },
           {
@@ -517,8 +517,8 @@ export const generatedRoutes: GeneratedRoute[] = [
             component: 'view.plugin_gantt_vtable',
             meta: {
               title: 'plugin_gantt_vtable',
-              i18nKey: 'route.plugin_gantt_vtable',
-              localIcon: 'visactor'
+              localIcon: 'visactor',
+              i18nKey: 'route.plugin_gantt_vtable'
             }
           }
         ]
@@ -529,8 +529,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.plugin_icon',
         meta: {
           title: 'plugin_icon',
-          i18nKey: 'route.plugin_icon',
-          localIcon: 'custom-icon'
+          localIcon: 'custom-icon',
+          i18nKey: 'route.plugin_icon'
         }
       },
       {
@@ -539,8 +539,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.plugin_map',
         meta: {
           title: 'plugin_map',
-          i18nKey: 'route.plugin_map',
-          icon: 'mdi:map'
+          icon: 'mdi:map',
+          i18nKey: 'route.plugin_map'
         }
       },
       {
@@ -549,8 +549,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.plugin_pdf',
         meta: {
           title: 'plugin_pdf',
-          i18nKey: 'route.plugin_pdf',
-          icon: 'uiw:file-pdf'
+          icon: 'uiw:file-pdf',
+          i18nKey: 'route.plugin_pdf'
         }
       },
       {
@@ -559,8 +559,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.plugin_pinyin',
         meta: {
           title: 'plugin_pinyin',
-          i18nKey: 'route.plugin_pinyin',
-          icon: 'entypo-social:google-hangouts'
+          icon: 'entypo-social:google-hangouts',
+          i18nKey: 'route.plugin_pinyin'
         }
       },
       {
@@ -569,8 +569,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.plugin_print',
         meta: {
           title: 'plugin_print',
-          i18nKey: 'route.plugin_print',
-          icon: 'mdi:printer'
+          icon: 'mdi:printer',
+          i18nKey: 'route.plugin_print'
         }
       },
       {
@@ -579,8 +579,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.plugin_swiper',
         meta: {
           title: 'plugin_swiper',
-          i18nKey: 'route.plugin_swiper',
-          icon: 'simple-icons:swiper'
+          icon: 'simple-icons:swiper',
+          i18nKey: 'route.plugin_swiper'
         }
       },
       {
@@ -588,8 +588,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         path: '/plugin/tables',
         meta: {
           title: 'plugin_tables',
-          i18nKey: 'route.plugin_tables',
-          icon: 'icon-park-outline:table'
+          icon: 'icon-park-outline:table',
+          i18nKey: 'route.plugin_tables'
         },
         children: [
           {
@@ -598,8 +598,8 @@ export const generatedRoutes: GeneratedRoute[] = [
             component: 'view.plugin_tables_vtable',
             meta: {
               title: 'plugin_tables_vtable',
-              i18nKey: 'route.plugin_tables_vtable',
-              localIcon: 'visactor'
+              localIcon: 'visactor',
+              i18nKey: 'route.plugin_tables_vtable'
             }
           }
         ]
@@ -610,8 +610,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.plugin_typeit',
         meta: {
           title: 'plugin_typeit',
-          i18nKey: 'route.plugin_typeit',
-          icon: 'mdi:typewriter'
+          icon: 'mdi:typewriter',
+          i18nKey: 'route.plugin_typeit'
         }
       },
       {
@@ -620,8 +620,8 @@ export const generatedRoutes: GeneratedRoute[] = [
         component: 'view.plugin_video',
         meta: {
           title: 'plugin_video',
-          i18nKey: 'route.plugin_video',
-          icon: 'mdi:video'
+          icon: 'mdi:video',
+          i18nKey: 'route.plugin_video'
         }
       }
     ]
@@ -632,8 +632,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base$view.user-center',
     meta: {
       title: 'user-center',
-      i18nKey: 'route.user-center',
-      hideInMenu: true
+      hideInMenu: true,
+      i18nKey: 'route.user-center'
     }
   }
 ];

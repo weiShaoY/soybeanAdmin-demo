@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouterPush } from '@/hooks/common/router';
-import { $t } from '@/locales';
 import { useTabStore } from '@/store/modules/tab';
 
 defineOptions({ name: 'TabPage' });
@@ -22,38 +21,38 @@ function resetTabLabel() {
 
 <template>
   <ElSpace direction="vertical" fill :size="16">
-    <ElCard :header="$t('page.function.tab.tabOperate.title')" class="card-wrapper">
-      <ElDivider content-position="left">{{ $t('page.function.tab.tabOperate.addTab') }}</ElDivider>
-      <ElButton @click="routerPushByKey('about')">{{ $t('page.function.tab.tabOperate.addTabDesc') }}</ElButton>
-      <ElDivider content-position="left">{{ $t('page.function.tab.tabOperate.closeTab') }}</ElDivider>
+    <ElCard :header="'标签页操作'" class="card-wrapper">
+      <ElDivider content-position="left">{{ '添加标签页' }}</ElDivider>
+      <ElButton @click="routerPushByKey('about')">{{ '跳转到关于页面' }}</ElButton>
+      <ElDivider content-position="left">{{ '关闭标签页' }}</ElDivider>
       <ElSpace>
         <ElButton @click="tabStore.removeActiveTab">
-          {{ $t('page.function.tab.tabOperate.closeCurrentTab') }}
+          {{ '关闭当前标签页' }}
         </ElButton>
         <ElButton @click="tabStore.removeTabByRouteName('about')">
-          {{ $t('page.function.tab.tabOperate.closeAboutTab') }}
+          {{ '关闭"关于"标签页' }}
         </ElButton>
       </ElSpace>
-      <ElDivider content-position="left">{{ $t('page.function.tab.tabOperate.addMultiTab') }}</ElDivider>
+      <ElDivider content-position="left">{{ '添加多标签页' }}</ElDivider>
       <ElSpace>
         <ElButton @click="routerPushByKey('function_multi-tab')">
-          {{ $t('page.function.tab.tabOperate.addMultiTabDesc1') }}
+          {{ '跳转到多标签页页面' }}
         </ElButton>
         <ElButton @click="routerPushByKey('function_multi-tab', { query: { a: '1' } })">
-          {{ $t('page.function.tab.tabOperate.addMultiTabDesc2') }}
+          {{'跳转到多标签页页面(带有查询参数)'}}
         </ElButton>
       </ElSpace>
     </ElCard>
-    <ElCard :header="$t('page.function.tab.tabTitle.title')" class="card-wrapper">
-      <ElDivider content-position="left">{{ $t('page.function.tab.tabTitle.changeTitle') }}</ElDivider>
-      <ElInput v-model="tabLabel" class="max-w-240px">
+    <ElCard :header="'标签页标题'" class="card-wrapper">
+      <ElDivider content-position="left">{{ '修改标题' }}</ElDivider>
+      <ElInput v-model="tabLabel" class="max-w-[240px]">
         <template #append>
-          <ElButton type="primary" @click="changeTabLabel">{{ $t('page.function.tab.tabTitle.change') }}</ElButton>
+          <ElButton type="primary" @click="changeTabLabel">{{ '修改' }}</ElButton>
         </template>
       </ElInput>
-      <ElDivider content-position="left">{{ $t('page.function.tab.tabTitle.resetTitle') }}</ElDivider>
-      <ElButton type="danger" plain class="w-80px" @click="resetTabLabel">
-        {{ $t('page.function.tab.tabTitle.reset') }}
+      <ElDivider content-position="left">{{ '重置标题' }}</ElDivider>
+      <ElButton type="danger" plain class="w-[80px]" @click="resetTabLabel">
+        {{ '重置' }}
       </ElButton>
     </ElCard>
   </ElSpace>

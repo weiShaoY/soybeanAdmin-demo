@@ -1,6 +1,5 @@
 <script setup lang="ts" generic="T extends Record<string, unknown>, K = never">
 import { VueDraggable } from 'vue-draggable-plus';
-import { $t } from '@/locales';
 
 defineOptions({ name: 'TableColumnSetting' });
 
@@ -17,7 +16,7 @@ const columns = defineModel<UI.TableColumnCheck[]>('columns', {
         <template #icon>
           <icon-ant-design-setting-outlined class="text-icon" />
         </template>
-        {{ $t('common.columnSetting') }}
+        {{ "列设置" }}
       </ElButton>
     </template>
     <VueDraggable v-model="columns" :animation="150" filter=".none_draggable">

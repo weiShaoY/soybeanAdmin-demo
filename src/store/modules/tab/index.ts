@@ -19,8 +19,6 @@ import {
   getTabByRoute,
   getTabIdByRoute,
   isTabInTabs,
-  updateTabByI18nKey,
-  updateTabsByI18nKey
 } from './shared';
 
 /** Tab 状态管理 */
@@ -68,7 +66,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
 
     if (themeStore.tab.cache && storageTabs) {
       const extractedTabs = extractTabsByAllRoutes(router, storageTabs);
-      tabs.value = updateTabsByI18nKey(extractedTabs);
+      tabs.value = extractedTabs;
     }
 
     addTab(currentRoute);
@@ -253,14 +251,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     return fixedTabIds.includes(tabId);
   }
 
-  /** 根据语言更新 Tab */
-  function updateTabsByLocale() {
-    tabs.value = updateTabsByI18nKey(tabs.value);
 
-    if (homeTab.value) {
-      homeTab.value = updateTabByI18nKey(homeTab.value);
-    }
-  }
 
   /** 缓存 Tab */
   function cacheTabs() {
@@ -305,8 +296,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     resetTabLabel,
     /** 判断 Tab 是否固定 */
     isTabRetain,
-    /** 根据语言更新 Tab */
-    updateTabsByLocale,
+
     /** 根据路由获取 Tab ID */
     getTabIdByRoute,
     /** 缓存 Tab */

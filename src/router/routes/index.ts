@@ -14,8 +14,7 @@ const customRoutes: CustomRoute[] = [
     path: '/exception',
     component: 'layout.base',
     meta: {
-      title: 'exception',
-      i18nKey: 'route.exception',
+      title: 'Exception',
       icon: 'ant-design:exception-outlined',
       order: 7
     },
@@ -25,8 +24,7 @@ const customRoutes: CustomRoute[] = [
         path: '/exception/403',
         component: 'view.403',
         meta: {
-          title: 'exception_403',
-          i18nKey: 'route.exception_403',
+          title: '403',
           icon: 'ic:baseline-block'
         }
       },
@@ -35,8 +33,7 @@ const customRoutes: CustomRoute[] = [
         path: '/exception/404',
         component: 'view.404',
         meta: {
-          title: 'exception_404',
-          i18nKey: 'route.exception_404',
+          title: '404',
           icon: 'ic:baseline-web-asset-off'
         }
       },
@@ -45,8 +42,7 @@ const customRoutes: CustomRoute[] = [
         path: '/exception/500',
         component: 'view.500',
         meta: {
-          title: 'exception_500',
-          i18nKey: 'route.exception_500',
+          title: '500',
           icon: 'ic:baseline-wifi-off'
         }
       }
@@ -57,8 +53,7 @@ const customRoutes: CustomRoute[] = [
     path: '/document',
     component: 'layout.base',
     meta: {
-      title: 'document',
-      i18nKey: 'route.document',
+      title: 'Document',
       order: 2,
       icon: 'mdi:file-document-multiple-outline'
     },
@@ -71,8 +66,7 @@ const customRoutes: CustomRoute[] = [
           url: 'https://antdv.com/components/overview-cn'
         },
         meta: {
-          title: 'document_antd',
-          i18nKey: 'route.document_antd',
+          title: 'Ant Design Vue Document',
           order: 7,
           icon: 'logos:ant-design'
         }
@@ -85,8 +79,7 @@ const customRoutes: CustomRoute[] = [
           url: 'https://www.UI.com/zh-CN/os-theme/docs/introduction'
         },
         meta: {
-          title: 'document_naive',
-          i18nKey: 'route.document_naive',
+          title: 'Naive UI Document',
           order: 6,
           icon: 'logos:naiveui'
         }
@@ -99,8 +92,7 @@ const customRoutes: CustomRoute[] = [
           url: 'https://element-plus.org/zh-CN/'
         },
         meta: {
-          title: 'document_element-plus',
-          i18nKey: 'route.document_element-plus',
+          title: 'Element Plus Document',
           order: 7,
           icon: 'ep:element-plus'
         }
@@ -113,8 +105,7 @@ const customRoutes: CustomRoute[] = [
           url: 'https://alova.js.org'
         },
         meta: {
-          title: 'document_alova',
-          i18nKey: 'route.document_alova',
+          title: 'Alova Document',
           order: 8,
           localIcon: 'alova'
         }
@@ -127,8 +118,7 @@ const customRoutes: CustomRoute[] = [
           url: 'https://docs.soybeanjs.cn/zh'
         },
         meta: {
-          title: 'document_project',
-          i18nKey: 'route.document_project',
+          title: 'Project Document',
           order: 1,
           localIcon: 'logo'
         }
@@ -138,8 +128,7 @@ const customRoutes: CustomRoute[] = [
         path: '/document/project-link',
         component: 'view.iframe-page',
         meta: {
-          title: 'document_project-link',
-          i18nKey: 'route.document_project-link',
+          title: 'Project Document(External Link)',
           order: 2,
           localIcon: 'logo',
           href: 'https://docs.soybeanjs.cn/zh'
@@ -153,8 +142,7 @@ const customRoutes: CustomRoute[] = [
           url: 'https://unocss.dev/'
         },
         meta: {
-          title: 'document_unocss',
-          i18nKey: 'route.document_unocss',
+          title: 'UnoCSS Document',
           order: 5,
           icon: 'logos:unocss'
         }
@@ -167,8 +155,7 @@ const customRoutes: CustomRoute[] = [
           url: 'https://cn.vitejs.dev/'
         },
         meta: {
-          title: 'document_vite',
-          i18nKey: 'route.document_vite',
+          title: 'Vite Document',
           order: 4,
           icon: 'logos:vitejs'
         }
@@ -181,8 +168,7 @@ const customRoutes: CustomRoute[] = [
           url: 'https://cn.vuejs.org/'
         },
         meta: {
-          title: 'document_vue',
-          i18nKey: 'route.document_vue',
+          title: 'Vue Document',
           order: 3,
           icon: 'logos:vue'
         }
