@@ -1,6 +1,8 @@
-import { computed } from 'vue';
-import { useCountDown, useLoading } from '@sa/hooks';
-import { REG_PHONE } from '@/constants/reg';
+import { REG_PHONE } from '@/constants/reg'
+
+import { useCountDown, useLoading } from '@sa/hooks'
+
+import { computed } from 'vue'
 
 /**
  * 自定义验证码 Hook
@@ -8,8 +10,9 @@ import { REG_PHONE } from '@/constants/reg';
  * @returns {object} 包含验证码相关方法和状态的对象
  */
 export function useCaptcha() {
-  const { loading, startLoading, endLoading } = useLoading();
-  const { count, start, stop, isCounting } = useCountDown(10);
+  const { loading, startLoading, endLoading } = useLoading()
+
+  const { count, start, stop, isCounting } = useCountDown(10)
 
   /**
    * 计算验证码按钮的文本
@@ -17,20 +20,20 @@ export function useCaptcha() {
    * @returns {string} 验证码按钮的文本
    */
   const label = computed(() => {
-    let text = '获取验证码';
+    let text = '获取验证码'
 
-    const countingLabel = `${count.value}秒后重新获取'`;
+    const countingLabel = `${count.value}秒后重新获取'`
 
     if (loading.value) {
-      text = '';
+      text = ''
     }
 
     if (isCounting.value) {
-      text = countingLabel;
+      text = countingLabel
     }
 
-    return text;
-  });
+    return text
+  })
 
   /**
    * 检查手机号是否有效
@@ -40,18 +43,18 @@ export function useCaptcha() {
    */
   function isPhoneValid(phone: string): boolean {
     if (phone.trim() === '') {
-      window.$message?.error?.('请输入手机号');
+      window.$message?.error?.('请输入手机号')
 
-      return false;
+      return false
     }
 
     if (!REG_PHONE.test(phone)) {
-      window.$message?.error?.('手机号格式不正确'));
+      window.$message?.error?.('手机号格式不正确')
 
-      return false;
+      return false
     }
 
-    return true;
+    return true
   }
 
   /**
@@ -61,24 +64,24 @@ export function useCaptcha() {
    * @returns {Promise<void>}
    */
   async function getCaptcha(phone: string): Promise<void> {
-    const valid = isPhoneValid(phone);
+    const valid = isPhoneValid(phone)
 
     if (!valid || loading.value) {
-      return;
+      return
     }
 
-    startLoading();
+    startLoading()
 
     // 模拟请求
-    await new Promise(resolve => {
-      setTimeout(resolve, 500);
-    });
+    await new Promise((resolve) => {
+      setTimeout(resolve, 500)
+    })
 
-    window.$message?.success?.('验证码发送成功');
+    window.$message?.success?.('验证码发送成功')
 
-    start();
+    start()
 
-    endLoading();
+    endLoading()
   }
 
   return {
@@ -87,6 +90,6 @@ export function useCaptcha() {
     stop,
     isCounting,
     loading,
-    getCaptcha
-  };
+    getCaptcha,
+  }
 }
