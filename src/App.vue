@@ -5,8 +5,6 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 import { computed } from 'vue'
 
-import { useAppStore } from './store/modules/app'
-
 import { useThemeStore } from './store/modules/theme'
 
 // 组件名称
@@ -14,13 +12,14 @@ defineOptions({
   name: 'App',
 })
 
-/** 获取应用状态管理 */
-const appStore = useAppStore()
-
-/** 获取主题状态管理 */
+/**
+ * 获取主题状态管理
+ */
 const themeStore = useThemeStore()
 
-/** 计算水印属性 */
+/**
+ * 计算水印属性
+ */
 const watermarkProps = computed<WatermarkProps>(() => {
   return {
     /** 设置水印内容，如果水印可见则显示对应文本，否则为空 */

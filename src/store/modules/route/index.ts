@@ -184,7 +184,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
   /** 初始化常量路由 */
   async function initConstantRoute() {
-    if (isInitConstantRoute.value) { return }
+    if (isInitConstantRoute.value) {
+      return
+    }
 
     const staticRoute = createStaticRoutes()
 
@@ -333,7 +335,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 获取权限路由是否存在
    *
    * @param {RouteMap[RouteKey]} routePath 路由路径
-   * @returns {Promise<boolean>}
    */
   async function getIsAuthRouteExist(routePath: RouteMap[RouteKey]) {
     const routeName = getRouteName(routePath)
