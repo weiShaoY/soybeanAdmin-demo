@@ -33,7 +33,7 @@ export const colorNames: [hex: string, name: string][] = [
   ['#00a693', 'Persian Green'],
   ['#00a86b', 'Jade'],
   ['#00cc99', 'Caribbean Green'],
-  ['#00cccc', "Robin's Egg Blue"],
+  ['#00cccc', 'Robin\'s Egg Blue'],
   ['#00ff00', 'Green'],
   ['#00ff7f', 'Spring Green'],
   ['#00ffff', 'Cyan Aqua'],
@@ -711,7 +711,7 @@ export const colorNames: [hex: string, name: string][] = [
   ['#960018', 'Carmine'],
   ['#964b00', 'Brown'],
   ['#967059', 'Leather'],
-  ['#9678b6', "Purple Mountain's Majesty"],
+  ['#9678b6', 'Purple Mountain\'s Majesty'],
   ['#967bb6', 'Lavender Purple'],
   ['#96a8a1', 'Pewter'],
   ['#96bbab', 'Summer Green'],
@@ -1564,8 +1564,8 @@ export const colorNames: [hex: string, name: string][] = [
   ['#ffff99', 'Pale Canary'],
   ['#ffffb4', 'Portafino'],
   ['#fffff0', 'Ivory'],
-  ['#ffffff', 'White']
-];
+  ['#ffffff', 'White'],
+]
 
 /**
  * 十六进制颜色值映射到颜色名称
@@ -1574,6 +1574,7 @@ export const colorNames: [hex: string, name: string][] = [
  * - 值：颜色名称
  */
 export const colorNameMap = colorNames.reduce<Record<string, string>>((acc, [hex, name]) => {
-  acc[hex] = name;
-  return acc;
-}, {});
+  acc[hex] = name
+  return acc
+}, {
+})

@@ -1,16 +1,21 @@
-import type { App } from 'vue';
+import type { App } from 'vue'
+
+import type { RouterHistory } from 'vue-router'
+
 import {
-  type RouterHistory,
   createMemoryHistory,
   createRouter,
   createWebHashHistory,
-  createWebHistory
-} from 'vue-router';
-import { createBuiltinVueRoutes } from './routes/builtin';
-import { createRouterGuard } from './guard';
+  createWebHistory,
+
+} from 'vue-router'
+
+import { createRouterGuard } from './guard'
+
+import { createBuiltinVueRoutes } from './routes/builtin'
 
 // 从环境变量中获取路由历史模式和基本 URL，默认为 'history' 模式
-const { VITE_ROUTER_HISTORY_MODE = 'history', VITE_BASE_URL } = import.meta.env;
+const { VITE_ROUTER_HISTORY_MODE = 'history', VITE_BASE_URL } = import.meta.env
 
 /**
  * 路由历史模式映射表
@@ -29,18 +34,19 @@ const historyCreatorMap: Record<Env.RouterHistoryMode, (base?: string) => Router
   history: createWebHistory,
 
   /** 使用内存模式，不依赖 URL 变更，适用于 SSR 或无浏览器环境 */
-  memory: createMemoryHistory
-};
+  memory: createMemoryHistory,
+}
 
 /** 创建路由实例 */
 export const router = createRouter({
   /** 设置路由历史记录 */
   history: historyCreatorMap[VITE_ROUTER_HISTORY_MODE](VITE_BASE_URL),
-  /** 设置路由表 */
-  routes: createBuiltinVueRoutes()
-});
 
-console.log('%c Line:36 🍪 createBuiltinVueRoutes', 'color:#42b983', createBuiltinVueRoutes());
+  /** 设置路由表 */
+  routes: createBuiltinVueRoutes(),
+})
+
+console.log('%c Line:36 🍪 createBuiltinVueRoutes', 'color:#42b983', createBuiltinVueRoutes())
 
 /**
  * 设置 Vue Router
@@ -49,11 +55,11 @@ console.log('%c Line:36 🍪 createBuiltinVueRoutes', 'color:#42b983', createBui
  */
 export async function setupRouter(app: App) {
   // 在 Vue 应用中使用路由
-  app.use(router);
+  app.use(router)
 
   // 创建并应用路由守卫
-  createRouterGuard(router);
+  createRouterGuard(router)
 
   // 等待路由准备就绪
-  await router.isReady();
+  await router.isReady()
 }

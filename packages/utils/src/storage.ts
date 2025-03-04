@@ -1,7 +1,7 @@
-import localforage from 'localforage';
+import localforage from 'localforage'
 
 /** 存储类型 */
-export type StorageType = 'local' | 'session';
+export type StorageType = 'local' | 'session'
 
 /**
  * 创建存储对象
@@ -12,7 +12,7 @@ export type StorageType = 'local' | 'session';
  */
 export function createStorage<T extends object>(type: StorageType, storagePrefix: string) {
   /** 存储对象 */
-  const stg = type === 'session' ? window.sessionStorage : window.localStorage;
+  const stg = type === 'session' ? window.sessionStorage : window.localStorage
 
   /** 存储对象 */
   const storage = {
@@ -24,10 +24,11 @@ export function createStorage<T extends object>(type: StorageType, storagePrefix
      */
     set<K extends keyof T>(key: K, value: T[K]) {
       /** 序列化后的 JSON 字符串 */
-      const json = JSON.stringify(value);
+      const json = JSON.stringify(value)
 
-      stg.setItem(`${storagePrefix}${key as string}`, json);
+      stg.setItem(`${storagePrefix}${key as string}`, json)
     },
+
     /**
      * 获取存储项
      *
@@ -36,23 +37,25 @@ export function createStorage<T extends object>(type: StorageType, storagePrefix
      */
     get<K extends keyof T>(key: K): T[K] | null {
       /** 获取存储项的 JSON 字符串 */
-      const json = stg.getItem(`${storagePrefix}${key as string}`);
+      const json = stg.getItem(`${storagePrefix}${key as string}`)
+
       if (json) {
         /** 解析后的存储项数据 */
-        let storageData: T[K] | null = null;
+        let storageData: T[K] | null = null
 
         try {
-          storageData = JSON.parse(json);
-        } catch {}
+          storageData = JSON.parse(json)
+        }
+        catch {}
 
         if (storageData) {
-          return storageData as T[K];
+          return storageData as T[K]
         }
       }
 
-      stg.removeItem(`${storagePrefix}${key as string}`);
+      stg.removeItem(`${storagePrefix}${key as string}`)
 
-      return null;
+      return null
     },
 
     /**
@@ -61,19 +64,21 @@ export function createStorage<T extends object>(type: StorageType, storagePrefix
      * @param {K} key 存储项的键
      */
     remove(key: keyof T) {
-      stg.removeItem(`${storagePrefix}${key as string}`);
+      stg.removeItem(`${storagePrefix}${key as string}`)
     },
 
     /** 清空存储 */
     clear() {
-      stg.clear();
-    }
-  };
-  return storage;
+      stg.clear()
+    },
+  }
+
+  return storage
 }
 
 /** localforage 存储接口，扩展 getItem、setItem 和 removeItem 的泛型能力 */
 type LocalForage<T extends object> = Omit<typeof localforage, 'getItem' | 'setItem' | 'removeItem'> & {
+
   /**
    * 获取存储项
    *
@@ -81,7 +86,7 @@ type LocalForage<T extends object> = Omit<typeof localforage, 'getItem' | 'setIt
    * @param {(err: any, value: T[K] | null) => void} [callback] 回调函数
    * @returns {Promise<T[K] | null>} 存储项的值或 Promise
    */
-  getItem<K extends keyof T>(key: K, callback?: (err: any, value: T[K] | null) => void): Promise<T[K] | null>;
+  getItem: <K extends keyof T>(key: K, callback?: (err: any, value: T[K] | null) => void) => Promise<T[K] | null>
 
   /**
    * 设置存储项
@@ -91,7 +96,7 @@ type LocalForage<T extends object> = Omit<typeof localforage, 'getItem' | 'setIt
    * @param {(err: any, value: T[K]) => void} [callback] 回调函数
    * @returns {Promise<T[K]>} 存储项的值或 Promise
    */
-  setItem<K extends keyof T>(key: K, value: T[K], callback?: (err: any, value: T[K]) => void): Promise<T[K]>;
+  setItem: <K extends keyof T>(key: K, value: T[K], callback?: (err: any, value: T[K]) => void) => Promise<T[K]>
 
   /**
    * 移除存储项
@@ -100,11 +105,11 @@ type LocalForage<T extends object> = Omit<typeof localforage, 'getItem' | 'setIt
    * @param {(err: any) => void} [callback] 回调函数
    * @returns {Promise<void>} Promise
    */
-  removeItem(key: keyof T, callback?: (err: any) => void): Promise<void>;
-};
+  removeItem: (key: keyof T, callback?: (err: any) => void) => Promise<void>
+}
 
 /** LocalForage 驱动类型 */
-type LocalforageDriver = 'local' | 'indexedDB' | 'webSQL';
+type LocalforageDriver = 'local' | 'indexedDB' | 'webSQL'
 
 /**
  * 创建 LocalForage 存储对象
@@ -118,12 +123,12 @@ export function createLocalforage<T extends object>(driver: LocalforageDriver): 
   const driverMap: Record<LocalforageDriver, string> = {
     local: localforage.LOCALSTORAGE,
     indexedDB: localforage.INDEXEDDB,
-    webSQL: localforage.WEBSQL
-  };
+    webSQL: localforage.WEBSQL,
+  }
 
   localforage.config({
-    driver: driverMap[driver]
-  });
+    driver: driverMap[driver],
+  })
 
-  return localforage as LocalForage<T>;
+  return localforage as LocalForage<T>
 }

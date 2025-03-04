@@ -1,4 +1,4 @@
-import type { Task } from 'dhtmlx-gantt';
+import type { Task } from 'dhtmlx-gantt'
 
 export const ganttTasks: Task[] = [
   {
@@ -9,7 +9,7 @@ export const ganttTasks: Task[] = [
     open: true,
     start_date: new Date('2024-01-10 00:00'),
     duration: 12,
-    parent: 0
+    parent: 0,
   },
   {
     id: 12,
@@ -20,7 +20,7 @@ export const ganttTasks: Task[] = [
     render: 'split',
     parent: '11',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 99,
@@ -29,7 +29,7 @@ export const ganttTasks: Task[] = [
     end_date: new Date('2024-03-25 00:00'),
     parent: '12',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 98,
@@ -38,7 +38,7 @@ export const ganttTasks: Task[] = [
     duration: 4,
     parent: '12',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 97,
@@ -47,7 +47,7 @@ export const ganttTasks: Task[] = [
     duration: 10,
     parent: '12',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 13,
@@ -58,7 +58,7 @@ export const ganttTasks: Task[] = [
     parent: '11',
     progress: 0.5,
     open: false,
-    duration: 11
+    duration: 11,
   },
   {
     id: 17,
@@ -67,7 +67,7 @@ export const ganttTasks: Task[] = [
     end_date: new Date('2024-04-03 00:00'),
     parent: '13',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 18,
@@ -76,7 +76,7 @@ export const ganttTasks: Task[] = [
     duration: 5,
     parent: '13',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 19,
@@ -85,7 +85,7 @@ export const ganttTasks: Task[] = [
     duration: 6,
     parent: '13',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 20,
@@ -94,7 +94,7 @@ export const ganttTasks: Task[] = [
     duration: 8,
     parent: '13',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 31,
@@ -103,7 +103,7 @@ export const ganttTasks: Task[] = [
     duration: 8,
     parent: '13',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 32,
@@ -112,7 +112,7 @@ export const ganttTasks: Task[] = [
     duration: 9,
     parent: '13',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 33,
@@ -121,7 +121,7 @@ export const ganttTasks: Task[] = [
     duration: 2,
     parent: '13',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 14,
@@ -130,7 +130,7 @@ export const ganttTasks: Task[] = [
     duration: 30,
     parent: '11',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 15,
@@ -139,7 +139,7 @@ export const ganttTasks: Task[] = [
     duration: 46,
     parent: '11',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 16,
@@ -150,7 +150,7 @@ export const ganttTasks: Task[] = [
     progress: 0,
     open: true,
     start_date: new Date('2024-07-22 00:00'),
-    duration: 11
+    duration: 11,
   },
   {
     id: 21,
@@ -159,7 +159,7 @@ export const ganttTasks: Task[] = [
     duration: 7,
     parent: '16',
     progress: 0,
-    open: true
+    open: true,
   },
   {
     id: 22,
@@ -168,6 +168,6 @@ export const ganttTasks: Task[] = [
     duration: 7,
     parent: '16',
     progress: 0,
-    open: true
-  }
-];
+    open: true,
+  },
+]

@@ -1,8 +1,12 @@
-import type { CreateAxiosDefaults } from 'axios';
-import type { IAxiosRetryConfig } from 'axios-retry';
-import { stringify } from 'qs';
-import { isHttpSuccess } from './shared';
-import type { RequestOption } from './type';
+import type { CreateAxiosDefaults } from 'axios'
+
+import type { IAxiosRetryConfig } from 'axios-retry'
+
+import type { RequestOption } from './type'
+
+import { stringify } from 'qs'
+
+import { isHttpSuccess } from './shared'
 
 /**
  * 创建默认的请求选项
@@ -26,12 +30,12 @@ export function createDefaultOptions<ResponseData = any>(options?: Partial<Reque
     transformBackendResponse: async response => response.data,
 
     /** 处理请求错误的回调，默认不执行任何操作 */
-    onError: async () => {}
-  };
+    onError: async () => {},
+  }
 
-  Object.assign(opts, options);
+  Object.assign(opts, options)
 
-  return opts;
+  return opts
 }
 
 /**
@@ -43,12 +47,12 @@ export function createDefaultOptions<ResponseData = any>(options?: Partial<Reque
 export function createRetryOptions(config?: Partial<CreateAxiosDefaults>) {
   /** 定义默认的重试配置，默认不重试 */
   const retryConfig: IAxiosRetryConfig = {
-    retries: 0
-  };
+    retries: 0,
+  }
 
-  Object.assign(retryConfig, config);
+  Object.assign(retryConfig, config)
 
-  return retryConfig;
+  return retryConfig
 }
 
 /**
@@ -58,25 +62,28 @@ export function createRetryOptions(config?: Partial<CreateAxiosDefaults>) {
  * @returns 完整的 Axios 配置
  */
 export function createAxiosConfig(config?: Partial<CreateAxiosDefaults>) {
-  const TEN_SECONDS = 10 * 1000;
+  const TEN_SECONDS = 10 * 1000
 
   const axiosConfig: CreateAxiosDefaults = {
     /** 超时时间 */
     timeout: TEN_SECONDS,
+
     /** 默认请求头，设置为 JSON 格式 */
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
 
     /** 验证 HTTP 响应状态码，使用 isHttpSuccess 函数 */
     validateStatus: isHttpSuccess,
-    /** 序列化请求参数，使用 qs 库的 stringify 方法s */
-    paramsSerializer: params => {
-      return stringify(params);
-    }
-  };
-  // 合并传入的 config 配置
-  Object.assign(axiosConfig, config);
 
-  return axiosConfig;
+    /** 序列化请求参数，使用 qs 库的 stringify 方法s */
+    paramsSerializer: (params) => {
+      return stringify(params)
+    },
+  }
+
+  // 合并传入的 config 配置
+  Object.assign(axiosConfig, config)
+
+  return axiosConfig
 }

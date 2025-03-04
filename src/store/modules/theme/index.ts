@@ -1,67 +1,85 @@
-import { computed, effectScope, onScopeDispose, ref, toRefs, watch } from 'vue';
-import type { Ref } from 'vue';
-import { defineStore } from 'pinia';
-import { useEventListener, usePreferredColorScheme } from '@vueuse/core';
-import { getPaletteColorByNumber } from '@sa/color';
-import { SetupStoreId } from '@/enum';
-import { localStg } from '@/utils/storage';
+import type { Ref } from 'vue'
+
+import { SetupStoreId } from '@/enum'
+
+import { localStg } from '@/utils/storage'
+
+import { getPaletteColorByNumber } from '@sa/color'
+
+import { useEventListener, usePreferredColorScheme } from '@vueuse/core'
+
+import { defineStore } from 'pinia'
+
+import {
+  computed,
+  effectScope,
+  onScopeDispose,
+  ref,
+  toRefs,
+  watch,
+} from 'vue'
+
 import {
   addThemeVarsToGlobal,
   createThemeToken,
   getNaiveTheme,
   initThemeSettings,
   toggleAuxiliaryColorModes,
-  toggleCssDarkMode
-} from './shared';
+  toggleCssDarkMode,
+} from './shared'
 
 /** 主题存储 */
 export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
-  const scope = effectScope();
-  const osTheme = usePreferredColorScheme();
+  const scope = effectScope()
+
+  const osTheme = usePreferredColorScheme()
 
   /** 主题设置 */
-  const settings: Ref<App.Theme.ThemeSetting> = ref(initThemeSettings());
+  const settings: Ref<App.Theme.ThemeSetting> = ref(initThemeSettings())
 
   /** 暗模式 */
   const darkMode = computed(() => {
     if (settings.value.themeScheme === 'auto') {
-      return osTheme.value === 'dark';
+      return osTheme.value === 'dark'
     }
-    return settings.value.themeScheme === 'dark';
-  });
+
+    return settings.value.themeScheme === 'dark'
+  })
 
   /** 灰度模式 */
-  const grayscaleMode = computed(() => settings.value.grayscale);
+  const grayscaleMode = computed(() => settings.value.grayscale)
 
   /** 色盲模式 */
-  const colourWeaknessMode = computed(() => settings.value.colourWeakness);
+  const colourWeaknessMode = computed(() => settings.value.colourWeakness)
 
   /** 主题颜色 */
   const themeColors = computed(() => {
-    const { themeColor, otherColor, isInfoFollowPrimary } = settings.value;
+    const { themeColor, otherColor, isInfoFollowPrimary } = settings.value
+
     const colors: App.Theme.ThemeColor = {
       primary: themeColor,
       ...otherColor,
-      info: isInfoFollowPrimary ? themeColor : otherColor.info
-    };
-    return colors;
-  });
+      info: isInfoFollowPrimary ? themeColor : otherColor.info,
+    }
+
+    return colors
+  })
 
   /** UI 主题 */
-  const uiTheme = computed(() => getNaiveTheme(themeColors.value, settings.value.recommendColor));
+  const uiTheme = computed(() => getNaiveTheme(themeColors.value, settings.value.recommendColor))
 
   /**
    * 设置 JSON
    *
    * 用于复制设置
    */
-  const settingsJson = computed(() => JSON.stringify(settings.value));
+  const settingsJson = computed(() => JSON.stringify(settings.value))
 
   /** 重置存储 */
   function resetStore() {
-    const themeStore = useThemeStore();
+    const themeStore = useThemeStore()
 
-    themeStore.$reset();
+    themeStore.$reset()
   }
 
   /**
@@ -70,7 +88,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
    * @param themeScheme 主题方案
    */
   function setThemeScheme(themeScheme: UnionKey.ThemeScheme) {
-    settings.value.themeScheme = themeScheme;
+    settings.value.themeScheme = themeScheme
   }
 
   /**
@@ -79,7 +97,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
    * @param isGrayscale 是否启用灰度模式
    */
   function setGrayscale(isGrayscale: boolean) {
-    settings.value.grayscale = isGrayscale;
+    settings.value.grayscale = isGrayscale
   }
 
   /**
@@ -88,20 +106,20 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
    * @param isColourWeakness 是否启用色盲模式
    */
   function setColourWeakness(isColourWeakness: boolean) {
-    settings.value.colourWeakness = isColourWeakness;
+    settings.value.colourWeakness = isColourWeakness
   }
 
   /** 切换主题方案 */
   function toggleThemeScheme() {
-    const themeSchemes: UnionKey.ThemeScheme[] = ['light', 'dark', 'auto'];
+    const themeSchemes: UnionKey.ThemeScheme[] = ['light', 'dark', 'auto']
 
-    const index = themeSchemes.findIndex(item => item === settings.value.themeScheme);
+    const index = themeSchemes.findIndex(item => item === settings.value.themeScheme)
 
-    const nextIndex = index === themeSchemes.length - 1 ? 0 : index + 1;
+    const nextIndex = index === themeSchemes.length - 1 ? 0 : index + 1
 
-    const nextThemeScheme = themeSchemes[nextIndex];
+    const nextThemeScheme = themeSchemes[nextIndex]
 
-    setThemeScheme(nextThemeScheme);
+    setThemeScheme(nextThemeScheme)
   }
 
   /**
@@ -111,18 +129,19 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
    * @param color 主题颜色
    */
   function updateThemeColors(key: App.Theme.ThemeColorKey, color: string) {
-    let colorValue = color;
+    let colorValue = color
 
     if (settings.value.recommendColor) {
       // 根据提供的颜色和颜色名称获取调色板，并使用适当的颜色
 
-      colorValue = getPaletteColorByNumber(color, 500, true);
+      colorValue = getPaletteColorByNumber(color, 500, true)
     }
 
     if (key === 'primary') {
-      settings.value.themeColor = colorValue;
-    } else {
-      settings.value.otherColor[key] = colorValue;
+      settings.value.themeColor = colorValue
+    }
+    else {
+      settings.value.otherColor[key] = colorValue
     }
   }
 
@@ -132,7 +151,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
    * @param mode 主题布局模式
    */
   function setThemeLayout(mode: UnionKey.ThemeLayoutMode) {
-    settings.value.layout.mode = mode;
+    settings.value.layout.mode = mode
   }
 
   /** 设置主题变量到全局 */
@@ -140,9 +159,10 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     const { themeTokens, darkThemeTokens } = createThemeToken(
       themeColors.value,
       settings.value.tokens,
-      settings.value.recommendColor
-    );
-    addThemeVarsToGlobal(themeTokens, darkThemeTokens);
+      settings.value.recommendColor,
+    )
+
+    addThemeVarsToGlobal(themeTokens, darkThemeTokens)
   }
 
   /**
@@ -151,58 +171,64 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
    * @param reverse 反转水平混合
    */
   function setLayoutReverseHorizontalMix(reverse: boolean) {
-    settings.value.layout.reverseHorizontalMix = reverse;
+    settings.value.layout.reverseHorizontalMix = reverse
   }
 
   /** 缓存主题设置 */
   function cacheThemeSettings() {
-    const isProd = import.meta.env.PROD;
+    const isProd = import.meta.env.PROD
 
-    if (!isProd) return;
+    if (!isProd) { return }
 
-    localStg.set('themeSettings', settings.value);
+    localStg.set('themeSettings', settings.value)
   }
 
   // 页面关闭或刷新时缓存主题设置
   useEventListener(window, 'beforeunload', () => {
-    cacheThemeSettings();
-  });
+    cacheThemeSettings()
+  })
 
   // 监听存储
   scope.run(() => {
     // 监听暗模式
     watch(
       darkMode,
-      val => {
-        toggleCssDarkMode(val);
-        localStg.set('darkMode', val);
+      (val) => {
+        toggleCssDarkMode(val)
+        localStg.set('darkMode', val)
       },
-      { immediate: true }
-    );
+      {
+        immediate: true,
+      },
+    )
 
     watch(
       [grayscaleMode, colourWeaknessMode],
-      val => {
-        toggleAuxiliaryColorModes(val[0], val[1]);
+      (val) => {
+        toggleAuxiliaryColorModes(val[0], val[1])
       },
-      { immediate: true }
-    );
+      {
+        immediate: true,
+      },
+    )
 
     // 主题颜色变化时，更新 CSS 变量并存储主题颜色
     watch(
       themeColors,
-      val => {
-        setupThemeVarsToGlobal();
-        localStg.set('themeColor', val.primary);
+      (val) => {
+        setupThemeVarsToGlobal()
+        localStg.set('themeColor', val.primary)
       },
-      { immediate: true }
-    );
-  });
+      {
+        immediate: true,
+      },
+    )
+  })
 
   /** 在作用域销毁时 */
   onScopeDispose(() => {
-    scope.stop();
-  });
+    scope.stop()
+  })
 
   return {
     ...toRefs(settings.value),
@@ -217,6 +243,6 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     toggleThemeScheme,
     updateThemeColors,
     setThemeLayout,
-    setLayoutReverseHorizontalMix
-  };
-});
+    setLayoutReverseHorizontalMix,
+  }
+})

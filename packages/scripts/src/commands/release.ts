@@ -1,4 +1,4 @@
-import { versionBump } from 'bumpp';
+import { versionBump } from 'bumpp'
 
 /**
  * 执行版本发布流程
@@ -13,6 +13,6 @@ export async function release(execute = 'pnpm sa changelog', push = true) {
     all: true,
     tag: true,
     commit: 'chore(projects): release v%s',
-    push
-  });
+    push,
+  })
 }

@@ -1,9 +1,11 @@
-import { colorPalettes } from './constant';
+import { colorPalettes } from './constant'
 
-export * from './palette';
+export * from './palette'
 
-export * from './shared';
+export * from './shared'
 
-export { colorPalettes };
+export {
+  colorPalettes,
+}
 
-export * from './types';
+export * from './types'

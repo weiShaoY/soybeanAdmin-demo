@@ -1,11 +1,13 @@
 <script setup lang="ts">
 defineOptions({
-  name: 'GlobalFooter'
-});
+  name: 'GlobalFooter',
+})
 </script>
 
 <template>
-  <DarkModeContainer class="h-full flex-center">
+  <DarkModeContainer
+    class="h-full flex-center"
+  >
     <a
       href="https://github.com/soybeanjs/soybean-admin-elp/blob/main/LICENSE"
       target="_blank"

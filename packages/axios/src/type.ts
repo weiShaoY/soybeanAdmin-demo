@@ -1,4 +1,10 @@
-import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import type {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios'
 
 /** 请求支持的 `Content-Type` 类型 */
 export type ContentType =
@@ -7,10 +13,11 @@ export type ContentType =
   | 'multipart/form-data'
   | 'application/json'
   | 'application/x-www-form-urlencoded'
-  | 'application/octet-stream';
+  | 'application/octet-stream'
 
 /** 请求选项 */
 export type RequestOption<ResponseData = any> = {
+
   /**
    * 请求前的钩子函数
    *
@@ -19,7 +26,7 @@ export type RequestOption<ResponseData = any> = {
    * @param config - Axios 请求配置
    * @returns 处理后的请求配置
    */
-  onRequest: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>;
+  onRequest: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>
 
   /**
    * 判断后端返回是否成功
@@ -27,7 +34,7 @@ export type RequestOption<ResponseData = any> = {
    * @param response - Axios 响应对象
    * @returns 是否成功
    */
-  isBackendSuccess: (response: AxiosResponse<ResponseData>) => boolean;
+  isBackendSuccess: (response: AxiosResponse<ResponseData>) => boolean
 
   /**
    * 处理后端请求失败的钩子
@@ -40,7 +47,7 @@ export type RequestOption<ResponseData = any> = {
   onBackendFail: (
     response: AxiosResponse<ResponseData>,
     instance: AxiosInstance
-  ) => Promise<AxiosResponse | null> | Promise<void>;
+  ) => Promise<AxiosResponse | null> | Promise<void>
 
   /**
    * 处理后端 JSON 响应数据
@@ -48,7 +55,7 @@ export type RequestOption<ResponseData = any> = {
    * @param response - Axios 响应对象
    * @returns 处理后的响应数据
    */
-  transformBackendResponse: (response: AxiosResponse<ResponseData>) => any | Promise<any>;
+  transformBackendResponse: (response: AxiosResponse<ResponseData>) => any | Promise<any>
 
   /**
    * 处理请求错误的钩子
@@ -57,20 +64,20 @@ export type RequestOption<ResponseData = any> = {
    *
    * @param error - Axios 错误对象
    */
-  onError: (error: AxiosError<ResponseData>) => void | Promise<void>;
-};
+  onError: (error: AxiosError<ResponseData>) => void | Promise<void>
+}
 
 /** Axios 响应类型映射 */
 type ResponseMap = {
-  blob: Blob;
-  text: string;
-  arrayBuffer: ArrayBuffer;
-  stream: ReadableStream<Uint8Array>;
-  document: Document;
-};
+  blob: Blob
+  text: string
+  arrayBuffer: ArrayBuffer
+  stream: ReadableStream<Uint8Array>
+  document: Document
+}
 
 /** 支持的响应类型 */
-export type ResponseType = keyof ResponseMap | 'json';
+export type ResponseType = keyof ResponseMap | 'json'
 
 /**
  * 根据响应类型获取具体的数据类型
@@ -80,15 +87,16 @@ export type ResponseType = keyof ResponseMap | 'json';
  */
 export type MappedType<R extends ResponseType, JsonType = any> = R extends keyof ResponseMap
   ? ResponseMap[R]
-  : JsonType;
+  : JsonType
 
 /** 自定义的 Axios 请求配置 */
 export type CustomAxiosRequestConfig<R extends ResponseType = 'json'> = Omit<AxiosRequestConfig, 'responseType'> & {
-  responseType?: R;
-};
+  responseType?: R
+}
 
 /** 请求实例的通用方法 */
 export type RequestInstanceCommon<T> = {
+
   /**
    * 通过 `requestId` 取消请求
    *
@@ -96,21 +104,22 @@ export type RequestInstanceCommon<T> = {
    *
    * @param requestId - 请求 ID
    */
-  cancelRequest: (requestId: string) => void;
+  cancelRequest: (requestId: string) => void
 
   /**
    * 取消所有请求
    *
    * 如果请求配置中提供了 `AbortController`，则不会被存入 `AbortController` 映射中
    */
-  cancelAllRequest: () => void;
+  cancelAllRequest: () => void
 
   /** 请求实例的自定义状态 */
-  state: T;
-};
+  state: T
+}
 
 /** 请求实例 */
 export type RequestInstance<S = Record<string, unknown>> = {
+
   /**
    * 发起请求
    *
@@ -119,40 +128,43 @@ export type RequestInstance<S = Record<string, unknown>> = {
    * @param config - 自定义的 Axios 请求配置
    * @returns 解析后的数据
    */
-  <T = any, R extends ResponseType = 'json'>(config: CustomAxiosRequestConfig<R>): Promise<MappedType<R, T>>;
-} & RequestInstanceCommon<S>;
+  <T = any, R extends ResponseType = 'json'>(config: CustomAxiosRequestConfig<R>): Promise<MappedType<R, T>>
+} & RequestInstanceCommon<S>
 
 /** 扁平化成功的响应数据 */
 export type FlatResponseSuccessData<T = any, ResponseData = any> = {
+
   /** 解析后的数据 */
-  data: T;
+  data: T
 
   /** 错误信息（成功时为 `null`） */
-  error: null;
+  error: null
 
   /** 原始的 Axios 响应对象 */
-  response: AxiosResponse<ResponseData>;
-};
+  response: AxiosResponse<ResponseData>
+}
 
 /** 扁平化失败的响应数据 */
 export type FlatResponseFailData<ResponseData = any> = {
+
   /** 解析后的数据（失败时为 `null`） */
-  data: null;
+  data: null
 
   /** 错误对象 */
-  error: AxiosError<ResponseData>;
+  error: AxiosError<ResponseData>
 
   /** 原始的 Axios 响应对象 */
-  response: AxiosResponse<ResponseData>;
-};
+  response: AxiosResponse<ResponseData>
+}
 
 /** 扁平化的响应数据 */
 export type FlatResponseData<T = any, ResponseData = any> =
   | FlatResponseSuccessData<T, ResponseData>
-  | FlatResponseFailData<ResponseData>;
+  | FlatResponseFailData<ResponseData>
 
 /** 扁平化的请求实例 */
 export type FlatRequestInstance<S = Record<string, unknown>, ResponseData = any> = {
+
   /**
    * 发起请求
    *
@@ -163,5 +175,5 @@ export type FlatRequestInstance<S = Record<string, unknown>, ResponseData = any>
    */
   <T = any, R extends ResponseType = 'json'>(
     config: CustomAxiosRequestConfig<R>
-  ): Promise<FlatResponseData<MappedType<R, T>, ResponseData>>;
-} & RequestInstanceCommon<S>;
+  ): Promise<FlatResponseData<MappedType<R, T>, ResponseData>>
+} & RequestInstanceCommon<S>

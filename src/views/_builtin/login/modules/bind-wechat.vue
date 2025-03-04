@@ -1,9 +1,11 @@
 <script setup lang="ts">
-defineOptions({ name: 'BindWechat' });
+defineOptions({
+  name: 'BindWechat',
+})
 </script>
 
 <template>
-  <div></div>
+  <div />
 </template>
 
 <style scoped></style>

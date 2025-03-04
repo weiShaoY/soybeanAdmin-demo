@@ -1,18 +1,24 @@
-import { computed, ref, shallowRef, triggerRef } from 'vue';
 import type {
   ComputedGetter,
   DebuggerOptions,
   Ref,
   ShallowRef,
   WritableComputedOptions,
-  WritableComputedRef
-} from 'vue';
+  WritableComputedRef,
+} from 'vue'
+
+import {
+  computed,
+  ref,
+  shallowRef,
+  triggerRef,
+} from 'vue'
 
 /** 更新器类型定义，接收一个值并返回更新后的值s */
-type Updater<T> = (value: T) => T;
+type Updater<T> = (value: T) => T
 
 /** 变更器类型定义，接收一个值并对其进行变更 */
-type Mutator<T> = (value: T) => void;
+type Mutator<T> = (value: T) => void
 
 /**
  * Signal 是一个可以设置、更新或变更的响应式值
@@ -40,7 +46,7 @@ type Mutator<T> = (value: T) => void;
  *   ```
  */
 export type Signal<T> = {
-  (): Readonly<T>; // 获取当前信号值
+  (): Readonly<T> // 获取当前信号值
   /**
    * 设置信号的值
    *
@@ -48,7 +54,7 @@ export type Signal<T> = {
    *
    * @param value
    */
-  set(value: T): void;
+  set: (value: T) => void
 
   /**
    * 使用更新器函数更新信号的值
@@ -57,7 +63,7 @@ export type Signal<T> = {
    *
    * @param updater
    */
-  update(updater: Updater<T>): void;
+  update: (updater: Updater<T>) => void
 
   /**
    * 使用变更器函数变更信号的值
@@ -68,7 +74,7 @@ export type Signal<T> = {
    *
    * @param mutator
    */
-  mutate(mutator: Mutator<T>): void;
+  mutate: (mutator: Mutator<T>) => void
 
   /**
    * 获取信号的引用
@@ -87,23 +93,24 @@ export type Signal<T> = {
    * </script>
    * ```
    */
-  getRef(): Readonly<ShallowRef<Readonly<T>>>;
-};
+  getRef: () => Readonly<ShallowRef<Readonly<T>>>
+}
 
 /** 只读信号 */
 export type ReadonlySignal<T> = {
-  (): Readonly<T>; // 返回只读信号
-};
+  (): Readonly<T> // 返回只读信号
+}
 
 // 信号选项的类型定义
 export type SignalOptions = {
+
   /**
    * 是否使用 `ref` 来存储值
    *
    * @default false 使用 `sharedRef` 来存储值
    */
-  useRef?: boolean;
-};
+  useRef?: boolean
+}
 
 /**
  * 创建一个信号
@@ -113,13 +120,14 @@ export type SignalOptions = {
  */
 export function useSignal<T>(initialValue: T, options?: SignalOptions): Signal<T> {
   // 从选项中解构出 useRef 参数
-  const { useRef } = options || {};
+  const { useRef } = options || {
+  }
 
   // 根据 useRef 选项选择使用 `ref` 或 `shallowRef` 来存储值
-  const state = useRef ? (ref(initialValue) as Ref<T>) : shallowRef(initialValue);
+  const state = useRef ? (ref(initialValue) as Ref<T>) : shallowRef(initialValue)
 
   // 创建并返回信号
-  return createSignal(state);
+  return createSignal(state)
 }
 
 /**
@@ -128,24 +136,25 @@ export function useSignal<T>(initialValue: T, options?: SignalOptions): Signal<T
  * @param getter 计算器函数或选项
  * @param debugOptions 调试选项
  */
-export function useComputed<T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ReadonlySignal<T>;
+export function useComputed<T>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ReadonlySignal<T>
 
-export function useComputed<T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions): Signal<T>;
+export function useComputed<T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions): Signal<T>
 
 export function useComputed<T>(
   getterOrOptions: ComputedGetter<T> | WritableComputedOptions<T>,
-  debugOptions?: DebuggerOptions
+  debugOptions?: DebuggerOptions,
 ) {
-  const isGetter = typeof getterOrOptions === 'function';
+  const isGetter = typeof getterOrOptions === 'function'
 
-  const computedValue = computed(getterOrOptions as any, debugOptions);
+  const computedValue = computed(getterOrOptions as any, debugOptions)
 
   // 如果是 getter 返回只读信号
   if (isGetter) {
-    return () => computedValue.value as ReadonlySignal<T>;
+    return () => computedValue.value as ReadonlySignal<T>
   }
+
   // 否则返回可以写入的信号
-  return createSignal(computedValue);
+  return createSignal(computedValue)
 }
 
 /**
@@ -155,26 +164,26 @@ export function useComputed<T>(
  */
 function createSignal<T>(state: ShallowRef<T> | WritableComputedRef<T>): Signal<T> {
   /** 信号的主体函数，用于获取当前值 */
-  const signal = () => state.value;
+  const signal = () => state.value
 
   // 设置信号值的函数
   signal.set = (value: T) => {
-    state.value = value;
-  };
+    state.value = value
+  }
 
   // 更新信号值的函数
   signal.update = (updater: Updater<T>) => {
-    state.value = updater(state.value);
-  };
+    state.value = updater(state.value)
+  }
 
   // 变更信号值的函数
   signal.mutate = (mutator: Mutator<T>) => {
-    mutator(state.value);
-    triggerRef(state);
-  };
+    mutator(state.value)
+    triggerRef(state)
+  }
 
   // 获取信号引用的函数
-  signal.getRef = () => state as Readonly<ShallowRef<Readonly<T>>>;
+  signal.getRef = () => state as Readonly<ShallowRef<Readonly<T>>>
 
-  return signal;
+  return signal
 }

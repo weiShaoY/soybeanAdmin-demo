@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/store/modules/auth';
+import { useAuthStore } from '@/store/modules/auth'
 
 /**
  * 自定义认证 Hook
@@ -7,7 +7,7 @@ import { useAuthStore } from '@/store/modules/auth';
  */
 export function useAuth() {
   /** 认证存储对象 */
-  const authStore = useAuthStore();
+  const authStore = useAuthStore()
 
   /**
    * 检查用户是否具有指定权限
@@ -17,17 +17,17 @@ export function useAuth() {
    */
   function hasAuth(codes: string | string[]): boolean {
     if (!authStore.isLogin) {
-      return false;
+      return false
     }
 
     if (typeof codes === 'string') {
-      return authStore.userInfo.buttons.includes(codes);
+      return authStore.userInfo.buttons.includes(codes)
     }
 
-    return codes.some(code => authStore.userInfo.buttons.includes(code));
+    return codes.some(code => authStore.userInfo.buttons.includes(code))
   }
 
   return {
-    hasAuth
-  };
+    hasAuth,
+  }
 }

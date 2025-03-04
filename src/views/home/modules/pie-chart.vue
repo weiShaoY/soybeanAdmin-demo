@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import { useEcharts } from '@/hooks/common/echarts';
+import { useEcharts } from '@/hooks/common/echarts'
 
-defineOptions({ name: 'PieChart' });
+defineOptions({
+  name: 'PieChart',
+})
 
 const { domRef, updateOptions } = useEcharts(() => ({
   tooltip: {
-    trigger: 'item'
+    trigger: 'item',
   },
   legend: {
     bottom: '1%',
     left: 'center',
     itemStyle: {
-      borderWidth: 0
-    }
+      borderWidth: 0,
+    },
   },
   series: [
     {
@@ -24,54 +26,71 @@ const { domRef, updateOptions } = useEcharts(() => ({
       itemStyle: {
         borderRadius: 10,
         borderColor: '#fff',
-        borderWidth: 1
+        borderWidth: 1,
       },
       label: {
         show: false,
-        position: 'center'
+        position: 'center',
       },
       emphasis: {
         label: {
           show: true,
-          fontSize: '12'
-        }
+          fontSize: '12',
+        },
       },
       labelLine: {
-        show: false
+        show: false,
       },
-      data: [] as { name: string; value: number }[]
-    }
-  ]
-}));
+      data: [] as { name: string, value: number }[],
+    },
+  ],
+}))
 
 async function mockData() {
-  await new Promise(resolve => {
-    setTimeout(resolve, 1000);
-  });
+  await new Promise((resolve) => {
+    setTimeout(resolve, 1000)
+  })
 
-  updateOptions(opts => {
+  updateOptions((opts) => {
     opts.series[0].data = [
-      { name: '学习', value: 20 },
-      { name: '娱乐', value: 10 },
-      { name: '工作', value: 40 },
-      { name: '休息', value: 30 }
-    ];
+      {
+        name: '学习',
+        value: 20,
+      },
+      {
+        name: '娱乐',
+        value: 10,
+      },
+      {
+        name: '工作',
+        value: 40,
+      },
+      {
+        name: '休息',
+        value: 30,
+      },
+    ]
 
-    return opts;
-  });
+    return opts
+  })
 }
 
 async function init() {
-  mockData();
+  mockData()
 }
 
 // init
-init();
+init()
 </script>
 
 <template>
-  <ElCard class="card-wrapper">
-    <div ref="domRef" class="h-[360px] overflow-hidden"></div>
+  <ElCard
+    class="card-wrapper"
+  >
+    <div
+      ref="domRef"
+      class="h-[360px] overflow-hidden"
+    />
   </ElCard>
 </template>
 

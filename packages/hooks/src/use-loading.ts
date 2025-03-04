@@ -1,15 +1,19 @@
-import { type Ref } from 'vue';
-import useBoolean from './use-boolean';
+import type { Ref } from 'vue'
+
+import useBoolean from './use-boolean'
 
 /** useLoading Hook 返回类型 */
 type UseLoadingReturn = {
+
   /** 是否处于加载状态 */
-  loading: Ref<boolean>;
+  loading: Ref<boolean>
+
   /** 开始加载 */
-  startLoading: () => void;
+  startLoading: () => void
+
   /** 结束加载 */
-  endLoading: () => void;
-};
+  endLoading: () => void
+}
 
 /**
  * Loading Hook
@@ -18,11 +22,11 @@ type UseLoadingReturn = {
  * @returns 加载状态及控制方法
  */
 export default function useLoading(initValue = false): UseLoadingReturn {
-  const { bool: loading, setTrue: startLoading, setFalse: endLoading } = useBoolean(initValue);
+  const { bool: loading, setTrue: startLoading, setFalse: endLoading } = useBoolean(initValue)
 
   return {
     loading,
     startLoading,
-    endLoading
-  };
+    endLoading,
+  }
 }

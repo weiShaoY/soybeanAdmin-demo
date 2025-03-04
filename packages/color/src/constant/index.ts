@@ -1,2 +1,3 @@
-export * from './name';
-export * from './palette';
+export * from './name'
+
+export * from './palette'

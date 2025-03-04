@@ -1,12 +1,20 @@
-import process from 'node:process';
-import path from 'node:path';
-import type { PluginOption } from 'vite';
-import Icons from 'unplugin-icons/vite';
-import IconsResolver from 'unplugin-icons/resolver';
-import Components from 'unplugin-vue-components/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
-import { FileSystemIconLoader } from 'unplugin-icons/loaders';
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import type { PluginOption } from 'vite'
+
+import path from 'node:path'
+
+import process from 'node:process'
+
+import { FileSystemIconLoader } from 'unplugin-icons/loaders'
+
+import IconsResolver from 'unplugin-icons/resolver'
+
+import Icons from 'unplugin-icons/vite'
+
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
+import Components from 'unplugin-vue-components/vite'
+
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 /**
  * 配置 Unplugin 相关插件
@@ -15,13 +23,13 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
  * @returns 返回 Vite 插件数组
  */
 export function setupUnplugin(viteEnv: Env.ImportMeta) {
-  const { VITE_ICON_PREFIX, VITE_ICON_LOCAL_PREFIX } = viteEnv;
+  const { VITE_ICON_PREFIX, VITE_ICON_LOCAL_PREFIX } = viteEnv
 
   // 本地 SVG 图标存放路径
-  const localIconPath = path.join(process.cwd(), 'src/assets/svg-icon');
+  const localIconPath = path.join(process.cwd(), 'src/assets/svg-icon')
 
   /** 本地图标集合的名称 */
-  const collectionName = VITE_ICON_LOCAL_PREFIX.replace(`${VITE_ICON_PREFIX}-`, '');
+  const collectionName = VITE_ICON_LOCAL_PREFIX.replace(`${VITE_ICON_PREFIX}-`, '')
 
   const plugins: PluginOption[] = [
     /**
@@ -34,11 +42,10 @@ export function setupUnplugin(viteEnv: Env.ImportMeta) {
       compiler: 'vue3',
       customCollections: {
         [collectionName]: FileSystemIconLoader(localIconPath, svg =>
-          svg.replace(/^<svg\s/, '<svg width="1em" height="1em" ')
-        )
+          svg.replace(/^<svg\s/, '<svg width="1em" height="1em" ')),
       },
       scale: 1,
-      defaultClass: 'inline-block'
+      defaultClass: 'inline-block',
     }),
 
     /**
@@ -50,15 +57,22 @@ export function setupUnplugin(viteEnv: Env.ImportMeta) {
      */
     Components({
       dts: 'src/typings/components.d.ts', // 生成的组件类型声明文件
-      types: [{ from: 'vue-router', names: ['RouterLink', 'RouterView'] }],
+      types: [{
+        from: 'vue-router',
+        names: ['RouterLink', 'RouterView'],
+      }],
       resolvers: [
         // 自动导入 Element Plus 组件，完整导入可查看 /src/plugins/ui.ts
         ElementPlusResolver({
-          importStyle: false // 不自动导入样式，完整导入可查看 /src/plugins/assets.ts
+          importStyle: false, // 不自动导入样式，完整导入可查看 /src/plugins/assets.ts
         }),
+
         // 自动解析自定义图标，结合 `unplugin-icons`
-        IconsResolver({ customCollections: [collectionName], componentPrefix: VITE_ICON_PREFIX })
-      ]
+        IconsResolver({
+          customCollections: [collectionName],
+          componentPrefix: VITE_ICON_PREFIX,
+        }),
+      ],
     }),
 
     /**
@@ -72,9 +86,9 @@ export function setupUnplugin(viteEnv: Env.ImportMeta) {
       iconDirs: [localIconPath], // 指定 SVG 图标目录
       symbolId: `${VITE_ICON_LOCAL_PREFIX}-[dir]-[name]`, // 生成的 symbol ID 规则
       inject: 'body-last', // 将 SVG 注入到 body 末尾
-      customDomId: '__SVG_ICON_LOCAL__' // 自定义 DOM ID
-    })
-  ];
+      customDomId: '__SVG_ICON_LOCAL__', // 自定义 DOM ID
+    }),
+  ]
 
-  return plugins;
+  return plugins
 }

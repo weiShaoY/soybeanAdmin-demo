@@ -1,28 +1,52 @@
 <script setup lang="ts">
-interface Props {
-  item: App.Global.Menu;
+type Props = {
+  item: App.Global.Menu
 }
 
-const { item } = defineProps<Props>();
+const { item } = defineProps<Props>()
 
-const hasChildren = item.children && item.children.length > 0;
+const hasChildren = item.children && item.children.length > 0
 </script>
 
 <template>
-  <ElSubMenu v-if="hasChildren" :index="item.key">
-    <template #title>
+  <ElSubMenu
+    v-if="hasChildren"
+    :index="item.key"
+  >
+    <template
+      #title
+    >
       <ElIcon>
-        <component :is="item.icon" />
+        <component
+          :is="item.icon"
+        />
       </ElIcon>
-      <span class="ib-ellipsis">{{ item.label }}</span>
+
+      <span
+        class="ib-ellipsis"
+      >{{ item.label }}</span>
     </template>
-    <MenuItem v-for="child in item.children" :key="child.key" :item="child" :index="child.key"></MenuItem>
+
+    <MenuItem
+      v-for="child in item.children"
+      :key="child.key"
+      :item="child"
+      :index="child.key"
+    />
   </ElSubMenu>
-  <ElMenuItem v-else>
+
+  <ElMenuItem
+    v-else
+  >
     <ElIcon>
-      <component :is="item.icon" />
+      <component
+        :is="item.icon"
+      />
     </ElIcon>
-    <span class="ib-ellipsis">{{ item.label }}</span>
+
+    <span
+      class="ib-ellipsis"
+    >{{ item.label }}</span>
   </ElMenuItem>
 </template>
 

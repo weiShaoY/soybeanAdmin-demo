@@ -1,5 +1,6 @@
-import { inject, provide } from 'vue';
-import type { InjectionKey } from 'vue';
+import type { InjectionKey } from 'vue'
+
+import { inject, provide } from 'vue'
 
 /**
  * 使用上下文提供和注入功能
@@ -58,27 +59,28 @@ import type { InjectionKey } from 'vue';
  * @param fn 上下文函数
  */
 export default function useContext<T extends (...args: any[]) => any>(contextName: string, fn: T) {
-  type Context = ReturnType<T>;
+  type Context = ReturnType<T>
 
   // 创建上下文时获取提供和注入方法
-  const { useProvide, useInject: useStore } = createContext<Context>(contextName);
+  const { useProvide, useInject: useStore } = createContext<Context>(contextName)
 
   function setupStore(...args: Parameters<T>) {
-    const context: Context = fn(...args);
-    return useProvide(context);
+    const context: Context = fn(...args)
+
+    return useProvide(context)
   }
 
   return {
     /** 在父组件中设置 store */
     setupStore,
     /** 在子组件中使用 store */
-    useStore
-  };
+    useStore,
+  }
 }
 
 /** 创建上下文 */
 function createContext<T>(contextName: string) {
-  const injectKey: InjectionKey<T> = Symbol(contextName);
+  const injectKey: InjectionKey<T> = Symbol(contextName)
 
   /**
    * 提供上下文给后代组件
@@ -86,18 +88,18 @@ function createContext<T>(contextName: string) {
    * @param context 上下文数据
    */
   function useProvide(context: T) {
-    provide(injectKey, context);
+    provide(injectKey, context)
 
-    return context;
+    return context
   }
 
   /** 注入上下文到当前组件 */
   function useInject() {
-    return inject(injectKey) as T;
+    return inject(injectKey) as T
   }
 
   return {
     useProvide,
-    useInject
-  };
+    useInject,
+  }
 }

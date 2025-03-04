@@ -1,7 +1,10 @@
-import { useRouter } from 'vue-router';
-import type { RouteLocationRaw } from 'vue-router';
-import type { RouteKey } from '@elegant-router/types';
-import { router as globalRouter } from '@/router';
+import type { RouteKey } from '@elegant-router/types'
+
+import type { RouteLocationRaw } from 'vue-router'
+
+import { router as globalRouter } from '@/router'
+
+import { useRouter } from 'vue-router'
 
 /**
  * Router push
@@ -12,20 +15,23 @@ import { router as globalRouter } from '@/router';
  * @returns 包含各种路由操作方法的对象
  */
 export function useRouterPush(inSetup = true) {
-  const router = inSetup ? useRouter() : globalRouter;
-  const route = globalRouter.currentRoute;
+  const router = inSetup ? useRouter() : globalRouter
 
-  const routerPush = router.push;
+  const route = globalRouter.currentRoute
 
-  const routerBack = router.back;
+  const routerPush = router.push
+
+  const routerBack = router.back
 
   /** 路由跳转选项; */
   type RouterPushOptions = {
+
     /** 路由查询参数 */
-    query?: Record<string, string>;
+    query?: Record<string, string>
+
     /** 路由动态参数 */
-    params?: Record<string, string>;
-  };
+    params?: Record<string, string>
+  }
 
   /**
    * 根据路由键名跳转
@@ -34,21 +40,24 @@ export function useRouterPush(inSetup = true) {
    * @param options 路由选项
    */
   async function routerPushByKey(key: RouteKey, options?: RouterPushOptions) {
-    const { query, params } = options || {};
+    const { query, params } = options || {
+    }
 
     const routeLocation: RouteLocationRaw = {
-      name: key
-    };
-
-    if (Object.keys(query || {}).length) {
-      routeLocation.query = query;
+      name: key,
     }
 
-    if (Object.keys(params || {}).length) {
-      routeLocation.params = params;
+    if (Object.keys(query || {
+    }).length) {
+      routeLocation.query = query
     }
 
-    return routerPush(routeLocation);
+    if (Object.keys(params || {
+    }).length) {
+      routeLocation.params = params
+    }
+
+    return routerPush(routeLocation)
   }
 
   /**
@@ -57,21 +66,25 @@ export function useRouterPush(inSetup = true) {
    * @param key 路由键名
    */
   function routerPushByKeyWithMetaQuery(key: RouteKey) {
-    const allRoutes = router.getRoutes();
-    const meta = allRoutes.find(item => item.name === key)?.meta || null;
+    const allRoutes = router.getRoutes()
 
-    const query: Record<string, string> = {};
+    const meta = allRoutes.find(item => item.name === key)?.meta || null
 
-    meta?.query?.forEach(item => {
-      query[item.key] = item.value;
-    });
+    const query: Record<string, string> = {
+    }
 
-    return routerPushByKey(key, { query });
+    meta?.query?.forEach((item) => {
+      query[item.key] = item.value
+    })
+
+    return routerPushByKey(key, {
+      query,
+    })
   }
 
   /** 跳转到首页 */
   async function toHome() {
-    return routerPushByKey('root');
+    return routerPushByKey('root')
   }
 
   /**
@@ -81,21 +94,21 @@ export function useRouterPush(inSetup = true) {
    * @param redirectUrl 重定向 URL，未指定时为当前路由的 fullPath
    */
   async function toLogin(loginModule?: UnionKey.LoginModule, redirectUrl?: string) {
-    const module = loginModule || 'pwd-login';
+    const module = loginModule || 'pwd-login'
 
     const options: RouterPushOptions = {
       params: {
-        module
-      }
-    };
+        module,
+      },
+    }
 
-    const redirect = redirectUrl || route.value.fullPath;
+    const redirect = redirectUrl || route.value.fullPath
 
     options.query = {
-      redirect
-    };
+      redirect,
+    }
 
-    return routerPushByKey('login', options);
+    return routerPushByKey('login', options)
   }
 
   /**
@@ -104,9 +117,14 @@ export function useRouterPush(inSetup = true) {
    * @param module 登录模块
    */
   async function toggleLoginModule(module: UnionKey.LoginModule) {
-    const query = route.value.query as Record<string, string>;
+    const query = route.value.query as Record<string, string>
 
-    return routerPushByKey('login', { query, params: { module } });
+    return routerPushByKey('login', {
+      query,
+      params: {
+        module,
+      },
+    })
   }
 
   /**
@@ -115,12 +133,13 @@ export function useRouterPush(inSetup = true) {
    * @param needRedirect 是否在登录后重定向。默认为 `true`. Default is `true`
    */
   async function redirectFromLogin(needRedirect = true) {
-    const redirect = route.value.query?.redirect as string;
+    const redirect = route.value.query?.redirect as string
 
     if (needRedirect && redirect) {
-      await routerPush(redirect);
-    } else {
-      await toHome();
+      await routerPush(redirect)
+    }
+    else {
+      await toHome()
     }
   }
 
@@ -131,6 +150,6 @@ export function useRouterPush(inSetup = true) {
     routerPushByKeyWithMetaQuery,
     toLogin,
     toggleLoginModule,
-    redirectFromLogin
-  };
+    redirectFromLogin,
+  }
 }

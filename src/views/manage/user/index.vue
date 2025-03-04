@@ -1,12 +1,23 @@
 <script setup lang="tsx">
-import { ElButton, ElPopconfirm, ElTag } from 'element-plus';
-import { fetchGetUserList } from '@/service/api';
-import { enableStatusRecord, userGenderRecord } from '@/constants/business';
-import { useTable, useTableOperate } from '@/hooks/common/table';
-import UserOperateDrawer from './modules/user-operate-drawer.vue';
-import UserSearch from './modules/user-search.vue';
+import { enableStatusRecord, userGenderRecord } from '@/constants/business'
 
-defineOptions({ name: 'UserManage' });
+import { useTable, useTableOperate } from '@/hooks/common/table'
+
+import { fetchGetUserList } from '@/service/api'
+
+import {
+  ElButton,
+  ElPopconfirm,
+  ElTag,
+} from 'element-plus'
+
+import UserOperateDrawer from './modules/user-operate-drawer.vue'
+
+import UserSearch from './modules/user-search.vue'
+
+defineOptions({
+  name: 'UserManage',
+})
 
 const {
   columns,
@@ -17,7 +28,7 @@ const {
   loading,
   mobilePagination,
   searchParams,
-  resetSearchParams
+  resetSearchParams,
 } = useTable({
   apiFn: fetchGetUserList,
   showTotal: true,
@@ -29,52 +40,75 @@ const {
     userGender: undefined,
     nickName: undefined,
     userPhone: undefined,
-    userEmail: undefined
+    userEmail: undefined,
   },
   columns: () => [
-    { type: 'selection', width: 48 },
-    { prop: 'index', label: '序号', width: 64 },
-    { prop: 'userName', label: '用户名', minWidth: 100 },
+    {
+      type: 'selection',
+      width: 48,
+    },
+    {
+      prop: 'index',
+      label: '序号',
+      width: 64,
+    },
+    {
+      prop: 'userName',
+      label: '用户名',
+      minWidth: 100,
+    },
     {
       prop: 'userGender',
       label: '性别',
       width: 100,
-      formatter: row => {
+      formatter: (row) => {
         if (row.userGender === undefined) {
-          return '';
+          return ''
         }
 
         const tagMap: Record<Api.SystemManage.UserGender, UI.ThemeColor> = {
           1: 'primary',
-          2: 'danger'
-        };
+          2: 'danger',
+        }
 
-        const label = userGenderRecord[row.userGender];
+        const label = userGenderRecord[row.userGender]
 
-        return <ElTag type={tagMap[row.userGender]}>{label}</ElTag>;
-      }
+        return <ElTag type={tagMap[row.userGender]}>{label}</ElTag>
+      },
     },
-    { prop: 'nickName', label: '昵称', minWidth: 100 },
-    { prop: 'userPhone', label: '手机号', width: 120 },
-    { prop: 'userEmail', label: '邮箱', minWidth: 200 },
+    {
+      prop: 'nickName',
+      label: '昵称',
+      minWidth: 100,
+    },
+    {
+      prop: 'userPhone',
+      label: '手机号',
+      width: 120,
+    },
+    {
+      prop: 'userEmail',
+      label: '邮箱',
+      minWidth: 200,
+    },
     {
       prop: 'status',
       label: '用户状态',
       align: 'center',
-      formatter: row => {
+      formatter: (row) => {
         if (row.status === undefined) {
-          return '';
+          return ''
         }
 
         const tagMap: Record<Api.Common.EnableStatus, UI.ThemeColor> = {
           1: 'success',
-          2: 'warning'
-        };
+          2: 'warning',
+        }
 
-        const label = enableStatusRecord[row.status];
+        const label = enableStatusRecord[row.status]
 
-        return <ElTag type={tagMap[row.status]}>{label}</ElTag>;
-      }
+        return <ElTag type={tagMap[row.status]}>{label}</ElTag>
+      },
     },
     {
       prop: 'operate',
@@ -83,22 +117,22 @@ const {
       formatter: row => (
         <div class="flex-center">
           <ElButton type="primary" plain size="small" onClick={() => edit(row.id)}>
-            {'编辑'}
+            编辑
           </ElButton>
-          <ElPopconfirm title={'确认删除吗？'} onConfirm={() => handleDelete(row.id)}>
+          <ElPopconfirm title="确认删除吗？" onConfirm={() => handleDelete(row.id)}>
             {{
               reference: () => (
                 <ElButton type="danger" plain size="small">
-                  {'删除'}
+                  删除
                 </ElButton>
-              )
+              ),
             }}
           </ElPopconfirm>
         </div>
-      )
-    }
-  ]
-});
+      ),
+    },
+  ],
+})
 
 const {
   drawerVisible,
@@ -108,38 +142,56 @@ const {
   handleEdit,
   checkedRowKeys,
   onBatchDeleted,
-  onDeleted
+  onDeleted,
+
   // closeDrawer
-} = useTableOperate(data, getData);
+} = useTableOperate(data, getData)
 
 async function handleBatchDelete() {
-  // eslint-disable-next-line no-console
-  console.log(checkedRowKeys.value);
+  console.log(checkedRowKeys.value)
+
   // request
 
-  onBatchDeleted();
+  onBatchDeleted()
 }
 
 function handleDelete(id: number) {
-  // eslint-disable-next-line no-console
-  console.log(id);
+  console.log(id)
+
   // request
 
-  onDeleted();
+  onDeleted()
 }
 
 function edit(id: number) {
-  handleEdit(id);
+  handleEdit(id)
 }
 </script>
 
 <template>
-  <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
-    <UserSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
-    <ElCard class="sm:flex-1-hidden card-wrapper" body-class="ht50">
-      <template #header>
-        <div class="flex items-center justify-between">
-          <p>{{ '用户列表' }}</p>
+  <div
+    class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto"
+  >
+    <UserSearch
+      v-model:model="searchParams"
+      @reset="resetSearchParams"
+      @search="getDataByPage"
+    />
+
+    <ElCard
+      class="sm:flex-1-hidden card-wrapper"
+      body-class="ht50"
+    >
+      <template
+        #header
+      >
+        <div
+          class="flex items-center justify-between"
+        >
+          <p>
+            {{ '用户列表' }}
+          </p>
+
           <TableHeaderOperation
             v-model:columns="columnChecks"
             :disabled-delete="checkedRowKeys.length === 0"
@@ -150,7 +202,10 @@ function edit(id: number) {
           />
         </div>
       </template>
-      <div class="h-[calc(100%-50px)]">
+
+      <div
+        class="h-[calc(100%-50px)]"
+      >
         <ElTable
           v-loading="loading"
           height="100%"
@@ -160,10 +215,17 @@ function edit(id: number) {
           row-key="id"
           @selection-change="checkedRowKeys = $event"
         >
-          <ElTableColumn v-for="col in columns" :key="col.prop" v-bind="col" />
+          <ElTableColumn
+            v-for="col in columns"
+            :key="col.prop"
+            v-bind="col"
+          />
         </ElTable>
       </div>
-      <div class="mt-20px flex justify-end">
+
+      <div
+        class="mt-20px flex justify-end"
+      >
         <ElPagination
           v-if="mobilePagination.total"
           layout="total,prev,pager,next,sizes"
@@ -172,6 +234,7 @@ function edit(id: number) {
           @size-change="mobilePagination['size-change']"
         />
       </div>
+
       <UserOperateDrawer
         v-model:visible="drawerVisible"
         :operate-type="operateType"

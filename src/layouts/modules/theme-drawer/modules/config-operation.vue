@@ -1,53 +1,82 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
-import Clipboard from 'clipboard';
-import { useThemeStore } from '@/store/modules/theme';
+import { useThemeStore } from '@/store/modules/theme'
 
-defineOptions({ name: 'ConfigOperation' });
+import Clipboard from 'clipboard'
 
-const themeStore = useThemeStore();
+import {
+  computed,
+  onMounted,
+  ref,
+} from 'vue'
 
-const domRef = ref<HTMLElement | null>(null);
+defineOptions({
+  name: 'ConfigOperation',
+})
+
+const themeStore = useThemeStore()
+
+const domRef = ref<HTMLElement | null>(null)
 
 function initClipboard() {
-  if (!domRef.value) return;
+  if (!domRef.value) { return }
 
-  const clipboard = new Clipboard(domRef.value);
+  const clipboard = new Clipboard(domRef.value)
 
   clipboard.on('success', () => {
-    window.$message?.success('复制成功，请替换 src/theme/settings.ts 中的变量 themeSettings');
-  });
+    window.$message?.success('复制成功，请替换 src/theme/settings.ts 中的变量 themeSettings')
+  })
 }
 
 function getClipboardText() {
-  const reg = /"\w+":/g;
+  const reg = /"\w+":/g
 
-  const json = themeStore.settingsJson;
+  const json = themeStore.settingsJson
 
-  return json.replace(reg, match => match.replace(/"/g, ''));
+  return json.replace(reg, match => match.replace(/"/g, ''))
 }
 
 function handleReset() {
-  themeStore.resetStore();
+  themeStore.resetStore()
 
   setTimeout(() => {
-    window.$message?.success('重置成功');
-  }, 50);
+    window.$message?.success('重置成功')
+  }, 50)
 }
 
-const dataClipboardText = computed(() => getClipboardText());
+const dataClipboardText = computed(() => getClipboardText())
 
 onMounted(() => {
-  initClipboard();
-});
+  initClipboard()
+})
 </script>
 
 <template>
-  <div class="w-full flex justify-between">
-    <textarea id="themeConfigCopyTarget" v-model="dataClipboardText" class="absolute opacity-0 -z-1" />
-    <ElButton type="danger" plain @click="handleReset">{{ '重置配置' }}</ElButton>
-    <div ref="domRef" data-clipboard-target="#themeConfigCopyTarget">
-      <ElButton type="primary">{{'复制配置' }}</ElButton>
+  <div
+    class="w-full flex justify-between"
+  >
+    <textarea
+      id="themeConfigCopyTarget"
+      v-model="dataClipboardText"
+      class="absolute opacity-0 -z-1"
+    />
+
+    <ElButton
+      type="danger"
+      plain
+      @click="handleReset"
+    >
+      {{ '重置配置' }}
+    </ElButton>
+
+    <div
+      ref="domRef"
+      data-clipboard-target="#themeConfigCopyTarget"
+    >
+      <ElButton
+        type="primary"
+      >
+        {{ '复制配置' }}
+      </ElButton>
     </div>
   </div>
 </template>

@@ -1,5 +1,6 @@
 /** 联合键命名空间 */
 declare namespace UnionKey {
+
   /**
    * 登录模块
    *
@@ -9,10 +10,10 @@ declare namespace UnionKey {
    * - reset-pwd: 重置密码
    * - bind-wechat: 绑定微信
    */
-  type LoginModule = 'pwd-login' | 'code-login' | 'register' | 'reset-pwd' | 'bind-wechat';
+  type LoginModule = 'pwd-login' | 'code-login' | 'register' | 'reset-pwd' | 'bind-wechat'
 
   /** 主题方案 */
-  type ThemeScheme = 'light' | 'dark' | 'auto';
+  type ThemeScheme = 'light' | 'dark' | 'auto'
 
   /**
    * 重置缓存策略
@@ -20,7 +21,7 @@ declare namespace UnionKey {
    * - close: 关闭页面时重新缓存
    * - refresh: 刷新页面时重新缓存
    */
-  type ResetCacheStrategy = 'close' | 'refresh';
+  type ResetCacheStrategy = 'close' | 'refresh'
 
   /**
    * 布局模式
@@ -30,7 +31,7 @@ declare namespace UnionKey {
    * - vertical-mix: 左侧垂直混合菜单
    * - horizontal-mix: 左侧垂直一级菜单和顶部水平子级菜单
    */
-  type ThemeLayoutMode = 'vertical' | 'horizontal' | 'vertical-mix' | 'horizontal-mix';
+  type ThemeLayoutMode = 'vertical' | 'horizontal' | 'vertical-mix' | 'horizontal-mix'
 
   /**
    * 内容溢出时的滚动模式
@@ -38,10 +39,10 @@ declare namespace UnionKey {
    * - wrapper: 包装组件的根元素溢出
    * - content: 内容组件溢出
    */
-  type ThemeScrollMode = import('@sa/materials').LayoutScrollMode;
+  type ThemeScrollMode = import('@sa/materials').LayoutScrollMode
 
   /** 页面动画模式 */
-  type ThemePageAnimateMode = 'fade' | 'fade-slide' | 'fade-bottom' | 'fade-scale' | 'zoom-fade' | 'zoom-out' | 'none';
+  type ThemePageAnimateMode = 'fade' | 'fade-slide' | 'fade-bottom' | 'fade-scale' | 'zoom-fade' | 'zoom-out' | 'none'
 
   /**
    * 标签模式
@@ -49,7 +50,7 @@ declare namespace UnionKey {
    * - chrome: Chrome 样式
    * - button: 按钮样式
    */
-  type ThemeTabMode = import('@sa/materials').PageTabMode;
+  type ThemeTabMode = import('@sa/materials').PageTabMode
 
   /** Unocss 动画键 */
   type UnoCssAnimateKey =
@@ -153,5 +154,5 @@ declare namespace UnionKey {
     | 'back-out-up'
     | 'back-out-down'
     | 'back-out-right'
-    | 'back-out-left';
+    | 'back-out-left'
 }

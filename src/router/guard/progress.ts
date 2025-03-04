@@ -1,4 +1,4 @@
-import type { Router } from 'vue-router';
+import type { Router } from 'vue-router'
 
 /**
  * 创建进度条守卫
@@ -8,12 +8,12 @@ import type { Router } from 'vue-router';
 export function createProgressGuard(router: Router) {
   // 在路由开始前启动进度条
   router.beforeEach((_to, _from, next) => {
-    window.NProgress?.start?.();
-    next();
-  });
+    window.NProgress?.start?.()
+    next()
+  })
 
   // 在路由结束后完成进度条
-  router.afterEach(_to => {
-    window.NProgress?.done?.();
-  });
+  router.afterEach((_to) => {
+    window.NProgress?.done?.()
+  })
 }

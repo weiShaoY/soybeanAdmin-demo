@@ -1,11 +1,16 @@
-import { bgRed, green, red, yellow } from 'kolorist';
+import {
+  bgRed,
+  green,
+  red,
+  yellow,
+} from 'kolorist'
 
 /**
  * 支持的语言类型
  *
  * @typedef {'zh-cn' | 'en-us'} Lang
  */
-export type Lang = 'zh-cn' | 'en-us';
+export type Lang = 'zh-cn' | 'en-us'
 
 /** 提供不同语言的 Git 提交信息配置 */
 export const locales = {
@@ -35,7 +40,7 @@ export const locales = {
        *
        * @type {string}
        */
-      description: `请输入描述信息（${yellow('!')}开头表示破坏性改动`
+      description: `请输入描述信息（${yellow('!')}开头表示破坏性改动`,
     },
 
     /**
@@ -57,7 +62,7 @@ export const locales = {
       ['build', '影响构建系统或外部依赖项的更改'],
       ['ci', '对 CI 配置文件和脚本的更改'],
       ['chore', '没有修改src或测试文件的其他变更'],
-      ['revert', '还原先前的提交']
+      ['revert', '还原先前的提交'],
     ] as [string, string][],
 
     /**
@@ -75,7 +80,7 @@ export const locales = {
       ['styles', '代码风格'],
       ['deps', '项目依赖'],
       ['release', '发布项目新版本'],
-      ['other', '其他的变更']
+      ['other', '其他的变更'],
     ] as [string, string][],
 
     /**
@@ -84,8 +89,8 @@ export const locales = {
      * @type {string}
      */
     gitCommitVerify: `${bgRed(' 错误 ')} ${red('git 提交信息必须符合 Conventional Commits 标准!')}\n\n${green(
-      '推荐使用命令 `pnpm commit` 生成符合 Conventional Commits 标准的提交信息。\n获取有关 Conventional Commits 的更多信息，请访问此链接: https://conventionalcommits.org'
-    )}`
+      '推荐使用命令 `pnpm commit` 生成符合 Conventional Commits 标准的提交信息。\n获取有关 Conventional Commits 的更多信息，请访问此链接: https://conventionalcommits.org',
+    )}`,
   },
 
   'en-us': {
@@ -114,7 +119,7 @@ export const locales = {
        *
        * @type {string}
        */
-      description: `Please enter a description (add prefix ${yellow('!')} to indicate breaking change)`
+      description: `Please enter a description (add prefix ${yellow('!')} to indicate breaking change)`,
     },
 
     /**
@@ -135,8 +140,8 @@ export const locales = {
       ['test', 'Adding missing tests or correcting existing tests'],
       ['build', 'Changes that affect the build system or external dependencies'],
       ['ci', 'Changes to our CI configuration files and scripts'],
-      ['chore', "Other changes that don't modify src or test files"],
-      ['revert', 'Reverts a previous commit']
+      ['chore', 'Other changes that don\'t modify src or test files'],
+      ['revert', 'Reverts a previous commit'],
     ] as [string, string][],
 
     /**
@@ -154,7 +159,7 @@ export const locales = {
       ['styles', 'style'],
       ['deps', 'project dependencies'],
       ['release', 'release project'],
-      ['other', 'other changes']
+      ['other', 'other changes'],
     ] as [string, string][],
 
     /**
@@ -163,7 +168,7 @@ export const locales = {
      * @type {string}
      */
     gitCommitVerify: `${bgRed(' ERROR ')} ${red('git commit message must match the Conventional Commits standard!')}\n\n${green(
-      'Recommended to use the command `pnpm commit` to generate Conventional Commits compliant commit information.\nGet more info about Conventional Commits, follow this link: https://conventionalcommits.org'
-    )}`
-  }
-} satisfies Record<Lang, Record<string, unknown>>;
+      'Recommended to use the command `pnpm commit` to generate Conventional Commits compliant commit information.\nGet more info about Conventional Commits, follow this link: https://conventionalcommits.org',
+    )}`,
+  },
+} satisfies Record<Lang, Record<string, unknown>>

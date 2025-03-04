@@ -83,6 +83,9 @@ importers:
       element-plus:
         specifier: ^2.8.7
         version: 2.8.7(vue@3.5.13(typescript@5.6.3))
+      eslint-plugin-format:
+        specifier: ^1.0.1
+        version: 1.0.1(eslint@9.21.0(jiti@2.4.0))
       jsbarcode:
         specifier: 3.11.6
         version: 3.11.6
@@ -140,7 +143,7 @@ importers:
         version: 0.0.15
       '@antfu/eslint-config':
         specifier: ^4.4.0
-        version: 4.4.0(@typescript-eslint/utils@8.26.0(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3))(@unocss/eslint-plugin@0.64.1(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3))(@vue/compiler-sfc@3.5.13)(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3)
+        version: 4.4.0(@typescript-eslint/utils@8.26.0(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3))(@unocss/eslint-plugin@0.64.1(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3))(@vue/compiler-sfc@3.5.13)(eslint-plugin-format@1.0.1(eslint@9.21.0(jiti@2.4.0)))(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3)
       '@elegant-router/vue':
         specifier: 0.3.8
         version: 0.3.8
@@ -827,6 +830,15 @@ packages:
   '@ctrl/tinycolor@3.6.1':
     resolution: {integrity: sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==}
     engines: {node: '>=10'}
+
+  '@dprint/formatter@0.3.0':
+    resolution: {integrity: sha512-N9fxCxbaBOrDkteSOzaCqwWjso5iAe+WJPsHC021JfHNj2ThInPNEF13ORDKta3llq5D1TlclODCvOvipH7bWQ==}
+
+  '@dprint/markdown@0.17.8':
+    resolution: {integrity: sha512-ukHFOg+RpG284aPdIg7iPrCYmMs3Dqy43S1ejybnwlJoFiW02b+6Bbr5cfZKFRYNP3dKGM86BqHEnMzBOyLvvA==}
+
+  '@dprint/toml@0.6.4':
+    resolution: {integrity: sha512-bZXIUjxr0LIuHWshZr/5mtUkOrnh0NKVZEF6ACojW5z7zkJu7s9sV2mMXm8XQDqN4cJzdHYUYzUyEGdfciaLJA==}
 
   '@elegant-router/core@0.3.8':
     resolution: {integrity: sha512-q8CihD9la9V2H+/OYIzMLftXSBkbT234UMwhMxDL1Gq7BGKU3kEIEJvifRM7htbiRD77bkQhwMGBY3WZacqw8A==}
@@ -3473,6 +3485,11 @@ packages:
   eslint-flat-config-utils@2.0.1:
     resolution: {integrity: sha512-brf0eAgQ6JlKj3bKfOTuuI7VcCZvi8ZCD1MMTVoEvS/d38j8cByZViLFALH/36+eqB17ukmfmKq3bWzGvizejA==}
 
+  eslint-formatting-reporter@0.0.0:
+    resolution: {integrity: sha512-k9RdyTqxqN/wNYVaTk/ds5B5rA8lgoAmvceYN7bcZMBwU7TuXx5ntewJv81eF3pIL/CiJE+pJZm36llG8yhyyw==}
+    peerDependencies:
+      eslint: '>=8.40.0'
+
   eslint-import-resolver-node@0.3.9:
     resolution: {integrity: sha512-WFj2isz22JahUv+B788TlO3N6zL3nNJGU8CcZbPZvVEkBPaJdCV4vy5wyghty5ROFbCRnm132v8BScu5/1BQ8g==}
 
@@ -3495,6 +3512,9 @@ packages:
   eslint-parser-plain@0.1.0:
     resolution: {integrity: sha512-oOeA6FWU0UJT/Rxc3XF5Cq0nbIZbylm7j8+plqq0CZoE6m4u32OXJrR+9iy4srGMmF6v6pmgvP1zPxSRIGh3sg==}
 
+  eslint-parser-plain@0.1.1:
+    resolution: {integrity: sha512-KRgd6wuxH4U8kczqPp+Oyk4irThIhHWxgFgLDtpgjUGVIS3wGrJntvZW/p6hHq1T4FOwnOtCNkvAI4Kr+mQ/Hw==}
+
   eslint-plugin-antfu@3.1.0:
     resolution: {integrity: sha512-BKlJcpIG8OGyU5JwQCdyTGaLuRgItheEYinhNroCx3bcuz2bCSYK0eNzJvPy2TY8yyz0uSSRxr5KHuQ1WOdOKg==}
     peerDependencies:
@@ -3510,6 +3530,11 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=8'
+
+  eslint-plugin-format@1.0.1:
+    resolution: {integrity: sha512-Tdns+CDjS+m7QrM85wwRi2yLae88XiWVdIOXjp9mDII0pmTBQlczPCmjpKnjiUIY3yPZNLqb5Ms/A/JXcBF2Dw==}
+    peerDependencies:
+      eslint: ^8.40.0 || ^9.0.0
 
   eslint-plugin-import-x@0.5.1:
     resolution: {integrity: sha512-2JK8bbFOLes+gG6tgdnM8safCxMAj4u2wjX8X1BRFPfnY7Ct2hFYESoIcVwABX/DDcdpQFLGtKmzbNEWJZD9iQ==}
@@ -5432,6 +5457,11 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
+  prettier@3.5.3:
+    resolution: {integrity: sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   pretty-ms@9.0.0:
     resolution: {integrity: sha512-E9e9HJ9R9NasGOgPaPE8VMeiPKAyWR5jcFpNnwIejslIhWqdqOrb2wShBsncMPUb+BcCd2OPYfh7p2W6oemTng==}
     engines: {node: '>=18'}
@@ -6654,7 +6684,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@antfu/eslint-config@4.4.0(@typescript-eslint/utils@8.26.0(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3))(@unocss/eslint-plugin@0.64.1(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3))(@vue/compiler-sfc@3.5.13)(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3)':
+  '@antfu/eslint-config@4.4.0(@typescript-eslint/utils@8.26.0(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3))(@unocss/eslint-plugin@0.64.1(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3))(@vue/compiler-sfc@3.5.13)(eslint-plugin-format@1.0.1(eslint@9.21.0(jiti@2.4.0)))(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3)':
     dependencies:
       '@antfu/install-pkg': 1.0.0
       '@clack/prompts': 0.10.0
@@ -6694,6 +6724,7 @@ snapshots:
       yaml-eslint-parser: 1.3.0
     optionalDependencies:
       '@unocss/eslint-plugin': 0.64.1(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3)
+      eslint-plugin-format: 1.0.1(eslint@9.21.0(jiti@2.4.0))
     transitivePeerDependencies:
       - '@eslint/json'
       - '@typescript-eslint/utils'
@@ -7390,6 +7421,12 @@ snapshots:
       sisteransi: 1.0.5
 
   '@ctrl/tinycolor@3.6.1': {}
+
+  '@dprint/formatter@0.3.0': {}
+
+  '@dprint/markdown@0.17.8': {}
+
+  '@dprint/toml@0.6.4': {}
 
   '@elegant-router/core@0.3.8':
     dependencies:
@@ -10325,6 +10362,11 @@ snapshots:
     dependencies:
       pathe: 2.0.3
 
+  eslint-formatting-reporter@0.0.0(eslint@9.21.0(jiti@2.4.0)):
+    dependencies:
+      eslint: 9.21.0(jiti@2.4.0)
+      prettier-linter-helpers: 1.0.0
+
   eslint-import-resolver-node@0.3.9:
     dependencies:
       debug: 3.2.7
@@ -10345,6 +10387,8 @@ snapshots:
 
   eslint-parser-plain@0.1.0: {}
 
+  eslint-parser-plain@0.1.1: {}
+
   eslint-plugin-antfu@3.1.0(eslint@9.21.0(jiti@2.4.0)):
     dependencies:
       eslint: 9.21.0(jiti@2.4.0)
@@ -10360,6 +10404,17 @@ snapshots:
       '@eslint-community/regexpp': 4.12.1
       eslint: 9.21.0(jiti@2.4.0)
       eslint-compat-utils: 0.5.1(eslint@9.21.0(jiti@2.4.0))
+
+  eslint-plugin-format@1.0.1(eslint@9.21.0(jiti@2.4.0)):
+    dependencies:
+      '@dprint/formatter': 0.3.0
+      '@dprint/markdown': 0.17.8
+      '@dprint/toml': 0.6.4
+      eslint: 9.21.0(jiti@2.4.0)
+      eslint-formatting-reporter: 0.0.0(eslint@9.21.0(jiti@2.4.0))
+      eslint-parser-plain: 0.1.1
+      prettier: 3.5.3
+      synckit: 0.9.2
 
   eslint-plugin-import-x@0.5.1(eslint@9.21.0(jiti@2.4.0))(typescript@5.6.3):
     dependencies:
@@ -12636,6 +12691,8 @@ snapshots:
   prettier@3.3.2: {}
 
   prettier@3.3.3: {}
+
+  prettier@3.5.3: {}
 
   pretty-ms@9.0.0:
     dependencies:

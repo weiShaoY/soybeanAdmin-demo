@@ -1,6 +1,8 @@
-import type { App } from 'vue';
-import { createPinia } from 'pinia';
-import { resetSetupStore } from './plugins';
+import type { App } from 'vue'
+
+import { createPinia } from 'pinia'
+
+import { resetSetupStore } from './plugins'
 
 /**
  * 设置 Vue Store 插件 Pinia
@@ -8,9 +10,9 @@ import { resetSetupStore } from './plugins';
  * @param {App} app Vue 应用实例
  */
 export function setupStore(app: App) {
-  const store = createPinia();
+  const store = createPinia()
 
-  store.use(resetSetupStore);
+  store.use(resetSetupStore)
 
-  app.use(store);
+  app.use(store)
 }

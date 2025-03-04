@@ -1,4 +1,4 @@
-import CryptoJS from 'crypto-js';
+import CryptoJS from 'crypto-js'
 
 /**
  * 加密类
@@ -7,7 +7,7 @@ import CryptoJS from 'crypto-js';
  */
 export class Crypto<T extends object> {
   /** 密钥 */
-  secret: string;
+  secret: string
 
   /**
    * 构造函数
@@ -15,7 +15,7 @@ export class Crypto<T extends object> {
    * @param {string} secret 密钥
    */
   constructor(secret: string) {
-    this.secret = secret;
+    this.secret = secret
   }
 
   /**
@@ -25,9 +25,11 @@ export class Crypto<T extends object> {
    * @returns {string} 加密后的字符串
    */
   encrypt(data: T): string {
-    const dataString = JSON.stringify(data);
-    const encrypted = CryptoJS.AES.encrypt(dataString, this.secret);
-    return encrypted.toString();
+    const dataString = JSON.stringify(data)
+
+    const encrypted = CryptoJS.AES.encrypt(dataString, this.secret)
+
+    return encrypted.toString()
   }
 
   /**
@@ -37,13 +39,16 @@ export class Crypto<T extends object> {
    * @returns {T | null} 解密后的数据或 null（如果解析错误）
    */
   decrypt(encrypted: string): T | null {
-    const decrypted = CryptoJS.AES.decrypt(encrypted, this.secret);
-    const dataString = decrypted.toString(CryptoJS.enc.Utf8);
+    const decrypted = CryptoJS.AES.decrypt(encrypted, this.secret)
+
+    const dataString = decrypted.toString(CryptoJS.enc.Utf8)
+
     try {
-      return JSON.parse(dataString) as T;
-    } catch {
+      return JSON.parse(dataString) as T
+    }
+    catch {
       // 避免解析错误
-      return null;
+      return null
     }
   }
 }

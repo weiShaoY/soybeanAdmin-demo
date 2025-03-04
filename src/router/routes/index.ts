@@ -1,7 +1,14 @@
-import type { CustomRoute, ElegantConstRoute, ElegantRoute } from '@elegant-router/types';
-import { generatedRoutes } from '../elegant/routes';
-import { layouts, views } from '../elegant/imports';
-import { transformElegantRoutesToVueRoutes } from '../elegant/transform';
+import type {
+  CustomRoute,
+  ElegantConstRoute,
+  ElegantRoute,
+} from '@elegant-router/types'
+
+import { layouts, views } from '../elegant/imports'
+
+import { generatedRoutes } from '../elegant/routes'
+
+import { transformElegantRoutesToVueRoutes } from '../elegant/transform'
 
 /**
  * 自定义路由
@@ -16,7 +23,7 @@ const customRoutes: CustomRoute[] = [
     meta: {
       title: 'Exception',
       icon: 'ant-design:exception-outlined',
-      order: 7
+      order: 7,
     },
     children: [
       {
@@ -25,8 +32,8 @@ const customRoutes: CustomRoute[] = [
         component: 'view.403',
         meta: {
           title: '403',
-          icon: 'ic:baseline-block'
-        }
+          icon: 'ic:baseline-block',
+        },
       },
       {
         name: 'exception_404',
@@ -34,8 +41,8 @@ const customRoutes: CustomRoute[] = [
         component: 'view.404',
         meta: {
           title: '404',
-          icon: 'ic:baseline-web-asset-off'
-        }
+          icon: 'ic:baseline-web-asset-off',
+        },
       },
       {
         name: 'exception_500',
@@ -43,10 +50,10 @@ const customRoutes: CustomRoute[] = [
         component: 'view.500',
         meta: {
           title: '500',
-          icon: 'ic:baseline-wifi-off'
-        }
-      }
-    ]
+          icon: 'ic:baseline-wifi-off',
+        },
+      },
+    ],
   },
   {
     name: 'document',
@@ -55,7 +62,7 @@ const customRoutes: CustomRoute[] = [
     meta: {
       title: 'Document',
       order: 2,
-      icon: 'mdi:file-document-multiple-outline'
+      icon: 'mdi:file-document-multiple-outline',
     },
     children: [
       {
@@ -63,65 +70,65 @@ const customRoutes: CustomRoute[] = [
         path: '/document/antd',
         component: 'view.iframe-page',
         props: {
-          url: 'https://antdv.com/components/overview-cn'
+          url: 'https://antdv.com/components/overview-cn',
         },
         meta: {
           title: 'Ant Design Vue Document',
           order: 7,
-          icon: 'logos:ant-design'
-        }
+          icon: 'logos:ant-design',
+        },
       },
       {
         name: 'document_naive',
         path: '/document/naive',
         component: 'view.iframe-page',
         props: {
-          url: 'https://www.UI.com/zh-CN/os-theme/docs/introduction'
+          url: 'https://www.UI.com/zh-CN/os-theme/docs/introduction',
         },
         meta: {
           title: 'Naive UI Document',
           order: 6,
-          icon: 'logos:naiveui'
-        }
+          icon: 'logos:naiveui',
+        },
       },
       {
         name: 'document_element-plus',
         path: '/document/element-plus',
         component: 'view.iframe-page',
         props: {
-          url: 'https://element-plus.org/zh-CN/'
+          url: 'https://element-plus.org/zh-CN/',
         },
         meta: {
           title: 'Element Plus Document',
           order: 7,
-          icon: 'ep:element-plus'
-        }
+          icon: 'ep:element-plus',
+        },
       },
       {
         name: 'document_alova',
         path: '/document/alova',
         component: 'view.iframe-page',
         props: {
-          url: 'https://alova.js.org'
+          url: 'https://alova.js.org',
         },
         meta: {
           title: 'Alova Document',
           order: 8,
-          localIcon: 'alova'
-        }
+          localIcon: 'alova',
+        },
       },
       {
         name: 'document_project',
         path: '/document/project',
         component: 'view.iframe-page',
         props: {
-          url: 'https://docs.soybeanjs.cn/zh'
+          url: 'https://docs.soybeanjs.cn/zh',
         },
         meta: {
           title: 'Project Document',
           order: 1,
-          localIcon: 'logo'
-        }
+          localIcon: 'logo',
+        },
       },
       {
         name: 'document_project-link',
@@ -131,51 +138,51 @@ const customRoutes: CustomRoute[] = [
           title: 'Project Document(External Link)',
           order: 2,
           localIcon: 'logo',
-          href: 'https://docs.soybeanjs.cn/zh'
-        }
+          href: 'https://docs.soybeanjs.cn/zh',
+        },
       },
       {
         name: 'document_unocss',
         path: '/document/unocss',
         component: 'view.iframe-page',
         props: {
-          url: 'https://unocss.dev/'
+          url: 'https://unocss.dev/',
         },
         meta: {
           title: 'UnoCSS Document',
           order: 5,
-          icon: 'logos:unocss'
-        }
+          icon: 'logos:unocss',
+        },
       },
       {
         name: 'document_vite',
         path: '/document/vite',
         component: 'view.iframe-page',
         props: {
-          url: 'https://cn.vitejs.dev/'
+          url: 'https://cn.vitejs.dev/',
         },
         meta: {
           title: 'Vite Document',
           order: 4,
-          icon: 'logos:vitejs'
-        }
+          icon: 'logos:vitejs',
+        },
       },
       {
         name: 'document_vue',
         path: '/document/vue',
         component: 'view.iframe-page',
         props: {
-          url: 'https://cn.vuejs.org/'
+          url: 'https://cn.vuejs.org/',
         },
         meta: {
           title: 'Vue Document',
           order: 3,
-          icon: 'logos:vue'
-        }
-      }
-    ]
-  }
-];
+          icon: 'logos:vue',
+        },
+      },
+    ],
+  },
+]
 
 /**
  * 创建静态路由
@@ -184,23 +191,24 @@ const customRoutes: CustomRoute[] = [
  */
 export function createStaticRoutes() {
   /** 常量路由 */
-  const constantRoutes: ElegantRoute[] = [];
+  const constantRoutes: ElegantRoute[] = []
 
   /** 权限路由 */
   const authRoutes: ElegantRoute[] = [];
 
-  [...customRoutes, ...generatedRoutes].forEach(item => {
+  [...customRoutes, ...generatedRoutes].forEach((item) => {
     if (item.meta?.constant) {
-      constantRoutes.push(item);
-    } else {
-      authRoutes.push(item);
+      constantRoutes.push(item)
     }
-  });
+    else {
+      authRoutes.push(item)
+    }
+  })
 
   return {
     constantRoutes,
-    authRoutes
-  };
+    authRoutes,
+  }
 }
 
 /**
@@ -210,5 +218,5 @@ export function createStaticRoutes() {
  * @returns 转换后的 vue 路由
  */
 export function getAuthVueRoutes(routes: ElegantConstRoute[]) {
-  return transformElegantRoutesToVueRoutes(routes, layouts, views);
+  return transformElegantRoutesToVueRoutes(routes, layouts, views)
 }

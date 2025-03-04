@@ -1,4 +1,3 @@
-
 /**
  * 将记录转换为选项
  *
@@ -21,8 +20,8 @@
 export function transformRecordToOption<T extends Record<string, string>>(record: T): CommonType.Option<keyof T>[] {
   return Object.entries(record).map(([value, label]) => ({
     value,
-    label
-  })) as CommonType.Option<keyof T>[];
+    label,
+  })) as CommonType.Option<keyof T>[]
 }
 
 /**
@@ -34,8 +33,8 @@ export function transformRecordToOption<T extends Record<string, string>>(record
 export function translateOptions(options: CommonType.Option<string>[]): CommonType.Option<string>[] {
   return options.map(option => ({
     ...option,
-    label: option.label
-  }));
+    label: option.label,
+  }))
 }
 
 /**
@@ -44,19 +43,19 @@ export function translateOptions(options: CommonType.Option<string>[]): CommonTy
  * @param {string} className 要切换的类名
  * @returns {object} 包含添加和移除类的方法
  */
-export function toggleHtmlClass(className: string): { add: () => void; remove: () => void } {
+export function toggleHtmlClass(className: string): { add: () => void, remove: () => void } {
   /** 添加类 */
   function add() {
-    document.documentElement.classList.add(className);
+    document.documentElement.classList.add(className)
   }
 
   /** 移除类 */
   function remove() {
-    document.documentElement.classList.remove(className);
+    document.documentElement.classList.remove(className)
   }
 
   return {
     add,
-    remove
-  };
+    remove,
+  }
 }

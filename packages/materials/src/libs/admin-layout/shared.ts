@@ -1,10 +1,14 @@
-import type { AdminLayoutProps, LayoutCssVars, LayoutCssVarsProps } from '../../types';
+import type {
+  AdminLayoutProps,
+  LayoutCssVars,
+  LayoutCssVarsProps,
+} from '../../types'
 
 /** 布局滚动元素的 ID */
-export const LAYOUT_SCROLL_EL_ID = '__SCROLL_EL_ID__';
+export const LAYOUT_SCROLL_EL_ID = '__SCROLL_EL_ID__'
 
 /** 布局的最大 z-index */
-export const LAYOUT_MAX_Z_INDEX = 100;
+export const LAYOUT_MAX_Z_INDEX = 100
 
 /**
  * 通过 css 变量属性创建布局 css 变量
@@ -23,10 +27,10 @@ function createLayoutCssVarsByCssVarsProps(props: LayoutCssVarsProps): LayoutCss
     '--soy-sider-z-index': props.siderZIndex,
     '--soy-mobile-sider-z-index': props.mobileSiderZIndex,
     '--soy-footer-height': `${props.footerHeight}px`,
-    '--soy-footer-z-index': props.footerZIndex
-  };
+    '--soy-footer-z-index': props.footerZIndex,
+  }
 
-  return cssVars;
+  return cssVars
 }
 
 /**
@@ -44,18 +48,18 @@ export function createLayoutCssVars(props: AdminLayoutProps): LayoutCssVars {
     tabHeight,
     siderWidth,
     siderCollapsedWidth,
-    footerHeight
-  } = props;
+    footerHeight,
+  } = props
 
-  const headerZIndex = maxZIndex - 3;
+  const headerZIndex = maxZIndex - 3
 
-  const tabZIndex = maxZIndex - 5;
+  const tabZIndex = maxZIndex - 5
 
-  const siderZIndex = mode === 'vertical' || isMobile ? maxZIndex - 1 : maxZIndex - 4;
+  const siderZIndex = mode === 'vertical' || isMobile ? maxZIndex - 1 : maxZIndex - 4
 
-  const mobileSiderZIndex = isMobile ? maxZIndex - 2 : 0;
+  const mobileSiderZIndex = isMobile ? maxZIndex - 2 : 0
 
-  const footerZIndex = maxZIndex - 5;
+  const footerZIndex = maxZIndex - 5
 
   const cssProps: LayoutCssVarsProps = {
     headerHeight,
@@ -67,8 +71,8 @@ export function createLayoutCssVars(props: AdminLayoutProps): LayoutCssVars {
     mobileSiderZIndex,
     siderCollapsedWidth,
     footerHeight,
-    footerZIndex
-  };
+    footerZIndex,
+  }
 
-  return createLayoutCssVarsByCssVarsProps(cssProps);
+  return createLayoutCssVarsByCssVarsProps(cssProps)
 }

@@ -1,127 +1,168 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
-import type { VNode } from 'vue';
-import type { DropdownInstance } from 'element-plus';
-import { useTabStore } from '@/store/modules/tab';
-import { useSvgIcon } from '@/hooks/common/icon';
+import type { DropdownInstance } from 'element-plus'
 
-defineOptions({ name: 'ContextMenu' });
+import type { VNode } from 'vue'
 
-interface Props {
-  /** ClientX */
-  x: number;
-  /** ClientY */
-  y: number;
-  tabId: string;
-  excludeKeys?: App.Global.DropdownKey[];
-  disabledKeys?: App.Global.DropdownKey[];
-}
+import { useSvgIcon } from '@/hooks/common/icon'
+
+import { useTabStore } from '@/store/modules/tab'
+
+import {
+  computed,
+  ref,
+  watch,
+} from 'vue'
+
+defineOptions({
+  name: 'ContextMenu',
+})
 
 const props = withDefaults(defineProps<Props>(), {
   excludeKeys: () => [],
-  disabledKeys: () => []
-});
+  disabledKeys: () => [],
+})
 
-const { removeTab, clearTabs, clearLeftTabs, clearRightTabs } = useTabStore();
-const { SvgIconVNode } = useSvgIcon();
+type Props = {
+
+  /** ClientX */
+  x: number
+
+  /** ClientY */
+  y: number
+  tabId: string
+  excludeKeys?: App.Global.DropdownKey[]
+  disabledKeys?: App.Global.DropdownKey[]
+}
+
+const { removeTab, clearTabs, clearLeftTabs, clearRightTabs } = useTabStore()
+
+const { SvgIconVNode } = useSvgIcon()
 
 type DropdownOption = {
-  key: App.Global.DropdownKey;
-  label: string;
-  icon?: () => VNode;
-  disabled?: boolean;
-};
+  key: App.Global.DropdownKey
+  label: string
+  icon?: () => VNode
+  disabled?: boolean
+}
 
 const options = computed(() => {
   const opts: DropdownOption[] = [
     {
       key: 'closeCurrent',
       label: '关闭',
-      icon: SvgIconVNode({ icon: 'ant-design:close-outlined', fontSize: 18 })
+      icon: SvgIconVNode({
+        icon: 'ant-design:close-outlined',
+        fontSize: 18,
+      }),
     },
     {
       key: 'closeOther',
-      label:'关闭其它',
-      icon: SvgIconVNode({ icon: 'ant-design:column-width-outlined', fontSize: 18 })
+      label: '关闭其它',
+      icon: SvgIconVNode({
+        icon: 'ant-design:column-width-outlined',
+        fontSize: 18,
+      }),
     },
     {
       key: 'closeLeft',
-      label:'关闭左侧',
-      icon: SvgIconVNode({ icon: 'mdi:format-horizontal-align-left', fontSize: 18 })
+      label: '关闭左侧',
+      icon: SvgIconVNode({
+        icon: 'mdi:format-horizontal-align-left',
+        fontSize: 18,
+      }),
     },
     {
       key: 'closeRight',
-      label:'关闭右侧',
-      icon: SvgIconVNode({ icon: 'mdi:format-horizontal-align-right', fontSize: 18 })
+      label: '关闭右侧',
+      icon: SvgIconVNode({
+        icon: 'mdi:format-horizontal-align-right',
+        fontSize: 18,
+      }),
     },
     {
       key: 'closeAll',
       label: '关闭所有',
-      icon: SvgIconVNode({ icon: 'ant-design:line-outlined', fontSize: 18 })
-    }
-  ];
-  const { excludeKeys, disabledKeys } = props;
+      icon: SvgIconVNode({
+        icon: 'ant-design:line-outlined',
+        fontSize: 18,
+      }),
+    },
+  ]
 
-  const result = opts.filter(opt => !excludeKeys.includes(opt.key));
+  const { excludeKeys, disabledKeys } = props
 
-  disabledKeys.forEach(key => {
-    const opt = result.find(item => item.key === key);
+  const result = opts.filter(opt => !excludeKeys.includes(opt.key))
+
+  disabledKeys.forEach((key) => {
+    const opt = result.find(item => item.key === key)
 
     if (opt) {
-      opt.disabled = true;
+      opt.disabled = true
     }
-  });
+  })
 
-  return result;
-});
+  return result
+})
 
-const visible = defineModel<boolean>('visible');
+const visible = defineModel<boolean>('visible')
 
-const dropdown = ref<DropdownInstance>();
+const dropdown = ref<DropdownInstance>()
 
-watch(visible, val => {
+watch(visible, (val) => {
   if (val) {
-    dropdown.value!.handleOpen();
-  } else {
-    dropdown.value!.handleClose();
+    dropdown.value!.handleOpen()
   }
-});
+  else {
+    dropdown.value!.handleClose()
+  }
+})
 
 function hideDropdown() {
-  visible.value = false;
-  dropdown.value!.handleClose();
+  visible.value = false
+  dropdown.value!.handleClose()
 }
 
 const dropdownAction: Record<App.Global.DropdownKey, () => void> = {
   closeCurrent() {
-    removeTab(props.tabId);
+    removeTab(props.tabId)
   },
   closeOther() {
-    clearTabs([props.tabId]);
+    clearTabs([props.tabId])
   },
   closeLeft() {
-    clearLeftTabs(props.tabId);
+    clearLeftTabs(props.tabId)
   },
   closeRight() {
-    clearRightTabs(props.tabId);
+    clearRightTabs(props.tabId)
   },
   closeAll() {
-    clearTabs();
-  }
-};
+    clearTabs()
+  },
+}
 
 function handleDropdown(optionKey: App.Global.DropdownKey) {
-  dropdownAction[optionKey]?.();
-  hideDropdown();
+  dropdownAction[optionKey]?.()
+  hideDropdown()
 }
 </script>
 
 <template>
-  <div class="absolute" :style="{ top: `${y - 60}px`, left: `${x + 60}px` }">
-    <ElDropdown ref="dropdown" popper-class="arrow-hide" trigger="click" @command="handleDropdown">
+  <div
+    class="absolute"
+    :style="{ top: `${y - 60}px`, left: `${x + 60}px` }"
+  >
+    <ElDropdown
+      ref="dropdown"
+      popper-class="arrow-hide"
+      trigger="click"
+      @command="handleDropdown"
+    >
       <!-- Avoid waning: [ElOnlyChild] no valid child node found -->
-      <span></span>
-      <template #dropdown>
+      <span />
+
+      <template
+        #dropdown
+      >
         <ElDropdownMenu>
           <ElDropdownItem
             v-for="{ key, label, icon, disabled } in options"

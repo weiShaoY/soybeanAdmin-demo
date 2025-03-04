@@ -1,6 +1,8 @@
-import process from 'node:process';
-import { loadConfig } from 'c12';
-import type { CliOption } from '../types';
+import type { CliOption } from '../types'
+
+import process from 'node:process'
+
+import { loadConfig } from 'c12'
 
 /** 默认选项 */
 const defaultOptions: CliOption = {
@@ -14,26 +16,29 @@ const defaultOptions: CliOption = {
     '**/yarn.lock',
     '**/pnpm-lock.yaml',
     '**/node_modules',
-    '!node_modules/**'
+    '!node_modules/**',
   ],
+
   /** Npm-check-updates 命令参数 */
   ncuCommandArgs: ['--deep', '-u'],
 
   /** 生成 changelog 的选项 */
-  changelogOptions: {},
+  changelogOptions: {
+  },
 
   /** Git 提交验证忽略的模式列表 */
   gitCommitVerifyIgnores: [
-    /^((Merge pull request)|(Merge (.*?) into (.*?)|(Merge branch (.*?)))(?:\r?\n)*$)/m,
-    /^(Merge tag (.*?))(?:\r?\n)*$/m,
+    /^((Merge pull request)|(Merge (.*?) into (.*)|(Merge branch (.*)))(?:\r?\n)*$)/m,
+    /^(Merge tag (.*))(?:\r?\n)*$/m,
     /^(R|r)evert (.*)/,
     /^(amend|fixup|squash)!/,
     /^(Merged (.*?)(in|into) (.*)|Merged PR (.*): (.*))/,
     /^Merge remote-tracking branch(\s*)(.*)/,
     /^Automatic merge(.*)/,
-    /^Auto-merged (.*?) into (.*)/
-  ]
-};
+    /^Auto-merged (.*?) into (.*)/,
+  ],
+}
+
 /**
  * 加载 CLI 选项
  *
@@ -47,8 +52,8 @@ export async function loadCliOptions(overrides?: Partial<CliOption>, cwd = proce
     defaults: defaultOptions,
     overrides,
     cwd,
-    packageJson: true
-  });
+    packageJson: true,
+  })
 
-  return config as CliOption;
+  return config as CliOption
 }

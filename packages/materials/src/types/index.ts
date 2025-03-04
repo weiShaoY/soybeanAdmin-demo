@@ -1,136 +1,155 @@
 /** 头部配置 */
 type AdminLayoutHeaderConfig = {
+
   /**
    * 头部是否可见
    *
    * @default true
    */
-  headerVisible?: boolean;
+  headerVisible?: boolean
+
   /**
    * 头部类名
    *
    * @default ''
    */
-  headerClass?: string;
+  headerClass?: string
+
   /**
    * 头部高度
    *
    * @default 56px
    */
-  headerHeight?: number;
-};
+  headerHeight?: number
+}
 
 /** 标签配置 */
 type AdminLayoutTabConfig = {
+
   /**
    * 标签是否可见
    *
    * @default true
    */
-  tabVisible?: boolean;
+  tabVisible?: boolean
+
   /**
    * 标签类名
    *
    * @default ''
    */
-  tabClass?: string;
+  tabClass?: string
+
   /**
    * 标签高度
    *
    * @default 48px
    */
-  tabHeight?: number;
-};
+  tabHeight?: number
+}
 
 /** 侧边栏配置 */
 type AdminLayoutSiderConfig = {
+
   /**
    * 侧边栏是否可见
    *
    * @default true
    */
-  siderVisible?: boolean;
+  siderVisible?: boolean
+
   /**
    * 侧边栏类名
    *
    * @default ''
    */
-  siderClass?: string;
+  siderClass?: string
+
   /**
    * 移动端侧边栏类名
    *
    * @default ''
    */
-  mobileSiderClass?: string;
+  mobileSiderClass?: string
+
   /**
    * 侧边栏折叠状态
    *
    * @default false
    */
-  siderCollapse?: boolean;
+  siderCollapse?: boolean
+
   /**
    * 侧边栏在未折叠时的宽度
    *
    * @default '220px'
    */
-  siderWidth?: number;
+  siderWidth?: number
+
   /**
    * 侧边栏在折叠时的宽度
    *
    * @default '64px'
    */
-  siderCollapsedWidth?: number;
-};
+  siderCollapsedWidth?: number
+}
 
 /** 内容配置 */
 export type AdminLayoutContentConfig = {
+
   /**
    * 内容类名
    *
    * @default ''
    */
-  contentClass?: string;
+  contentClass?: string
+
   /**
    * 内容是否全屏
    *
    * 如果为 true，其他元素将通过 `display: none` 隐藏
    */
-  fullContent?: boolean;
-};
+  fullContent?: boolean
+}
 
 /** 底部配置 */
 export type AdminLayoutFooterConfig = {
+
   /**
    * 底部是否可见
    *
    * @default true
    */
-  footerVisible?: boolean;
+  footerVisible?: boolean
+
   /**
    * 底部是否固定
    *
    * @default true
    */
-  fixedFooter?: boolean;
+  fixedFooter?: boolean
+
   /**
    * 底部类名
    *
    * @default ''
    */
-  footerClass?: string;
+  footerClass?: string
+
   /**
    * 底部高度
    *
    * @default 48px
    */
-  footerHeight?: number;
+  footerHeight?: number
+
   /**
    * 底部是否位于右侧
    *
    * 当布局为垂直时，底部位于右侧
    */
-  rightFooter?: boolean;
-};
+  rightFooter?: boolean
+}
 
 /**
  * 布局模式
@@ -138,7 +157,7 @@ export type AdminLayoutFooterConfig = {
  * - Horizontal: 水平布局
  * - Vertical: 垂直布局
  */
-export type LayoutMode = 'horizontal' | 'vertical';
+export type LayoutMode = 'horizontal' | 'vertical'
 
 /**
  * 内容溢出时的滚动模式
@@ -148,26 +167,27 @@ export type LayoutMode = 'horizontal' | 'vertical';
  *
  * @default 'wrapper'
  */
-export type LayoutScrollMode = 'wrapper' | 'content';
+export type LayoutScrollMode = 'wrapper' | 'content'
 
 /** 管理布局属性 */
 export type AdminLayoutProps = {
+
   /**
    * 布局模式
    *
    * - {@link LayoutMode}
    */
-  mode?: LayoutMode;
+  mode?: LayoutMode
 
   /** 是否为移动端布局 */
-  isMobile?: boolean;
+  isMobile?: boolean
 
   /**
    * 滚动模式
    *
    * - {@link LayoutScrollMode}
    */
-  scrollMode?: LayoutScrollMode;
+  scrollMode?: LayoutScrollMode
 
   /**
    * 布局的滚动元素的 ID
@@ -185,11 +205,14 @@ export type AdminLayoutProps = {
    * const adminLayoutScrollElId = '__ADMIN_LAYOUT_SCROLL_EL_ID__'
    * ```
    */
-  scrollElId?: string;
+  scrollElId?: string
+
   /** 滚动元素的类名 */
-  scrollElClass?: string;
+  scrollElClass?: string
+
   /** 滚动包装元素的类名 */
-  scrollWrapperClass?: string;
+  scrollWrapperClass?: string
+
   /**
    * 布局的通用类名
    *
@@ -197,61 +220,64 @@ export type AdminLayoutProps = {
    *
    * @default 'transition-all-300'
    */
-  commonClass?: string;
+  commonClass?: string
+
   /**
    * 是否固定顶部的头部和标签
    *
    * @default true
    */
-  fixedTop?: boolean;
+  fixedTop?: boolean
+
   /**
    * 布局的最大 z-index
    *
    * 头部、标签、侧边栏和底部的 z-index 不会超过此值
    */
-  maxZIndex?: number;
+  maxZIndex?: number
 } & AdminLayoutHeaderConfig &
-  AdminLayoutTabConfig &
-  AdminLayoutSiderConfig &
-  AdminLayoutContentConfig &
-  AdminLayoutFooterConfig;
+AdminLayoutTabConfig &
+AdminLayoutSiderConfig &
+AdminLayoutContentConfig &
+AdminLayoutFooterConfig
 
 /** 将字符串转换为 kebab-case 的类型 */
-type Kebab<S extends string> = S extends Uncapitalize<S> ? S : `-${Uncapitalize<S>}`;
+type Kebab<S extends string> = S extends Uncapitalize<S> ? S : `-${Uncapitalize<S>}`
 
 /** 将字符串转换为 kebab-case 的类型 */
 type KebabCase<S extends string> = S extends `${infer Start}${infer End}`
   ? `${Uncapitalize<Start>}${KebabCase<Kebab<End>>}`
-  : S;
+  : S
 
 /** CSS 变量前缀 */
-type Prefix = '--soy-';
+type Prefix = '--soy-'
 
 /** 布局 CSS 变量属性 */
 export type LayoutCssVarsProps = Pick<
   AdminLayoutProps,
   'headerHeight' | 'tabHeight' | 'siderWidth' | 'siderCollapsedWidth' | 'footerHeight'
 > & {
+
   /** 头部 z-index */
-  headerZIndex?: number;
+  headerZIndex?: number
 
   /** 标签 z-index */
-  tabZIndex?: number;
+  tabZIndex?: number
 
   /** 侧边栏 z-index */
-  siderZIndex?: number;
+  siderZIndex?: number
 
   /** 移动端侧边栏 z-index */
-  mobileSiderZIndex?: number;
+  mobileSiderZIndex?: number
 
   /** 底部 z-index */
-  footerZIndex?: number;
-};
+  footerZIndex?: number
+}
 
 /** 布局 CSS 变量 */
 export type LayoutCssVars = {
   [K in keyof LayoutCssVarsProps as `${Prefix}${KebabCase<K>}`]: string | number;
-};
+}
 
 /**
  * 标签模式
@@ -261,19 +287,20 @@ export type LayoutCssVars = {
  *
  * @default chrome
  */
-export type PageTabMode = 'button' | 'chrome';
+export type PageTabMode = 'button' | 'chrome'
 
 /** 页面标签属性 */
 export type PageTabProps = {
+
   /** 是否为暗模式 */
-  darkMode?: boolean;
+  darkMode?: boolean
 
   /**
    * 标签模式
    *
    * - {@link PageTabMode}
    */
-  mode?: PageTabMode;
+  mode?: PageTabMode
 
   /**
    * 布局的通用类名
@@ -282,75 +309,77 @@ export type PageTabProps = {
    *
    * @default 'transition-all-300'
    */
-  commonClass?: string;
+  commonClass?: string
 
   /** 按钮标签的类名 */
-  buttonClass?: string;
+  buttonClass?: string
 
   /** Chrome 标签的类名 */
-  chromeClass?: string;
+  chromeClass?: string
 
   /** 标签是否激活 */
-  active?: boolean;
+  active?: boolean
 
   /** 激活标签的颜色 */
-  activeColor?: string;
+  activeColor?: string
 
   /**
    * 标签是否可关闭
    *
    * 当为 true 时显示关闭图标
    */
-  closable?: boolean;
-};
+  closable?: boolean
+}
 
 /** 页面标签 CSS 变量属性 */
 export type PageTabCssVarsProps = {
+
   /**
    * 主颜色
    *
    * @default ''
    */
-  primaryColor: string;
+  primaryColor: string
 
   /**
    * 主颜色 1
    *
    * @default ''
    */
-  primaryColor1: string;
+  primaryColor1: string
 
   /**
    * 主颜色 2
    *
    * @default ''
    */
-  primaryColor2: string;
+  primaryColor2: string
 
   /**
    * 主颜色不透明度 1
    *
    * @default ''
    */
-  primaryColorOpacity1: string;
+  primaryColorOpacity1: string
 
   /**
    * 主颜色不透明度 2
    *
    * @default ''
    */
-  primaryColorOpacity2: string;
+  primaryColorOpacity2: string
 
   /**
    * 主颜色不透明度 3
    *
    * @default ''
    */
-  primaryColorOpacity3: string;
-};
+  primaryColorOpacity3: string
+}
 
 /** 页面标签 CSS 变量 */
 export type PageTabCssVars = {
+
   /** 根据 `PageTabCssVarsProps` 中的键，通过 `Prefix` 和 `KebabCase` 转换后形成新的键，并且值为 `string` 或 `number` */
   [K in keyof PageTabCssVarsProps as `${Prefix}${KebabCase<K>}`]: string | number;
-};
+}

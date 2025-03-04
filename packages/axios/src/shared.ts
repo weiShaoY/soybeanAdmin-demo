@@ -1,4 +1,8 @@
-import type { AxiosHeaderValue, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import type {
+  AxiosHeaderValue,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios'
 
 /**
  * 获取请求的 `Content-Type`
@@ -7,9 +11,9 @@ import type { AxiosHeaderValue, AxiosResponse, InternalAxiosRequestConfig } from
  * @returns 请求的 `Content-Type`，默认为 `'application/json'`
  */
 export function getContentType(config: InternalAxiosRequestConfig) {
-  const contentType: AxiosHeaderValue = config.headers?.['Content-Type'] || 'application/json';
+  const contentType: AxiosHeaderValue = config.headers?.['Content-Type'] || 'application/json'
 
-  return contentType;
+  return contentType
 }
 
 /**
@@ -19,9 +23,9 @@ export function getContentType(config: InternalAxiosRequestConfig) {
  * @returns 是否成功 (2xx 或 304)
  */
 export function isHttpSuccess(status: number) {
-  const isSuccessCode = status >= 200 && status < 300;
+  const isSuccessCode = status >= 200 && status < 300
 
-  return isSuccessCode || status === 304;
+  return isSuccessCode || status === 304
 }
 
 /**
@@ -31,7 +35,7 @@ export function isHttpSuccess(status: number) {
  * @returns 是否为 JSON 类型
  */
 export function isResponseJson(response: AxiosResponse) {
-  const { responseType } = response.config;
+  const { responseType } = response.config
 
-  return responseType === 'json' || responseType === undefined;
+  return responseType === 'json' || responseType === undefined
 }

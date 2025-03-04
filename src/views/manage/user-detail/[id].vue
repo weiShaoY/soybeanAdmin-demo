@@ -1,10 +1,10 @@
 <script setup lang="ts">
-interface Props {
-  // eslint-disable-next-line vue/no-unused-properties
-  id: string;
+type Props = {
+
+  id: string
 }
 
-defineProps<Props>();
+defineProps<Props>()
 </script>
 
 <template>

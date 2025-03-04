@@ -1,15 +1,17 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed } from 'vue'
 
-defineOptions({ name: 'PinToggler' });
+defineOptions({
+  name: 'PinToggler',
+})
 
-interface Props {
-  pin?: boolean;
+const props = defineProps<Props>()
+
+type Props = {
+  pin?: boolean
 }
 
-const props = defineProps<Props>();
-
-const icon = computed(() => (props.pin ? 'mdi-pin-off' : 'mdi-pin'));
+const icon = computed(() => (props.pin ? 'mdi-pin-off' : 'mdi-pin'))
 </script>
 
 <template>
@@ -18,7 +20,9 @@ const icon = computed(() => (props.pin ? 'mdi-pin-off' : 'mdi-pin'));
     tooltip-placement="bottom-start"
     :z-index="100"
   >
-    <SvgIcon :icon="icon" />
+    <SvgIcon
+      :icon="icon"
+    />
   </ButtonIcon>
 </template>
 

@@ -1,57 +1,124 @@
 <script setup lang="ts">
-import { useAppStore } from '@/store/modules/app';
-import { useThemeStore } from '@/store/modules/theme';
-import LayoutModeCard from '../components/layout-mode-card.vue';
-import SettingItem from '../components/setting-item.vue';
+import { useAppStore } from '@/store/modules/app'
 
-defineOptions({ name: 'LayoutMode' });
+import { useThemeStore } from '@/store/modules/theme'
 
-const appStore = useAppStore();
-const themeStore = useThemeStore();
+import LayoutModeCard from '../components/layout-mode-card.vue'
+
+import SettingItem from '../components/setting-item.vue'
+
+defineOptions({
+  name: 'LayoutMode',
+})
+
+const appStore = useAppStore()
+
+const themeStore = useThemeStore()
 
 function handleReverseHorizontalMixChange(value: boolean | string | number) {
-  themeStore.setLayoutReverseHorizontalMix(value as boolean);
+  themeStore.setLayoutReverseHorizontalMix(value as boolean)
 }
 </script>
 
 <template>
-  <ElDivider>{{ '布局模式' }}</ElDivider>
-  <LayoutModeCard v-model:mode="themeStore.layout.mode" :disabled="appStore.isMobile">
-    <template #vertical>
-      <div class="layout-sider h-full w-[18px]"></div>
-      <div class="vertical-wrapper">
-        <div class="layout-header"></div>
-        <div class="layout-main"></div>
+  <ElDivider>
+    {{ '布局模式' }}
+  </ElDivider>
+
+  <LayoutModeCard
+    v-model:mode="themeStore.layout.mode"
+    :disabled="appStore.isMobile"
+  >
+    <template
+      #vertical
+    >
+      <div
+        class="layout-sider h-full w-[18px]"
+      />
+
+      <div
+        class="vertical-wrapper"
+      >
+        <div
+          class="layout-header"
+        />
+
+        <div
+          class="layout-main"
+        />
       </div>
     </template>
-    <template #vertical-mix>
-      <div class="layout-sider h-full w-[8px]"></div>
-      <div class="layout-sider h-full w-[16px]"></div>
-      <div class="vertical-wrapper">
-        <div class="layout-header"></div>
-        <div class="layout-main"></div>
+
+    <template
+      #vertical-mix
+    >
+      <div
+        class="layout-sider h-full w-[8px]"
+      />
+
+      <div
+        class="layout-sider h-full w-[16px]"
+      />
+
+      <div
+        class="vertical-wrapper"
+      >
+        <div
+          class="layout-header"
+        />
+
+        <div
+          class="layout-main"
+        />
       </div>
     </template>
-    <template #horizontal>
-      <div class="layout-header"></div>
-      <div class="horizontal-wrapper">
-        <div class="layout-main"></div>
+
+    <template
+      #horizontal
+    >
+      <div
+        class="layout-header"
+      />
+
+      <div
+        class="horizontal-wrapper"
+      >
+        <div
+          class="layout-main"
+        />
       </div>
     </template>
-    <template #horizontal-mix>
-      <div class="layout-header"></div>
-      <div class="horizontal-wrapper">
-        <div class="layout-sider w-[18px]"></div>
-        <div class="layout-main"></div>
+
+    <template
+      #horizontal-mix
+    >
+      <div
+        class="layout-header"
+      />
+
+      <div
+        class="horizontal-wrapper"
+      >
+        <div
+          class="layout-sider w-[18px]"
+        />
+
+        <div
+          class="layout-main"
+        />
       </div>
     </template>
   </LayoutModeCard>
+
   <SettingItem
     v-if="themeStore.layout.mode === 'horizontal-mix'"
-    :label="'一级菜单与子级菜单位置反转'"
+    label="一级菜单与子级菜单位置反转"
     class="mt-[16px]"
   >
-    <ElSwitch v-model="themeStore.layout.reverseHorizontalMix" @change="handleReverseHorizontalMixChange" />
+    <ElSwitch
+      v-model="themeStore.layout.reverseHorizontalMix"
+      @change="handleReverseHorizontalMixChange"
+    />
   </SettingItem>
 </template>
 

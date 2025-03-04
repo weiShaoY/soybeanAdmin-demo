@@ -1,47 +1,68 @@
-import { effectScope, nextTick, onScopeDispose, ref, watch } from "vue";
-import { defineStore } from "pinia";
+import { SetupStoreId } from '@/enum'
+
+import { localStg } from '@/utils/storage'
+
+import { useBoolean } from '@sa/hooks'
+
 import {
   breakpointsTailwind,
   useBreakpoints,
   useEventListener,
-  useTitle,
-} from "@vueuse/core";
-import { useBoolean } from "@sa/hooks";
-import { SetupStoreId } from "@/enum";
-import { router } from "@/router";
-import { localStg } from "@/utils/storage";
-import { useRouteStore } from "../route";
-import { useTabStore } from "../tab";
-import { useThemeStore } from "../theme";
+} from '@vueuse/core'
+
+import { defineStore } from 'pinia'
+
+import {
+  effectScope,
+  nextTick,
+  onScopeDispose,
+  watch,
+} from 'vue'
+
+import { useRouteStore } from '../route'
+
+import { useTabStore } from '../tab'
+
+import { useThemeStore } from '../theme'
 
 export const useAppStore = defineStore(SetupStoreId.App, () => {
-  const themeStore = useThemeStore();
-  const routeStore = useRouteStore();
-  const tabStore = useTabStore();
-  const scope = effectScope();
-  const breakpoints = useBreakpoints(breakpointsTailwind);
+  const themeStore = useThemeStore()
+
+  const routeStore = useRouteStore()
+
+  const tabStore = useTabStore()
+
+  const scope = effectScope()
+
+  const breakpoints = useBreakpoints(breakpointsTailwind)
+
   const {
     bool: themeDrawerVisible,
     setTrue: openThemeDrawer,
     setFalse: closeThemeDrawer,
-  } = useBoolean();
-  const { bool: reloadFlag, setBool: setReloadFlag } = useBoolean(true);
-  const { bool: fullContent, toggle: toggleFullContent } = useBoolean();
-  const { bool: contentXScrollable, setBool: setContentXScrollable } =
-    useBoolean();
+  } = useBoolean()
+
+  const { bool: reloadFlag, setBool: setReloadFlag } = useBoolean(true)
+
+  const { bool: fullContent, toggle: toggleFullContent } = useBoolean()
+
+  const { bool: contentXScrollable, setBool: setContentXScrollable }
+    = useBoolean()
+
   const {
     bool: siderCollapse,
     setBool: setSiderCollapse,
     toggle: toggleSiderCollapse,
-  } = useBoolean();
+  } = useBoolean()
+
   const {
     bool: mixSiderFixed,
     setBool: setMixSiderFixed,
     toggle: toggleMixSiderFixed,
-  } = useBoolean(localStg.get("mixSiderFixed") === "Y");
+  } = useBoolean(localStg.get('mixSiderFixed') === 'Y')
 
   /** 是否为移动布局 */
-  const isMobile = breakpoints.smaller("sm");
+  const isMobile = breakpoints.smaller('sm')
 
   /**
    * 重新加载页面
@@ -49,18 +70,18 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
    * @param {number} duration 持续时间
    */
   async function reloadPage(duration = 300) {
-    setReloadFlag(false);
+    setReloadFlag(false)
 
-    const d = themeStore.page.animate ? duration : 40;
+    const d = themeStore.page.animate ? duration : 40
 
     await new Promise((resolve) => {
-      setTimeout(resolve, d);
-    });
+      setTimeout(resolve, d)
+    })
 
-    setReloadFlag(true);
+    setReloadFlag(true)
 
-    if (themeStore.resetCacheStrategy === "refresh") {
-      routeStore.resetRouteCache();
+    if (themeStore.resetCacheStrategy === 'refresh') {
+      routeStore.resetRouteCache()
     }
   }
 
@@ -75,43 +96,46 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
       (newValue) => {
         if (newValue) {
           // 备份移动设备之前的主题设置
-          localStg.set("backupThemeSettingBeforeIsMobile", {
+          localStg.set('backupThemeSettingBeforeIsMobile', {
             layout: themeStore.layout.mode,
             siderCollapse: siderCollapse.value,
-          });
+          })
 
-          themeStore.setThemeLayout("vertical");
-          setSiderCollapse(true);
-        } else {
+          themeStore.setThemeLayout('vertical')
+          setSiderCollapse(true)
+        }
+        else {
           // 如果不是移动设备，恢复备份的主题设置
-          const backup = localStg.get("backupThemeSettingBeforeIsMobile");
+          const backup = localStg.get('backupThemeSettingBeforeIsMobile')
 
           if (backup) {
             nextTick(() => {
-              themeStore.setThemeLayout(backup.layout);
-              setSiderCollapse(backup.siderCollapse);
+              themeStore.setThemeLayout(backup.layout)
+              setSiderCollapse(backup.siderCollapse)
 
-              localStg.remove("backupThemeSettingBeforeIsMobile");
-            });
+              localStg.remove('backupThemeSettingBeforeIsMobile')
+            })
           }
         }
       },
-      { immediate: true },
-    );
-  });
+      {
+        immediate: true,
+      },
+    )
+  })
 
   // 缓存 mixSiderFixed
-  useEventListener(window, "beforeunload", () => {
-    localStg.set("mixSiderFixed", mixSiderFixed.value ? "Y" : "N");
-  });
+  useEventListener(window, 'beforeunload', () => {
+    localStg.set('mixSiderFixed', mixSiderFixed.value ? 'Y' : 'N')
+  })
 
   /** 作用域销毁时的处理 */
   onScopeDispose(() => {
-    scope.stop();
-  });
+    scope.stop()
+  })
 
   // 初始化
-  init();
+  init()
 
   return {
     isMobile,
@@ -130,5 +154,5 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     mixSiderFixed,
     setMixSiderFixed,
     toggleMixSiderFixed,
-  };
-});
+  }
+})

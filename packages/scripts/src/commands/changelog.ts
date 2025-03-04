@@ -1,6 +1,6 @@
-import type { ChangelogOption } from '@soybeanjs/changelog';
+import type { ChangelogOption } from '@soybeanjs/changelog'
 
-import { generateChangelog, generateTotalChangelog } from '@soybeanjs/changelog';
+import { generateChangelog, generateTotalChangelog } from '@soybeanjs/changelog'
 
 /**
  * 生成变更日志
@@ -12,9 +12,10 @@ import { generateChangelog, generateTotalChangelog } from '@soybeanjs/changelog'
 export async function genChangelog(options?: Partial<ChangelogOption>, total = false): Promise<void> {
   if (total) {
     // 生成基于所有标签的完整变更日志
-    await generateTotalChangelog(options);
-  } else {
+    await generateTotalChangelog(options)
+  }
+  else {
     // 生成基于当前版本的变更日志
-    await generateChangelog(options);
+    await generateChangelog(options)
   }
 }

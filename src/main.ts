@@ -1,51 +1,54 @@
-import { createApp } from 'vue';
-import './plugins/assets';
+import { createApp } from 'vue'
+
+import App from './App.vue'
+
 import {
   setupAppVersionNotification,
   setupDayjs,
   setupIconifyOffline,
   setupLoading,
   setupNProgress,
-  setupUI
-} from './plugins';
-import { setupStore } from './store';
-import { setupRouter } from './router';
-import App from './App.vue';
+  setupUI,
+} from './plugins'
+
+import { setupRouter } from './router'
+
+import { setupStore } from './store'
+
+import './plugins/assets'
 
 /** 设置应用程序 */
 async function setupApp() {
   // 设置加载指示器
-  setupLoading();
+  setupLoading()
 
   // 设置顶部进度条
-  setupNProgress();
+  setupNProgress()
 
   // 设置离线图标库
-  setupIconifyOffline();
+  setupIconifyOffline()
 
   // 设置 dayjs 日期处理库
-  setupDayjs();
+  setupDayjs()
 
   // 创建 Vue 应用实例
-  const app = createApp(App);
+  const app = createApp(App)
 
   // 设置 UI 框架
-  setupUI(app);
+  setupUI(app)
 
   // 设置状态管理
-  setupStore(app);
+  setupStore(app)
 
   // 设置路由
-  await setupRouter(app);
-
-
+  await setupRouter(app)
 
   // 设置应用程序版本通知
-  setupAppVersionNotification();
+  setupAppVersionNotification()
 
   // 挂载应用实例到 DOM
-  app.mount('#app');
+  app.mount('#app')
 }
 
 // 初始化应用程序
-setupApp();
+setupApp()

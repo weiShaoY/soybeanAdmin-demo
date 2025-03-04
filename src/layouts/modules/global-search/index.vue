@@ -1,17 +1,26 @@
 <script lang="ts" setup>
-import { useBoolean } from '@sa/hooks';
-import SearchModal from './components/search-modal.vue';
+import { useBoolean } from '@sa/hooks'
 
-defineOptions({ name: 'GlobalSearch' });
+import SearchModal from './components/search-modal.vue'
 
-const { bool: show, toggle } = useBoolean();
+defineOptions({
+  name: 'GlobalSearch',
+})
+
+const { bool: show, toggle } = useBoolean()
 </script>
 
 <template>
-  <ButtonIcon :tooltip-content="'搜索'" @click="toggle">
+  <ButtonIcon
+    tooltip-content="搜索"
+    @click="toggle"
+  >
     <icon-uil-search />
   </ButtonIcon>
-  <SearchModal v-model:show="show" />
+
+  <SearchModal
+    v-model:show="show"
+  />
 </template>
 
 <style lang="scss" scoped></style>

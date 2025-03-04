@@ -1,4 +1,4 @@
-import type { Options } from 'execa';
+import type { Options } from 'execa'
 
 /**
  * 执行 shell 命令
@@ -9,9 +9,9 @@ import type { Options } from 'execa';
  * @returns 返回命令执行的标准输出内容（去除首尾空格）
  */
 export async function execCommand(cmd: string, args: string[], options?: Options): Promise<string> {
-  const { execa } = await import('execa');
+  const { execa } = await import('execa')
 
-  const res = await execa(cmd, args, options);
+  const res = await execa(cmd, args, options)
 
-  return (res?.stdout as string)?.trim() || '';
+  return (res?.stdout as string)?.trim() || ''
 }

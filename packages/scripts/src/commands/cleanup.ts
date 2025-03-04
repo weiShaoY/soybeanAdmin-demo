@@ -1,4 +1,4 @@
-import { rimraf } from 'rimraf';
+import { rimraf } from 'rimraf'
 
 /**
  * 清理指定的目录
@@ -8,6 +8,6 @@ import { rimraf } from 'rimraf';
  */
 export async function cleanup(paths: string[]): Promise<void> {
   await rimraf(paths, {
-    glob: true
-  });
+    glob: true,
+  })
 }

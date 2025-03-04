@@ -1,20 +1,30 @@
 <script setup lang="ts">
-defineOptions({ name: 'WebSiteLink' });
+defineOptions({
+  name: 'WebSiteLink',
+})
 
-interface Props {
+defineProps<Props>()
+
+type Props = {
+
   /** Web site name */
-  label: string;
+  label: string
+
   /** Web site link */
-  link: string;
+  link: string
 }
 
-defineProps<Props>();
 </script>
 
 <template>
   <p>
     <span>{{ label }}</span>
-    <a class="text-blue-500" :href="link" target="#">
+
+    <a
+      class="text-blue-500"
+      :href="link"
+      target="#"
+    >
       {{ link }}
     </a>
   </p>

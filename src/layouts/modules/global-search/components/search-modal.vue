@@ -1,102 +1,128 @@
 <script lang="ts" setup>
-import { computed, ref, shallowRef } from 'vue';
-import { useRouter } from 'vue-router';
-import { onKeyStroke, useDebounceFn } from '@vueuse/core';
-import type { InputInstance } from 'element-plus';
-import { useRouteStore } from '@/store/modules/route';
-import { useAppStore } from '@/store/modules/app';
-import SearchResult from './search-result.vue';
-import SearchFooter from './search-footer.vue';
+import type { InputInstance } from 'element-plus'
 
-defineOptions({ name: 'SearchModal' });
+import { useAppStore } from '@/store/modules/app'
 
-const router = useRouter();
-const appStore = useAppStore();
-const routeStore = useRouteStore();
+import { useRouteStore } from '@/store/modules/route'
 
-const isMobile = computed(() => appStore.isMobile);
+import { onKeyStroke, useDebounceFn } from '@vueuse/core'
 
-const keyword = ref('');
-const activePath = ref('');
-const resultOptions = shallowRef<App.Global.Menu[]>([]);
+import {
+  computed,
+  ref,
+  shallowRef,
+} from 'vue'
 
-const handleSearch = useDebounceFn(search, 300);
+import { useRouter } from 'vue-router'
 
-const visible = defineModel<boolean>('show', { required: true });
+import SearchFooter from './search-footer.vue'
 
-const searchInput = ref<InputInstance>();
+import SearchResult from './search-result.vue'
+
+defineOptions({
+  name: 'SearchModal',
+})
+
+const router = useRouter()
+
+const appStore = useAppStore()
+
+const routeStore = useRouteStore()
+
+const isMobile = computed(() => appStore.isMobile)
+
+const keyword = ref('')
+
+const activePath = ref('')
+
+const resultOptions = shallowRef<App.Global.Menu[]>([])
+
+const handleSearch = useDebounceFn(search, 300)
+
+const visible = defineModel<boolean>('show', {
+  required: true,
+})
+
+const searchInput = ref<InputInstance>()
 
 function search() {
-  resultOptions.value = routeStore.searchMenus.filter(menu => {
-    const trimKeyword = keyword.value.toLocaleLowerCase().trim();
-    const title = menu.label.toLocaleLowerCase();
-    return trimKeyword && title.includes(trimKeyword);
-  });
+  resultOptions.value = routeStore.searchMenus.filter((menu) => {
+    const trimKeyword = keyword.value.toLocaleLowerCase().trim()
 
-  activePath.value = resultOptions.value[0]?.routePath ?? '';
+    const title = menu.label.toLocaleLowerCase()
+
+    return trimKeyword && title.includes(trimKeyword)
+  })
+
+  activePath.value = resultOptions.value[0]?.routePath ?? ''
 }
 
 function handleClose() {
   // handle with setTimeout to prevent user from seeing some operations
   setTimeout(() => {
-    visible.value = false;
-    resultOptions.value = [];
-    keyword.value = '';
-  }, 200);
+    visible.value = false
+    resultOptions.value = []
+    keyword.value = ''
+  }, 200)
 }
 
 /** key up */
 function handleUp() {
-  const { length } = resultOptions.value;
-  if (length === 0) return;
+  const { length } = resultOptions.value
 
-  const index = getActivePathIndex();
-  if (index === -1) return;
+  if (length === 0) { return }
 
-  const activeIndex = index === 0 ? length - 1 : index - 1;
+  const index = getActivePathIndex()
 
-  activePath.value = resultOptions.value[activeIndex].routePath;
+  if (index === -1) { return }
+
+  const activeIndex = index === 0 ? length - 1 : index - 1
+
+  activePath.value = resultOptions.value[activeIndex].routePath
 }
 
 /** key down */
 function handleDown() {
-  const { length } = resultOptions.value;
-  if (length === 0) return;
+  const { length } = resultOptions.value
 
-  const index = getActivePathIndex();
-  if (index === -1) return;
+  if (length === 0) { return }
 
-  const activeIndex = index === length - 1 ? 0 : index + 1;
+  const index = getActivePathIndex()
 
-  activePath.value = resultOptions.value[activeIndex].routePath;
+  if (index === -1) { return }
+
+  const activeIndex = index === length - 1 ? 0 : index + 1
+
+  activePath.value = resultOptions.value[activeIndex].routePath
 }
 
 function getActivePathIndex() {
-  return resultOptions.value.findIndex(item => item.routePath === activePath.value);
+  return resultOptions.value.findIndex(item => item.routePath === activePath.value)
 }
 
 /** key enter */
 function handleEnter() {
-  if (resultOptions.value?.length === 0 || activePath.value === '') return;
-  handleClose();
-  router.push(activePath.value);
+  if (resultOptions.value?.length === 0 || activePath.value === '') { return }
+
+  handleClose()
+  router.push(activePath.value)
 }
 
 function registerShortcut() {
-  onKeyStroke('Escape', handleClose);
-  onKeyStroke('Enter', handleEnter);
-  onKeyStroke('ArrowUp', handleUp);
-  onKeyStroke('ArrowDown', handleDown);
+  onKeyStroke('Escape', handleClose)
+  onKeyStroke('Enter', handleEnter)
+  onKeyStroke('ArrowUp', handleUp)
+  onKeyStroke('ArrowDown', handleDown)
 }
 
 /** open dialog and set input focus */
 function setFocus() {
   setTimeout(() => {
-    searchInput.value?.focus();
-  });
+    searchInput.value?.focus()
+  })
 }
 
-registerShortcut();
+registerShortcut()
 </script>
 
 <template>
@@ -113,23 +139,52 @@ registerShortcut();
       ref="searchInput"
       v-model="keyword"
       clearable
-      :placeholder="'请输入关键词搜索'"
+      placeholder="请输入关键词搜索"
       @input="handleSearch"
     >
-      <template #prefix>
-        <icon-uil-search class="text-[15px]" />
+      <template
+        #prefix
+      >
+        <icon-uil-search
+          class="text-[15px]"
+        />
       </template>
-      <template v-if="isMobile" #append>
-        <ElButton type="primary" plain @click="handleClose">{{ '取消' }}</ElButton>
+
+      <template
+        v-if="isMobile"
+        #append
+      >
+        <ElButton
+          type="primary"
+          plain
+          @click="handleClose"
+        >
+          {{ '取消' }}
+        </ElButton>
       </template>
     </ElInput>
 
     <div>
-      <ElEmpty v-if="resultOptions.length === 0" :description="'无数据'" :image-size="50" />
-      <SearchResult v-else v-model:path="activePath" :options="resultOptions" @enter="handleEnter" />
+      <ElEmpty
+        v-if="resultOptions.length === 0"
+        description="无数据"
+        :image-size="50"
+      />
+
+      <SearchResult
+        v-else
+        v-model:path="activePath"
+        :options="resultOptions"
+        @enter="handleEnter"
+      />
     </div>
-    <template #footer>
-      <SearchFooter v-if="!isMobile" />
+
+    <template
+      #footer
+    >
+      <SearchFooter
+        v-if="!isMobile"
+      />
     </template>
   </ElDialog>
 </template>

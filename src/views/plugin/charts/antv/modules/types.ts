@@ -1,4 +1,8 @@
-import type { EdgeData, GraphData, NodeData } from '@antv/g6';
+import type {
+  EdgeData,
+  GraphData,
+  NodeData,
+} from '@antv/g6'
 
 export type NodeStatus =
   | 'MILESTONE'
@@ -8,21 +12,21 @@ export type NodeStatus =
   | 'IN_PROGRESS'
   | 'COMPLETED'
   | 'COMPLETED_EARLY'
-  | 'COMPLETED_LATE';
+  | 'COMPLETED_LATE'
 
-export interface CustomNodeData extends NodeData {
-  isDelayed?: boolean;
-  isDeleted?: boolean;
-  milestone?: boolean;
-  status?: NodeStatus;
-}
+export type CustomNodeData = {
+  isDelayed?: boolean
+  isDeleted?: boolean
+  milestone?: boolean
+  status?: NodeStatus
+} & NodeData
 
-export interface CustomEdgeData extends EdgeData {
-  isDelayed?: boolean;
-  isDeleted?: boolean;
-}
+export type CustomEdgeData = {
+  isDelayed?: boolean
+  isDeleted?: boolean
+} & EdgeData
 
-export interface CustomGraphData extends GraphData {
-  nodes: CustomNodeData[];
-  edges: CustomEdgeData[];
-}
+export type CustomGraphData = {
+  nodes: CustomNodeData[]
+  edges: CustomEdgeData[]
+} & GraphData

@@ -1,14 +1,18 @@
-import type { AnyColor, HslColor, RgbColor } from 'colord';
+import type {
+  AnyColor,
+  HslColor,
+  RgbColor,
+} from 'colord'
 
-import { colord, extend } from 'colord';
+import { colord, extend } from 'colord'
 
-import labPlugin from 'colord/plugins/lab';
+import labPlugin from 'colord/plugins/lab'
 
-import mixPlugin from 'colord/plugins/mix';
+import mixPlugin from 'colord/plugins/mix'
 
-import namesPlugin from 'colord/plugins/names';
+import namesPlugin from 'colord/plugins/names'
 
-extend([namesPlugin, mixPlugin, labPlugin]);
+extend([namesPlugin, mixPlugin, labPlugin])
 
 /**
  * 判断颜色是否有效
@@ -17,7 +21,7 @@ extend([namesPlugin, mixPlugin, labPlugin]);
  * @returns 是否有效的颜色
  */
 export function isValidColor(color: AnyColor) {
-  return colord(color).isValid();
+  return colord(color).isValid()
 }
 
 /**
@@ -27,7 +31,7 @@ export function isValidColor(color: AnyColor) {
  * @returns 颜色的HEX值
  */
 export function getHex(color: AnyColor) {
-  return colord(color).toHex();
+  return colord(color).toHex()
 }
 
 /**
@@ -37,7 +41,7 @@ export function getHex(color: AnyColor) {
  * @returns 颜色的RGB值
  */
 export function getRgb(color: AnyColor) {
-  return colord(color).toRgb();
+  return colord(color).toRgb()
 }
 
 /**
@@ -47,7 +51,7 @@ export function getRgb(color: AnyColor) {
  * @returns 颜色的HSL值
  */
 export function getHsl(color: AnyColor) {
-  return colord(color).toHsl();
+  return colord(color).toHsl()
 }
 
 /**
@@ -57,7 +61,7 @@ export function getHsl(color: AnyColor) {
  * @returns 颜色的HSV值
  */
 export function getHsv(color: AnyColor) {
-  return colord(color).toHsv();
+  return colord(color).toHsv()
 }
 
 /**
@@ -68,7 +72,7 @@ export function getHsv(color: AnyColor) {
  * @returns 两个颜色之间的Delta E值
  */
 export function getDeltaE(color1: AnyColor, color2: AnyColor) {
-  return colord(color1).delta(color2);
+  return colord(color1).delta(color2)
 }
 
 /**
@@ -78,7 +82,7 @@ export function getDeltaE(color1: AnyColor, color2: AnyColor) {
  * @returns HEX颜色
  */
 export function transformHslToHex(color: HslColor) {
-  return colord(color).toHex();
+  return colord(color).toHex()
 }
 
 /**
@@ -89,7 +93,7 @@ export function transformHslToHex(color: HslColor) {
  * @returns 带有透明度的HEX颜色
  */
 export function addColorAlpha(color: AnyColor, alpha: number) {
-  return colord(color).alpha(alpha).toHex();
+  return colord(color).alpha(alpha).toHex()
 }
 
 /**
@@ -101,7 +105,7 @@ export function addColorAlpha(color: AnyColor, alpha: number) {
  * @returns 混合后的HEX颜色
  */
 export function mixColor(firstColor: AnyColor, secondColor: AnyColor, ratio: number) {
-  return colord(firstColor).mix(secondColor, ratio).toHex();
+  return colord(firstColor).mix(secondColor, ratio).toHex()
 }
 
 /**
@@ -113,23 +117,23 @@ export function mixColor(firstColor: AnyColor, secondColor: AnyColor, ratio: num
  * @returns 转换后的HEX颜色
  */
 export function transformColorWithOpacity(color: AnyColor, alpha: number, bgColor = '#ffffff') {
-  const originColor = addColorAlpha(color, alpha);
+  const originColor = addColorAlpha(color, alpha)
 
-  const { r: oR, g: oG, b: oB } = colord(originColor).toRgb();
+  const { r: oR, g: oG, b: oB } = colord(originColor).toRgb()
 
-  const { r: bgR, g: bgG, b: bgB } = colord(bgColor).toRgb();
+  const { r: bgR, g: bgG, b: bgB } = colord(bgColor).toRgb()
 
   function calRgb(or: number, bg: number, al: number) {
-    return bg + (or - bg) * al;
+    return bg + (or - bg) * al
   }
 
   const resultRgb: RgbColor = {
     r: calRgb(oR, bgR, alpha),
     g: calRgb(oG, bgG, alpha),
-    b: calRgb(oB, bgB, alpha)
-  };
+    b: calRgb(oB, bgB, alpha),
+  }
 
-  return colord(resultRgb).toHex();
+  return colord(resultRgb).toHex()
 }
 
 /**
@@ -139,7 +143,9 @@ export function transformColorWithOpacity(color: AnyColor, alpha: number, bgColo
  * @returns 是否为白色
  */
 export function isWhiteColor(color: AnyColor) {
-  return colord(color).isEqual('#ffffff');
+  return colord(color).isEqual('#ffffff')
 }
 
-export { colord };
+export {
+  colord,
+}

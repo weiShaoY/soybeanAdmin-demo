@@ -1,5 +1,6 @@
-import { useSvgIconRender } from '@sa/hooks';
-import SvgIcon from '@/components/custom/svg-icon.vue';
+import SvgIcon from '@/components/custom/svg-icon.vue'
+
+import { useSvgIconRender } from '@sa/hooks'
 
 /**
  * 使用 SVG 图标
@@ -8,9 +9,9 @@ import SvgIcon from '@/components/custom/svg-icon.vue';
  */
 export function useSvgIcon() {
   /** 渲染 SVG 图标的 VNode */
-  const { SvgIconVNode } = useSvgIconRender(SvgIcon);
+  const { SvgIconVNode } = useSvgIconRender(SvgIcon)
 
   return {
-    SvgIconVNode
-  };
+    SvgIconVNode,
+  }
 }

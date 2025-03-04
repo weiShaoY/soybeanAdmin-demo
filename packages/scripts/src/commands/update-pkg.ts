@@ -1,4 +1,4 @@
-import { execCommand } from '../shared';
+import { execCommand } from '../shared'
 
 /**
  * 更新包
@@ -7,5 +7,7 @@ import { execCommand } from '../shared';
  * @returns 返回一个 Promise 对象
  */
 export async function updatePkg(args: string[] = ['--deep', '-u']) {
-  execCommand('npx', ['ncu', ...args], { stdio: 'inherit' });
+  execCommand('npx', ['ncu', ...args], {
+    stdio: 'inherit',
+  })
 }

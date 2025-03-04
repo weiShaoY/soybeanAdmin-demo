@@ -1,4 +1,4 @@
-import type { Plugin } from 'vite';
+import type { Plugin } from 'vite'
 
 /**
  * 生成 Vite 插件，在构建时向 HTML 添加 `buildTime` 元数据
@@ -26,9 +26,9 @@ export function setupHtmlPlugin(buildTime: string) {
      * @returns 处理后的 HTML 内容
      */
     transformIndexHtml(html) {
-      return html.replace('<head>', `<head>\n    <meta name="buildTime" content="${buildTime}">`);
-    }
-  };
+      return html.replace('<head>', `<head>\n    <meta name="buildTime" content="${buildTime}">`)
+    },
+  }
 
-  return plugin;
+  return plugin
 }

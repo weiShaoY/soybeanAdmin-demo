@@ -1,114 +1,142 @@
 <script setup lang="tsx">
-import { ref } from 'vue';
+import type { Ref } from 'vue'
 
-import type { Ref } from 'vue';
+import type { OperateType } from './modules/menu-operate-modal.vue'
 
-import { useBoolean } from '@sa/hooks';
+import SvgIcon from '@/components/custom/svg-icon.vue'
 
-import { ElButton, ElPopconfirm, ElTag } from 'element-plus';
+import { enableStatusRecord, menuTypeRecord } from '@/constants/business'
 
-import { fetchGetAllPages, fetchGetMenuList } from '@/service/api';
+import { yesOrNoRecord } from '@/constants/common'
 
-import { useTable, useTableOperate } from '@/hooks/common/table';
+import { useTable, useTableOperate } from '@/hooks/common/table'
 
-import { yesOrNoRecord } from '@/constants/common';
+import { fetchGetAllPages, fetchGetMenuList } from '@/service/api'
 
-import { enableStatusRecord, menuTypeRecord } from '@/constants/business';
+import { useBoolean } from '@sa/hooks'
 
-import SvgIcon from '@/components/custom/svg-icon.vue';
+import {
+  ElButton,
+  ElPopconfirm,
+  ElTag,
+} from 'element-plus'
 
-import MenuOperateModal, { type OperateType } from './modules/menu-operate-modal.vue';
+import { ref } from 'vue'
 
-const { bool: visible, setTrue: openModal } = useBoolean();
+import MenuOperateModal from './modules/menu-operate-modal.vue'
 
-const wrapperRef = ref<HTMLElement | null>(null);
+const { bool: visible, setTrue: openModal } = useBoolean()
+
+const wrapperRef = ref<HTMLElement | null>(null)
 
 const { columns, columnChecks, data, loading, pagination, getData, getDataByPage } = useTable({
   apiFn: fetchGetMenuList,
   columns: () => [
-    { type: 'selection', width: 48 },
-    { prop: 'id', label: 'ID' },
+    {
+      type: 'selection',
+      width: 48,
+    },
+    {
+      prop: 'id',
+      label: 'ID',
+    },
     {
       prop: 'menuType',
       label: '菜单类型',
       width: 90,
-      formatter: row => {
+      formatter: (row) => {
         const tagMap: Record<Api.SystemManage.MenuType, UI.ThemeColor> = {
           1: 'info',
-          2: 'primary'
-        };
+          2: 'primary',
+        }
 
-        const label = menuTypeRecord[row.menuType];
+        const label = menuTypeRecord[row.menuType]
 
-        return <ElTag type={tagMap[row.menuType]}>{label}</ElTag>;
-      }
+        return <ElTag type={tagMap[row.menuType]}>{label}</ElTag>
+      },
     },
     {
       prop: 'menuName',
       label: '菜单名称',
       minWidth: 120,
-      formatter: row => {
-        const label = row.menuName;
+      formatter: (row) => {
+        const label = row.menuName
 
-        return <span>{label}</span>;
-      }
+        return <span>{label}</span>
+      },
     },
     {
       prop: 'icon',
       label: '图标',
       width: 100,
-      formatter: row => {
-        const icon = row.iconType === '1' ? row.icon : undefined;
+      formatter: (row) => {
+        const icon = row.iconType === '1' ? row.icon : undefined
 
-        const localIcon = row.iconType === '2' ? row.icon : undefined;
+        const localIcon = row.iconType === '2' ? row.icon : undefined
 
         return (
           <div class="flex-center">
             <SvgIcon icon={icon} localIcon={localIcon} class="text-icon" />
           </div>
-        );
-      }
+        )
+      },
     },
-    { prop: 'routeName', label: '路由名称', minWidth: 120 },
-    { prop: 'routePath', label: '路由路径', minWidth: 120 },
+    {
+      prop: 'routeName',
+      label: '路由名称',
+      minWidth: 120,
+    },
+    {
+      prop: 'routePath',
+      label: '路由路径',
+      minWidth: 120,
+    },
     {
       prop: 'status',
       label: '菜单状态',
       width: 80,
-      formatter: row => {
+      formatter: (row) => {
         if (row.status === undefined) {
-          return '';
+          return ''
         }
 
         const tagMap: Record<Api.Common.EnableStatus, UI.ThemeColor> = {
           1: 'success',
-          2: 'warning'
-        };
+          2: 'warning',
+        }
 
-        const label = enableStatusRecord[row.status];
+        const label = enableStatusRecord[row.status]
 
-        return <ElTag type={tagMap[row.status]}>{label}</ElTag>;
-      }
+        return <ElTag type={tagMap[row.status]}>{label}</ElTag>
+      },
     },
     {
       prop: 'hideInMenu',
       label: '隐藏菜单',
       width: 80,
-      formatter: row => {
-        const hide: CommonType.YesOrNo = row.hideInMenu ? 'Y' : 'N';
+      formatter: (row) => {
+        const hide: CommonType.YesOrNo = row.hideInMenu ? 'Y' : 'N'
 
         const tagMap: Record<CommonType.YesOrNo, UI.ThemeColor> = {
           Y: 'danger',
-          N: 'info'
-        };
+          N: 'info',
+        }
 
-        const label = yesOrNoRecord[hide];
+        const label = yesOrNoRecord[hide]
 
-        return <ElTag type={tagMap[hide]}>{label}</ElTag>;
-      }
+        return <ElTag type={tagMap[hide]}>{label}</ElTag>
+      },
     },
-    { prop: 'parentId', label: '父级菜单ID', width: 90 },
-    { prop: 'order', label: '排序', width: 60 },
+    {
+      prop: 'parentId',
+      label: '父级菜单ID',
+      width: 90,
+    },
+    {
+      prop: 'order',
+      label: '排序',
+      width: 60,
+    },
     {
       prop: 'operate',
       label: '操作',
@@ -121,86 +149,103 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
             </ElButton>
           )}
           <ElButton type="primary" plain size="small" onClick={() => handleEdit(row)}>
-            {'编辑'}
+            编辑
           </ElButton>
-          <ElPopconfirm title={'确认删除吗？'} onConfirm={() => handleDelete(row.id)}>
+          <ElPopconfirm title="确认删除吗？" onConfirm={() => handleDelete(row.id)}>
             {{
               reference: () => (
                 <ElButton type="danger" plain size="small">
-                  {'删除'}
+                  删除
                 </ElButton>
-              )
+              ),
             }}
           </ElPopconfirm>
         </div>
-      )
-    }
-  ]
-});
+      ),
+    },
+  ],
+})
 
-const { checkedRowKeys, onBatchDeleted, onDeleted } = useTableOperate(data, getData);
+const { checkedRowKeys, onBatchDeleted, onDeleted } = useTableOperate(data, getData)
 
-const operateType = ref<OperateType>('add');
+const operateType = ref<OperateType>('add')
 
 function handleAdd() {
-  operateType.value = 'add';
-  openModal();
+  operateType.value = 'add'
+  openModal()
 }
 
 async function handleBatchDelete() {
   // request
 
-  onBatchDeleted();
+  onBatchDeleted()
 }
 
 function handleDelete(id: number) {
-  // eslint-disable-next-line no-console
-  console.log(id);
+  console.log(id)
+
   // request
 
-  onDeleted();
+  onDeleted()
 }
 
 /** the edit menu data or the parent menu data when adding a child menu */
-const editingData: Ref<Api.SystemManage.Menu | null> = ref(null);
+const editingData: Ref<Api.SystemManage.Menu | null> = ref(null)
 
 function handleEdit(item: Api.SystemManage.Menu) {
-  operateType.value = 'edit';
-  editingData.value = { ...item };
+  operateType.value = 'edit'
+  editingData.value = {
+    ...item,
+  }
 
-  openModal();
+  openModal()
 }
 
 function handleAddChildMenu(item: Api.SystemManage.Menu) {
-  operateType.value = 'addChild';
+  operateType.value = 'addChild'
 
-  editingData.value = { ...item };
+  editingData.value = {
+    ...item,
+  }
 
-  openModal();
+  openModal()
 }
 
-const allPages = ref<string[]>([]);
+const allPages = ref<string[]>([])
 
 async function getAllPages() {
-  const { data: pages } = await fetchGetAllPages();
+  const { data: pages } = await fetchGetAllPages()
 
-  allPages.value = pages || [];
+  allPages.value = pages || []
 }
 
 function init() {
-  getAllPages();
+  getAllPages()
 }
 
 // init
-init();
+init()
 </script>
 
 <template>
-  <div ref="wrapperRef" class="flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
-    <ElCard class="sm:flex-1-hidden card-wrapper" body-class="ht50">
-      <template #header>
-        <div class="flex items-center justify-between">
-          <p>菜单列表</p>
+  <div
+    ref="wrapperRef"
+    class="flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto"
+  >
+    <ElCard
+      class="sm:flex-1-hidden card-wrapper"
+      body-class="ht50"
+    >
+      <template
+        #header
+      >
+        <div
+          class="flex items-center justify-between"
+        >
+          <p>
+            菜单列表
+          </p>
+
           <TableHeaderOperation
             v-model:columns="columnChecks"
             :disabled-delete="checkedRowKeys.length === 0"
@@ -211,7 +256,10 @@ init();
           />
         </div>
       </template>
-      <div class="h-[calc(100%-50px)]">
+
+      <div
+        class="h-[calc(100%-50px)]"
+      >
         <ElTable
           v-loading="loading"
           height="100%"
@@ -221,9 +269,16 @@ init();
           row-key="id"
           @selection-change="checkedRowKeys = $event"
         >
-          <ElTableColumn v-for="col in columns" :key="col.prop" v-bind="col" />
+          <ElTableColumn
+            v-for="col in columns"
+            :key="col.prop"
+            v-bind="col"
+          />
         </ElTable>
-        <div class="mt-20px flex justify-end">
+
+        <div
+          class="mt-20px flex justify-end"
+        >
           <ElPagination
             v-if="pagination.total"
             layout="total,prev,pager,next,sizes"
@@ -233,6 +288,7 @@ init();
           />
         </div>
       </div>
+
       <MenuOperateModal
         v-model:visible="visible"
         :operate-type="operateType"

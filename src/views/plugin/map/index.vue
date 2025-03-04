@@ -1,28 +1,57 @@
 <script setup lang="ts">
-import { type Component, ref } from 'vue';
-import { BaiduMap, GaodeMap, TencentMap } from './components';
+import type { Component } from 'vue'
 
-defineOptions({ name: 'MapComp' });
+import { ref } from 'vue'
 
-interface Map {
-  id: string;
-  label: string;
-  component: Component;
+import {
+  BaiduMap,
+  GaodeMap,
+  TencentMap,
+} from './components'
+
+defineOptions({
+  name: 'MapComp',
+})
+
+type Map = {
+  id: string
+  label: string
+  component: Component
 }
 
 const maps: Map[] = [
-  { id: 'gaode', label: '高德地图', component: GaodeMap },
-  { id: 'tencent', label: '腾讯地图', component: TencentMap },
-  { id: 'baidu', label: '百度地图', component: BaiduMap }
-];
+  {
+    id: 'gaode',
+    label: '高德地图',
+    component: GaodeMap,
+  },
+  {
+    id: 'tencent',
+    label: '腾讯地图',
+    component: TencentMap,
+  },
+  {
+    id: 'baidu',
+    label: '百度地图',
+    component: BaiduMap,
+  },
+]
 
-const activeMap = ref(maps[0].id);
+const activeMap = ref(maps[0].id)
 </script>
 
 <template>
-  <div class="h-full">
-    <ElCard header="地图插件" class="h-full" content-style="overflow:hidden">
-      <ElTabs class="h-full">
+  <div
+    class="h-full"
+  >
+    <ElCard
+      header="地图插件"
+      class="h-full"
+      content-style="overflow:hidden"
+    >
+      <ElTabs
+        class="h-full"
+      >
         <ElTabPane
           v-for="item in maps"
           :key="item.id"
@@ -32,7 +61,9 @@ const activeMap = ref(maps[0].id);
           :label="item.label"
           lazy
         >
-          <component :is="item.component" />
+          <component
+            :is="item.component"
+          />
         </ElTabPane>
       </ElTabs>
     </ElCard>

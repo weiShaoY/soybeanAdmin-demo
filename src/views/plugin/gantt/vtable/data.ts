@@ -15,7 +15,7 @@ export const basicGanttRecords = [
         start: '2024-07-24',
         end: '2024-07-24',
         progress: 60,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 3,
@@ -24,7 +24,7 @@ export const basicGanttRecords = [
         start: '2024-07-25',
         end: '2024-07-26',
         progress: 100,
-        priority: 'P1'
+        priority: 'P1',
       },
       {
         id: 3,
@@ -33,7 +33,7 @@ export const basicGanttRecords = [
         start: '2024-07-27',
         end: '2024-07-26',
         progress: 100,
-        priority: 'P1'
+        priority: 'P1',
       },
       {
         id: 3,
@@ -42,9 +42,9 @@ export const basicGanttRecords = [
         start: '2024-08-01',
         end: '2024-08-15',
         progress: 0,
-        priority: 'P1'
-      }
-    ]
+        priority: 'P1',
+      },
+    ],
   },
   {
     id: 2,
@@ -53,7 +53,7 @@ export const basicGanttRecords = [
     start: '2024-07-24',
     end: '2024-08-01',
     progress: 60,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 3,
@@ -71,7 +71,7 @@ export const basicGanttRecords = [
         start: '2024-08-01',
         end: '2024-08-01',
         progress: 90,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 1,
@@ -80,7 +80,7 @@ export const basicGanttRecords = [
         start: '2024-07-30',
         end: '2024-08-04',
         progress: 31,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 2,
@@ -89,7 +89,7 @@ export const basicGanttRecords = [
         start: '2024.07.26',
         end: '2024.07.08',
         progress: 60,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 3,
@@ -98,7 +98,7 @@ export const basicGanttRecords = [
         start: '2024-07-29',
         end: '2024-07-31',
         progress: 100,
-        priority: 'P1'
+        priority: 'P1',
       },
       {
         id: 1,
@@ -107,7 +107,7 @@ export const basicGanttRecords = [
         start: '07.24.2024',
         end: '08.04.2024',
         progress: 31,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 2,
@@ -116,7 +116,7 @@ export const basicGanttRecords = [
         start: '2024-07-16',
         end: '2024-07-18',
         progress: 60,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 3,
@@ -125,9 +125,9 @@ export const basicGanttRecords = [
         start: '2024-08-09',
         end: '2024-09-11',
         progress: 100,
-        priority: 'P1'
-      }
-    ]
+        priority: 'P1',
+      },
+    ],
   },
 
   {
@@ -137,7 +137,7 @@ export const basicGanttRecords = [
     start: '2024-07-24',
     end: '2024-08-04',
     progress: 31,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 2,
@@ -164,7 +164,7 @@ export const basicGanttRecords = [
             start: '2024-07-24',
             end: '2024-08-04',
             progress: 31,
-            priority: 'P0'
+            priority: 'P0',
           },
           {
             id: 2,
@@ -173,7 +173,7 @@ export const basicGanttRecords = [
             start: '2024-07-26',
             end: '2024-07-28',
             progress: 60,
-            priority: 'P0'
+            priority: 'P0',
           },
           {
             id: 3,
@@ -182,9 +182,9 @@ export const basicGanttRecords = [
             start: '2024-07-29',
             end: '2024-07-31',
             progress: 100,
-            priority: 'P1'
-          }
-        ]
+            priority: 'P1',
+          },
+        ],
       },
       {
         id: 1,
@@ -202,7 +202,7 @@ export const basicGanttRecords = [
             start: '2024-07-24',
             end: '2024-08-04',
             progress: 31,
-            priority: 'P0'
+            priority: 'P0',
           },
           {
             id: 2,
@@ -211,7 +211,7 @@ export const basicGanttRecords = [
             start: '2024-07-06',
             end: '2024-07-08',
             progress: 60,
-            priority: 'P0'
+            priority: 'P0',
           },
           {
             id: 3,
@@ -220,9 +220,9 @@ export const basicGanttRecords = [
             start: '2024-07-29',
             end: '2024-07-31',
             progress: 100,
-            priority: 'P1'
-          }
-        ]
+            priority: 'P1',
+          },
+        ],
       },
       {
         id: 2,
@@ -231,7 +231,7 @@ export const basicGanttRecords = [
         start: '2024-07-26',
         end: '2024-07-28',
         progress: 60,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 3,
@@ -249,7 +249,7 @@ export const basicGanttRecords = [
             start: '2024-07-24',
             end: '2024-08-04',
             progress: 31,
-            priority: 'P0'
+            priority: 'P0',
           },
           {
             id: 2,
@@ -258,9 +258,9 @@ export const basicGanttRecords = [
             start: '2024-07-06',
             end: '2024-07-08',
             progress: 60,
-            priority: 'P0'
-          }
-        ]
+            priority: 'P0',
+          },
+        ],
       },
       {
         id: 1,
@@ -269,7 +269,7 @@ export const basicGanttRecords = [
         start: '2024-07-24',
         end: '2024-08-04',
         progress: 31,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 2,
@@ -278,7 +278,7 @@ export const basicGanttRecords = [
         start: '2024-07-26',
         end: '2024-07-28',
         progress: 60,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 3,
@@ -287,9 +287,9 @@ export const basicGanttRecords = [
         start: '2024-07-29',
         end: '2024-07-31',
         progress: 100,
-        priority: 'P1'
-      }
-    ]
+        priority: 'P1',
+      },
+    ],
   },
 
   {
@@ -308,7 +308,7 @@ export const basicGanttRecords = [
         start: '2024-07-24',
         end: '2024-08-04',
         progress: 31,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 2,
@@ -317,7 +317,7 @@ export const basicGanttRecords = [
         start: '2024-07-23',
         end: '2024-07-28',
         progress: 60,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 3,
@@ -326,7 +326,7 @@ export const basicGanttRecords = [
         start: '2024-07-29',
         end: '2024-07-31',
         progress: 100,
-        priority: 'P1'
+        priority: 'P1',
       },
       {
         id: 1,
@@ -335,7 +335,7 @@ export const basicGanttRecords = [
         start: '2024-07-30',
         end: '2024-08-14',
         progress: 31,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 2,
@@ -344,9 +344,9 @@ export const basicGanttRecords = [
         start: '2024-07-24',
         end: '2024-08-04',
         progress: 60,
-        priority: 'P0'
-      }
-    ]
+        priority: 'P0',
+      },
+    ],
   },
   {
     id: 1,
@@ -364,7 +364,7 @@ export const basicGanttRecords = [
         start: '2024-07-24',
         end: '2024-08-04',
         progress: 100,
-        priority: 'P1'
+        priority: 'P1',
       },
       {
         id: 1,
@@ -373,7 +373,7 @@ export const basicGanttRecords = [
         start: '2024-08-04',
         end: '2024-08-04',
         progress: 90,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 2,
@@ -382,9 +382,9 @@ export const basicGanttRecords = [
         start: '07/24/2024',
         end: '08/04/2024',
         progress: 60,
-        priority: 'P0'
-      }
-    ]
+        priority: 'P0',
+      },
+    ],
   },
   {
     id: 2,
@@ -393,7 +393,7 @@ export const basicGanttRecords = [
     start: '2024-07-27',
     end: '2024-07-28',
     progress: 60,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 3,
@@ -411,7 +411,7 @@ export const basicGanttRecords = [
         start: '07.24.2024',
         end: '08.04.2024',
         progress: 31,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 2,
@@ -420,7 +420,7 @@ export const basicGanttRecords = [
         start: '2024-07-26',
         end: '2024-07-28',
         progress: 60,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 3,
@@ -429,7 +429,7 @@ export const basicGanttRecords = [
         start: '2024-08-09',
         end: '2024-09-11',
         progress: 100,
-        priority: 'P1'
+        priority: 'P1',
       },
       {
         id: 1,
@@ -438,7 +438,7 @@ export const basicGanttRecords = [
         start: '2024-07-24',
         end: '2024-08-04',
         progress: 31,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 2,
@@ -447,7 +447,7 @@ export const basicGanttRecords = [
         start: '2024-07-26',
         end: '2024-07-28',
         progress: 60,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 3,
@@ -456,7 +456,7 @@ export const basicGanttRecords = [
         start: '2024-07-29',
         end: '2024-07-31',
         progress: 100,
-        priority: 'P1'
+        priority: 'P1',
       },
       {
         id: 1,
@@ -465,7 +465,7 @@ export const basicGanttRecords = [
         start: '2024-07-24',
         end: '2024-08-04',
         progress: 31,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 2,
@@ -474,7 +474,7 @@ export const basicGanttRecords = [
         start: '2024-07-26',
         end: '2024-07-28',
         progress: 60,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 3,
@@ -483,9 +483,9 @@ export const basicGanttRecords = [
         start: '2024-07-29',
         end: '2024-07-31',
         progress: 100,
-        priority: 'P1'
-      }
-    ]
+        priority: 'P1',
+      },
+    ],
   },
   {
     id: 1,
@@ -503,7 +503,7 @@ export const basicGanttRecords = [
         start: '2024-07-24',
         end: '2024-08-04',
         progress: 100,
-        priority: 'P1'
+        priority: 'P1',
       },
       {
         id: 1,
@@ -512,7 +512,7 @@ export const basicGanttRecords = [
         start: '2024-07-24',
         end: '2024-08-04',
         progress: 31,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 2,
@@ -521,7 +521,7 @@ export const basicGanttRecords = [
         start: '2024.07.06',
         end: '2024.07.08',
         progress: 60,
-        priority: 'P0'
+        priority: 'P0',
       },
       {
         id: 3,
@@ -530,11 +530,11 @@ export const basicGanttRecords = [
         start: '2024-07-29',
         end: '2024-07-31',
         progress: 100,
-        priority: 'P1'
-      }
-    ]
-  }
-];
+        priority: 'P1',
+      },
+    ],
+  },
+]
 
 export const linkGanttRecords = [
   {
@@ -544,7 +544,7 @@ export const linkGanttRecords = [
     start: '2024-07-15',
     end: '2024-07-16',
     progress: 31,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 2,
@@ -553,7 +553,7 @@ export const linkGanttRecords = [
     start: '2024-07-16',
     end: '2024-07-17',
     progress: 60,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 3,
@@ -562,7 +562,7 @@ export const linkGanttRecords = [
     start: '2024-07-18',
     end: '2024-07-19',
     progress: 90,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 4,
@@ -571,7 +571,7 @@ export const linkGanttRecords = [
     start: '2024/07/17',
     end: '2024/07/18',
     progress: 100,
-    priority: 'P1'
+    priority: 'P1',
   },
   {
     id: 5,
@@ -580,7 +580,7 @@ export const linkGanttRecords = [
     start: '07/19/2024',
     end: '07/20/2024',
     progress: 60,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 6,
@@ -589,7 +589,7 @@ export const linkGanttRecords = [
     start: '2024-07-24',
     end: '2024-08-04',
     progress: 100,
-    priority: 'P1'
+    priority: 'P1',
   },
   {
     id: 7,
@@ -598,7 +598,7 @@ export const linkGanttRecords = [
     start: '2024-07-24',
     end: '2024-08-04',
     progress: 31,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 8,
@@ -607,7 +607,7 @@ export const linkGanttRecords = [
     start: '2024.07.06',
     end: '2024.07.08',
     progress: 60,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 9,
@@ -616,7 +616,7 @@ export const linkGanttRecords = [
     start: '2024/07/09',
     end: '2024/07/11',
     progress: 100,
-    priority: 'P1'
+    priority: 'P1',
   },
   {
     id: 10,
@@ -625,7 +625,7 @@ export const linkGanttRecords = [
     start: '07.24.2024',
     end: '08.04.2024',
     progress: 31,
-    priority: 'P0'
+    priority: 'P0',
   },
 
   {
@@ -635,7 +635,7 @@ export const linkGanttRecords = [
     start: '2024-07-24',
     end: '2024-08-04',
     progress: 31,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 12,
@@ -644,7 +644,7 @@ export const linkGanttRecords = [
     start: '2024-07-06',
     end: '2024-07-08',
     progress: 60,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 13,
@@ -653,9 +653,9 @@ export const linkGanttRecords = [
     start: '2024-07-09',
     end: '2024-07-11',
     progress: 100,
-    priority: 'P1'
-  }
-];
+    priority: 'P1',
+  },
+]
 
 export const customGanttRecords = [
   {
@@ -666,7 +666,7 @@ export const customGanttRecords = [
     start: '2024-07-24',
     end: '2024-07-26',
     progress: 31,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 2,
@@ -676,7 +676,7 @@ export const customGanttRecords = [
     start: '07/25/2024',
     end: '07/28/2024',
     progress: 60,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 3,
@@ -686,7 +686,7 @@ export const customGanttRecords = [
     start: '2024-07-28',
     end: '2024-08-01',
     progress: 100,
-    priority: 'P1'
+    priority: 'P1',
   },
   {
     id: 1,
@@ -696,7 +696,7 @@ export const customGanttRecords = [
     start: '2024-07-31',
     end: '2024-08-03',
     progress: 31,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 2,
@@ -706,7 +706,7 @@ export const customGanttRecords = [
     start: '2024-08-02',
     end: '2024-08-04',
     progress: 60,
-    priority: 'P0'
+    priority: 'P0',
   },
   {
     id: 3,
@@ -716,6 +716,6 @@ export const customGanttRecords = [
     start: '2024-08-03',
     end: '2024-08-10',
     progress: 100,
-    priority: 'P1'
-  }
-];
+    priority: 'P1',
+  },
+]

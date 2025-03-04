@@ -1,40 +1,60 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
-import Player from 'xgplayer';
-import 'xgplayer/dist/index.min.css';
+import {
+  onMounted,
+  onUnmounted,
+  ref,
+} from 'vue'
 
-defineOptions({ name: 'VideoComp' });
+import Player from 'xgplayer'
 
-const domRef = ref<HTMLElement>();
-const player = ref<Player>();
+import 'xgplayer/dist/index.min.css'
+
+defineOptions({
+  name: 'VideoComp',
+})
+
+const domRef = ref<HTMLElement>()
+
+const player = ref<Player>()
 
 function renderXgPlayer() {
-  if (!domRef.value) return;
-  const url = 'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/byted-player-videos/1.0.0/xgplayer-demo.mp4';
+  if (!domRef.value) { return }
+
+  const url = 'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/byted-player-videos/1.0.0/xgplayer-demo.mp4'
+
   player.value = new Player({
     el: domRef.value,
     url,
-    playbackRate: [0.5, 0.75, 1, 1.5, 2]
-  });
+    playbackRate: [0.5, 0.75, 1, 1.5, 2],
+  })
 }
+
 function destroyXgPlayer() {
-  player.value?.destroy();
+  player.value?.destroy()
 }
 
 onMounted(() => {
-  renderXgPlayer();
-});
+  renderXgPlayer()
+})
 
 onUnmounted(() => {
-  destroyXgPlayer();
-});
+  destroyXgPlayer()
+})
 </script>
 
 <template>
   <div>
-    <ElCard header="视频播放器插件" class="h-full card-wrapper">
-      <div class="flex-center">
-        <div ref="domRef" class="h-auto w-full shadow-md"></div>
+    <ElCard
+      header="视频播放器插件"
+      class="h-full card-wrapper"
+    >
+      <div
+        class="flex-center"
+      >
+        <div
+          ref="domRef"
+          class="h-auto w-full shadow-md"
+        />
       </div>
     </ElCard>
   </div>

@@ -44,6 +44,7 @@
     "update-pkg": "sa update-pkg"
   },
   "dependencies": {
+
     "@antv/data-set": "0.11.8",
     "@antv/g2": "5.2.7",
     "@antv/g6": "5.0.30",
@@ -54,6 +55,7 @@
     "@sa/color": "workspace:*",
     "@sa/hooks": "workspace:*",
     "@sa/materials": "workspace:*",
+    "eslint-plugin-format": "^1.0.1",
     "@sa/utils": "workspace:*",
     "@visactor/vchart": "1.12.11",
     "@visactor/vchart-theme": "1.12.2",
@@ -88,8 +90,8 @@
     "xlsx": "0.18.5"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.4.0",
     "@amap/amap-jsapi-types": "0.0.15",
+    "@antfu/eslint-config": "^4.4.0",
     "@elegant-router/vue": "0.3.8",
     "@iconify/json": "2.2.273",
     "@sa/scripts": "workspace:*",
