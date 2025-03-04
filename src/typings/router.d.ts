@@ -3,8 +3,8 @@ import 'vue-router'
 declare module 'vue-router' {
 
   // 路由元信息接口
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-  type RouteMeta = {
+  // eslint-disable-next-line ts/consistent-type-definitions
+  interface RouteMeta {
 
     /**
      * 路由标题

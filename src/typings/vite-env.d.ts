@@ -129,7 +129,7 @@ declare namespace Env {
   } & ImportMetaEnv
 }
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-type ImportMeta = {
+// eslint-disable-next-line ts/consistent-type-definitions
+interface ImportMeta {
   readonly env: Env.ImportMeta
 }

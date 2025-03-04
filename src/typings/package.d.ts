@@ -7,8 +7,9 @@ declare namespace BMap {
 }
 
 declare const TMap: any
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-type Window = {
+
+// eslint-disable-next-line ts/consistent-type-definitions
+interface Window {
 
   /**
    * 使用 https 协议进行百度地图请求
