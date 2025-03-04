@@ -10,11 +10,11 @@ const authStore = useAuthStore();
 
 const gap = computed(() => (appStore.isMobile ? 0 : 16));
 
-interface StatisticData {
+type StatisticData = {
   id: number;
   title: string;
   value: number;
-}
+};
 
 const statisticData = computed<StatisticData[]>(() => [
   { id: 0, title: '项目数', value: 25 },
@@ -33,9 +33,9 @@ const statisticData = computed<StatisticData[]>(() => [
           </div>
           <div class="pl-[12px]">
             <h3 class="text-[18px] font-semibold">
-              {{  `早安，${ authStore.userInfo.userName }, 今天又是充满活力的一天!`  }}
+              {{ `早安，${authStore.userInfo.userName}, 今天又是充满活力的一天!` }}
             </h3>
-            <p class="text-[#999] leading-[30px]">{{ '今日多云转晴，20℃ - 25℃!' }}</p>
+            <p class="text-[#999] leading-[30px]">今日多云转晴，20℃ - 25℃!</p>
           </div>
         </div>
       </ElCol>

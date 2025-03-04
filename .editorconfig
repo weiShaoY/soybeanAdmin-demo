@@ -1,11 +1,23 @@
-# Editor configuration, see http://editorconfig.org
-
+# 指定此文件为 EditorConfig 配置的根目录
 root = true
 
+# 对所有文件生效的通用设置
 [*]
+
+# 设置文件的字符编码为 UTF-8，确保跨平台兼容性
 charset = utf-8
+
+# 规定缩进使用空格，而不是制表符（tab）
 indent_style = space
+
+# 设置缩进的大小为 2 个空格，常用于 JavaScript、TypeScript、JSON 等项目
 indent_size = 2
+
+# 规定行尾符号为 LF（换行符），适用于 Unix/Linux/macOS 平台
 end_of_line = lf
+
+# 自动移除每行末尾的多余空格，提高代码整洁度
 trim_trailing_whitespace = true
+
+# 确保文件末尾始终有一个空行，避免某些工具或版本控制系统的警告
 insert_final_newline = true

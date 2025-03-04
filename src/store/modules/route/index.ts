@@ -19,8 +19,7 @@ import {
   getSelectedMenuKeyPathByKey,
   isRouteExistByRouteName,
   sortRoutesByOrder,
-  transformMenuToSearchMenus,
-  updateLocaleOfGlobalMenus
+  transformMenuToSearchMenus
 } from './shared';
 
 export const useRouteStore = defineStore(SetupStoreId.Route, () => {
@@ -99,8 +98,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   function getGlobalMenus(routes: ElegantConstRoute[]) {
     menus.value = getGlobalMenusByAuthRoutes(routes);
   }
-
-
 
   /** 缓存路由 */
   const cacheRoutes = ref<RouteKey[]>([]);

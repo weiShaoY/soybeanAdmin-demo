@@ -4,7 +4,7 @@ import { createReusableTemplate } from '@vueuse/core';
 
 defineOptions({ name: 'CardData' });
 
-interface CardData {
+type CardData = {
   key: string;
   title: string;
   value: number;
@@ -14,7 +14,7 @@ interface CardData {
     end: string;
   };
   icon: string;
-}
+};
 
 const cardData = computed<CardData[]>(() => [
   {
@@ -63,9 +63,9 @@ const cardData = computed<CardData[]>(() => [
   }
 ]);
 
-interface GradientBgProps {
+type GradientBgProps = {
   gradientColor: string;
-}
+};
 
 const [DefineGradientBg, GradientBg] = createReusableTemplate<GradientBgProps>();
 

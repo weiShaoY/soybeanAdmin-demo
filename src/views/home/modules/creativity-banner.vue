@@ -1,11 +1,10 @@
 <script setup lang="ts">
-
 defineOptions({ name: 'CreativityBanner' });
 </script>
 
 <template>
-  <ElCard :header="'创意'" class="h-full card-wrapper">
-    <div class="h-full flex justify-center items-center">
+  <ElCard header="创意" class="h-full card-wrapper">
+    <div class="h-full flex items-center justify-center">
       <icon-local-banner class="text-[400px] text-primary sm:text-[320px]" />
     </div>
   </ElCard>

@@ -1,11 +1,19 @@
 import { createAlova } from 'alova';
+
 import type { AlovaDefaultCacheAdapter, AlovaGenerics, AlovaGlobalCacheAdapter, AlovaRequestAdapter } from 'alova';
+
 import VueHook from 'alova/vue';
+
 import type { VueHookType } from 'alova/vue';
+
 import adapterFetch from 'alova/fetch';
+
 import { createServerTokenAuthentication } from 'alova/client';
+
 import type { FetchRequestInit } from 'alova/fetch';
+
 import { BACKEND_ERROR_CODE } from './constant';
+
 import type { CustomAlovaConfig, RequestOptions } from './type';
 
 /**
@@ -110,7 +118,9 @@ export const createAlovaRequest = <
       onSuccess: async (response, method) => {
         // 检查 HTTP 状态是否成功
         let error: any = null;
+
         let transformedData: any = null;
+
         try {
           // 判断后端是否返回成功状态
           if (await options.isBackendSuccess(response)) {
@@ -149,5 +159,7 @@ export const createAlovaRequest = <
 };
 
 export { BACKEND_ERROR_CODE };
+
 export type * from './type';
+
 export type * from 'alova';

@@ -1,6 +1,0 @@
-{
-  "i18n-ally.localesPaths": [
-    "src/1-locales/langs",
-    "packages/scripts/src/locales"
-  ]
-}

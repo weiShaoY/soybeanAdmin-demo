@@ -1,13 +1,22 @@
 <script setup lang="tsx">
 import { ref } from 'vue';
+
 import type { Ref } from 'vue';
+
 import { useBoolean } from '@sa/hooks';
+
 import { ElButton, ElPopconfirm, ElTag } from 'element-plus';
+
 import { fetchGetAllPages, fetchGetMenuList } from '@/service/api';
+
 import { useTable, useTableOperate } from '@/hooks/common/table';
+
 import { yesOrNoRecord } from '@/constants/common';
+
 import { enableStatusRecord, menuTypeRecord } from '@/constants/business';
+
 import SvgIcon from '@/components/custom/svg-icon.vue';
+
 import MenuOperateModal, { type OperateType } from './modules/menu-operate-modal.vue';
 
 const { bool: visible, setTrue: openModal } = useBoolean();
@@ -21,7 +30,7 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
     { prop: 'id', label: 'ID' },
     {
       prop: 'menuType',
-      label:'菜单类型',
+      label: '菜单类型',
       width: 90,
       formatter: row => {
         const tagMap: Record<Api.SystemManage.MenuType, UI.ThemeColor> = {
@@ -39,15 +48,14 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
       label: '菜单名称',
       minWidth: 120,
       formatter: row => {
-
-        const label = menuName;
+        const label = row.menuName;
 
         return <span>{label}</span>;
       }
     },
     {
       prop: 'icon',
-      label:'图标',
+      label: '图标',
       width: 100,
       formatter: row => {
         const icon = row.iconType === '1' ? row.icon : undefined;
@@ -84,7 +92,7 @@ const { columns, columnChecks, data, loading, pagination, getData, getDataByPage
     },
     {
       prop: 'hideInMenu',
-      label:'隐藏菜单',
+      label: '隐藏菜单',
       width: 80,
       formatter: row => {
         const hide: CommonType.YesOrNo = row.hideInMenu ? 'Y' : 'N';
@@ -175,6 +183,7 @@ const allPages = ref<string[]>([]);
 
 async function getAllPages() {
   const { data: pages } = await fetchGetAllPages();
+
   allPages.value = pages || [];
 }
 

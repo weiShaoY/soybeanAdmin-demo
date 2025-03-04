@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { actionDelegationMiddleware, useAutoRequest } from '@sa/alova/client';
+
 import { ref } from 'vue';
+
 import { alova } from '@/service-alova/request';
 
 defineOptions({ name: 'NetworkToggleRequest' });
 
 const getLastTime = alova.Get<{ time: string }>('/mock/getLastTime', { cacheFor: null });
+
 const isStop = ref(false);
+
 const { loading, data } = useAutoRequest(getLastTime, {
   enableVisibility: false,
   enableNetwork: true,
@@ -29,16 +33,14 @@ const toggleStop = () => {
 
 <template>
   <ElSpace direction="vertical" fill>
-    <ElAlert type="info" show-icon>
-      网络重连后自动请求
-    </ElAlert>
+    <ElAlert type="info" show-icon>网络重连后自动请求</ElAlert>
     <ElButton type="primary" @click="toggleStop">
       <icon-carbon-play v-if="isStop" class="mr-2" />
       <icon-carbon-stop v-else class="mr-2" />
       {{ isStop ? '开始请求' : '停止请求' }}
     </ElButton>
     <ElSpace class="justify-center">
-      <span>{{'更新时间' }}: {{ data.time || '--' }}</span>
+      <span>更新时间: {{ data.time || '--' }}</span>
       <SvgIcon v-if="loading" icon="line-md:loading-twotone-loop" class="text-[20px]" />
     </ElSpace>
   </ElSpace>

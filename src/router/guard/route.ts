@@ -5,10 +5,15 @@ import type {
   RouteLocationRaw,
   Router
 } from 'vue-router';
+
 import type { RouteKey, RoutePath } from '@elegant-router/types';
+
 import { getRouteName } from '@/router/elegant/transform';
+
 import { useAuthStore } from '@/store/modules/auth';
+
 import { useRouteStore } from '@/store/modules/route';
+
 import { localStg } from '@/utils/storage';
 
 /**
@@ -92,6 +97,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
 
   /** 未找到路由的路由名 */
   const notFoundRoute: RouteKey = 'not-found';
+
   /** 是否为未找到路由 */
   const isNotFoundRoute = to.name === notFoundRoute;
 
@@ -102,6 +108,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
     // 因为常量路由未初始化，路由被 "not-found" 路由捕获
     // 初始化常量路由后，重定向到原始路由
     const path = to.fullPath;
+
     const location: RouteLocationRaw = {
       path,
       replace: true,
@@ -124,6 +131,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
 
     // 如果用户未登录，则跳转到登录页面
     const loginRoute: RouteKey = 'login';
+
     const query = getRouteQueryOfLoginRoute(to, routeStore.routeHome);
 
     const location: RouteLocationRaw = {
@@ -142,6 +150,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
     // 初始化权限路由后，重定向到原始路由
     if (isNotFoundRoute) {
       const rootRoute: RouteKey = 'root';
+
       const path = to.redirectedFrom?.name === rootRoute ? '/' : to.fullPath;
 
       const location: RouteLocationRaw = {
@@ -165,6 +174,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
 
   // 被 "not-found" 路由捕获，检查路由是否存在
   const exist = await routeStore.getIsAuthRouteExist(to.path as RoutePath);
+
   /** 无权限路由名 */
   const noPermissionRoute: RouteKey = '403';
 
@@ -208,8 +218,11 @@ function handleRouteSwitch(to: RouteLocationNormalized, from: RouteLocationNorma
  */
 function getRouteQueryOfLoginRoute(to: RouteLocationNormalized, routeHome: RouteKey) {
   const loginRoute: RouteKey = 'login';
+
   const redirect = to.fullPath;
+
   const [redirectPath, redirectQuery] = redirect.split('?');
+
   const redirectName = getRouteName(redirectPath as RoutePath);
 
   const isRedirectHome = routeHome === redirectName;

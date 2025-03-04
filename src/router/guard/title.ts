@@ -1,4 +1,5 @@
 import { useTitle } from '@vueuse/core';
+
 import type { Router } from 'vue-router';
 
 /**
@@ -12,7 +13,7 @@ export function createDocumentTitleGuard(router: Router) {
     const { title } = to.meta;
 
     /** 文档标题 */
-    const documentTitle = title ? title : '';
+    const documentTitle = title || '';
 
     // 设置文档标题
     useTitle(documentTitle as string);

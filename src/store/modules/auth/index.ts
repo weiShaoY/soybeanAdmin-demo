@@ -1,20 +1,34 @@
 import { computed, reactive, ref } from 'vue';
+
 import { useRoute } from 'vue-router';
+
 import { defineStore } from 'pinia';
+
 import { useLoading } from '@sa/hooks';
+
 import { SetupStoreId } from '@/enum';
+
 import { useRouterPush } from '@/hooks/common/router';
+
 import { fetchGetUserInfo, fetchLogin } from '@/service/api';
+
 import { localStg } from '@/utils/storage';
+
 import { useRouteStore } from '../route';
+
 import { useTabStore } from '../tab';
+
 import { clearAuthStorage, getToken } from './shared';
 
 export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const route = useRoute();
+
   const routeStore = useRouteStore();
+
   const tabStore = useTabStore();
+
   const { toLogin, redirectFromLogin } = useRouterPush(false);
+
   const { loading: loginLoading, startLoading, endLoading } = useLoading();
 
   /** 用户 token */

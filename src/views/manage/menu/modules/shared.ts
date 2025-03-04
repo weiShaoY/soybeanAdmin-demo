@@ -1,9 +1,12 @@
 const LAYOUT_PREFIX = 'layout.';
+
 const VIEW_PREFIX = 'view.';
+
 const FIRST_LEVEL_ROUTE_COMPONENT_SPLIT = '$';
 
 export function getLayoutAndPage(component?: string | null) {
   let layout = '';
+
   let page = '';
 
   const [layoutOrPage = '', pageItem = ''] = component?.split(FIRST_LEVEL_ROUTE_COMPONENT_SPLIT) || [];
@@ -24,6 +27,7 @@ function getPage(page: string) {
 
 export function transformLayoutAndPageToComponent(layout: string, page: string) {
   const hasLayout = Boolean(layout);
+
   const hasPage = Boolean(page);
 
   if (hasLayout && hasPage) {

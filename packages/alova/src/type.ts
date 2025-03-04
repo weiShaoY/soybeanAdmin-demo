@@ -18,7 +18,7 @@ export type CustomAlovaConfig<AG extends AlovaGenerics> = Omit<
  *
  * @template AG Alova 泛型参数
  */
-export interface RequestOptions<AG extends AlovaGenerics> {
+export type RequestOptions<AG extends AlovaGenerics> = {
   /**
    * 请求前的钩子
    *
@@ -63,4 +63,4 @@ export interface RequestOptions<AG extends AlovaGenerics> {
    * @param response Alova 响应数据
    */
   transformBackendResponse: (response: AG['Response']) => any;
-}
+};

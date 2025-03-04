@@ -1,13 +1,15 @@
 import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router';
+
 import type { ElegantConstRoute, LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
+
 import { useSvgIcon } from '@/hooks/common/icon';
 
 /**
  * 根据角色过滤权限路由
  *
- * @param {ElegantConstRoute[]} routes 权限路由
- * @param {string[]} roles 角色
- * @returns {ElegantConstRoute[]} 过滤后的权限路由
+ * @param routes 权限路由数组
+ * @param roles 角色
+ * @returns 过滤后的权限路由数组
  */
 export function filterAuthRoutesByRoles(routes: ElegantConstRoute[], roles: string[]) {
   return routes.flatMap(route => filterAuthRouteByRoles(route, roles));
@@ -95,8 +97,6 @@ export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
   return menus;
 }
 
-
-
 /**
  * 根据路由获取全局菜单
  *
@@ -107,9 +107,10 @@ function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | Elegant
   const { SvgIconVNode } = useSvgIcon();
 
   const { name, path } = route;
+
   const { title, icon = import.meta.env.VITE_MENU_ICON, localIcon, iconFontSize } = route.meta ?? {};
 
-  const label = title? title : '';
+  const label = title || '';
 
   const menu: App.Global.Menu = {
     key: name as string,
@@ -269,6 +270,7 @@ export function getBreadcrumbsByRoute(
   menus: App.Global.Menu[]
 ): App.Global.Breadcrumb[] {
   const key = route.name as string;
+
   const activeKey = route.meta?.activeMenu;
 
   for (const menu of menus) {
@@ -282,6 +284,7 @@ export function getBreadcrumbsByRoute(
       const parentKey = key.split(ROUTE_DEGREE_SPLITTER).slice(0, -1).join(ROUTE_DEGREE_SPLITTER);
 
       const breadcrumbMenu = getGlobalMenuByBaseRoute(route);
+
       if (parentKey !== activeKey) {
         return [transformMenuToBreadcrumb(breadcrumbMenu)];
       }
@@ -291,6 +294,7 @@ export function getBreadcrumbsByRoute(
 
     if (menu.children?.length) {
       const result = getBreadcrumbsByRoute(route, menu.children);
+
       if (result.length > 0) {
         return [transformMenuToBreadcrumb(menu), ...result];
       }
@@ -313,9 +317,11 @@ export function transformMenuToSearchMenus(menus: App.Global.Menu[], treeMap: Ap
     if (!cur.children) {
       acc.push(cur);
     }
+
     if (cur.children && cur.children.length > 0) {
       transformMenuToSearchMenus(cur.children, treeMap);
     }
+
     return acc;
   }, treeMap);
 }

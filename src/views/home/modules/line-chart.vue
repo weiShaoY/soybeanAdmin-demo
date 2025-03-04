@@ -1,11 +1,7 @@
 <script setup lang="ts">
-import { watch } from 'vue';
-import { useAppStore } from '@/store/modules/app';
 import { useEcharts } from '@/hooks/common/echarts';
 
 defineOptions({ name: 'LineChart' });
-
-const appStore = useAppStore();
 
 const { domRef, updateOptions } = useEcharts(() => ({
   tooltip: {
@@ -112,28 +108,9 @@ async function mockData() {
   });
 }
 
-function updateLocale() {
-  updateOptions((opts, factory) => {
-    const originOpts = factory();
-
-    opts.legend.data = originOpts.legend.data;
-    opts.series[0].name = originOpts.series[0].name;
-    opts.series[1].name = originOpts.series[1].name;
-
-    return opts;
-  });
-}
-
 async function init() {
   mockData();
 }
-
-watch(
-  () => appStore.locale,
-  () => {
-    updateLocale();
-  }
-);
 
 // init
 init();

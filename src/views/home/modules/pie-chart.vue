@@ -1,11 +1,7 @@
 <script setup lang="ts">
-import { watch } from 'vue';
-import { useAppStore } from '@/store/modules/app';
 import { useEcharts } from '@/hooks/common/echarts';
 
 defineOptions({ name: 'PieChart' });
-
-const appStore = useAppStore();
 
 const { domRef, updateOptions } = useEcharts(() => ({
   tooltip: {
@@ -55,24 +51,7 @@ async function mockData() {
 
   updateOptions(opts => {
     opts.series[0].data = [
-      { name:  '学习', value: 20 },
-      { name: '娱乐', value: 10 },
-      { name: '工作', value: 40 },
-      { name: '休息', value: 30 }
-    ];
-
-    return opts;
-  });
-}
-
-function updateLocale() {
-  updateOptions((opts, factory) => {
-    const originOpts = factory();
-
-    opts.series[0].name = originOpts.series[0].name;
-
-    opts.series[0].data = [
-      { name:  '学习', value: 20 },
+      { name: '学习', value: 20 },
       { name: '娱乐', value: 10 },
       { name: '工作', value: 40 },
       { name: '休息', value: 30 }
@@ -85,13 +64,6 @@ function updateLocale() {
 async function init() {
   mockData();
 }
-
-watch(
-  () => appStore.locale,
-  () => {
-    updateLocale();
-  }
-);
 
 // init
 init();
