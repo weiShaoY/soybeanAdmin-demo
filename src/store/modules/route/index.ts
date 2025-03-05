@@ -1,7 +1,5 @@
 import type {
-  CustomRoute,
   ElegantConstRoute,
-  LastLevelRouteKey,
   RouteKey,
   RouteMap,
 } from '@elegant-router/types'
@@ -12,17 +10,9 @@ import { SetupStoreId } from '@/enum'
 
 import { router } from '@/router'
 
-import { getRouteName, getRoutePath } from '@/router/elegant/transform'
+import { getRouteName } from '@/router/elegant/transform'
 
 import { createStaticRoutes, getAuthVueRoutes } from '@/router/routes'
-
-import { ROOT_ROUTE } from '@/router/routes/builtin'
-
-import {
-  fetchGetConstantRoutes,
-  fetchGetUserRoutes,
-  fetchIsRouteExist,
-} from '@/service/api'
 
 import { useBoolean } from '@sa/hooks'
 
@@ -60,13 +50,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   const { bool: isInitAuthRoute, setBool: setIsInitAuthRoute } = useBoolean()
 
   /**
-   * 权限路由模式
-   *
-   * 建议在开发环境中使用静态模式，在生产环境中使用动态模式；如果在开发环境中使用静态模式，权限路由将由插件 "@elegant-router/vue" 自动生成
+   *  首页路由键
    */
-  const authRouteMode = ref(import.meta.env.VITE_AUTH_ROUTE_MODE)
-
-  /** 首页路由键 */
   const routeHome = ref(import.meta.env.VITE_ROUTE_HOME)
 
   /**
@@ -74,35 +59,46 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    *
    * @param {LastLevelRouteKey} routeKey 路由键
    */
-  function setRouteHome(routeKey: LastLevelRouteKey) {
-    routeHome.value = routeKey
-  }
+  // function setRouteHome(routeKey: LastLevelRouteKey) {
+  //   routeHome.value = routeKey
+  // }
 
-  /** 常量路由 */
+  /**
+   * 常量路由
+   */
   const constantRoutes = shallowRef<ElegantConstRoute[]>([])
 
   /**
-   * 添加常量路由
+   * 添加并去重常量路由
    *
-   * @param {ElegantConstRoute[]} routes 路由数组
+   * 该函数用于将传入的常量路由去重后存入 `constantRoutes.value`，确保常量路由唯一。
+   *
+   * @param routes - 需要添加的常量路由列表
    */
   function addConstantRoutes(routes: ElegantConstRoute[]) {
+    // 创建一个 Map 用于去重，key 是 route.name，value 是对应的路由对象
     const constantRoutesMap = new Map<string, ElegantConstRoute>([])
 
+    // 遍历传入的路由数组，将每个路由存入 Map，利用 Map 的 key 唯一性进行去重
     routes.forEach((route) => {
       constantRoutesMap.set(route.name, route)
     })
 
+    // 将去重后的路由列表转换为数组，并赋值给 constantRoutes 变量
     constantRoutes.value = Array.from(constantRoutesMap.values())
   }
 
-  /** 权限路由 */
+  /**
+   *  权限路由
+   */
   const authRoutes = shallowRef<ElegantConstRoute[]>([])
 
   /**
-   * 添加权限路由
+   * 添加并去重权限路由
    *
-   * @param {ElegantConstRoute[]} routes 路由数组
+   * 该函数会将传入的路由列表去重后存入 `authRoutes.value`，确保权限路由唯一。
+   *
+   * @param  routes  需要添加的权限路由列表
    */
   function addAuthRoutes(routes: ElegantConstRoute[]) {
     const authRoutesMap = new Map<string, ElegantConstRoute>([])
@@ -112,12 +108,17 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     })
 
     authRoutes.value = Array.from(authRoutesMap.values())
+    console.log('%c Line:111 🍇 authRoutes.value', 'color:#465975', authRoutes.value)
   }
 
-  /** 移除路由函数数组 */
+  /**
+   *  移除路由函数数组
+   */
   const removeRouteFns: (() => void)[] = []
 
-  /** 全局菜单 */
+  /**
+   * 全局菜单
+   */
   const menus = ref<App.Global.Menu[]>([])
 
   const searchMenus = computed(() => transformMenuToSearchMenus(menus.value))
@@ -161,10 +162,14 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     excludeCacheRoutes.value = []
   }
 
-  /** 全局面包屑 */
+  /**
+   * 全局面包屑
+   */
   const breadcrumbs = computed(() => getBreadcrumbsByRoute(router.currentRoute.value, menus.value))
 
-  /** 重置存储 */
+  /**
+   * 重置存储
+   */
   async function resetStore() {
     const routeStore = useRouteStore()
 
@@ -176,60 +181,55 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     await initConstantRoute()
   }
 
-  /** 重置 Vue 路由 */
+  /**
+   * 重置 Vue 路由
+   */
   function resetVueRoutes() {
     removeRouteFns.forEach(fn => fn())
     removeRouteFns.length = 0
   }
 
-  /** 初始化常量路由 */
+  /**
+   * 初始化常量路由
+   */
   async function initConstantRoute() {
+  // 如果常量路由已经初始化，则直接返回，避免重复执行
     if (isInitConstantRoute.value) {
       return
     }
 
+    // 创建静态路由
     const staticRoute = createStaticRoutes()
 
-    if (authRouteMode.value === 'static') {
-      addConstantRoutes(staticRoute.constantRoutes)
-    }
-    else {
-      const { data, error } = await fetchGetConstantRoutes()
+    addConstantRoutes(staticRoute.constantRoutes)
 
-      if (!error) {
-        addConstantRoutes(data)
-      }
-      else {
-        // 如果获取常量路由失败，则使用静态常量路由
-        addConstantRoutes(staticRoute.constantRoutes)
-      }
-    }
-
+    // 处理常量路由和权限路由的逻辑
     handleConstantAndAuthRoutes()
 
+    // 设置常量路由初始化状态为 true
     setIsInitConstantRoute(true)
 
+    // 初始化首页标签页
     tabStore.initHomeTab()
   }
 
-  /** 初始化权限路由 */
+  /**
+   * 初始化权限路由
+   */
   async function initAuthRoute() {
     // 检查用户信息是否已初始化
     if (!authStore.userInfo.userId) {
       await authStore.initUserInfo()
     }
 
-    if (authRouteMode.value === 'static') {
-      initStaticAuthRoute()
-    }
-    else {
-      await initDynamicAuthRoute()
-    }
+    initStaticAuthRoute()
 
     tabStore.initHomeTab()
   }
 
-  /** 初始化静态权限路由 */
+  /**
+   * 初始化静态权限路由
+   */
   function initStaticAuthRoute() {
     const { authRoutes: staticAuthRoutes } = createStaticRoutes()
 
@@ -247,55 +247,49 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     setIsInitAuthRoute(true)
   }
 
-  /** 初始化动态权限路由 */
-  async function initDynamicAuthRoute() {
-    const { data, error } = await fetchGetUserRoutes()
-
-    if (!error) {
-      const { routes, home } = data
-
-      addAuthRoutes(routes)
-
-      handleConstantAndAuthRoutes()
-
-      setRouteHome(home)
-
-      handleUpdateRootRouteRedirect(home)
-
-      setIsInitAuthRoute(true)
-    }
-    else {
-      // 如果获取用户路由失败，则重置存储
-      authStore.resetStore()
-    }
-  }
-
-  /** 处理常量路由和权限路由 */
+  /**
+   * 处理常量路由和权限路由
+   */
   function handleConstantAndAuthRoutes() {
+  // 合并常量路由和权限路由
     const allRoutes = [...constantRoutes.value, ...authRoutes.value]
 
+    console.log('%c Line:270 🍕 authRoutes.value', 'color:#ffdd4d', authRoutes.value)
+
+    /**
+     *  对路由进行排序
+     */
     const sortRoutes = sortRoutesByOrder(allRoutes)
 
+    /**
+     *  对路由进行权限过滤
+     */
     const vueRoutes = getAuthVueRoutes(sortRoutes)
 
+    // 重置 Vue Router 中的所有动态路由
     resetVueRoutes()
 
+    // 将处理后的路由添加到 Vue Router
     addRoutesToVueRouter(vueRoutes)
 
+    // 生成全局菜单数据
     getGlobalMenus(sortRoutes)
 
+    // 计算需要缓存的路由
     getCacheRoutes(vueRoutes)
   }
 
   /**
    * 添加路由到 Vue 路由器
    *
-   * @param {RouteRecordRaw[]} routes Vue 路由数组
+   * @param  routes Vue 路由数组
    */
   function addRoutesToVueRouter(routes: RouteRecordRaw[]) {
     routes.forEach((route) => {
+      // 调用 Vue Router 的 `addRoute` 方法添加路由，返回一个移除该路由的函数
       const removeFn = router.addRoute(route)
 
+      // 将移除函数存储，方便后续清理路由
       addRemoveRouteFn(removeFn)
     })
   }
@@ -303,38 +297,16 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   /**
    * 添加移除路由函数
    *
-   * @param {() => void} fn 移除路由函数
+   * @param fn 移除路由函数
    */
   function addRemoveRouteFn(fn: () => void) {
     removeRouteFns.push(fn)
   }
 
   /**
-   * 更新根路由重定向
-   *
-   * @param {LastLevelRouteKey} redirectKey 重定向路由键
-   */
-  function handleUpdateRootRouteRedirect(redirectKey: LastLevelRouteKey) {
-    const redirect = getRoutePath(redirectKey)
-
-    if (redirect) {
-      const rootRoute: CustomRoute = {
-        ...ROOT_ROUTE,
-        redirect,
-      }
-
-      router.removeRoute(rootRoute.name)
-
-      const [rootVueRoute] = getAuthVueRoutes([rootRoute])
-
-      router.addRoute(rootVueRoute)
-    }
-  }
-
-  /**
    * 获取权限路由是否存在
    *
-   * @param {RouteMap[RouteKey]} routePath 路由路径
+   * @param  routePath 路由路径
    */
   async function getIsAuthRouteExist(routePath: RouteMap[RouteKey]) {
     const routeName = getRouteName(routePath)
@@ -343,15 +315,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       return false
     }
 
-    if (authRouteMode.value === 'static') {
-      const { authRoutes: staticAuthRoutes } = createStaticRoutes()
+    const { authRoutes: staticAuthRoutes } = createStaticRoutes()
 
-      return isRouteExistByRouteName(routeName, staticAuthRoutes)
-    }
-
-    const { data } = await fetchIsRouteExist(routeName)
-
-    return data
+    return isRouteExistByRouteName(routeName, staticAuthRoutes)
   }
 
   /**
@@ -364,12 +330,13 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     return getSelectedMenuKeyPathByKey(selectedKey, menus.value)
   }
 
+  /**
+   * 登录后执行路由切换操作
+   *
+   * 该函数在用户登录后初始化用户信息，确保用户身份信息可用。
+   */
   async function onRouteSwitchWhenLoggedIn() {
     await authStore.initUserInfo()
-  }
-
-  async function onRouteSwitchWhenNotLoggedIn() {
-    // 如果不需要登录，可以在此添加一些全局初始化逻辑
   }
 
   return {
@@ -389,6 +356,5 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     getIsAuthRouteExist,
     getSelectedMenuKeyPath,
     onRouteSwitchWhenLoggedIn,
-    onRouteSwitchWhenNotLoggedIn,
   }
 })

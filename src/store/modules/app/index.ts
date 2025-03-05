@@ -21,16 +21,12 @@ import {
 
 import { useRouteStore } from '../route'
 
-import { useTabStore } from '../tab'
-
 import { useThemeStore } from '../theme'
 
 export const useAppStore = defineStore(SetupStoreId.App, () => {
   const themeStore = useThemeStore()
 
   const routeStore = useRouteStore()
-
-  const tabStore = useTabStore()
 
   const scope = effectScope()
 

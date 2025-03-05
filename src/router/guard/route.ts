@@ -134,7 +134,6 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
   if (!isLogin) {
     // 如果用户未登录且路由是常量路由但不是 "not-found" 路由，则允许访问
     if (to.meta.constant && !isNotFoundRoute) {
-      routeStore.onRouteSwitchWhenNotLoggedIn()
       return null
     }
 

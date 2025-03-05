@@ -3,8 +3,6 @@ import type { Component } from 'vue'
 
 import { loginModuleRecord } from '@/constants/app'
 
-import { useAppStore } from '@/store/modules/app'
-
 import { useThemeStore } from '@/store/modules/theme'
 
 import { getPaletteColorByNumber, mixColor } from '@sa/color'
@@ -32,8 +30,6 @@ type Props = {
   /** The login module */
   module?: UnionKey.LoginModule
 }
-
-const appStore = useAppStore()
 
 const themeStore = useThemeStore()
 

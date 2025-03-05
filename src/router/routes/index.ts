@@ -194,7 +194,9 @@ export function createStaticRoutes() {
   const constantRoutes: ElegantRoute[] = []
 
   /** 权限路由 */
-  const authRoutes: ElegantRoute[] = [];
+  const authRoutes: ElegantRoute[] = []
+
+  console.log('%c Line:198 🍧 authRoutes', 'color:#465975', authRoutes);
 
   [...customRoutes, ...generatedRoutes].forEach((item) => {
     if (item.meta?.constant) {
@@ -207,6 +209,7 @@ export function createStaticRoutes() {
 
   return {
     constantRoutes,
+
     authRoutes,
   }
 }

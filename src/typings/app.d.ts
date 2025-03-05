@@ -5,7 +5,9 @@ declare namespace App {
   namespace Theme {
     type ColorPaletteNumber = import('@sa/color').ColorPaletteNumber
 
-    /** 主题设置 */
+    /**
+     * 主题设置
+     */
     type ThemeSetting = {
 
       /** 主题方案 */
@@ -156,7 +158,9 @@ declare namespace App {
       }
     }
 
-    /** 其他颜色 */
+    /**
+     * 其他颜色
+     */
     type OtherColor = {
 
       /** 信息颜色 */

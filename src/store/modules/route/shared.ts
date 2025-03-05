@@ -23,9 +23,9 @@ export function filterAuthRoutesByRoles(routes: ElegantConstRoute[], roles: stri
 /**
  * 根据角色过滤权限路由
  *
- * @param {ElegantConstRoute} route 权限路由
- * @param {string[]} roles 角色
- * @returns {ElegantConstRoute[]} 过滤后的权限路由
+ * @param  route 权限路由
+ * @param  roles 角色
+ * @returns  过滤后的权限路由
  */
 function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]): ElegantConstRoute[] {
   const routeRoles = (route.meta && route.meta.roles) || []
@@ -55,8 +55,8 @@ function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]): Eleg
 /**
  * 根据顺序排序路由
  *
- * @param {ElegantConstRoute} route 路由
- * @returns {ElegantConstRoute} 排序后的路由
+ * @param  route 路由
+ * @returns  排序后的路由
  */
 function sortRouteByOrder(route: ElegantConstRoute) {
   if (route.children?.length) {
@@ -70,8 +70,8 @@ function sortRouteByOrder(route: ElegantConstRoute) {
 /**
  * 根据顺序排序路由数组
  *
- * @param {ElegantConstRoute[]} routes 路由数组
- * @returns {ElegantConstRoute[]} 排序后的路由数组
+ * @param  routes 路由数组
+ * @returns  排序后的路由数组
  */
 export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
   routes.sort((next, prev) => (Number(next.meta?.order) || 0) - (Number(prev.meta?.order) || 0))
@@ -83,8 +83,8 @@ export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
 /**
  * 根据权限路由获取全局菜单
  *
- * @param {ElegantConstRoute[]} routes 权限路由
- * @returns {App.Global.Menu[]} 全局菜单
+ * @param  routes 权限路由
+ * @returns 全局菜单
  */
 export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
   const menus: App.Global.Menu[] = []
@@ -107,7 +107,7 @@ export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
 /**
  * 根据路由获取全局菜单
  *
- * @param {RouteLocationNormalizedLoaded | ElegantConstRoute} route 路由
+ * @param  route 路由
  * @returns 全局菜单
  */
 function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | ElegantConstRoute) {
@@ -130,6 +130,7 @@ function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | Elegant
       localIcon,
       fontSize: iconFontSize || 20,
     }),
+
   }
 
   return menu
@@ -138,8 +139,8 @@ function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | Elegant
 /**
  * 获取缓存路由名
  *
- * @param {RouteRecordRaw[]} routes Vue 路由数组（两级）
- * @returns {LastLevelRouteKey[]} 缓存路由名
+ * @param  routes Vue 路由数组（两级）
+ * @returns  缓存路由名
  */
 export function getCacheRouteNames(routes: RouteRecordRaw[]) {
   const cacheNames: LastLevelRouteKey[] = []
@@ -191,9 +192,9 @@ function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName
 /**
  * 根据选中菜单键获取选中菜单键路径
  *
- * @param {string} selectedKey 选中菜单键
- * @param {App.Global.Menu[]} menus 全局菜单
- * @returns {string[]} 选中菜单键路径
+ * @param  selectedKey 选中菜单键
+ * @param  menus 全局菜单
+ * @returns  选中菜单键路径数组
  */
 export function getSelectedMenuKeyPathByKey(selectedKey: string, menus: App.Global.Menu[]) {
   const keyPath: string[] = []
@@ -216,9 +217,9 @@ export function getSelectedMenuKeyPathByKey(selectedKey: string, menus: App.Glob
 /**
  * 查找菜单路径
  *
- * @param {string} targetKey 目标菜单键
- * @param {App.Global.Menu} menu 菜单
- * @returns {string[] | null} 菜单路径
+ * @param  targetKey 目标菜单键
+ * @param  menu 菜单
+ * @returns  菜单路径数组
  */
 function findMenuPath(targetKey: string, menu: App.Global.Menu): string[] | null {
   const path: string[] = []
@@ -253,8 +254,8 @@ function findMenuPath(targetKey: string, menu: App.Global.Menu): string[] | null
 /**
  * 将菜单转换为面包屑
  *
- * @param {App.Global.Menu} menu 菜单
- * @returns {App.Global.Breadcrumb} 面包屑
+ * @param  menu 菜单
+ * @returns  面包屑
  */
 function transformMenuToBreadcrumb(menu: App.Global.Menu) {
   const { children, ...rest } = menu
@@ -273,9 +274,9 @@ function transformMenuToBreadcrumb(menu: App.Global.Menu) {
 /**
  * 根据路由获取面包屑
  *
- * @param {RouteLocationNormalizedLoaded} route 路由
- * @param {App.Global.Menu[]} menus 全局菜单
- * @returns {App.Global.Breadcrumb[]} 面包屑数组
+ * @param  route 路由
+ * @param  menus 全局菜单数组
+ * @returns  面包屑数组
  */
 export function getBreadcrumbsByRoute(
   route: RouteLocationNormalizedLoaded,
@@ -319,12 +320,14 @@ export function getBreadcrumbsByRoute(
 /**
  * 将菜单转换为搜索菜单
  *
- * @param {App.Global.Menu[]} menus 菜单数组
- * @param {App.Global.Menu[]} [treeMap] 树形映射. Default is `[]`
- * @returns {App.Global.Menu[]} 搜索菜单数组
+ * @param  menus 菜单数组
+ * @param  treeMap 树形映射数组. Default is `[]`
+ * @returns  搜索菜单数组
  */
 export function transformMenuToSearchMenus(menus: App.Global.Menu[], treeMap: App.Global.Menu[] = []) {
-  if (menus && menus.length === 0) { return [] }
+  if (menus && menus.length === 0) {
+    return []
+  }
 
   return menus.reduce((acc, cur) => {
     if (!cur.children) {
