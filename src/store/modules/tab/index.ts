@@ -145,7 +145,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   async function removeTabByRouteName(routeName: RouteKey) {
     const tab = findTabByRouteName(routeName, tabs.value)
 
-    if (!tab) { return }
+    if (!tab) {
+      return
+    }
 
     await removeTab(tab.id)
   }
@@ -202,7 +204,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
 
     const index = tabIds.indexOf(tabId)
 
-    if (index === -1) { return }
+    if (index === -1) {
+      return
+    }
 
     const excludes = tabIds.slice(index)
 
@@ -226,7 +230,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
 
     const index = tabIds.indexOf(tabId)
 
-    if (index === -1) { return }
+    if (index === -1) {
+      return
+    }
 
     const excludes = tabIds.slice(0, index + 1)
 
@@ -244,7 +250,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
 
     const tab = tabs.value.find(item => item.id === id)
 
-    if (!tab) { return }
+    if (!tab) {
+      return
+    }
 
     tab.oldLabel = tab.label
     tab.newLabel = label
@@ -260,7 +268,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
 
     const tab = tabs.value.find(item => item.id === id)
 
-    if (!tab) { return }
+    if (!tab) {
+      return
+    }
 
     tab.newLabel = undefined
   }
@@ -271,7 +281,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param tabId Tab ID
    */
   function isTabRetain(tabId: string) {
-    if (tabId === homeTab.value?.id) { return true }
+    if (tabId === homeTab.value?.id) {
+      return true
+    }
 
     const fixedTabIds = getFixedTabIds(tabs.value)
 
@@ -280,7 +292,9 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
 
   /** 缓存 Tab */
   function cacheTabs() {
-    if (!themeStore.tab.cache) { return }
+    if (!themeStore.tab.cache) {
+      return
+    }
 
     localStg.set('globalTabs', tabs.value)
   }

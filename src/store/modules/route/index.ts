@@ -49,15 +49,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    */
   const routeHome = ref(import.meta.env.VITE_ROUTE_HOME)
 
-  // /**
-  //  * 设置首页路由
-  //  *
-  //  * @param {LastLevelRouteKey} routeKey 路由键
-  //  */
-  // function setRouteHome(routeKey: LastLevelRouteKey) {
-  //   routeHome.value = routeKey
-  // }
-
   /**
    * 常量路由
    */

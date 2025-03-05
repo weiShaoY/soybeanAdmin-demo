@@ -88,14 +88,6 @@ declare namespace Env {
     readonly VITE_HTTP_PROXY?: CommonType.YesOrNo
 
     /**
-     * 认证路由模式
-     *
-     * - Static: 认证路由在前端生成
-     * - Dynamic: 认证路由在后端生成
-     */
-    readonly VITE_AUTH_ROUTE_MODE: 'static' | 'dynamic'
-
-    /**
      * 主页路由键
      *
      * 仅在认证路由模式为静态时有效，如果路由模式为动态，主页路由键在后端定义
