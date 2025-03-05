@@ -22,7 +22,9 @@ export function initThemeSettings() {
   const isProd = import.meta.env.PROD
 
   // 如果是开发模式，主题设置不会被缓存，通过更新 `src/theme/settings.ts` 中的 `themeSettings` 来更新主题设置
-  if (!isProd) { return themeSettings }
+  if (!isProd) {
+    return themeSettings
+  }
 
   // 如果是生产模式，主题设置将被缓存到 localStorage 中
   // 如果想在发布新版本时更新主题设置，请更新 `src/theme/settings.ts` 中的 `overrideThemeSettings`

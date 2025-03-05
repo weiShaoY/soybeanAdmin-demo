@@ -227,7 +227,6 @@ declare namespace Api {
     type MenuPropsOfRoute = Pick<
       import('vue-router').RouteMeta,
         | 'keepAlive'
-        | 'constant'
         | 'order'
         | 'href'
         | 'hideInMenu'

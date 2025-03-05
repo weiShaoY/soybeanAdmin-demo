@@ -28,7 +28,9 @@ import {
   toggleCssDarkMode,
 } from './shared'
 
-/** 主题存储 */
+/**
+ * 主题存储
+ */
 export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
   const scope = effectScope()
 
@@ -178,7 +180,9 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
   function cacheThemeSettings() {
     const isProd = import.meta.env.PROD
 
-    if (!isProd) { return }
+    if (!isProd) {
+      return
+    }
 
     localStg.set('themeSettings', settings.value)
   }

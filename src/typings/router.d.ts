@@ -26,13 +26,6 @@ declare module 'vue-router' {
     keepAlive?: boolean
 
     /**
-     * 是否为常量路由
-     *
-     * 无需登录，并且该路由在前端定义
-     */
-    constant?: boolean
-
-    /**
      * Iconify 图标
      *
      * 可用于菜单或面包屑中

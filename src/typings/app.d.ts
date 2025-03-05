@@ -292,7 +292,7 @@ declare namespace App {
       routePath: RoutePath
 
       /** 菜单图标 */
-      icon?: () => VNode
+      icon?: () => VNode | undefined
 
       /** 菜单子项 */
       children?: Menu[]

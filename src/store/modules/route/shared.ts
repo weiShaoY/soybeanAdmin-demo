@@ -117,9 +117,9 @@ export function getCacheRouteNames(routes: RouteRecordRaw[]) {
 /**
  * 根据路由名判断路由是否存在
  *
- * @param {RouteKey} routeName 路由名
- * @param {ElegantConstRoute[]} routes 路由数组
- * @returns {boolean} 路由是否存在
+ * @param  routeName 路由名
+ * @param  routes 路由数组
+ * @returns  路由是否存在
  */
 export function isRouteExistByRouteName(routeName: RouteKey, routes: ElegantConstRoute[]) {
   return routes.some(route => recursiveGetIsRouteExistByRouteName(route, routeName))
@@ -128,9 +128,9 @@ export function isRouteExistByRouteName(routeName: RouteKey, routes: ElegantCons
 /**
  * 递归判断路由是否存在
  *
- * @param {ElegantConstRoute} route 路由
- * @param {RouteKey} routeName 路由名
- * @returns {boolean} 路由是否存在
+ * @param  route 路由
+ * @param  routeName 路由名
+ * @returns  路由是否存在
  */
 function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName: RouteKey) {
   let isExist = route.name === routeName
@@ -251,7 +251,9 @@ export function getBreadcrumbsByRoute(
     if (menu.key === activeKey) {
       const ROUTE_DEGREE_SPLITTER = '_'
 
-      const parentKey = key.split(ROUTE_DEGREE_SPLITTER).slice(0, -1).join(ROUTE_DEGREE_SPLITTER)
+      const parentKey = key.split(ROUTE_DEGREE_SPLITTER)
+        .slice(0, -1)
+        .join(ROUTE_DEGREE_SPLITTER)
 
       const breadcrumbMenu = getGlobalMenuByBaseRoute(route)
 

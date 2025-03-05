@@ -190,28 +190,18 @@ const customRoutes: CustomRoute[] = [
  * @returns 包含常量路由和权限路由的对象
  */
 export function createStaticRoutes() {
-  /** 常量路由 */
-  const constantRoutes: ElegantRoute[] = []
+
 
   /** 权限路由 */
-  const authRoutes: ElegantRoute[] = []
+  let allRoutes: ElegantRoute[] = [...customRoutes, ...generatedRoutes]
 
-  console.log('%c Line:198 🍧 authRoutes', 'color:#465975', authRoutes);
+  console.log('%c Line:200 🥒 authRoutes', 'color:#42b983', allRoutes);
 
-  [...customRoutes, ...generatedRoutes].forEach((item) => {
-    if (item.meta?.constant) {
-      constantRoutes.push(item)
-    }
-    else {
-      authRoutes.push(item)
-    }
-  })
 
-  return {
-    constantRoutes,
-
-    authRoutes,
-  }
+  allRoutes = Array.from(
+    new Map(allRoutes.map(route => [route.name, route])).values()
+  )
+  return allRoutes
 }
 
 /**

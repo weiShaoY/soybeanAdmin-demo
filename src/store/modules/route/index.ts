@@ -12,7 +12,7 @@ import { router } from '@/router'
 
 import { getRouteName } from '@/router/elegant/transform'
 
-import { createStaticRoutes, getAuthVueRoutes } from '@/router/routes'
+import { createStaticRoutes as createAllRoutes, getAuthVueRoutes } from '@/router/routes'
 
 import { useBoolean } from '@sa/hooks'
 
@@ -50,51 +50,21 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   const routeHome = ref(import.meta.env.VITE_ROUTE_HOME)
 
   /**
-   * 常量路由
-   */
-  const constantRoutes = shallowRef<ElegantConstRoute[]>([])
-
-  /**
-   * 添加并去重常量路由
-   *
-   * 该函数用于将传入的常量路由去重后存入 `constantRoutes.value`，确保常量路由唯一。
-   *
-   * @param routes - 需要添加的常量路由列表
-   */
-  function addConstantRoutes(routes: ElegantConstRoute[]) {
-    // 创建一个 Map 用于去重，key 是 route.name，value 是对应的路由对象
-    const constantRoutesMap = new Map<string, ElegantConstRoute>([])
-
-    // 遍历传入的路由数组，将每个路由存入 Map，利用 Map 的 key 唯一性进行去重
-    routes.forEach((route) => {
-      constantRoutesMap.set(route.name, route)
-    })
-
-    // 将去重后的路由列表转换为数组，并赋值给 constantRoutes 变量
-    constantRoutes.value = Array.from(constantRoutesMap.values())
-  }
-
-  /**
    *  权限路由
    */
   const authRoutes = shallowRef<ElegantConstRoute[]>([])
 
   /**
-   * 添加并去重权限路由
+   * 去重路由
    *
    * 该函数会将传入的路由列表去重后存入 `authRoutes.value`，确保权限路由唯一。
    *
    * @param  routes  需要添加的权限路由列表
    */
-  function addAuthRoutes(routes: ElegantConstRoute[]) {
-    const authRoutesMap = new Map<string, ElegantConstRoute>([])
-
-    routes.forEach((route) => {
-      authRoutesMap.set(route.name, route)
-    })
-
-    authRoutes.value = Array.from(authRoutesMap.values())
-    console.log('%c Line:111 🍇 authRoutes.value', 'color:#465975', authRoutes.value)
+  function deduplicateRoutes(routes: ElegantConstRoute[]) {
+    authRoutes.value = Array.from(
+      new Map(routes.map(route => [route.name, route])).values()
+    )
   }
 
   /**
@@ -107,27 +77,25 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    */
   const menus = ref<App.Global.Menu[]>([])
 
+  /**
+   *  搜索菜单
+   */
   const searchMenus = computed(() => transformMenuToSearchMenus(menus.value))
 
   /**
-   * 获取全局菜单
-   *
-   * @param {ElegantConstRoute[]} routes 路由数组
+   * 缓存路由
    */
-  function getGlobalMenus(routes: ElegantConstRoute[]) {
-    menus.value = getGlobalMenusByAuthRoutes(routes)
-  }
-
-  /** 缓存路由 */
   const cacheRoutes = ref<RouteKey[]>([])
 
-  /** 排除缓存路由，用于重置路由缓存 */
+  /**
+   *  排除缓存路由，用于重置路由缓存
+   */
   const excludeCacheRoutes = ref<RouteKey[]>([])
 
   /**
    * 获取缓存路由
    *
-   * @param {RouteRecordRaw[]} routes Vue 路由数组
+   * @param routes Vue 路由数组
    */
   function getCacheRoutes(routes: RouteRecordRaw[]) {
     cacheRoutes.value = getCacheRouteNames(routes)
@@ -185,9 +153,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     }
 
     // 创建静态路由
-    const staticRoute = createStaticRoutes()
+    const staticRoute = createAllRoutes()
 
-    addConstantRoutes(staticRoute.constantRoutes)
 
     // 处理常量路由和权限路由的逻辑
     handleConstantAndAuthRoutes()
@@ -212,9 +179,12 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 初始化静态权限路由
    */
   function initStaticAuthRoute() {
-    const { authRoutes: staticAuthRoutes } = createStaticRoutes()
+    const staticRoutes = createAllRoutes()
 
-    addAuthRoutes([...staticAuthRoutes, ...authRoutes.value])
+
+    deduplicateRoutes(staticRoutes)
+
+
 
     handleConstantAndAuthRoutes()
 
@@ -226,7 +196,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    */
   function handleConstantAndAuthRoutes() {
   // 合并常量路由和权限路由
-    const allRoutes = [...constantRoutes.value, ...authRoutes.value]
+    const allRoutes = [ ...authRoutes.value]
 
     console.log('%c Line:270 🍕 authRoutes.value', 'color:#ffdd4d', authRoutes.value)
 
@@ -247,7 +217,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     addRoutesToVueRouter(vueRoutes)
 
     // 生成全局菜单数据
-    getGlobalMenus(sortRoutes)
+    menus.value = getGlobalMenusByAuthRoutes(sortRoutes)
 
     // 计算需要缓存的路由
     getCacheRoutes(vueRoutes)
@@ -289,9 +259,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       return false
     }
 
-    const { authRoutes: staticAuthRoutes } = createStaticRoutes()
+    const staticRoutes = createAllRoutes()
 
-    return isRouteExistByRouteName(routeName, staticAuthRoutes)
+    return isRouteExistByRouteName(routeName, staticRoutes)
   }
 
   /**
