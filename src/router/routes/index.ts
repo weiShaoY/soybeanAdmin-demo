@@ -189,7 +189,7 @@ const customRoutes: CustomRoute[] = [
  *
  * @returns 包含常量路由和权限路由的对象
  */
-export function createStaticRoutes() {
+export function createAllRoutes() {
 
 
   /** 权限路由 */
