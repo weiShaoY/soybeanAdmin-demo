@@ -10,23 +10,28 @@ import type {
 import { useRouteStore } from '@/store/modules/route'
 
 /**
- * 创建路由守卫
+ * 处理路由切换
  *
- * @param router - 路由实例
+ * @param to - 目标路由
+ * @param from - 来源路由
+ * @param next - 导航守卫的 next 函数
  */
-export function createRouteGuard(router: Router) {
-  router.beforeEach(async (to, from, next) => {
-    // 初始化路由
-    const location = await initRoute(to)
+function handleRouteSwitch(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
+  // 带有 href 的路由
+  if (to.meta.href) {
+    window.open(to.meta.href, '_blank')
 
-    if (location) {
-      next(location)
-      return
-    }
+    next({
+      path: from.fullPath,
+      replace: true,
+      query: from.query,
+      hash: to.hash,
+    })
 
-    // 正常切换路由
-    handleRouteSwitch(to, from, next)
-  })
+    return
+  }
+
+  next()
 }
 
 /**
@@ -47,8 +52,6 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
    *  是否为未找到路由
    */
   const isNotFoundRoute = to.name === notFoundRoute
-
-
 
   if (!routeStore.isInitAuthRoute) {
     // 初始化权限路由
@@ -96,26 +99,21 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
 }
 
 /**
- * 处理路由切换
+ * 创建路由守卫
  *
- * @param to - 目标路由
- * @param from - 来源路由
- * @param next - 导航守卫的 next 函数
+ * @param router - 路由实例
  */
-function handleRouteSwitch(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
-  // 带有 href 的路由
-  if (to.meta.href) {
-    window.open(to.meta.href, '_blank')
+export function createRouteGuard(router: Router) {
+  router.beforeEach(async (to, from, next) => {
+    // 初始化路由
+    const location = await initRoute(to)
 
-    next({
-      path: from.fullPath,
-      replace: true,
-      query: from.query,
-      hash: to.hash,
-    })
+    if (location) {
+      next(location)
+      return
+    }
 
-    return
-  }
-
-  next()
+    // 正常切换路由
+    handleRouteSwitch(to, from, next)
+  })
 }

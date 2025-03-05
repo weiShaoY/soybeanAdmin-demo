@@ -76,47 +76,12 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   const excludeCacheRoutes = ref<RouteKey[]>([]);
 
   /**
-   * 获取缓存路由
+   * 添加移除路由函数
    *
-   * @param routes Vue 路由数组
+   * @param fn 移除路由函数
    */
-  function getCacheRoutes(routes: RouteRecordRaw[]) {
-    cacheRoutes.value = getCacheRouteNames(routes);
-  }
-
-  /**
-   * 重置路由缓存
-   *
-   * @param {RouteKey} [routeKey] 路由键，默认值为当前路由名
-   */
-  async function resetRouteCache(routeKey?: RouteKey) {
-    const routeName = routeKey || (router.currentRoute.value.name as RouteKey);
-
-    excludeCacheRoutes.value.push(routeName);
-
-    await nextTick();
-
-    excludeCacheRoutes.value = [];
-  }
-
-  /**
-   * 全局面包屑
-   */
-  const breadcrumbs = computed(() =>
-    getBreadcrumbsByRoute(router.currentRoute.value, menus.value),
-  );
-
-  /**
-   * 重置存储
-   */
-  async function resetStore() {
-    const routeStore = useRouteStore();
-
-    routeStore.$reset();
-
-    resetVueRoutes();
-
-    await initAuthRoute();
+  function addRemoveRouteFn(fn: () => void) {
+    removeRouteFns.push(fn);
   }
 
   /**
@@ -128,18 +93,12 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   }
 
   /**
-   * 添加路由到 Vue 路由器
+   * 获取缓存路由
    *
-   * @param  routes Vue 路由数组
+   * @param routes Vue 路由数组
    */
-  function addRoutesToVueRouter(routes: RouteRecordRaw[]) {
-    routes.forEach((route) => {
-      // 调用 Vue Router 的 `addRoute` 方法添加路由，返回一个移除该路由的函数
-      const removeFn = router.addRoute(route);
-
-      // 将移除函数存储，方便后续清理路由
-      addRemoveRouteFn(removeFn);
-    });
+  function getCacheRoutes(routes: RouteRecordRaw[]) {
+    cacheRoutes.value = getCacheRouteNames(routes);
   }
 
   /**
@@ -170,33 +129,34 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   }
 
   /**
-   * 初始化静态权限路由
+   * 添加路由到 Vue 路由器
+   *
+   * @param  routes Vue 路由数组
    */
-  function initStaticAuthRoute() {
+  function addRoutesToVueRouter(routes: RouteRecordRaw[]) {
+    routes.forEach((route) => {
+      // 调用 Vue Router 的 `addRoute` 方法添加路由，返回一个移除该路由的函数
+      const removeFn = router.addRoute(route);
+
+      // 将移除函数存储，方便后续清理路由
+      addRemoveRouteFn(removeFn);
+    });
+  }
+
+
+
+  /**
+   * 初始化权限路由
+   */
+  async function initAuthRoute() {
     allRoutes.value = createAllRoutes();
 
     //  处理常量路由和权限路由
     handleConstantAndAuthRoutes();
 
     setIsInitAuthRoute(true);
-  }
-
-  /**
-   * 初始化权限路由
-   */
-  async function initAuthRoute() {
-    initStaticAuthRoute();
 
     tabStore.initHomeTab();
-  }
-
-  /**
-   * 添加移除路由函数
-   *
-   * @param fn 移除路由函数
-   */
-  function addRemoveRouteFn(fn: () => void) {
-    removeRouteFns.push(fn);
   }
 
   /**
@@ -224,6 +184,41 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    */
   function getSelectedMenuKeyPath(selectedKey: string) {
     return getSelectedMenuKeyPathByKey(selectedKey, menus.value);
+  }
+
+  /**
+   * 全局面包屑
+   */
+  const breadcrumbs = computed(() =>
+    getBreadcrumbsByRoute(router.currentRoute.value, menus.value),
+  );
+
+  /**
+   * 重置路由缓存
+   *
+   * @param {RouteKey} [routeKey] 路由键，默认值为当前路由名
+   */
+  async function resetRouteCache(routeKey?: RouteKey) {
+    const routeName = routeKey || (router.currentRoute.value.name as RouteKey);
+
+    excludeCacheRoutes.value.push(routeName);
+
+    await nextTick();
+
+    excludeCacheRoutes.value = [];
+  }
+
+  /**
+   * 重置存储
+   */
+  async function resetStore() {
+    const routeStore = useRouteStore();
+
+    routeStore.$reset();
+
+    resetVueRoutes();
+
+    await initAuthRoute();
   }
 
   return {
