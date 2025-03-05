@@ -34,6 +34,7 @@ declare module "@elegant-router/types" {
     "403": "/403";
     "404": "/404";
     "500": "/500";
+    "aaa": "/aaa";
     "about": "/about";
     "alova": "/alova";
     "alova_request": "/alova/request";
@@ -136,6 +137,7 @@ declare module "@elegant-router/types" {
     | "403"
     | "404"
     | "500"
+    | "aaa"
     | "about"
     | "alova"
     | "function"
@@ -169,6 +171,7 @@ declare module "@elegant-router/types" {
     | "500"
     | "iframe-page"
     | "login"
+    | "aaa"
     | "about"
     | "alova_request"
     | "alova_scenes"

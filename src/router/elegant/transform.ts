@@ -180,6 +180,7 @@ const routeMap: RouteMap = {
   "403": "/403",
   "404": "/404",
   "500": "/500",
+  "aaa": "/aaa",
   "about": "/about",
   "alova": "/alova",
   "alova_request": "/alova/request",

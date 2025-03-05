@@ -21,7 +21,7 @@ const customRoutes: CustomRoute[] = [
     path: '/exception',
     component: 'layout.base',
     meta: {
-      title: 'Exception',
+      title: '列外',
       icon: 'ant-design:exception-outlined',
       order: 7,
     },
