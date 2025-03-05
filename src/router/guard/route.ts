@@ -38,29 +38,17 @@ export function createRouteGuard(router: Router) {
 async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw | null> {
   const routeStore = useRouteStore()
 
-  /** 未找到路由的路由名 */
+  /**
+   * 未找到路由的路由名
+   */
   const notFoundRoute: RouteKey = 'not-found'
 
-  /** 是否为未找到路由 */
+  /**
+   *  是否为未找到路由
+   */
   const isNotFoundRoute = to.name === notFoundRoute
 
-  // 如果常量路由未初始化，则初始化常量路由
-  if (!routeStore.isInitConstantRoute) {
-    await routeStore.initConstantRoute()
 
-    // 因为常量路由未初始化，路由被 "not-found" 路由捕获
-    // 初始化常量路由后，重定向到原始路由
-    const path = to.fullPath
-
-    const location: RouteLocationRaw = {
-      path,
-      replace: true,
-      query: to.query,
-      hash: to.hash,
-    }
-
-    return location
-  }
 
   if (!routeStore.isInitAuthRoute) {
     // 初始化权限路由

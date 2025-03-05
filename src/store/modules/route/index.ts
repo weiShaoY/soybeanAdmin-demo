@@ -38,9 +38,6 @@ import {
 export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   const tabStore = useTabStore();
 
-  const { bool: isInitConstantRoute, setBool: setIsInitConstantRoute } =
-    useBoolean();
-
   const { bool: isInitAuthRoute, setBool: setIsInitAuthRoute } = useBoolean();
 
   /**
@@ -119,8 +116,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
     resetVueRoutes();
 
-    // 重置存储后需要重新初始化常量路由
-    await initConstantRoute();
+    await initAuthRoute();
   }
 
   /**
@@ -132,31 +128,18 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   }
 
   /**
-   * 初始化常量路由
+   * 添加路由到 Vue 路由器
+   *
+   * @param  routes Vue 路由数组
    */
-  async function initConstantRoute() {
-    // 如果常量路由已经初始化，则直接返回，避免重复执行
-    if (isInitConstantRoute.value) {
-      return;
-    }
+  function addRoutesToVueRouter(routes: RouteRecordRaw[]) {
+    routes.forEach((route) => {
+      // 调用 Vue Router 的 `addRoute` 方法添加路由，返回一个移除该路由的函数
+      const removeFn = router.addRoute(route);
 
-    // 处理常量路由和权限路由的逻辑
-    handleConstantAndAuthRoutes();
-
-    // 设置常量路由初始化状态为 true
-    setIsInitConstantRoute(true);
-
-    // 初始化首页标签页
-    tabStore.initHomeTab();
-  }
-
-  /**
-   * 初始化权限路由
-   */
-  async function initAuthRoute() {
-    initStaticAuthRoute();
-
-    tabStore.initHomeTab();
+      // 将移除函数存储，方便后续清理路由
+      addRemoveRouteFn(removeFn);
+    });
   }
 
   /**
@@ -199,18 +182,12 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   }
 
   /**
-   * 添加路由到 Vue 路由器
-   *
-   * @param  routes Vue 路由数组
+   * 初始化权限路由
    */
-  function addRoutesToVueRouter(routes: RouteRecordRaw[]) {
-    routes.forEach((route) => {
-      // 调用 Vue Router 的 `addRoute` 方法添加路由，返回一个移除该路由的函数
-      const removeFn = router.addRoute(route);
+  async function initAuthRoute() {
+    initStaticAuthRoute();
 
-      // 将移除函数存储，方便后续清理路由
-      addRemoveRouteFn(removeFn);
-    });
+    tabStore.initHomeTab();
   }
 
   /**
@@ -258,8 +235,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     excludeCacheRoutes,
     resetRouteCache,
     breadcrumbs,
-    initConstantRoute,
-    isInitConstantRoute,
     initAuthRoute,
     isInitAuthRoute,
     setIsInitAuthRoute,
