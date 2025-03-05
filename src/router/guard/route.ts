@@ -53,9 +53,9 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
    */
   const isNotFoundRoute = to.name === notFoundRoute
 
-  if (!routeStore.isInitAuthRoute) {
+  if (!routeStore.isInitRoute) {
     // 初始化权限路由
-    await routeStore.initAuthRoute()
+    await routeStore.initRoute()
 
     // 因为权限路由未初始化，路由被 "not-found" 路由捕获
     // 初始化权限路由后，重定向到原始路由
@@ -82,7 +82,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
   }
 
   // 被 "not-found" 路由捕获，检查路由是否存在
-  const exist = await routeStore.getIsAuthRouteExist(to.path as RoutePath)
+  const exist = await routeStore.getIsRouteExist(to.path as RoutePath)
 
   /** 无权限路由名 */
   const noPermissionRoute: RouteKey = '403'

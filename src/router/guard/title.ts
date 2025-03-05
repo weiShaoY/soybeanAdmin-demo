@@ -12,7 +12,9 @@ export function createDocumentTitleGuard(router: Router) {
     /** 路由元信息中的国际化键 */
     const { title } = to.meta
 
-    /** 文档标题 */
+    /**
+     * 文档标题
+     */
     const documentTitle = title || ''
 
     // 设置文档标题

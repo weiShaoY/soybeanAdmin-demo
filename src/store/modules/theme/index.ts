@@ -36,7 +36,9 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
 
   const osTheme = usePreferredColorScheme()
 
-  /** 主题设置 */
+  /**
+   * 主题设置
+   */
   const settings: Ref<App.Theme.ThemeSetting> = ref(initThemeSettings())
 
   /** 暗模式 */
@@ -48,13 +50,19 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     return settings.value.themeScheme === 'dark'
   })
 
-  /** 灰度模式 */
+  /**
+   * 灰度模式
+   */
   const grayscaleMode = computed(() => settings.value.grayscale)
 
-  /** 色盲模式 */
+  /**
+   * 色盲模式
+   */
   const colourWeaknessMode = computed(() => settings.value.colourWeakness)
 
-  /** 主题颜色 */
+  /**
+   * 主题颜色
+   */
   const themeColors = computed(() => {
     const { themeColor, otherColor, isInfoFollowPrimary } = settings.value
 
@@ -67,12 +75,13 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     return colors
   })
 
-  /** UI 主题 */
+  /**
+   * UI 主题
+   */
   const uiTheme = computed(() => getNaiveTheme(themeColors.value, settings.value.recommendColor))
 
   /**
    * 设置 JSON
-   *
    * 用于复制设置
    */
   const settingsJson = computed(() => JSON.stringify(settings.value))
