@@ -10,9 +10,9 @@ import {
 
 } from 'vue-router'
 
-import { createRouterGuard } from './guard'
+import { createBuiltinVueRoutes } from './builtin'
 
-import { createBuiltinVueRoutes } from './routes/builtin'
+import { createRouterGuard } from './utils'
 
 // 从环境变量中获取路由历史模式和基本 URL，默认为 'history' 模式
 const { VITE_ROUTER_HISTORY_MODE = 'history', VITE_BASE_URL } = import.meta.env
