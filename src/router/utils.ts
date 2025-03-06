@@ -4,7 +4,6 @@ import type {
   NavigationGuardNext,
   RouteLocationNormalized,
   RouteLocationRaw,
-  Router,
 } from 'vue-router'
 
 import { useRouteStore } from '@/store/modules/route'
@@ -16,7 +15,7 @@ import { useRouteStore } from '@/store/modules/route'
  * @param from - 来源路由
  * @param next - 导航守卫的 next 函数
  */
-function handleRouteSwitch(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
+export function handleRouteSwitch(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
   // 带有 href 的路由
   if (to.meta.href) {
     window.open(to.meta.href, '_blank')
@@ -40,7 +39,7 @@ function handleRouteSwitch(to: RouteLocationNormalized, from: RouteLocationNorma
  * @param to - 目标路由
  * @returns 重定向路由对象或 null
  */
-async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw | null> {
+export async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw | null> {
   const routeStore = useRouteStore()
 
   /**
@@ -96,24 +95,4 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
   }
 
   return null
-}
-
-/**
- * 创建路由守卫
- *
- * @param router - 路由实例
- */
-export function createRouteGuard(router: Router) {
-  router.beforeEach(async (to, from, next) => {
-    // 初始化路由
-    const location = await initRoute(to)
-
-    if (location) {
-      next(location)
-      return
-    }
-
-    // 正常切换路由
-    handleRouteSwitch(to, from, next)
-  })
 }

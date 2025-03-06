@@ -2,9 +2,9 @@ import type { Router } from 'vue-router'
 
 import { createProgressGuard } from './progress'
 
-import { createRouteGuard } from './route'
-
 import { createDocumentTitleGuard } from './title'
+
+import { handleRouteSwitch, initRoute } from './utils'
 
 /**
  * 创建路由守卫
@@ -16,7 +16,18 @@ export function createRouterGuard(router: Router) {
   createProgressGuard(router)
 
   // 创建路由守卫
-  createRouteGuard(router)
+  router.beforeEach(async (to, from, next) => {
+    // 初始化路由
+    const location = await initRoute(to)
+
+    if (location) {
+      next(location)
+      return
+    }
+
+    // 正常切换路由
+    handleRouteSwitch(to, from, next)
+  })
 
   // 创建文档标题守卫
   createDocumentTitleGuard(router)

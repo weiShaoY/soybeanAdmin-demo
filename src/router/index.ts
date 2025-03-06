@@ -27,17 +27,25 @@ const { VITE_ROUTER_HISTORY_MODE = 'history', VITE_BASE_URL } = import.meta.env
  *   - `memory` 模式：基于内存存储的历史记录，通常用于服务端渲染 (SSR) 或测试环境
  */
 const historyCreatorMap: Record<Env.RouterHistoryMode, (base?: string) => RouterHistory> = {
-  /** 使用 Hash 模式，URL 以 `#` 号分割，如 `example.com/#/home` */
+  /**
+   *  使用 Hash 模式，URL 以 `#` 号分割，如 `example.com/#/home`
+   */
   hash: createWebHashHistory,
 
-  /** 使用 HTML5 History API 模式，URL 结构更干净，如 `example.com/home` */
+  /**
+   * 使用 HTML5 History API 模式，URL 结构更干净，如 `example.com/home`
+   */
   history: createWebHistory,
 
-  /** 使用内存模式，不依赖 URL 变更，适用于 SSR 或无浏览器环境 */
+  /**
+   *  使用内存模式，不依赖 URL 变更，适用于 SSR 或无浏览器环境
+   */
   memory: createMemoryHistory,
 }
 
-/** 创建路由实例 */
+/**
+ * 创建路由实例
+ */
 export const router = createRouter({
   /** 设置路由历史记录 */
   history: historyCreatorMap[VITE_ROUTER_HISTORY_MODE](VITE_BASE_URL),
@@ -54,7 +62,6 @@ export const router = createRouter({
 export async function setupRouter(app: App) {
   // 在 Vue 应用中使用路由
   app.use(router)
-  console.log('%c Line:36 🍪 createBuiltinVueRoutes', 'color:#42b983', createBuiltinVueRoutes())
 
   // 创建并应用路由守卫
   createRouterGuard(router)

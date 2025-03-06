@@ -190,16 +190,14 @@ const customRoutes: CustomRoute[] = [
  * @returns 包含常量路由和权限路由的对象
  */
 export function createAllRoutes() {
-
-
   /** 权限路由 */
   let allRoutes: ElegantRoute[] = [...customRoutes, ...generatedRoutes]
 
-  console.log('%c Line:200 🥒 authRoutes', 'color:#42b983', allRoutes);
+  console.log('%c Line:200 🥒 authRoutes', 'color:#42b983', allRoutes)
 
-
+  //  去重
   allRoutes = Array.from(
-    new Map(allRoutes.map(route => [route.name, route])).values()
+    new Map(allRoutes.map(route => [route.name, route])).values(),
   )
   return allRoutes
 }
