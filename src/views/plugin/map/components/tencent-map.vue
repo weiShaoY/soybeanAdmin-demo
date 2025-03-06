@@ -15,7 +15,9 @@ const domRef = ref<HTMLDivElement | null>(null)
 
 async function renderMap() {
   await load(true)
-  if (!domRef.value) { return }
+  if (!domRef.value) {
+    return
+  }
 
   // eslint-disable-next-line no-new
   new TMap.Map(domRef.value, {

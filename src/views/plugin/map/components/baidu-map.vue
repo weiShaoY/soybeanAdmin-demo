@@ -17,7 +17,9 @@ const domRef = ref<HTMLDivElement>()
 
 async function renderMap() {
   await load(true)
-  if (!domRef.value) { return }
+  if (!domRef.value) {
+    return
+  }
 
   const map = new BMap.Map(domRef.value)
 

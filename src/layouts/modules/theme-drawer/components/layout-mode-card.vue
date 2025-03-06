@@ -64,7 +64,9 @@ const layoutConfig: LayoutConfig = {
 }
 
 function handleChangeMode(mode: UnionKey.ThemeLayoutMode) {
-  if (props.disabled) { return }
+  if (props.disabled) {
+    return
+  }
 
   emit('update:mode', mode)
 }

@@ -23,7 +23,9 @@ const vditor = ref<Vditor>()
 const domRef = ref<HTMLElement>()
 
 function renderVditor() {
-  if (!domRef.value) { return }
+  if (!domRef.value) {
+    return
+  }
 
   vditor.value = new Vditor(domRef.value, {
     minHeight: 400,

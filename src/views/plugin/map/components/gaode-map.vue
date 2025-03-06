@@ -15,7 +15,9 @@ const domRef = ref<HTMLDivElement>()
 
 async function renderMap() {
   await load(true)
-  if (!domRef.value) { return }
+  if (!domRef.value) {
+    return
+  }
 
   const map = new AMap.Map(domRef.value, {
     zoom: 11,

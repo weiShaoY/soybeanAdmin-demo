@@ -18,7 +18,9 @@ const domRef = ref<HTMLElement>()
 const player = ref<Player>()
 
 function renderXgPlayer() {
-  if (!domRef.value) { return }
+  if (!domRef.value) {
+    return
+  }
 
   const url = 'https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/byted-player-videos/1.0.0/xgplayer-demo.mp4'
 
@@ -49,7 +51,7 @@ onUnmounted(() => {
       class="h-full card-wrapper"
     >
       <div
-        class="flex-center"
+        class="flex items-center justify-center"
       >
         <div
           ref="domRef"

@@ -70,11 +70,15 @@ function handleClose() {
 function handleUp() {
   const { length } = resultOptions.value
 
-  if (length === 0) { return }
+  if (length === 0) {
+    return
+  }
 
   const index = getActivePathIndex()
 
-  if (index === -1) { return }
+  if (index === -1) {
+    return
+  }
 
   const activeIndex = index === 0 ? length - 1 : index - 1
 
@@ -85,11 +89,15 @@ function handleUp() {
 function handleDown() {
   const { length } = resultOptions.value
 
-  if (length === 0) { return }
+  if (length === 0) {
+    return
+  }
 
   const index = getActivePathIndex()
 
-  if (index === -1) { return }
+  if (index === -1) {
+    return
+  }
 
   const activeIndex = index === length - 1 ? 0 : index + 1
 
@@ -102,7 +110,9 @@ function getActivePathIndex() {
 
 /** key enter */
 function handleEnter() {
-  if (resultOptions.value?.length === 0 || activePath.value === '') { return }
+  if (resultOptions.value?.length === 0 || activePath.value === '') {
+    return
+  }
 
   handleClose()
   router.push(activePath.value)

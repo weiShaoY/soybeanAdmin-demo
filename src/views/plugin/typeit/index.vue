@@ -14,7 +14,9 @@ defineOptions({
 const textRef = shallowRef<El>()
 
 function init() {
-  if (!textRef.value) { return }
+  if (!textRef.value) {
+    return
+  }
 
   const options: Options = {
     strings: 'SoybeanAdmin是一个清新优雅、高颜值且功能强大的后台管理模板',
@@ -60,7 +62,7 @@ onMounted(() => {
 
       <span
         ref="textRef"
-        class="text-18px"
+        class="text-[18px]"
       />
     </ElCard>
   </div>

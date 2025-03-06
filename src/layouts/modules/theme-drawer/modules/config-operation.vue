@@ -18,7 +18,9 @@ const themeStore = useThemeStore()
 const domRef = ref<HTMLElement | null>(null)
 
 function initClipboard() {
-  if (!domRef.value) { return }
+  if (!domRef.value) {
+    return
+  }
 
   const clipboard = new Clipboard(domRef.value)
 

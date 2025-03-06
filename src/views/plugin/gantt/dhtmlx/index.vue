@@ -48,7 +48,9 @@ const data: TimeData[] = [
 ]
 
 function initGantt() {
-  if (!ganttRef.value) { return }
+  if (!ganttRef.value) {
+    return
+  }
 
   const config: Partial<GanttConfigOptions> = {
     grid_width: 350,

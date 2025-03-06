@@ -225,7 +225,9 @@ function removeButton(index: number) {
 function handleInitModel() {
   Object.assign(model, createDefaultModel())
 
-  if (!props.rowData) { return }
+  if (!props.rowData) {
+    return
+  }
 
   if (props.operateType === 'addChild') {
     const { id } = props.rowData

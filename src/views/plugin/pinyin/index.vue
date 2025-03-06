@@ -16,7 +16,9 @@ const domRef2 = ref<HTMLElement | null>(null)
 const domRef3 = ref<HTMLElement | null>(null)
 
 function renderHtml() {
-  if (!domRef.value || !domRef2.value || !domRef3.value) { return }
+  if (!domRef.value || !domRef2.value || !domRef3.value) {
+    return
+  }
 
   const text = 'SoybeanAdmin是一个清新优雅、高颜值且功能强大的后台管理模板'
 
@@ -63,7 +65,7 @@ onMounted(() => {
 
       <p
         ref="domRef"
-        class="text-18px"
+        class="text-[18px]"
       />
 
       <ElDivider
@@ -74,7 +76,7 @@ onMounted(() => {
 
       <p
         ref="domRef2"
-        class="text-18px"
+        class="text-[18px]"
       />
 
       <ElDivider
@@ -85,7 +87,7 @@ onMounted(() => {
 
       <p
         ref="domRef3"
-        class="custom-style text-18px"
+        class="custom-style text-[18px]"
       />
     </ElCard>
   </div>

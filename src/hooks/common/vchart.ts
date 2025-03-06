@@ -100,7 +100,9 @@ export function useVChart<T extends ISpec>(specFactory: () => T, hooks: ChartHoo
    * @returns {Promise<void>}
    */
   async function updateSpec(callback: (opts: T, optsFactory: () => T) => ISpec = () => spec): Promise<void> {
-    if (!isRendered()) { return }
+    if (!isRendered()) {
+      return
+    }
 
     const updatedOpts = callback(spec, specFactory)
 
@@ -161,7 +163,9 @@ export function useVChart<T extends ISpec>(specFactory: () => T, hooks: ChartHoo
    * @returns {Promise<void>}
    */
   async function destroy(): Promise<void> {
-    if (!chart) { return }
+    if (!chart) {
+      return
+    }
 
     await onDestroy?.(chart)
     chart?.release()
