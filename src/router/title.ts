@@ -9,7 +9,9 @@ import { useTitle } from '@vueuse/core'
  */
 export function createDocumentTitleGuard(router: Router) {
   router.afterEach((to) => {
-    /** 路由元信息中的国际化键 */
+    /**
+     * 路由元信息中的文档标题
+     */
     const { title } = to.meta
 
     /**

@@ -1,6 +1,9 @@
 import type { App } from 'vue'
 
-import type { RouterHistory } from 'vue-router'
+import type {
+  Router,
+  RouterHistory,
+} from 'vue-router'
 
 import {
   createMemoryHistory,
@@ -12,7 +15,11 @@ import {
 
 import { createBuiltinVueRoutes } from './builtin'
 
-import { createRouterGuard } from './utils'
+import { createProgressGuard } from './progress'
+
+import { createDocumentTitleGuard } from './title'
+
+import { handleRouteSwitch, initRoute } from './utils'
 
 // 从环境变量中获取路由历史模式和基本 URL，默认为 'history' 模式
 const { VITE_ROUTER_HISTORY_MODE = 'history', VITE_BASE_URL } = import.meta.env
@@ -53,6 +60,33 @@ export const router = createRouter({
   /** 设置路由表 */
   routes: createBuiltinVueRoutes(),
 })
+
+/**
+ * 创建路由守卫
+ *
+ * @param router - 路由实例
+ */
+export function createRouterGuard(router: Router) {
+  // 创建进度条守卫
+  createProgressGuard(router)
+
+  // 创建路由守卫
+  router.beforeEach(async (to, from, next) => {
+    // 初始化路由
+    const location = await initRoute(to)
+
+    if (location) {
+      next(location)
+      return
+    }
+
+    // 正常切换路由
+    handleRouteSwitch(to, from, next)
+  })
+
+  // 创建文档标题守卫
+  createDocumentTitleGuard(router)
+}
 
 /**
  * 设置 Vue Router
