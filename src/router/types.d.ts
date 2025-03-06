@@ -1,10 +1,13 @@
-import 'vue-router'
+import type { defineComponent } from 'vue'
 
-declare module 'vue-router' {
+import type { NavigationGuard, RouteMeta } from 'vue-router'
 
-  // 路由元信息接口
-  // eslint-disable-next-line ts/consistent-type-definitions
-  interface RouteMeta {
+export type Component<T = any> =
+  | ReturnType<typeof defineComponent>
+  | (() => Promise<typeof import('*.vue')>)
+  | (() => Promise<T>)
+
+export type AppRouteRecordRaw = {
 
     /**
      * 路由标题
@@ -83,6 +86,4 @@ declare module 'vue-router' {
 
 
     redirect?: string | { name: string }
-
-  }
 }

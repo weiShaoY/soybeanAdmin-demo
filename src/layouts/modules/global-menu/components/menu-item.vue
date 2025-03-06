@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
+/** 组件的属性 */
 type Props = {
+  /** 菜单项 */
   item: App.Global.Menu
 }
 
 const { item } = defineProps<Props>()
 
+
+/** 判断是否有子菜单 */
 const hasChildren = item.children && item.children.length > 0
 </script>
 
@@ -13,18 +19,15 @@ const hasChildren = item.children && item.children.length > 0
     v-if="hasChildren"
     :index="item.key"
   >
-    <template
-      #title
-    >
+    <template #title>
       <ElIcon>
-        <component
-          :is="item.icon"
-        />
+        <component :is="item.icon" />
       </ElIcon>
 
-      <span
-        class="ib-ellipsis"
-      >{{ item.label }}</span>
+      <span class="ib-ellipsis">
+        {{ item.label }}
+      </span>
+
     </template>
 
     <MenuItem
@@ -35,18 +38,14 @@ const hasChildren = item.children && item.children.length > 0
     />
   </ElSubMenu>
 
-  <ElMenuItem
-    v-else
-  >
+  <ElMenuItem v-else>
     <ElIcon>
-      <component
-        :is="item.icon"
-      />
+      <component :is="item.icon" />
     </ElIcon>
 
-    <span
-      class="ib-ellipsis"
-    >{{ item.label }}</span>
+    <span class="ib-ellipsis">
+      {{ item.label }}
+    </span>
   </ElMenuItem>
 </template>
 

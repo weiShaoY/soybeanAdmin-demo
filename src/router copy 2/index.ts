@@ -1,5 +1,4 @@
 import type { App } from 'vue'
-import type { RouteRecordNormalized } from 'vue-router'
 
 import type {
   Router,
@@ -21,10 +20,6 @@ import { createProgressGuard } from './progress'
 import { createDocumentTitleGuard } from './title'
 
 import { handleRouteSwitch, initRoute } from './utils'
-
-import {appRoutes} from './aaa'
-
-import { useRouteStore } from '@/store/modules/route'
 
 // 从环境变量中获取路由历史模式和基本 URL，默认为 'history' 模式
 const { VITE_ROUTER_HISTORY_MODE = 'history', VITE_BASE_URL } = import.meta.env
@@ -54,30 +49,6 @@ const historyCreatorMap: Record<Env.RouterHistoryMode, (base?: string) => Router
    */
   memory: createMemoryHistory,
 }
-/** 根路由 */
-export const ROOT_ROUTE = {
-  name: 'root',
-  path: '/',
-  redirect:'/home',
-  meta: {
-    title: 'root',
-    constant: true,
-  },
-}
-
-/** 未找到路由 */
-const NOT_FOUND_ROUTE = {
-  name: 'not-found',
-  path: '/:pathMatch(.*)*',
-  component: () => import('@/views/_builtin/404/index.vue'),
-  meta: {
-    title: 'not-found',
-    constant: true,
-  },
-}
-
-console.log("%c Line:80 🍻 appRoutes", "color:#465975", appRoutes);
-
 
 /**
  * 创建路由实例
@@ -86,15 +57,9 @@ export const router = createRouter({
   /** 设置路由历史记录 */
   history: historyCreatorMap[VITE_ROUTER_HISTORY_MODE](VITE_BASE_URL),
 
-  routes: [
-    ROOT_ROUTE,
-
-    ...appRoutes,
-    NOT_FOUND_ROUTE,
-  ],
+  /** 设置路由表 */
+  routes: createBuiltinVueRoutes(),
 })
-
-
 
 /**
  * 创建路由守卫
@@ -106,21 +71,19 @@ export function createRouterGuard(router: Router) {
   createProgressGuard(router)
 
   // 创建路由守卫
-  // router.beforeEach(async (to, from, next) => {
-  //   // 初始化路由
-  //   const location = await initRoute(to)
+  router.beforeEach(async (to, from, next) => {
+    // 初始化路由
+    const location = await initRoute(to)
 
-  //   if (location) {
-  //     next(location)
-  //     return
-  //   }
+    if (location) {
+      next(location)
+      return
+    }
 
-  //   // 正常切换路由
-  //   handleRouteSwitch(to, from, next)
-  // })
-  const routeStore = useRouteStore()
+    // 正常切换路由
+    handleRouteSwitch(to, from, next)
+  })
 
-  routeStore.setMenus()
   // 创建文档标题守卫
   createDocumentTitleGuard(router)
 }

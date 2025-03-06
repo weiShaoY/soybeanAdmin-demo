@@ -21,6 +21,8 @@ import { useBoolean } from '@sa/hooks'
 
 import { defineStore } from 'pinia'
 
+import { appRoutes} from '@/router/aaa'
+
 import {
   computed,
   nextTick,
@@ -223,6 +225,29 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
     await initRoute()
   }
+  /////////////////////////////////////////////
+/**
+ * 将 Vue Router 路由表转换为 routeStore.menus 格式
+ * @param routes Vue Router 的路由表
+ * @returns 转换后的菜单数组
+ */
+function transformRoutesToMenus(routes: RouteRecordRaw[]): App.Global.Menu[] {
+  console.log("%c Line:235 🥕 routes", "color:#465975", routes);
+  return routes
+    .sort((a, b) => (a.meta?.order || 0) - (b.meta?.order || 0)) // 按 order 排序
+    .map(route => ({
+      key: route.name as string, // 作为唯一标识
+      label: route.meta?.locale as string, // 菜单名称
+      icon: route.meta?.icon || '', // 菜单图标
+      routeKey: route.path as RouteKey, // 路由键
+      routePath: route.path as RouteMap[RouteKey], // 路由路径
+      children: route.children ? transformRoutesToMenus(route.children) : [] // 递归处理子菜单
+    }))
+}
+  function setMenus() {
+    // menus.value = transformRoutesToMenus(appRoutes)
+    console.log("%c Line:249 🍔 menus.value", "color:#ffdd4d", menus.value);
+  }
 
   return {
     resetStore,
@@ -238,5 +263,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     setIsInitRoute,
     getIsRouteExist,
     getSelectedMenuKeyPath,
+    setMenus
   }
 })
