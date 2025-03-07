@@ -34,7 +34,6 @@ declare module "@elegant-router/types" {
     "403": "/403";
     "404": "/404";
     "500": "/500";
-    "aaa": "/aaa";
     "about": "/about";
     "function": "/function";
     "function_hide-child": "/function/hide-child";
@@ -131,7 +130,6 @@ declare module "@elegant-router/types" {
     | "403"
     | "404"
     | "500"
-    | "aaa"
     | "about"
     | "function"
     | "home"
@@ -162,7 +160,6 @@ declare module "@elegant-router/types" {
     | "404"
     | "500"
     | "iframe-page"
-    | "aaa"
     | "about"
     | "function_hide-child_one"
     | "function_hide-child_three"

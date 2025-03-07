@@ -42,9 +42,9 @@ function formatModules(_modules: any, result: RouteRecordNormalized[]) {
 /**
  *  导出appRoutes和appExternalRoutes 变量是格式化过的modules模块
  */
-const appRoutes: RouteRecordNormalized[] = formatModules(appModules, [])
+const routeList: RouteRecordNormalized[] = formatModules(appModules, [])
 
 export {
-  appRoutes,
   formatModules,
+  routeList,
 }

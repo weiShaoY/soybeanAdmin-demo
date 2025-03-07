@@ -1,7 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-
-import { formatModules } from '../../aaa'
+import { formatModules } from '../../guard'
 
 /**
  *  获取当前文件名
@@ -30,24 +29,24 @@ const modules = Object.fromEntries(
  * @constant
  * @description 通过调用 `formatModules` 函数格式化模块化路由，并排除当前文件，以便生成代码模块的子路由列表。
  */
-const blogChildRoutes = formatModules(modules, [])
+const blogChildRouteList = formatModules(modules, [])
 
 /**
- *  blogRouter (代码模块路由)
+ *  blogRouter (博客模块路由)
  */
 const blogRouter: RouteRecordRaw[] = [
   {
     path: '/blog',
     name: 'Blog',
     redirect: {
-      name: blogChildRoutes[0].name,
+      name: blogChildRouteList[0].name,
     },
-    children: [...blogChildRoutes],
+    children: [...blogChildRouteList],
   },
 ]
 
 export default blogRouter
 
 export {
-  blogChildRoutes,
+  blogChildRouteList,
 }

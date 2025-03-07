@@ -167,7 +167,6 @@ export function getSelectedMenuKeyPathByKey(selectedKey: string, menus: App.Glob
 
     return find
   })
-
   return keyPath
 }
 

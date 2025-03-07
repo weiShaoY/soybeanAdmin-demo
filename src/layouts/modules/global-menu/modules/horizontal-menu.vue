@@ -17,11 +17,10 @@ defineOptions({
 
 const routeStore = useRouteStore()
 
-console.log('%c Line:19 🥒 routeStore', 'color:#93c0a4', routeStore.menus)
-
 const { routerPushByKeyWithMetaQuery } = useRouterPush()
 
 const { selectedKey } = useMenu()
+
 </script>
 
 <template>

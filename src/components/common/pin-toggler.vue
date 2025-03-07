@@ -8,6 +8,10 @@ defineOptions({
 const props = defineProps<Props>()
 
 type Props = {
+
+  /**
+   *  是否固定
+   */
   pin?: boolean
 }
 

@@ -81,8 +81,7 @@ declare module 'vue-router' {
      */
     query?: { key: string, value: string }[] | null
 
-
-    redirect?: string | { name: string }
+    // redirect?: string | { name: string }
 
   }
 }

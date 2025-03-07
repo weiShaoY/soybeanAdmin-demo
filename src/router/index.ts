@@ -1,10 +1,11 @@
 import type { App } from 'vue'
-import type { RouteRecordNormalized } from 'vue-router'
 
 import type {
   Router,
   RouterHistory,
 } from 'vue-router'
+
+import { useRouteStore } from '@/store/modules/route'
 
 import {
   createMemoryHistory,
@@ -14,17 +15,13 @@ import {
 
 } from 'vue-router'
 
-import { createBuiltinVueRoutes } from './builtin'
+import { routeList } from './guard'
+
+import { blogChildRouteList } from './modules/blog'
 
 import { createProgressGuard } from './progress'
 
 import { createDocumentTitleGuard } from './title'
-
-import { handleRouteSwitch, initRoute } from './utils'
-
-import {appRoutes} from './aaa'
-
-import { useRouteStore } from '@/store/modules/route'
 
 // 从环境变量中获取路由历史模式和基本 URL，默认为 'history' 模式
 const { VITE_ROUTER_HISTORY_MODE = 'history', VITE_BASE_URL } = import.meta.env
@@ -54,11 +51,12 @@ const historyCreatorMap: Record<Env.RouterHistoryMode, (base?: string) => Router
    */
   memory: createMemoryHistory,
 }
+
 /** 根路由 */
 export const ROOT_ROUTE = {
   name: 'root',
   path: '/',
-  redirect:'/home',
+  redirect: '/404',
   meta: {
     title: 'root',
     constant: true,
@@ -69,15 +67,12 @@ export const ROOT_ROUTE = {
 const NOT_FOUND_ROUTE = {
   name: 'not-found',
   path: '/:pathMatch(.*)*',
-  component: () => import('@/views/_builtin/404/index.vue'),
+  component: () => import('@/pages/error/404/index.vue'),
   meta: {
     title: 'not-found',
     constant: true,
   },
 }
-
-console.log("%c Line:80 🍻 appRoutes", "color:#465975", appRoutes);
-
 
 /**
  * 创建路由实例
@@ -89,12 +84,11 @@ export const router = createRouter({
   routes: [
     ROOT_ROUTE,
 
-    ...appRoutes,
+    ...routeList,
+
     NOT_FOUND_ROUTE,
   ],
 })
-
-
 
 /**
  * 创建路由守卫
@@ -120,7 +114,8 @@ export function createRouterGuard(router: Router) {
   // })
   const routeStore = useRouteStore()
 
-  routeStore.setMenus()
+  routeStore.setMenus(blogChildRouteList)
+
   // 创建文档标题守卫
   createDocumentTitleGuard(router)
 }
