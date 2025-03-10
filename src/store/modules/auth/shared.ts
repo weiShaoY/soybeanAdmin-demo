@@ -1,4 +1,4 @@
-import { localStg } from '@/utils/storage'
+import { localStg } from '@/utils'
 
 /**
  * 获取 token

@@ -8,7 +8,7 @@ import { router } from '@/router'
 
 import { useRouteStore } from '@/store/modules/route'
 
-import { localStg } from '@/utils/storage'
+import { localStg } from '@/utils'
 
 import { useEventListener } from '@vueuse/core'
 

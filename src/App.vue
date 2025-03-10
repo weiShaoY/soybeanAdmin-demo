@@ -45,8 +45,6 @@ const watermarkProps = computed<WatermarkProps>(() => {
   }
 })
 
-const aaa = 1
-
 </script>
 
 <template>

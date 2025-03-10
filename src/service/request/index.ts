@@ -4,9 +4,7 @@ import type { RequestInstanceState } from './type'
 
 import { useAuthStore } from '@/store/modules/auth'
 
-import { getServiceBaseURL } from '@/utils/service'
-
-import { localStg } from '@/utils/storage'
+import { getServiceBaseURL, localStg } from '@/utils'
 
 import {
   BACKEND_ERROR_CODE,

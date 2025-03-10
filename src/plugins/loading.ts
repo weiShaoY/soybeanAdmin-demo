@@ -2,9 +2,7 @@ import systemLogo from '@/assets/svg-icon/logo.svg?raw'
 
 import { DARK_CLASS } from '@/constants/app'
 
-import { toggleHtmlClass } from '@/utils/common'
-
-import { localStg } from '@/utils/storage'
+import { localStg, toggleHtmlClass } from '@/utils'
 
 import { getRgb } from '@sa/color'
 

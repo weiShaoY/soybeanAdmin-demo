@@ -2,7 +2,7 @@ import type { Ref } from 'vue'
 
 import { SetupStoreId } from '@/enum'
 
-import { localStg } from '@/utils/storage'
+import { localStg } from '@/utils'
 
 import { getPaletteColorByNumber } from '@sa/color'
 

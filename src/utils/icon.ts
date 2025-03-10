@@ -9,7 +9,9 @@ export function getLocalIcons(): string[] {
 
   /** 获取并处理图标名称 */
   const keys = Object.keys(svgIcons)
-    .map(item => item.split('/').at(-1)?.replace('.svg', '') || '')
+    .map(item => item.split('/')
+      .at(-1)
+      ?.replace('.svg', '') || '')
     .filter(Boolean)
 
   return keys

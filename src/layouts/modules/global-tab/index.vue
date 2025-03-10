@@ -9,7 +9,7 @@ import { useTabStore } from '@/store/modules/tab'
 
 import { useThemeStore } from '@/store/modules/theme'
 
-import { isPC } from '@/utils/agent'
+import { isPC } from '@/utils'
 
 import { PageTab } from '@sa/materials'
 
@@ -57,7 +57,9 @@ type TabNamedNodeMap = NamedNodeMap & {
 
 async function scrollToActiveTab() {
   await nextTick()
-  if (!tabRef.value) { return }
+  if (!tabRef.value) {
+    return
+  }
 
   const { children } = tabRef.value
 
@@ -200,7 +202,7 @@ init()
 
 <template>
   <DarkModeContainer
-    class="size-full flex-y-center px-16px shadow-tab"
+    class="size-full flex-y-center px-[16px] shadow-tab"
   >
     <div
       ref="bsWrapper"
@@ -213,8 +215,8 @@ init()
       >
         <div
           ref="tabRef"
-          class="h-full flex pr-18px"
-          :class="[themeStore.tab.mode === 'chrome' ? 'items-end' : 'items-center gap-12px']"
+          class="h-full flex pr-[18px]"
+          :class="[themeStore.tab.mode === 'chrome' ? 'items-end' : 'items-center gap-[12px]']"
         >
           <PageTab
             v-for="tab in tabStore.tabs"
@@ -235,12 +237,12 @@ init()
               <SvgIcon
                 :icon="tab.icon"
                 :local-icon="tab.localIcon"
-                class="inline-block align-text-bottom text-16px"
+                class="inline-block align-text-bottom text-[16px]"
               />
             </template>
 
             <div
-              class="max-w-240px ellipsis-text"
+              class="max-w-[240px] ellipsis-text"
             >
               {{ tab.label }}
             </div>

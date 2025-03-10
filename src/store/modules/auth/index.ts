@@ -4,7 +4,7 @@ import { useRouterPush } from '@/hooks/common/router'
 
 import { fetchGetUserInfo, fetchLogin } from '@/service/api'
 
-import { localStg } from '@/utils/storage'
+import { localStg } from '@/utils'
 
 import { useLoading } from '@sa/hooks'
 

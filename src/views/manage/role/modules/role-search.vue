@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { enableStatusOptions } from '@/constants/business'
 
-import { translateOptions } from '@/utils/common'
+import { translateOptions } from '@/utils'
 
 import { ref } from 'vue'
 

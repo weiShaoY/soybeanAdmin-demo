@@ -8,7 +8,7 @@ import {
 
 import { useThemeStore } from '@/store/modules/theme'
 
-import { translateOptions } from '@/utils/common'
+import { translateOptions } from '@/utils'
 
 import { computed } from 'vue'
 

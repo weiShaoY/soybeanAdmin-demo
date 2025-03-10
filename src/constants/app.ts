@@ -1,4 +1,4 @@
-import { transformRecordToOption } from '@/utils/common'
+import { transformRecordToOption } from '@/utils'
 
 /** 全局头部菜单ID */
 export const GLOBAL_HEADER_MENU_ID = '__GLOBAL_HEADER_MENU__'

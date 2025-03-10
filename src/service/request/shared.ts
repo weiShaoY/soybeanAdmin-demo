@@ -2,7 +2,7 @@ import type { RequestInstanceState } from './type'
 
 import { useAuthStore } from '@/store/modules/auth'
 
-import { localStg } from '@/utils/storage'
+import { localStg } from '@/utils'
 
 import { fetchRefreshToken } from '../api'
 

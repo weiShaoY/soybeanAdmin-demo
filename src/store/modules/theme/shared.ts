@@ -4,9 +4,7 @@ import { overrideThemeSettings, themeSettings } from '@/theme/settings'
 
 import { themeVars } from '@/theme/vars'
 
-import { toggleHtmlClass } from '@/utils/common'
-
-import { localStg } from '@/utils/storage'
+import { localStg, toggleHtmlClass } from '@/utils'
 
 import {
   addColorAlpha,

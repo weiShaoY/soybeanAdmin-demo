@@ -1,4 +1,4 @@
-import { transformRecordToOption } from '@/utils/common'
+import { transformRecordToOption } from '@/utils'
 
 /**
  * 是或否记录

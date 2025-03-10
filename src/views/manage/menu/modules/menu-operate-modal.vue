@@ -11,7 +11,7 @@ import { useForm, useFormRules } from '@/hooks/common/form'
 
 import { fetchGetAllRoles } from '@/service/api'
 
-import { getLocalIcons } from '@/utils/icon'
+import { getLocalIcons } from '@/utils'
 
 import {
   computed,

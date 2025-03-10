@@ -3,7 +3,7 @@ import { enableStatusOptions, userGenderOptions } from '@/constants/business'
 
 import { useForm, useFormRules } from '@/hooks/common/form'
 
-import { translateOptions } from '@/utils/common'
+import { translateOptions } from '@/utils'
 
 import { computed } from 'vue'
 

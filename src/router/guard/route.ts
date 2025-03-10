@@ -14,7 +14,7 @@ import { useAuthStore } from '@/store/modules/auth'
 
 import { useRouteStore } from '@/store/modules/route'
 
-import { localStg } from '@/utils/storage'
+import { localStg } from '@/utils'
 
 /**
  * 创建路由守卫

@@ -1,6 +1,6 @@
 import { SetupStoreId } from '@/enum'
 
-import { localStg } from '@/utils/storage'
+import { localStg } from '@/utils'
 
 import { useBoolean } from '@sa/hooks'
 
