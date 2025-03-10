@@ -15,6 +15,10 @@ const appStore = useAppStore()
 
 const themeStore = useThemeStore()
 
+/**
+ * 处理水平混合模式下的一级菜单与子级菜单位置反转
+ * @param value 是否反转菜单位置
+ */
 function handleReverseHorizontalMixChange(value: boolean | string | number) {
   themeStore.setLayoutReverseHorizontalMix(value as boolean)
 }

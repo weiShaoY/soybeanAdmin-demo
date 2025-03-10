@@ -25,6 +25,9 @@ const appStore = useAppStore()
 
 const themeStore = useThemeStore()
 
+/**
+ *  根据当前的布局模式动态选择菜单组件
+ */
 const activeMenu = computed(() => {
   const menuMap: Record<UnionKey.ThemeLayoutMode, Component> = {
     'vertical': VerticalMenu,
@@ -33,9 +36,13 @@ const activeMenu = computed(() => {
     'horizontal-mix': themeStore.layout.reverseHorizontalMix ? ReversedHorizontalMixMenu : HorizontalMixMenu,
   }
 
+  // 返回当前布局模式对应的菜单组件
   return menuMap[themeStore.layout.mode]
 })
 
+/**
+ *  当布局为纵向且设备为移动端时，强制重新渲染菜单
+ */
 const reRenderVertical = computed(() => themeStore.layout.mode === 'vertical' && appStore.isMobile)
 </script>
 

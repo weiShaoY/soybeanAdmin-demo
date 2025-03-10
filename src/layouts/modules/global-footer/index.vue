@@ -6,14 +6,14 @@ defineOptions({
 
 <template>
   <DarkModeContainer
-    class="h-full flex-center"
+    class="h-full flex items-center justify-center"
   >
     <a
-      href="https://github.com/soybeanjs/soybean-admin-elp/blob/main/LICENSE"
+      href="https://github.com/weiShaoY/weiShaoY.github.io"
       target="_blank"
       rel="noopener noreferrer"
     >
-      Copyright MIT © 2021 Soybean
+      Copyright MIT © 2025 weiShaoY
     </a>
   </DarkModeContainer>
 </template>

@@ -20,10 +20,22 @@ defineOptions({
 
 const themeStore = useThemeStore()
 
+/**
+ * 获取当前布局模式
+ * @returns 当前的布局模式
+ */
 const layoutMode = computed(() => themeStore.layout.mode)
 
+/**
+ * 判断当前是否为混合布局模式
+ * @returns 是否为混合模式
+ */
 const isMixLayoutMode = computed(() => layoutMode.value.includes('mix'))
 
+/**
+ * 判断当前是否使用包装器滚动模式
+ * @returns 是否使用包装器滚动模式
+ */
 const isWrapperScrollMode = computed(() => themeStore.layout.scrollMode === 'wrapper')
 </script>
 

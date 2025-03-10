@@ -23,6 +23,7 @@ const { selectedKey } = useMenu()
 </script>
 
 <template>
+  <!-- 将菜单传送到全局头部菜单 -->
   <Teleport
     :to="`#${GLOBAL_HEADER_MENU_ID}`"
   >
@@ -33,6 +34,7 @@ const { selectedKey } = useMenu()
       :default-active="selectedKey"
       @select="val => routerPushByKeyWithMetaQuery(val as RouteKey)"
     >
+      <!-- 渲染菜单项 -->
       <MenuItem
         v-for="item in routeStore.menus"
         :key="item.key"

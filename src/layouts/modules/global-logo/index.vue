@@ -29,7 +29,7 @@ type Props = {
       v-show="showTitle"
       class="pl-[8px] text-[16px] text-primary font-bold transition duration-300 ease-in-out"
     >
-      'Soybean 管理系统'
+      weiShaoY
     </h2>
   </RouterLink>
 </template>

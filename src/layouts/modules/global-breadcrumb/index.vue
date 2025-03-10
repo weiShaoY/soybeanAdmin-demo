@@ -25,6 +25,10 @@ type BreadcrumbContentProps = {
 
 const [DefineBreadcrumbContent, BreadcrumbContent] = createReusableTemplate<BreadcrumbContentProps>()
 
+/**
+ * 处理点击菜单项事件
+ * @param key 路由键
+ */
 function handleClickMenu(key: RouteKey) {
   routerPushByKey(key)
 }
@@ -34,7 +38,7 @@ function handleClickMenu(key: RouteKey) {
   <ElBreadcrumb
     v-if="themeStore.header.breadcrumb.visible"
   >
-    <!-- define component start: BreadcrumbContent -->
+    <!-- 定义组件：BreadcrumbContent -->
     <DefineBreadcrumbContent
       v-slot="{ breadcrumb }"
     >
@@ -44,13 +48,14 @@ function handleClickMenu(key: RouteKey) {
         <component
           :is="breadcrumb.icon"
           v-if="themeStore.header.breadcrumb.showIcon"
-          class="mr-4px text-icon"
+          class="mr-[4px] text-icon"
         />
         {{ breadcrumb.label }}
       </div>
     </DefineBreadcrumbContent>
+    <!-- 组件定义结束：BreadcrumbContent -->
 
-    <!-- define component end: BreadcrumbContent -->
+    <!-- 渲染面包屑项 -->
     <ElBreadcrumbItem
       v-for="item in routeStore.breadcrumbs"
       :key="item.key"
@@ -59,6 +64,7 @@ function handleClickMenu(key: RouteKey) {
         v-if="item.options?.length"
         @command="handleClickMenu"
       >
+        <!-- 面包屑内容 -->
         <BreadcrumbContent
           :breadcrumb="item"
         />

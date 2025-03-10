@@ -65,6 +65,10 @@ const hasChildMenus = computed(() => childLevelMenus.value.length > 0)
 
 const showDrawer = computed(() => hasChildMenus.value && (drawerVisible.value || appStore.mixSiderFixed))
 
+/**
+ * 处理选择混合菜单事件
+ * @param menu 菜单项
+ */
 function handleSelectMixMenu(menu: App.Global.Menu) {
   setActiveFirstLevelMenuKey(menu.key)
 
@@ -76,6 +80,9 @@ function handleSelectMixMenu(menu: App.Global.Menu) {
   }
 }
 
+/**
+ * 重置激活的菜单项
+ */
 function handleResetActiveMenu() {
   setDrawerVisible(false)
 
@@ -86,6 +93,9 @@ function handleResetActiveMenu() {
 
 const expandedKeys = ref<string[]>([])
 
+/**
+ * 更新展开的菜单项
+ */
 function updateExpandedKeys() {
   if (appStore.siderCollapse || !selectedKey.value) {
     expandedKeys.value = []
@@ -107,6 +117,7 @@ watch(
 </script>
 
 <template>
+  <!-- 将菜单传送到全局侧边菜单 -->
   <Teleport
     :to="`#${GLOBAL_SIDER_MENU_ID}`"
   >
@@ -114,6 +125,7 @@ watch(
       class="h-full flex"
       @mouseleave="handleResetActiveMenu"
     >
+      <!-- 一级菜单 -->
       <FirstLevelMenu
         :menus="allMenus"
         :active-menu-key="activeFirstLevelMenuKey"
@@ -124,6 +136,7 @@ watch(
         @select="handleSelectMixMenu"
         @toggle-sider-collapse="appStore.toggleSiderCollapse"
       >
+        <!-- 全局 Logo -->
         <GlobalLogo
           :show-title="false"
           :style="{ height: `${themeStore.header.height}px` }"
@@ -139,6 +152,7 @@ watch(
           :inverted="inverted"
           :style="{ width: showDrawer ? `${themeStore.sider.mixChildMenuWidth}px` : '0px' }"
         >
+          <!-- 顶部栏 -->
           <header
             class="flex-y-center justify-between px-[12px]"
             :style="{ height: `${themeStore.header.height}px` }"
@@ -146,7 +160,7 @@ watch(
             <h2
               class="text-[16px] text-primary font-bold"
             >
-              {{ 'Soybean 管理系统' }}
+              weiShaoY
             </h2>
 
             <PinToggler
@@ -156,12 +170,14 @@ watch(
             />
           </header>
 
+          <!-- 滚动条容器 -->
           <SimpleScrollbar>
             <ElMenu
               mode="vertical"
               :default-active="selectedKey"
               @select="val => routerPushByKeyWithMetaQuery(val as RouteKey)"
             >
+              <!-- 子级菜单项 -->
               <MenuItem
                 v-for="item in childLevelMenus"
                 :key="item.key"

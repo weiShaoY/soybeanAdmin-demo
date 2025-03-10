@@ -29,6 +29,10 @@ const { allMenus, childLevelMenus, activeFirstLevelMenuKey, setActiveFirstLevelM
 
 const { selectedKey } = useMenu()
 
+/**
+ * 处理选择混合菜单事件
+ * @param menu 菜单项
+ */
 function handleSelectMixMenu(menu: App.Global.Menu) {
   setActiveFirstLevelMenuKey(menu.key)
 
@@ -39,6 +43,7 @@ function handleSelectMixMenu(menu: App.Global.Menu) {
 </script>
 
 <template>
+  <!-- 将菜单传送到全局头部菜单 -->
   <Teleport
     :to="`#${GLOBAL_HEADER_MENU_ID}`"
   >
@@ -49,6 +54,7 @@ function handleSelectMixMenu(menu: App.Global.Menu) {
       :default-active="selectedKey"
       @select="val => routerPushByKeyWithMetaQuery(val as RouteKey)"
     >
+      <!-- 渲染子级菜单项 -->
       <MenuItem
         v-for="item in childLevelMenus"
         :key="item.key"
@@ -58,6 +64,7 @@ function handleSelectMixMenu(menu: App.Global.Menu) {
     </ElMenu>
   </Teleport>
 
+  <!-- 将一级菜单传送到全局侧边菜单 -->
   <Teleport
     :to="`#${GLOBAL_SIDER_MENU_ID}`"
   >

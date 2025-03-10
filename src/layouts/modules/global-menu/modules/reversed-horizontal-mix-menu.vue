@@ -7,7 +7,6 @@ import { useRouterPush } from '@/hooks/common/router'
 
 import { useAppStore } from '@/store/modules/app'
 
-// import { useThemeStore } from '@/store/modules/theme';
 import { useRouteStore } from '@/store/modules/route'
 
 import { SimpleScrollbar } from '@sa/materials'
@@ -28,7 +27,6 @@ const route = useRoute()
 
 const appStore = useAppStore()
 
-// const themeStore = useThemeStore();
 const routeStore = useRouteStore()
 
 const { routerPushByKeyWithMetaQuery } = useRouterPush()
@@ -43,6 +41,10 @@ const {
 
 const { selectedKey } = useMenu()
 
+/**
+ * 处理选择混合菜单事件
+ * @param key 路由键
+ */
 function handleSelectMixMenu(key: RouteKey) {
   setActiveFirstLevelMenuKey(key)
 
@@ -53,6 +55,9 @@ function handleSelectMixMenu(key: RouteKey) {
 
 const expandedKeys = ref<string[]>([])
 
+/**
+ * 更新展开的菜单项
+ */
 function updateExpandedKeys() {
   if (appStore.siderCollapse || !selectedKey.value) {
     expandedKeys.value = []
@@ -74,6 +79,7 @@ watch(
 </script>
 
 <template>
+  <!-- 将一级菜单传送到全局头部菜单 -->
   <Teleport
     :to="`#${GLOBAL_HEADER_MENU_ID}`"
   >
@@ -84,6 +90,7 @@ watch(
       :default-active="activeFirstLevelMenuKey"
       @select="val => handleSelectMixMenu(val as RouteKey)"
     >
+      <!-- 渲染一级菜单项 -->
       <MenuItem
         v-for="item in firstLevelMenus"
         :key="item.key"
@@ -93,6 +100,7 @@ watch(
     </ElMenu>
   </Teleport>
 
+  <!-- 将子级菜单传送到全局侧边菜单 -->
   <Teleport
     :to="`#${GLOBAL_SIDER_MENU_ID}`"
   >
@@ -103,6 +111,7 @@ watch(
         :collapse="appStore.siderCollapse"
         @select="val => routerPushByKeyWithMetaQuery(val as RouteKey)"
       >
+        <!-- 渲染子级菜单项 -->
         <MenuItem
           v-for="item in childLevelMenus"
           :key="item.key"

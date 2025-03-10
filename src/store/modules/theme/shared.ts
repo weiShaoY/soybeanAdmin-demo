@@ -7,9 +7,7 @@ import { themeVars } from '@/theme/vars'
 import { localStg, toggleHtmlClass } from '@/utils'
 
 import {
-  addColorAlpha,
   getColorPalette,
-  getPaletteColorByNumber,
   getRgb,
 } from '@sa/color'
 
@@ -20,7 +18,9 @@ export function initThemeSettings() {
   const isProd = import.meta.env.PROD
 
   // 如果是开发模式，主题设置不会被缓存，通过更新 `src/theme/settings.ts` 中的 `themeSettings` 来更新主题设置
-  if (!isProd) { return themeSettings }
+  if (!isProd) {
+    return themeSettings
+  }
 
   // 如果是生产模式，主题设置将被缓存到 localStorage 中
   // 如果想在发布新版本时更新主题设置，请更新 `src/theme/settings.ts` 中的 `overrideThemeSettings`
@@ -200,85 +200,4 @@ export function toggleAuxiliaryColorModes(grayscaleMode = false, colourWeakness 
   htmlElement.style.filter = [grayscaleMode ? 'grayscale(100%)' : '', colourWeakness ? 'invert(80%)' : '']
     .filter(Boolean)
     .join(' ')
-}
-
-type NaiveColorScene = '' | 'Suppl' | 'Hover' | 'Pressed' | 'Active'
-type NaiveColorKey = `${App.Theme.ThemeColorKey}Color${NaiveColorScene}`
-type NaiveThemeColor = Partial<Record<NaiveColorKey, string>>
-type NaiveColorAction = {
-  scene: NaiveColorScene
-  handler: (color: string) => string
-}
-
-/**
- * 获取 Naive UI 主题颜色
- *
- * @param colors 主题颜色
- * @param [recommended] 是否使用推荐颜色。默认值为 `false`. Default is `false`
- */
-function getNaiveThemeColors(colors: App.Theme.ThemeColor, recommended = false) {
-  const colorActions: NaiveColorAction[] = [
-    {
-      scene: '',
-      handler: color => color,
-    },
-    {
-      scene: 'Suppl',
-      handler: color => color,
-    },
-    {
-      scene: 'Hover',
-      handler: color => getPaletteColorByNumber(color, 500, recommended),
-    },
-    {
-      scene: 'Pressed',
-      handler: color => getPaletteColorByNumber(color, 700, recommended),
-    },
-    {
-      scene: 'Active',
-      handler: color => addColorAlpha(color, 0.1),
-    },
-  ]
-
-  const themeColors: NaiveThemeColor = {
-  }
-
-  const colorEntries = Object.entries(colors) as [App.Theme.ThemeColorKey, string][]
-
-  colorEntries.forEach((color) => {
-    colorActions.forEach((action) => {
-      const [colorType, colorValue] = color
-
-      const colorKey: NaiveColorKey = `${colorType}Color${action.scene}`
-
-      themeColors[colorKey] = action.handler(colorValue)
-    })
-  })
-
-  return themeColors
-}
-
-/**
- * 获取 Naive UI 主题
- *
- * @param colors 主题颜色
- * @param [recommended] 是否使用推荐颜色。默认值为 `false`. Default is `false`
- */
-export function getNaiveTheme(colors: App.Theme.ThemeColor, recommended = false) {
-  const { primary: colorLoading } = colors
-
-  const theme = {
-    common: {
-      ...getNaiveThemeColors(colors, recommended),
-      borderRadius: '6px',
-    },
-    LoadingBar: {
-      colorLoading,
-    },
-    Tag: {
-      borderRadius: '6px',
-    },
-  }
-
-  return theme
 }

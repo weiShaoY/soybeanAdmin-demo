@@ -37,6 +37,9 @@ const { selectedKey } = useMenu()
 
 const expandedKeys = ref<string[]>([])
 
+/**
+ * 更新展开的菜单项
+ */
 function updateExpandedKeys() {
   if (appStore.siderCollapse || !selectedKey.value) {
     expandedKeys.value = []
@@ -58,6 +61,7 @@ watch(
 </script>
 
 <template>
+  <!-- 将菜单传送到全局侧边菜单 -->
   <Teleport
     :to="`#${GLOBAL_SIDER_MENU_ID}`"
   >
@@ -69,6 +73,7 @@ watch(
         :collapse="appStore.siderCollapse"
         @select="val => routerPushByKeyWithMetaQuery(val as RouteKey)"
       >
+        <!-- 渲染菜单项 -->
         <MenuItem
           v-for="item in routeStore.menus"
           :key="item.key"

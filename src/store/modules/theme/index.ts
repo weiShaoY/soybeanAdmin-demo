@@ -22,7 +22,6 @@ import {
 import {
   addThemeVarsToGlobal,
   createThemeToken,
-  getNaiveTheme,
   initThemeSettings,
   toggleAuxiliaryColorModes,
   toggleCssDarkMode,
@@ -64,9 +63,6 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
 
     return colors
   })
-
-  /** UI 主题 */
-  const uiTheme = computed(() => getNaiveTheme(themeColors.value, settings.value.recommendColor))
 
   /**
    * 设置 JSON
@@ -178,7 +174,9 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
   function cacheThemeSettings() {
     const isProd = import.meta.env.PROD
 
-    if (!isProd) { return }
+    if (!isProd) {
+      return
+    }
 
     localStg.set('themeSettings', settings.value)
   }
@@ -234,7 +232,6 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     ...toRefs(settings.value),
     darkMode,
     themeColors,
-    uiTheme,
     settingsJson,
     setGrayscale,
     setColourWeakness,

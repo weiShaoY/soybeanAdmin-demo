@@ -2,33 +2,31 @@ import type { Component, VNode } from 'vue'
 
 import { h } from 'vue'
 
-/** 图标配置类型定义 */
-type IconConfig = {
-
-  /** Iconify 图标名称 */
-  icon?: string
-
-  /** 本地图标名称 */
-  localIcon?: string
-
-  /** 图标颜色 */
-  color?: string
-
-  /** 图标大小 */
-  fontSize?: number
-}
-
 /**
  * Svg 图标渲染 hook
  *
  * @param SvgIcon Svg 图标组件
  * @returns 包含 Svg 图标 VNode 渲染函数的对象
  */
-export default function useSvgIconRender(SvgIcon: Component): {
-  SvgIconVNode: (config: IconConfig) => (() => VNode | undefined) | undefined
-} {
+export default function useSvgIconRender(SvgIcon: Component) {
   /** 图标样式类型定义 */
   type IconStyle = Partial<Pick<CSSStyleDeclaration, 'color' | 'fontSize'>>
+
+  /** 图标配置类型定义 */
+  type IconConfig = {
+
+    /** Iconify 图标名称 */
+    icon?: string
+
+    /** 本地图标名称 */
+    localIcon?: string
+
+    /** 图标颜色 */
+    color?: string
+
+    /** 图标大小 */
+    fontSize?: number
+  }
 
   /**
    * Svg 图标 VNode
@@ -36,7 +34,9 @@ export default function useSvgIconRender(SvgIcon: Component): {
    * @param config 图标配置
    * @returns 返回一个函数，该函数返回渲染的 VNode 或 undefined
    */
-  const SvgIconVNode = (config: IconConfig): (() => VNode | undefined) | undefined => {
+  const SvgIconVNode = (
+    config: IconConfig,
+  ) => {
     const { color, fontSize, icon, localIcon } = config
 
     const style: IconStyle = {
@@ -58,11 +58,12 @@ export default function useSvgIconRender(SvgIcon: Component): {
     }
 
     // 返回渲染的 Svg 图标 VNode
-    return () => h(SvgIcon, {
-      icon,
-      localIcon,
-      style,
-    })
+    return () =>
+      h(SvgIcon, {
+        icon,
+        localIcon,
+        style,
+      })
   }
 
   return {

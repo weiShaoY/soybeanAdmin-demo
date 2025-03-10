@@ -35,6 +35,9 @@ const { childLevelMenus, isActiveFirstLevelMenuHasChildren } = setupMixMenuConte
 
 const GlobalMenu = defineAsyncComponent(() => import('../modules/global-menu/index.vue'))
 
+/**
+ * 获取布局模式
+ */
 const layoutMode = computed(() => {
   const vertical: LayoutMode = 'vertical'
 
@@ -43,6 +46,9 @@ const layoutMode = computed(() => {
   return themeStore.layout.mode.includes(vertical) ? vertical : horizontal
 })
 
+/**
+ * 获取头部属性配置
+ */
 const headerProps = computed(() => {
   const { mode, reverseHorizontalMix } = themeStore.layout
 
@@ -72,16 +78,34 @@ const headerProps = computed(() => {
   return headerPropsConfig[mode]
 })
 
+/**
+ * 判断侧边栏是否可见
+ */
 const siderVisible = computed(() => themeStore.layout.mode !== 'horizontal')
 
+/**
+ * 判断是否为垂直混合模式
+ */
 const isVerticalMix = computed(() => themeStore.layout.mode === 'vertical-mix')
 
+/**
+ * 判断是否为水平混合模式
+ */
 const isHorizontalMix = computed(() => themeStore.layout.mode === 'horizontal-mix')
 
+/**
+ * 获取侧边栏宽度
+ */
 const siderWidth = computed(() => getSiderWidth())
 
+/**
+ * 获取侧边栏折叠宽度
+ */
 const siderCollapsedWidth = computed(() => getSiderCollapsedWidth())
 
+/**
+ * 计算侧边栏宽度
+ */
 function getSiderWidth() {
   const { reverseHorizontalMix } = themeStore.layout
 
@@ -100,6 +124,9 @@ function getSiderWidth() {
   return w
 }
 
+/**
+ * 计算侧边栏折叠宽度
+ */
 function getSiderCollapsedWidth() {
   const { reverseHorizontalMix } = themeStore.layout
 
@@ -140,6 +167,7 @@ function getSiderCollapsedWidth() {
     :fixed-footer="themeStore.footer.fixed"
     :right-footer="themeStore.footer.right"
   >
+    <!-- 头部插槽 -->
     <template
       #header
     >
@@ -148,24 +176,30 @@ function getSiderCollapsedWidth() {
       />
     </template>
 
+    <!-- 标签栏插槽 -->
     <template
       #tab
     >
       <GlobalTab />
     </template>
 
+    <!-- 侧边栏插槽 -->
     <template
       #sider
     >
       <GlobalSider />
     </template>
 
+    <!-- 菜单组件 -->
     <GlobalMenu />
 
+    <!-- 内容组件 -->
     <GlobalContent />
 
+    <!-- 主题抽屉组件 -->
     <ThemeDrawer />
 
+    <!-- 底部插槽 -->
     <template
       #footer
     >

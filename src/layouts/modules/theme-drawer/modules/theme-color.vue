@@ -9,12 +9,20 @@ defineOptions({
 
 const themeStore = useThemeStore()
 
+/**
+ * 更新主题颜色
+ * @param color 选中的颜色
+ * @param key 主题颜色的键
+ */
 function handleUpdateColor(color: string | null, key: App.Theme.ThemeColorKey) {
   if (color !== null) {
     themeStore.updateThemeColors(key, color)
   }
 }
 
+/**
+ * 预定义颜色选项
+ */
 const swatches: string[] = [
   '#3b82f6',
   '#6366f1',

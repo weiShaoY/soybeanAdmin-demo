@@ -7,7 +7,10 @@ defineProps<Props>()
 
 type Props = {
 
-  /** Label */
+  /**
+   * 标签文本
+   * 该属性用于指定显示的标签内容
+   */
   label: string
 }
 
@@ -19,7 +22,7 @@ type Props = {
   >
     <div>
       <span
-        class="pr-8px text-base-text"
+        class="pr-[8px] text-base-text"
       >{{ label }}</span>
 
       <slot
