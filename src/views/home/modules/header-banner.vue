@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useAppStore } from '@/store/modules/app'
 
+import { useAuthStore } from '@/store/modules/auth'
+
 import { computed } from 'vue'
 
 defineOptions({
@@ -8,6 +10,8 @@ defineOptions({
 })
 
 const appStore = useAppStore()
+
+const authStore = useAuthStore()
 
 const gap = computed(() => (appStore.isMobile ? 0 : 16))
 
@@ -67,7 +71,7 @@ const statisticData = computed<StatisticData[]>(() => [
             <h3
               class="text-[18px] font-semibold"
             >
-              {{ `早安，, 今天又是充满活力的一天!` }}
+              {{ `早安，${authStore.userInfo.userName}, 今天又是充满活力的一天!` }}
             </h3>
 
             <p

@@ -20,41 +20,26 @@ export function getAuthorization() {
 }
 
 /** 刷新令牌 */
-async function handleRefreshToken() {
+export async function handleRefreshToken() {
   const { resetStore } = useAuthStore()
 
   const rToken = localStg.get('refreshToken') || ''
 
-  const { error, data } = await fetchRefreshToken(rToken)
+  const refreshTokenMethod = fetchRefreshToken(rToken)
 
-  if (!error) {
+  // 设置 refreshToken 角色，以便请求不会被拦截
+  refreshTokenMethod.meta.authRole = 'refreshToken'
+
+  try {
+    const data = await refreshTokenMethod
+
     localStg.set('token', data.token)
     localStg.set('refreshToken', data.refreshToken)
-    return true
   }
-
-  resetStore()
-  return false
-}
-
-/**
- * 处理令牌过期请求
- *
- * @param state 请求实例状态
- * @returns 是否成功
- */
-export async function handleExpiredRequest(state: RequestInstanceState) {
-  if (!state.refreshTokenFn) {
-    state.refreshTokenFn = handleRefreshToken()
+  catch (error) {
+    resetStore()
+    throw error
   }
-
-  const success = await state.refreshTokenFn
-
-  setTimeout(() => {
-    state.refreshTokenFn = null
-  }, 1000)
-
-  return success
 }
 
 /**
@@ -73,15 +58,18 @@ export function showErrorMsg(state: RequestInstanceState, message: string) {
   if (!isExist) {
     state.errMsgStack.push(message)
 
-    window.$message?.error({
-      message,
-      onClose: () => {
-        state.errMsgStack = state.errMsgStack.filter(msg => msg !== message)
+    if (window.$message) {
+      window.$message({
+        type: 'error',
+        message,
+        onClose: () => {
+          state.errMsgStack = state.errMsgStack.filter(msg => msg !== message)
 
-        setTimeout(() => {
-          state.errMsgStack = []
-        }, 5000)
-      },
-    })
+          setTimeout(() => {
+            state.errMsgStack = []
+          }, 5000)
+        },
+      })
+    }
   }
 }

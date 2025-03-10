@@ -63,6 +63,51 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'alova',
+    path: '/alova',
+    component: 'layout.base',
+    meta: {
+      title: 'alova',
+      icon: 'carbon:http',
+      order: 7,
+      i18nKey: 'route.alova'
+    },
+    children: [
+      {
+        name: 'alova_request',
+        path: '/alova/request',
+        component: 'view.alova_request',
+        meta: {
+          title: 'alova_request',
+          order: 1,
+          i18nKey: 'route.alova_request'
+        }
+      },
+      {
+        name: 'alova_scenes',
+        path: '/alova/scenes',
+        component: 'view.alova_scenes',
+        meta: {
+          title: 'alova_scenes',
+          icon: 'cbi:scene-dynamic',
+          order: 3,
+          i18nKey: 'route.alova_scenes'
+        }
+      },
+      {
+        name: 'alova_user',
+        path: '/alova/user',
+        component: 'view.alova_user',
+        meta: {
+          title: 'alova_user',
+          icon: 'carbon:user-multiple',
+          order: 2,
+          i18nKey: 'route.alova_user'
+        }
+      }
+    ]
+  },
+  {
     name: 'function',
     path: '/function',
     component: 'layout.base',
@@ -166,6 +211,17 @@ export const generatedRoutes: GeneratedRoute[] = [
           order: 1,
           i18nKey: 'route.function_tab'
         }
+      },
+      {
+        name: 'function_toggle-auth',
+        path: '/function/toggle-auth',
+        component: 'view.function_toggle-auth',
+        meta: {
+          title: 'function_toggle-auth',
+          icon: 'ic:round-construction',
+          order: 4,
+          i18nKey: 'route.function_toggle-auth'
+        }
       }
     ]
   },
@@ -191,6 +247,18 @@ export const generatedRoutes: GeneratedRoute[] = [
       hideInMenu: true,
       keepAlive: true,
       i18nKey: 'route.iframe-page'
+    }
+  },
+  {
+    name: 'login',
+    path: '/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?',
+    component: 'layout.blank$view.login',
+    props: true,
+    meta: {
+      title: 'login',
+      constant: true,
+      hideInMenu: true,
+      i18nKey: 'route.login'
     }
   },
   {

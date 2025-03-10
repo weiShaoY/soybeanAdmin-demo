@@ -25,9 +25,12 @@ import {
   shallowRef,
 } from 'vue'
 
+import { useAuthStore } from '../auth'
+
 import { useTabStore } from '../tab'
 
 import {
+  filterAuthRoutesByRoles,
   getBreadcrumbsByRoute,
   getCacheRouteNames,
   getGlobalMenusByAuthRoutes,
@@ -38,6 +41,8 @@ import {
 } from './shared'
 
 export const useRouteStore = defineStore(SetupStoreId.Route, () => {
+  const authStore = useAuthStore()
+
   const tabStore = useTabStore()
 
   const { bool: isInitConstantRoute, setBool: setIsInitConstantRoute } = useBoolean()
@@ -49,11 +54,11 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    */
   const routeHome = ref(import.meta.env.VITE_ROUTE_HOME)
 
-  // /**
-  //  * 设置首页路由
-  //  *
-  //  * @param {LastLevelRouteKey} routeKey 路由键
-  //  */
+  /**
+   * 设置首页路由
+   *
+   * @param {LastLevelRouteKey} routeKey 路由键
+   */
   // function setRouteHome(routeKey: LastLevelRouteKey) {
   //   routeHome.value = routeKey
   // }
@@ -212,6 +217,11 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 初始化权限路由
    */
   async function initAuthRoute() {
+    // 检查用户信息是否已初始化
+    if (!authStore.userInfo.userId) {
+      await authStore.initUserInfo()
+    }
+
     initStaticAuthRoute()
 
     tabStore.initHomeTab()
@@ -223,7 +233,14 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   function initStaticAuthRoute() {
     const { authRoutes: staticAuthRoutes } = createStaticRoutes()
 
-    addAuthRoutes([...staticAuthRoutes, ...authRoutes.value])
+    if (authStore.isStaticSuper) {
+      addAuthRoutes(staticAuthRoutes)
+    }
+    else {
+      const filteredAuthRoutes = filterAuthRoutesByRoles(staticAuthRoutes, authStore.userInfo.roles)
+
+      addAuthRoutes(filteredAuthRoutes)
+    }
 
     handleConstantAndAuthRoutes()
 
@@ -313,6 +330,15 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     return getSelectedMenuKeyPathByKey(selectedKey, menus.value)
   }
 
+  /**
+   * 登录后执行路由切换操作
+   *
+   * 该函数在用户登录后初始化用户信息，确保用户身份信息可用。
+   */
+  async function onRouteSwitchWhenLoggedIn() {
+    await authStore.initUserInfo()
+  }
+
   return {
     resetStore,
     routeHome,
@@ -329,5 +355,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     setIsInitAuthRoute,
     getIsAuthRouteExist,
     getSelectedMenuKeyPath,
+    onRouteSwitchWhenLoggedIn,
   }
 })

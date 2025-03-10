@@ -15,6 +15,8 @@ import GlobalSearch from '../global-search/index.vue'
 
 import ThemeButton from './components/theme-button.vue'
 
+import UserAvatar from './components/user-avatar.vue'
+
 defineOptions({
   name: 'GlobalHeader',
 })
@@ -94,6 +96,8 @@ const { isFullscreen, toggle } = useFullscreen()
       <div>
         <ThemeButton />
       </div>
+
+      <UserAvatar />
     </div>
   </DarkModeContainer>
 </template>

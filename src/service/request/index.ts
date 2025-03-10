@@ -1,4 +1,8 @@
+import type { AxiosResponse } from 'axios'
+
 import type { RequestInstanceState } from './type'
+
+import { useAuthStore } from '@/store/modules/auth'
 
 import { getServiceBaseURL } from '@/utils/service'
 
@@ -10,7 +14,11 @@ import {
   createRequest,
 } from '@sa/axios'
 
-import { showErrorMsg } from './shared'
+import {
+  getAuthorization,
+  handleExpiredRequest,
+  showErrorMsg,
+} from './shared'
 
 /** 是否使用 HTTP 代理 */
 const isHttpProxy = import.meta.env.DEV && import.meta.env.VITE_HTTP_PROXY === 'Y'
@@ -29,6 +37,12 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
   {
     /** 请求拦截器 */
     async onRequest(config) {
+      const Authorization = getAuthorization()
+
+      Object.assign(config.headers, {
+        Authorization,
+      })
+
       return config
     },
 
@@ -41,8 +55,73 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
 
     /** 后端请求失败时的处理逻辑 */
     async onBackendFail(response, instance) {
-      console.log('%c Line:53 🎂 response', 'color:#42b983', response)
-      console.log('%c Line:53 🌭 instance', 'color:#e41a6a', instance)
+      const authStore = useAuthStore()
+
+      const responseCode = String(response.data.code)
+
+      /** 处理注销逻辑 */
+      function handleLogout() {
+        authStore.resetStore()
+      }
+
+      /** 注销并清理 */
+      function logoutAndCleanup() {
+        handleLogout()
+        window.removeEventListener('beforeunload', handleLogout)
+
+        request.state.errMsgStack = request.state.errMsgStack.filter(msg => msg !== response.data.msg)
+      }
+
+      // 当后端响应代码在 `logoutCodes` 中时，表示用户将被注销并重定向到登录页面
+      const logoutCodes = import.meta.env.VITE_SERVICE_LOGOUT_CODES?.split(',') || []
+
+      if (logoutCodes.includes(responseCode)) {
+        handleLogout()
+        return null
+      }
+
+      // 当后端响应代码在 `modalLogoutCodes` 中时，表示用户将通过显示一个模态框被注销
+      const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || []
+
+      if (modalLogoutCodes.includes(responseCode) && !request.state.errMsgStack?.includes(response.data.msg)) {
+        request.state.errMsgStack = [...(request.state.errMsgStack || []), response.data.msg]
+
+        // 防止用户刷新页面
+        window.addEventListener('beforeunload', handleLogout)
+
+        window.$messageBox
+          ?.confirm(response.data.msg, '错误', {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'error',
+            closeOnClickModal: false,
+            closeOnPressEscape: false,
+          })
+          .then(() => {
+            logoutAndCleanup()
+          })
+
+        return null
+      }
+
+      // 当后端响应代码在 `expiredTokenCodes` 中时，表示令牌已过期并刷新令牌
+      // `refreshToken` 接口不能返回 `expiredTokenCodes` 中的错误代码，否则会形成死循环，应返回 `logoutCodes` 或 `modalLogoutCodes`
+      const expiredTokenCodes = import.meta.env.VITE_SERVICE_EXPIRED_TOKEN_CODES?.split(',') || []
+
+      if (expiredTokenCodes.includes(responseCode)) {
+        const success = await handleExpiredRequest(request.state)
+
+        if (success) {
+          const Authorization = getAuthorization()
+
+          Object.assign(response.config.headers, {
+            Authorization,
+          })
+
+          return instance.request(response.config) as Promise<AxiosResponse>
+        }
+      }
+
       return null
     },
 

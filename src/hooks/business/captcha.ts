@@ -7,7 +7,7 @@ import { computed } from 'vue'
 /**
  * 自定义验证码 Hook
  *
- *  包含验证码相关方法和状态的对象
+ * @returns {object} 包含验证码相关方法和状态的对象
  */
 export function useCaptcha() {
   const { loading, startLoading, endLoading } = useLoading()

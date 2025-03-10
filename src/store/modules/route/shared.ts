@@ -10,6 +10,49 @@ import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router'
 import { useSvgIcon } from '@/hooks/common/icon'
 
 /**
+ * 根据角色过滤权限路由
+ *
+ * @param routes 权限路由数组
+ * @param roles 角色
+ * @returns 过滤后的权限路由数组
+ */
+export function filterAuthRoutesByRoles(routes: ElegantConstRoute[], roles: string[]) {
+  return routes.flatMap(route => filterAuthRouteByRoles(route, roles))
+}
+
+/**
+ * 根据角色过滤权限路由
+ *
+ * @param  route 权限路由
+ * @param  roles 角色
+ * @returns  过滤后的权限路由
+ */
+function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]): ElegantConstRoute[] {
+  const routeRoles = (route.meta && route.meta.roles) || []
+
+  // 如果路由的 "roles" 为空，则允许访问
+  const isEmptyRoles = !routeRoles.length
+
+  // 如果用户的角色包含在路由的 "roles" 中，则允许访问
+  const hasPermission = routeRoles.some(role => roles.includes(role))
+
+  const filterRoute = {
+    ...route,
+  }
+
+  if (filterRoute.children?.length) {
+    filterRoute.children = filterRoute.children.flatMap(item => filterAuthRouteByRoles(item, roles))
+  }
+
+  // 如果过滤后路由没有子路由，则排除该路由
+  if (filterRoute.children?.length === 0) {
+    return []
+  }
+
+  return hasPermission || isEmptyRoles ? [filterRoute] : []
+}
+
+/**
  * 根据顺序排序路由
  *
  * @param  route 路由
