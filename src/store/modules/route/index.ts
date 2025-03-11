@@ -30,7 +30,6 @@ import {
 import { useTabStore } from '../tab'
 
 import {
-  filterAuthRoutesByRoles,
   getBreadcrumbsByRoute,
   getCacheRouteNames,
   getGlobalMenusByAuthRoutes,
