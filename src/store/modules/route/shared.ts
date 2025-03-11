@@ -16,7 +16,10 @@ import { useSvgIcon } from '@/hooks/common/icon'
  * @param roles 角色
  * @returns 过滤后的权限路由数组
  */
-export function filterAuthRoutesByRoles(routes: ElegantConstRoute[], roles: string[]) {
+export function filterAuthRoutesByRoles(
+  routes: ElegantConstRoute[],
+  roles: string[],
+) {
   return routes.flatMap(route => filterAuthRouteByRoles(route, roles))
 }
 
@@ -27,7 +30,10 @@ export function filterAuthRoutesByRoles(routes: ElegantConstRoute[], roles: stri
  * @param  roles 角色
  * @returns  过滤后的权限路由
  */
-function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]): ElegantConstRoute[] {
+function filterAuthRouteByRoles(
+  route: ElegantConstRoute,
+  roles: string[],
+): ElegantConstRoute[] {
   const routeRoles = (route.meta && route.meta.roles) || []
 
   // 如果路由的 "roles" 为空，则允许访问
@@ -41,7 +47,9 @@ function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]): Eleg
   }
 
   if (filterRoute.children?.length) {
-    filterRoute.children = filterRoute.children.flatMap(item => filterAuthRouteByRoles(item, roles))
+    filterRoute.children = filterRoute.children.flatMap(item =>
+      filterAuthRouteByRoles(item, roles),
+    )
   }
 
   // 如果过滤后路由没有子路由，则排除该路由
@@ -60,7 +68,10 @@ function filterAuthRouteByRoles(route: ElegantConstRoute, roles: string[]): Eleg
  */
 function sortRouteByOrder(route: ElegantConstRoute) {
   if (route.children?.length) {
-    route.children.sort((next, prev) => (Number(next.meta?.order) || 0) - (Number(prev.meta?.order) || 0))
+    route.children.sort(
+      (next, prev) =>
+        (Number(next.meta?.order) || 0) - (Number(prev.meta?.order) || 0),
+    )
     route.children.forEach(sortRouteByOrder)
   }
 
@@ -74,7 +85,10 @@ function sortRouteByOrder(route: ElegantConstRoute) {
  * @returns  排序后的路由数组
  */
 export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
-  routes.sort((next, prev) => (Number(next.meta?.order) || 0) - (Number(prev.meta?.order) || 0))
+  routes.sort(
+    (next, prev) =>
+      (Number(next.meta?.order) || 0) - (Number(prev.meta?.order) || 0),
+  )
   routes.forEach(sortRouteByOrder)
 
   return routes
@@ -110,12 +124,19 @@ export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
  * @param  route 路由
  * @returns 全局菜单
  */
-function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | ElegantConstRoute) {
+function getGlobalMenuByBaseRoute(
+  route: RouteLocationNormalizedLoaded | ElegantConstRoute,
+) {
   const { SvgIconVNode } = useSvgIcon()
 
   const { name, path } = route
 
-  const { title, icon = import.meta.env.VITE_MENU_ICON, localIcon, iconFontSize } = route.meta ?? {
+  const {
+    title,
+    icon = import.meta.env.VITE_MENU_ICON,
+    localIcon,
+    iconFontSize,
+  } = route.meta ?? {
   }
 
   const label = title || ''
@@ -130,7 +151,6 @@ function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | Elegant
       localIcon,
       fontSize: iconFontSize || 20,
     }),
-
   }
 
   return menu
@@ -160,22 +180,30 @@ export function getCacheRouteNames(routes: RouteRecordRaw[]) {
 /**
  * 根据路由名判断路由是否存在
  *
- * @param {RouteKey} routeName 路由名
- * @param {ElegantConstRoute[]} routes 路由数组
- * @returns {boolean} 路由是否存在
+ * @param  routeName 路由名
+ * @param  routes 路由数组
+ * @returns  路由是否存在
  */
-export function isRouteExistByRouteName(routeName: RouteKey, routes: ElegantConstRoute[]) {
-  return routes.some(route => recursiveGetIsRouteExistByRouteName(route, routeName))
+export function isRouteExistByRouteName(
+  routeName: RouteKey,
+  routes: ElegantConstRoute[],
+) {
+  return routes.some(route =>
+    recursiveGetIsRouteExistByRouteName(route, routeName),
+  )
 }
 
 /**
  * 递归判断路由是否存在
  *
- * @param {ElegantConstRoute} route 路由
- * @param {RouteKey} routeName 路由名
- * @returns {boolean} 路由是否存在
+ * @param  route 路由
+ * @param  routeName 路由名
+ * @returns  路由是否存在
  */
-function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName: RouteKey) {
+function recursiveGetIsRouteExistByRouteName(
+  route: ElegantConstRoute,
+  routeName: RouteKey,
+) {
   let isExist = route.name === routeName
 
   if (isExist) {
@@ -183,7 +211,9 @@ function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName
   }
 
   if (route.children && route.children.length) {
-    isExist = route.children.some(item => recursiveGetIsRouteExistByRouteName(item, routeName))
+    isExist = route.children.some(item =>
+      recursiveGetIsRouteExistByRouteName(item, routeName),
+    )
   }
 
   return isExist
@@ -196,7 +226,10 @@ function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName
  * @param  menus 全局菜单
  * @returns  选中菜单键路径数组
  */
-export function getSelectedMenuKeyPathByKey(selectedKey: string, menus: App.Global.Menu[]) {
+export function getSelectedMenuKeyPathByKey(
+  selectedKey: string,
+  menus: App.Global.Menu[],
+) {
   const keyPath: string[] = []
 
   menus.some((menu) => {
@@ -221,7 +254,10 @@ export function getSelectedMenuKeyPathByKey(selectedKey: string, menus: App.Glob
  * @param  menu 菜单
  * @returns  菜单路径数组
  */
-function findMenuPath(targetKey: string, menu: App.Global.Menu): string[] | null {
+function findMenuPath(
+  targetKey: string,
+  menu: App.Global.Menu,
+): string[] | null {
   const path: string[] = []
 
   function dfs(item: App.Global.Menu): boolean {
@@ -294,7 +330,10 @@ export function getBreadcrumbsByRoute(
     if (menu.key === activeKey) {
       const ROUTE_DEGREE_SPLITTER = '_'
 
-      const parentKey = key.split(ROUTE_DEGREE_SPLITTER).slice(0, -1).join(ROUTE_DEGREE_SPLITTER)
+      const parentKey = key
+        .split(ROUTE_DEGREE_SPLITTER)
+        .slice(0, -1)
+        .join(ROUTE_DEGREE_SPLITTER)
 
       const breadcrumbMenu = getGlobalMenuByBaseRoute(route)
 
@@ -302,7 +341,10 @@ export function getBreadcrumbsByRoute(
         return [transformMenuToBreadcrumb(breadcrumbMenu)]
       }
 
-      return [transformMenuToBreadcrumb(menu), transformMenuToBreadcrumb(breadcrumbMenu)]
+      return [
+        transformMenuToBreadcrumb(menu),
+        transformMenuToBreadcrumb(breadcrumbMenu),
+      ]
     }
 
     if (menu.children?.length) {
@@ -324,7 +366,10 @@ export function getBreadcrumbsByRoute(
  * @param  treeMap 树形映射数组. Default is `[]`
  * @returns  搜索菜单数组
  */
-export function transformMenuToSearchMenus(menus: App.Global.Menu[], treeMap: App.Global.Menu[] = []) {
+export function transformMenuToSearchMenus(
+  menus: App.Global.Menu[],
+  treeMap: App.Global.Menu[] = [],
+) {
   if (menus && menus.length === 0) {
     return []
   }
