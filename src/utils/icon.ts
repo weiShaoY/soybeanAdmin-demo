@@ -1,7 +1,7 @@
 /**
  * 获取本地 SVG 图标
  *
- * @returns {string[]} SVG 图标名称数组
+ * @returns  SVG 图标名称数组
  */
 export function getLocalIcons(): string[] {
   /** 导入所有 SVG 图标 */

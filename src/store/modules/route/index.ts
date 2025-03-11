@@ -25,8 +25,6 @@ import {
   shallowRef,
 } from 'vue'
 
-// import { useAuthStore } from '../auth'
-
 import { useTabStore } from '../tab'
 
 import {
@@ -178,10 +176,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 初始化权限路由
    */
   async function initAuthRoute() {
-    // if (!authStore.userInfo.userId) {
-    //   // await authStore.initUserInfo() // 确保用户信息已初始化
-    // }
-
     initStaticAuthRoute()
     tabStore.initHomeTab() // 初始化首页标签页
   }
@@ -193,15 +187,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     const { authRoutes } = createStaticRoutes()
 
     addAuthRoutes(authRoutes)
-
-    // if (authStore.isStaticSuper) {
-    //   addAuthRoutes(staticAuthRoutes)
-    // }
-    // else {
-    //   const filteredAuthRoutes = filterAuthRoutesByRoles(staticAuthRoutes, authStore.userInfo.roles)
-
-    //   addAuthRoutes(filteredAuthRoutes)
-    // }
 
     handleConstantAndAuthRoutes()
 
@@ -273,13 +258,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   function getSelectedMenuKeyPath(selectedKey: string) {
     return getSelectedMenuKeyPathByKey(selectedKey, menus.value)
   }
-
-  /**
-   * 登录后执行路由切换操作
-   */
-  // async function onRouteSwitchWhenLoggedIn() {
-  //   // await authStore.initUserInfo() // 确保用户信息已初始化
-  // }
 
   return {
     /**
@@ -367,9 +345,5 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
      */
     getSelectedMenuKeyPath,
 
-    /**
-     * 登录后执行路由切换操作（初始化用户信息）
-     */
-    // onRouteSwitchWhenLoggedIn,
   }
 })

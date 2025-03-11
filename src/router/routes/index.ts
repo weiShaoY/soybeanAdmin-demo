@@ -212,14 +212,15 @@ export function createStaticRoutes() {
    * - 否则，将其添加到 `authRoutes`。
    */
   ;[...customRoutes, ...generatedRoutes].forEach((item) => {
-    if (item.meta?.constant) {
-      // 添加到常量路由
-      constantRoutes.push(item)
-    }
-    else {
-      // 添加到权限路由
-      authRoutes.push(item)
-    }
+    // if (item.meta?.constant) {
+    //   // 添加到常量路由
+    //   constantRoutes.push(item)
+    // }
+    // else {
+    //   // 添加到权限路由
+    //   authRoutes.push(item)
+    // }
+    authRoutes.push(item)
   })
 
   return {
