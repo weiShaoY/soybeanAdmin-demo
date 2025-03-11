@@ -191,49 +191,10 @@ const customRoutes: CustomRoute[] = [
  * 1. 常量路由 (`constantRoutes`)：不需要权限即可访问的路由。
  * 2. 权限路由 (`authRoutes`)：需要特定权限才能访问的路由。
  *
- * @returns 返回一个对象，包含两类路由：
- * - `constantRoutes`: 常量路由数组。
- * - `authRoutes`: 权限路由数组。
+ * @returns 路由数组
  */
 export function createStaticRoutes() {
-  /** 常量路由数组，用于存储不需要权限即可访问的路由 */
-  const constantRoutes: ElegantRoute[] = []
-
-  /** 权限路由数组，用于存储需要特定权限才能访问的路由 */
-  const authRoutes: ElegantRoute[] = []
-
-  // 打印权限路由，用于调试
-  console.log('%c Line:198 🍧 authRoutes', 'color:#465975', authRoutes)
-
-  /**
-   * 遍历自定义路由 (`customRoutes`) 和生成的路由 (`generatedRoutes`)，
-   * 根据路由的 `meta.constant` 属性将其分类：
-   * - 如果 `meta.constant` 为 `true`，则将其添加到 `constantRoutes`。
-   * - 否则，将其添加到 `authRoutes`。
-   */
-  ;[...customRoutes, ...generatedRoutes].forEach((item) => {
-    // if (item.meta?.constant) {
-    //   // 添加到常量路由
-    //   constantRoutes.push(item)
-    // }
-    // else {
-    //   // 添加到权限路由
-    //   authRoutes.push(item)
-    // }
-    authRoutes.push(item)
-  })
-
-  return {
-    /**
-     *  常量路由
-     */
-    constantRoutes,
-
-    /**
-     *  权限路由
-     */
-    authRoutes,
-  }
+  return [...customRoutes, ...generatedRoutes]
 }
 
 /**
