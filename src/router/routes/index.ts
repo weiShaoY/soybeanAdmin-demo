@@ -60,7 +60,7 @@ const customRoutes: CustomRoute[] = [
     path: '/document',
     component: 'layout.base',
     meta: {
-      title: 'Document',
+      title: '文档',
       order: 2,
       icon: 'mdi:file-document-multiple-outline',
     },
@@ -217,7 +217,8 @@ export function createStaticRoutes() {
       constantRoutes.push(item)
     }
     else {
-      authRoutes.push(item) // 添加到权限路由
+      // 添加到权限路由
+      authRoutes.push(item)
     }
   })
 

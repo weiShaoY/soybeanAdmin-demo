@@ -1,20 +1,19 @@
 import type { RouteKey, RoutePath } from '@elegant-router/types'
 
 import type {
-  LocationQueryRaw,
   NavigationGuardNext,
   RouteLocationNormalized,
   RouteLocationRaw,
   Router,
 } from 'vue-router'
 
-import { getRouteName } from '@/router/elegant/transform'
+// import { getRouteName } from '@/router/elegant/transform'
 
-import { useAuthStore } from '@/store/modules/auth'
+// import { useAuthStore } from '@/store/modules/auth'
 
 import { useRouteStore } from '@/store/modules/route'
 
-import { localStg } from '@/utils'
+// import { localStg } from '@/utils'
 
 /**
  * 创建路由守卫
@@ -25,85 +24,87 @@ export function createRouteGuard(router: Router) {
     // 初始化路由
     const location = await initRoute(to)
 
+    console.log('%c Line:27 🍫 location', 'color:#6ec1c2', location)
+
     if (location) {
       next(location)
       return
     }
 
-    const authStore = useAuthStore()
+    // const authStore = useAuthStore()
 
     /**
      *  根路由名
      */
-    const rootRoute: RouteKey = 'root'
+    // const rootRoute: RouteKey = 'root'
 
-    /**
-     *  登录路由名
-     */
-    const loginRoute: RouteKey = 'login'
+    // /**
+    //  *  登录路由名
+    //  */
+    // const loginRoute: RouteKey = 'login'
 
-    /**
-     *  无权限路由名
-     */
-    const noAuthorizationRoute: RouteKey = '403'
+    // /**
+    //  *  无权限路由名
+    //  */
+    // const noAuthorizationRoute: RouteKey = '403'
 
-    /**
-     *  是否登录
-     */
-    const isLogin = Boolean(localStg.get('token'))
+    // /**
+    //  *  是否登录
+    //  */
+    // const isLogin = Boolean(localStg.get('token'))
 
-    /**
-     *  是否需要登录
-     */
-    const needLogin = !to.meta.constant
+    // /**
+    //  *  是否需要登录
+    //  */
+    // const needLogin = !to.meta.constant
 
-    /**
-     *  路由角色
-     */
-    const routeRoles = to.meta.roles || []
+    // /**
+    //  *  路由角色
+    //  */
+    // const routeRoles = to.meta.roles || []
 
-    /**
-     *  是否有角色权限
-     */
-    const hasRole = authStore.userInfo.roles.some(role => routeRoles.includes(role))
+    // /**
+    //  *  是否有角色权限
+    //  */
+    // const hasRole = authStore.userInfo.roles.some(role => routeRoles.includes(role))
 
-    /**
-     *  是否有访问权限
-     */
-    const hasAuth = authStore.isStaticSuper || !routeRoles.length || hasRole
+    // /**
+    //  *  是否有访问权限
+    //  */
+    // const hasAuth = authStore.isStaticSuper || !routeRoles.length || hasRole
 
     // 如果已登录且是登录路由，则跳转到根页面
-    if (to.name === loginRoute && isLogin) {
-      next({
-        name: rootRoute,
-      })
-      return
-    }
+    // if (to.name === loginRoute && isLogin) {
+    //   next({
+    //     name: rootRoute,
+    //   })
+    //   return
+    // }
 
     // 如果路由不需要登录，则直接访问
-    if (!needLogin) {
-      handleRouteSwitch(to, from, next)
-      return
-    }
+    // if (!needLogin) {
+    //   handleRouteSwitch(to, from, next)
+    //   return
+    // }
 
     // 需要登录但用户未登录，则跳转到登录页面
-    if (!isLogin) {
-      next({
-        name: loginRoute,
-        query: {
-          redirect: to.fullPath,
-        },
-      })
-      return
-    }
+    // if (!isLogin) {
+    //   next({
+    //     name: loginRoute,
+    //     query: {
+    //       redirect: to.fullPath,
+    //     },
+    //   })
+    //   return
+    // }
 
     // 如果用户已登录但没有权限，则跳转到403页面
-    if (!hasAuth) {
-      next({
-        name: noAuthorizationRoute,
-      })
-      return
-    }
+    // if (!hasAuth) {
+    //   next({
+    //     name: noAuthorizationRoute,
+    //   })
+    //   return
+    // }
 
     // 正常切换路由
     handleRouteSwitch(to, from, next)
@@ -150,26 +151,26 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
   /**
    *  是否登录
    */
-  const isLogin = Boolean(localStg.get('token'))
+  // const isLogin = Boolean(localStg.get('token'))
 
-  if (!isLogin) {
-    // 如果用户未登录且路由是常量路由但不是 "not-found" 路由，则允许访问
-    if (to.meta.constant && !isNotFoundRoute) {
-      return null
-    }
+  // if (!isLogin) {
+  //   // 如果用户未登录且路由是常量路由但不是 "not-found" 路由，则允许访问
+  //   if (to.meta.constant && !isNotFoundRoute) {
+  //     return null
+  //   }
 
-    // 如果用户未登录，则跳转到登录页面
-    const loginRoute: RouteKey = 'login'
+  //   // 如果用户未登录，则跳转到登录页面
+  //   const loginRoute: RouteKey = 'login'
 
-    const query = getRouteQueryOfLoginRoute(to, routeStore.routeHome)
+  //   const query = getRouteQueryOfLoginRoute(to, routeStore.routeHome)
 
-    const location: RouteLocationRaw = {
-      name: loginRoute,
-      query,
-    }
+  //   const location: RouteLocationRaw = {
+  //     name: loginRoute,
+  //     query,
+  //   }
 
-    return location
-  }
+  //   return location
+  // }
 
   if (!routeStore.isInitAuthRoute) {
     // 初始化权限路由
@@ -254,58 +255,58 @@ function handleRouteSwitch(to: RouteLocationNormalized, from: RouteLocationNorma
  * @param routeHome - 首页路由
  * @returns 登录路由的查询参数
  */
-function getRouteQueryOfLoginRoute(to: RouteLocationNormalized, routeHome: RouteKey) {
-  /**
-   *  登录路由名
-   */
-  const loginRoute: RouteKey = 'login'
+// function getRouteQueryOfLoginRoute(to: RouteLocationNormalized, routeHome: RouteKey) {
+//   /**
+//    *  登录路由名
+//    */
+//   const loginRoute: RouteKey = 'login'
 
-  /**
-   *  重定向路径
-   */
-  const redirect = to.fullPath
+//   /**
+//    *  重定向路径
+//    */
+//   const redirect = to.fullPath
 
-  /**
-   *  分割重定向路径和查询参数
-   */
-  const [redirectPath, redirectQuery] = redirect.split('?')
+//   /**
+//    *  分割重定向路径和查询参数
+//    */
+//   const [redirectPath, redirectQuery] = redirect.split('?')
 
-  /**
-   *  获取重定向路径的路由名
-   */
-  const redirectName = getRouteName(redirectPath as RoutePath)
+//   /**
+//    *  获取重定向路径的路由名
+//    */
+//   const redirectName = getRouteName(redirectPath as RoutePath)
 
-  /**
-   *  是否重定向到首页
-   */
-  const isRedirectHome = routeHome === redirectName
+//   /**
+//    *  是否重定向到首页
+//    */
+//   const isRedirectHome = routeHome === redirectName
 
-  /**
-   * 定义登录路由的查询参数
-   *
-   * 1. 如果目标路由不是登录路由 (`to.name !== loginRoute`) 且不是重定向到首页 (`!isRedirectHome`)，
-   *    则将 `redirect` 参数设置为目标路由的完整路径 (`redirect`)。
-   * 2. 否则，查询参数为空对象。
-   */
-  const query: LocationQueryRaw = to.name !== loginRoute && !isRedirectHome
-    ? {
-        redirect, // 将目标路由的完整路径作为重定向参数
-      }
-    : {
-        // 如果目标路由是登录路由或重定向到首页，则查询参数为空
-      }
+//   /**
+//    * 定义登录路由的查询参数
+//    *
+//    * 1. 如果目标路由不是登录路由 (`to.name !== loginRoute`) 且不是重定向到首页 (`!isRedirectHome`)，
+//    *    则将 `redirect` 参数设置为目标路由的完整路径 (`redirect`)。
+//    * 2. 否则，查询参数为空对象。
+//    */
+//   const query: LocationQueryRaw = to.name !== loginRoute && !isRedirectHome
+//     ? {
+//         redirect, // 将目标路由的完整路径作为重定向参数
+//       }
+//     : {
+//         // 如果目标路由是登录路由或重定向到首页，则查询参数为空
+//       }
 
-  /**
-   * 如果目标路由是重定向到首页 (`isRedirectHome`) 且存在重定向查询参数 (`redirectQuery`)，
-   * 则将 `redirect` 参数设置为首页路径加上查询参数。
-   *
-   * 例如：
-   * - 如果 `redirectQuery` 是 `tab=1`，则 `redirect` 会被设置为 `/?tab=1`。
-   */
-  if (isRedirectHome && redirectQuery) {
-    // 将首页路径和查询参数拼接为完整的重定向路径
-    query.redirect = `/?${redirectQuery}`
-  }
+//   /**
+//    * 如果目标路由是重定向到首页 (`isRedirectHome`) 且存在重定向查询参数 (`redirectQuery`)，
+//    * 则将 `redirect` 参数设置为首页路径加上查询参数。
+//    *
+//    * 例如：
+//    * - 如果 `redirectQuery` 是 `tab=1`，则 `redirect` 会被设置为 `/?tab=1`。
+//    */
+//   if (isRedirectHome && redirectQuery) {
+//     // 将首页路径和查询参数拼接为完整的重定向路径
+//     query.redirect = `/?${redirectQuery}`
+//   }
 
-  return query
-}
+//   return query
+// }

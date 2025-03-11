@@ -205,18 +205,6 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
-    name: 'login',
-    path: '/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?',
-    component: 'layout.blank$view.login',
-    props: true,
-    meta: {
-      title: 'login',
-      constant: true,
-      hideInMenu: true,
-      i18nKey: 'route.login'
-    }
-  },
-  {
     name: 'manage',
     path: '/manage',
     component: 'layout.base',
