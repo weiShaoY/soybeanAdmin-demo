@@ -20,7 +20,7 @@ const appStore = useAppStore()
 
 <template>
   <ElDrawer
-    v-model="appStore.themeDrawerVisible"
+    v-model="appStore.isOpenThemeDrawer"
     title="主题配置"
     :size="360"
   >

@@ -97,7 +97,7 @@ const expandedKeys = ref<string[]>([])
  * 更新展开的菜单项
  */
 function updateExpandedKeys() {
-  if (appStore.siderCollapse || !selectedKey.value) {
+  if (appStore.isSiderCollapse || !selectedKey.value) {
     expandedKeys.value = []
     return
   }
@@ -130,7 +130,7 @@ watch(
         :menus="allMenus"
         :active-menu-key="activeFirstLevelMenuKey"
         :inverted="inverted"
-        :sider-collapse="appStore.siderCollapse"
+        :sider-collapse="appStore.isSiderCollapse"
         :dark-mode="themeStore.darkMode"
         :theme-color="themeStore.themeColor"
         @select="handleSelectMixMenu"

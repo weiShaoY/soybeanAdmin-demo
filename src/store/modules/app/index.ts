@@ -16,7 +16,6 @@ import {
   effectScope,
   nextTick,
   onScopeDispose,
-  ref,
   watch,
 } from 'vue'
 
@@ -40,10 +39,10 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
   const breakpoints = useBreakpoints(breakpointsTailwind)
 
   /**
-   *  主题设置抽屉的可见状态
+   *  是否打开主题抽屉
    */
   const {
-    bool: themeDrawerVisible,
+    bool: isOpenThemeDrawer,
     setTrue: openThemeDrawer,
     setFalse: closeThemeDrawer,
   } = useBoolean()
@@ -51,12 +50,13 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
   /**
    *  页面是否需要重新加载
    */
-  const reloadFlag = ref(true)
+
+  const { bool: isPageReload, setBool: setReloadFlag } = useBoolean(true)
 
   /**
-   *  是否全屏显示内容
+   *  是否全屏显示
    */
-  const isFullContent = ref(false)
+  const { bool: isFullContent, toggle: toggleIsFullContent } = useBoolean()
 
   /**
    *  内容区域是否允许横向滚动
@@ -67,7 +67,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
    *  侧边栏折叠状态
    */
   const {
-    bool: siderCollapse,
+    bool: isSiderCollapse,
     setBool: setSiderCollapse,
     toggle: toggleSiderCollapse,
   } = useBoolean()
@@ -90,8 +90,8 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
    * 重新加载页面
    * @param duration 持续时间（毫秒）
    */
-  async function reloadPage(duration = 300) {
-    reloadFlag.value = false
+  async function triggerIsPageReload(duration = 300) {
+    setReloadFlag(false)
 
     /**
      *  根据主题动画配置决定等待时间
@@ -102,7 +102,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
       setTimeout(resolve, d)
     })
 
-    reloadFlag.value = true
+    setReloadFlag(true)
 
     // 根据缓存策略重置路由缓存
     if (themeStore.resetCacheStrategy === 'refresh') {
@@ -120,7 +120,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
           // 备份移动设备之前的主题设置
           localStg.set('backupThemeSettingBeforeIsMobile', {
             layout: themeStore.layout.mode,
-            siderCollapse: siderCollapse.value,
+            siderCollapse: isSiderCollapse.value,
           })
 
           themeStore.setThemeLayout('vertical')
@@ -163,24 +163,29 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     isMobile,
 
     /**
-     *  是否需要重新加载页面
+     *  是否重新加载页面
      */
-    reloadFlag,
+    isPageReload,
 
     /**
-     *  重新加载页面的方法
+     *  重新加载页面
      */
-    reloadPage,
+    triggerIsPageReload,
 
     /**
-     *  是否全屏显示内容
+     *  是否全屏显示
      */
     isFullContent,
 
     /**
-     *  主题抽屉可见状态
+     *  切换全屏显示
      */
-    themeDrawerVisible,
+    toggleIsFullContent,
+
+    /**
+     *  是否打开主题抽屉
+     */
+    isOpenThemeDrawer,
 
     /**
      *  打开主题抽屉
@@ -193,7 +198,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     closeThemeDrawer,
 
     /**
-     *  内容区域是否允许横向滚动
+     *  是否允许内容区域横向滚动
      */
     contentXScrollable,
 
@@ -205,7 +210,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     /**
      *  侧边栏折叠状态
      */
-    siderCollapse,
+    isSiderCollapse,
 
     /**
      *  设置侧边栏折叠状态

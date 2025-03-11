@@ -71,7 +71,7 @@ function handleSelectMixMenu(menu: App.Global.Menu) {
     <FirstLevelMenu
       :menus="allMenus"
       :active-menu-key="activeFirstLevelMenuKey"
-      :sider-collapse="appStore.siderCollapse"
+      :sider-collapse="appStore.isSiderCollapse"
       :dark-mode="themeStore.darkMode"
       :theme-color="themeStore.themeColor"
       @select="handleSelectMixMenu"

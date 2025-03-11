@@ -41,7 +41,7 @@ const expandedKeys = ref<string[]>([])
  * 更新展开的菜单项
  */
 function updateExpandedKeys() {
-  if (appStore.siderCollapse || !selectedKey.value) {
+  if (appStore.isSiderCollapse || !selectedKey.value) {
     expandedKeys.value = []
     return
   }
@@ -70,7 +70,7 @@ watch(
         mode="vertical"
         :default-active="selectedKey"
         :default-openeds="expandedKeys"
-        :collapse="appStore.siderCollapse"
+        :collapse="appStore.isSiderCollapse"
         @select="val => routerPushByKeyWithMetaQuery(val as RouteKey)"
       >
         <!-- 渲染菜单项 -->

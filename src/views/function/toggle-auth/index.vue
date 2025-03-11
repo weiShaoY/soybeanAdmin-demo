@@ -68,7 +68,7 @@ async function handleToggleAccount(account: Account) {
   await authStore.login(account.userName, account.password, false)
   tabStore.initTabStore(route)
   endLoading()
-  appStore.reloadPage()
+  appStore.triggerIsPageReload()
 }
 </script>
 

@@ -60,7 +60,7 @@ const { isFullscreen, toggle } = useFullscreen()
     <!-- 菜单切换按钮 -->
     <MenuToggler
       v-if="showMenuToggler"
-      :collapsed="appStore.siderCollapse"
+      :collapsed="appStore.isSiderCollapse"
       @click="appStore.toggleSiderCollapse"
     />
 

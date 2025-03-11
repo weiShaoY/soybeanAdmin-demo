@@ -152,7 +152,7 @@ async function handleCloseTab(tab: App.Global.Tab) {
  * 刷新页面
  */
 async function refresh() {
-  appStore.reloadPage(500)
+  appStore.triggerIsPageReload(500)
 }
 
 type DropdownConfig = {
@@ -323,7 +323,7 @@ init()
     <!-- 刷新按钮 -->
     <div>
       <ReloadButton
-        :loading="!appStore.reloadFlag"
+        :loading="!appStore.isPageReload"
         @click="refresh"
       />
     </div>
@@ -331,10 +331,9 @@ init()
     <!-- 全屏切换按钮 -->
     <FullScreen
       :full="appStore.isFullContent"
-      @click="appStore.isFullContent = !appStore.isFullContent"
+      @click="appStore.toggleIsFullContent"
     />
   </DarkModeContainer>
-
   <!-- 右键菜单 -->
   <ContextMenu
     :visible="dropdown.visible"

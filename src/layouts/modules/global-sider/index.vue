@@ -52,7 +52,7 @@ const menuWrapperClass = computed(() => (showLogo.value ? 'flex-1-hidden' : 'h-f
     <!-- 全局 Logo，控制是否显示标题 -->
     <GlobalLogo
       v-if="showLogo"
-      :show-title="!appStore.siderCollapse"
+      :show-title="!appStore.isSiderCollapse"
       :style="{ height: `${themeStore.header.height}px` }"
     />
 

@@ -148,12 +148,12 @@ function getSiderCollapsedWidth() {
 
 <template>
   <AdminLayout
-    v-model:sider-collapse="appStore.siderCollapse"
+    v-model:sider-collapse="appStore.isSiderCollapse"
     :mode="layoutMode"
     :scroll-el-id="LAYOUT_SCROLL_EL_ID"
     :scroll-mode="themeStore.layout.scrollMode"
     :is-mobile="appStore.isMobile"
-    :full-content="appStore.isFullContent"
+    :is-full-content="appStore.isFullContent"
     :fixed-top="themeStore.fixedHeaderAndTab"
     :header-height="themeStore.header.height"
     :tab-visible="themeStore.tab.visible"

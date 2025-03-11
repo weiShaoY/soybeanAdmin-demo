@@ -7,6 +7,10 @@ defineOptions({
 defineProps<Props>()
 
 type Props = {
+
+  /**
+   *  是否加载
+   */
   loading?: boolean
 }
 
