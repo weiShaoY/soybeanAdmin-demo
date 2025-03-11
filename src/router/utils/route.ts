@@ -22,8 +22,6 @@ export function createRouteGuard(router: Router) {
     // 初始化路由
     const location = await initRoute(to)
 
-    console.log('%c Line:27 🍫 location', 'color:#6ec1c2', location)
-
     if (location) {
       next(location)
       return

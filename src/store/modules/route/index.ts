@@ -179,11 +179,37 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 处理常量路由和权限路由
    */
   function handleConstantAndAuthRoutes() {
+    // const allRoutes = [...authRoutes.value]
+
+    // // 对路由进行排序
+    // const sortRoutes = sortRoutesByOrder(allRoutes)
+
+    // // 对路由进行权限过滤
+    // const vueRoutes = getAuthVueRoutes(sortRoutes)
+
+    // // 重置 Vue Router 中的所有动态路由
+    // resetVueRoutes()
+
+    // // 将处理后的路由添加到 Vue Router
+    // addRoutesToVueRouter(vueRoutes)
+
+    // // 生成全局菜单数据
+    // getGlobalMenus(sortRoutes)
+
+    // // 计算需要缓存的路由
+    // getCacheRoutes(vueRoutes)
+
     const allRoutes = [...authRoutes.value]
 
-    const sortRoutes = sortRoutesByOrder(allRoutes) // 对路由进行排序
+    // 对路由进行排序
+    const sortRoutes = sortRoutesByOrder(allRoutes)
 
-    const vueRoutes = getAuthVueRoutes(sortRoutes) // 对路由进行权限过滤
+    console.log('%c Line:206 🍑 sortRoutes', 'color:#ffdd4d', sortRoutes)
+
+    // 对路由进行权限过滤
+    const vueRoutes = getAuthVueRoutes(sortRoutes)
+
+    console.log('%c Line:211 🥥 vueRoutes', 'color:#33a5ff', vueRoutes)
 
     // 重置 Vue Router 中的所有动态路由
     resetVueRoutes()

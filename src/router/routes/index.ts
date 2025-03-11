@@ -1,7 +1,6 @@
 import type {
   CustomRoute,
   ElegantConstRoute,
-  ElegantRoute,
 } from '@elegant-router/types'
 
 import { layouts, views } from '../elegant/imports'
