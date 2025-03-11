@@ -176,7 +176,9 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
    * @param callback 回调函数. Default is `() => chartOptions`. Default is `() => chartOptions`
    */
   async function updateOptions(callback: (opts: T, optsFactory: () => T) => ECOption = () => chartOptions) {
-    if (!isRendered()) { return }
+    if (!isRendered()) {
+      return
+    }
 
     const updatedOpts = callback(chartOptions, optionsFactory)
 
@@ -228,7 +230,9 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
 
   /** 销毁图表 */
   async function destroy() {
-    if (!chart) { return }
+    if (!chart) {
+      return
+    }
 
     await onDestroy?.(chart)
     chart?.dispose()

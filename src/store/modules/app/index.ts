@@ -16,6 +16,7 @@ import {
   effectScope,
   nextTick,
   onScopeDispose,
+  ref,
   watch,
 } from 'vue'
 
@@ -23,6 +24,9 @@ import { useRouteStore } from '../route'
 
 import { useThemeStore } from '../theme'
 
+/**
+ * 应用全局状态管理
+ */
 export const useAppStore = defineStore(SetupStoreId.App, () => {
   const themeStore = useThemeStore()
 
@@ -30,63 +34,85 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
 
   const scope = effectScope()
 
+  /**
+   *  断点管理（用于响应式布局）
+   */
   const breakpoints = useBreakpoints(breakpointsTailwind)
 
+  /**
+   *  主题设置抽屉的可见状态
+   */
   const {
     bool: themeDrawerVisible,
     setTrue: openThemeDrawer,
     setFalse: closeThemeDrawer,
   } = useBoolean()
 
-  const { bool: reloadFlag, setBool: setReloadFlag } = useBoolean(true)
+  /**
+   *  页面是否需要重新加载
+   */
+  const reloadFlag = ref(true)
 
-  const { bool: fullContent, toggle: toggleFullContent } = useBoolean()
+  /**
+   *  是否全屏显示内容
+   */
+  const isFullContent = ref(false)
 
-  const { bool: contentXScrollable, setBool: setContentXScrollable }
-    = useBoolean()
+  /**
+   *  内容区域是否允许横向滚动
+   */
+  const { bool: contentXScrollable, setBool: setContentXScrollable } = useBoolean()
 
+  /**
+   *  侧边栏折叠状态
+   */
   const {
     bool: siderCollapse,
     setBool: setSiderCollapse,
     toggle: toggleSiderCollapse,
   } = useBoolean()
 
+  /**
+   *  是否固定混合菜单的侧边栏
+   */
   const {
     bool: mixSiderFixed,
     setBool: setMixSiderFixed,
     toggle: toggleMixSiderFixed,
   } = useBoolean(localStg.get('mixSiderFixed') === 'Y')
 
-  /** 是否为移动布局 */
+  /**
+   *  是否为移动布局
+   */
   const isMobile = breakpoints.smaller('sm')
 
   /**
    * 重新加载页面
-   *
-   * @param {number} duration 持续时间
+   * @param duration 持续时间（毫秒）
    */
   async function reloadPage(duration = 300) {
-    setReloadFlag(false)
+    reloadFlag.value = false
 
+    /**
+     *  根据主题动画配置决定等待时间
+     */
     const d = themeStore.page.animate ? duration : 40
 
     await new Promise((resolve) => {
       setTimeout(resolve, d)
     })
 
-    setReloadFlag(true)
+    reloadFlag.value = true
 
+    // 根据缓存策略重置路由缓存
     if (themeStore.resetCacheStrategy === 'refresh') {
       routeStore.resetRouteCache()
     }
   }
 
-  /** 初始化 */
-  function init() {}
-
-  // 监听 store
+  // 监听 store 变化
   scope.run(() => {
-    // 监听 isMobile，如果是移动设备，折叠菜单
+    // 监听 isMobile 状态，若为移动设备，则折叠菜单
     watch(
       isMobile,
       (newValue) => {
@@ -101,7 +127,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
           setSiderCollapse(true)
         }
         else {
-          // 如果不是移动设备，恢复备份的主题设置
+          // 还原备份的主题设置
           const backup = localStg.get('backupThemeSettingBeforeIsMobile')
 
           if (backup) {
@@ -120,7 +146,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     )
   })
 
-  // 缓存 mixSiderFixed
+  // 在页面关闭时缓存 mixSiderFixed 状态
   useEventListener(window, 'beforeunload', () => {
     localStg.set('mixSiderFixed', mixSiderFixed.value ? 'Y' : 'N')
   })
@@ -130,25 +156,80 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     scope.stop()
   })
 
-  // 初始化
-  init()
-
   return {
+    /**
+     *  是否为移动端布局
+     */
     isMobile,
+
+    /**
+     *  是否需要重新加载页面
+     */
     reloadFlag,
+
+    /**
+     *  重新加载页面的方法
+     */
     reloadPage,
-    fullContent,
+
+    /**
+     *  是否全屏显示内容
+     */
+    isFullContent,
+
+    /**
+     *  主题抽屉可见状态
+     */
     themeDrawerVisible,
+
+    /**
+     *  打开主题抽屉
+     */
     openThemeDrawer,
+
+    /**
+     *  关闭主题抽屉
+     */
     closeThemeDrawer,
-    toggleFullContent,
+
+    /**
+     *  内容区域是否允许横向滚动
+     */
     contentXScrollable,
+
+    /**
+     *  设置内容区域横向滚动
+     */
     setContentXScrollable,
+
+    /**
+     *  侧边栏折叠状态
+     */
     siderCollapse,
+
+    /**
+     *  设置侧边栏折叠状态
+     */
     setSiderCollapse,
+
+    /**
+     *  切换侧边栏折叠状态
+     */
     toggleSiderCollapse,
+
+    /**
+     *  是否固定混合侧边栏
+     */
     mixSiderFixed,
+
+    /**
+     *  设置混合侧边栏固定状态
+     */
     setMixSiderFixed,
+
+    /**
+     *  切换混合侧边栏固定状态
+     */
     toggleMixSiderFixed,
   }
 })

@@ -29,6 +29,8 @@ type Props = {
 
   /** Tooltip placement */
   tooltipPlacement?: Placement
+
+  /** Tooltip zIndex */
   zIndex?: number
 }
 
@@ -49,7 +51,7 @@ const DEFAULT_CLASS = 'h-[36px] text-icon'
       v-bind="$attrs"
     >
       <div
-        class="flex-center gap-8px text-lg"
+        class="flex items-center justify-center gap-[8px] text-lg"
       >
         <slot>
           <SvgIcon

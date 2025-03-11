@@ -23,4 +23,5 @@ export const REG_CODE_FOUR = /^\d{4}$/
 
 /** URL 正则 */
 export const REG_URL
+  // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/no-useless-quantifier
   = /(((^https?:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-]*)?\??[-+=&;%@.\w]*(?:#\w*)?)?)$/

@@ -82,7 +82,9 @@ export function useRouterPush(inSetup = true) {
     })
   }
 
-  /** 跳转到首页 */
+  /**
+   * 跳转到首页
+   */
   async function toHome() {
     return routerPushByKey('root')
   }

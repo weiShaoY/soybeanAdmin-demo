@@ -109,7 +109,7 @@ export type AdminLayoutContentConfig = {
    *
    * 如果为 true，其他元素将通过 `display: none` 隐藏
    */
-  fullContent?: boolean
+  isFullContent?: boolean
 }
 
 /** 底部配置 */

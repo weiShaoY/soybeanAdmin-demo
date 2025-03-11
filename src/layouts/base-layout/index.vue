@@ -153,7 +153,7 @@ function getSiderCollapsedWidth() {
     :scroll-el-id="LAYOUT_SCROLL_EL_ID"
     :scroll-mode="themeStore.layout.scrollMode"
     :is-mobile="appStore.isMobile"
-    :full-content="appStore.fullContent"
+    :full-content="appStore.isFullContent"
     :fixed-top="themeStore.fixedHeaderAndTab"
     :header-height="themeStore.header.height"
     :tab-visible="themeStore.tab.visible"

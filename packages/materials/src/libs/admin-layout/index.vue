@@ -153,7 +153,7 @@ const fixedHeaderAndTab = computed(() => props.fixedTop || (isHorizontal.value &
  * @returns 根据侧边栏状态返回对应的类名
  */
 const leftGapClass = computed(() => {
-  if (!props.fullContent && showSider.value) {
+  if (!props.isFullContent && showSider.value) {
     return props.siderCollapse ? style['left-gap_collapsed'] : style['left-gap']
   }
 
@@ -227,7 +227,7 @@ function handleClickMask() {
         v-if="showHeader"
       >
         <header
-          v-show="!fullContent"
+          v-show="!isFullContent"
           class="flex-shrink-0"
           :class="[
             style['layout-header'],
@@ -243,7 +243,7 @@ function handleClickMask() {
         </header>
 
         <div
-          v-show="!fullContent && fixedHeaderAndTab"
+          v-show="!isFullContent && fixedHeaderAndTab"
           class="flex-shrink-0 overflow-hidden"
           :class="[style['layout-header-placement']]"
         />
@@ -259,7 +259,7 @@ function handleClickMask() {
             style['layout-tab'],
             commonClass,
             tabClass,
-            { 'top-[0]!': fullContent || !showHeader },
+            { 'top-[0]!': isFullContent || !showHeader },
             leftGapClass,
             { 'absolute left-0 w-full': fixedHeaderAndTab },
           ]"
@@ -270,7 +270,7 @@ function handleClickMask() {
         </div>
 
         <div
-          v-show="fullContent || fixedHeaderAndTab"
+          v-show="isFullContent || fixedHeaderAndTab"
           class="flex-shrink-0 overflow-hidden"
           :class="[style['layout-tab-placement']]"
         />
@@ -281,7 +281,7 @@ function handleClickMask() {
         v-if="showSider"
       >
         <aside
-          v-show="!fullContent"
+          v-show="!isFullContent"
           class="absolute left-0 top-0 h-full"
           :class="[
             commonClass,
@@ -336,7 +336,7 @@ function handleClickMask() {
         v-if="showFooter"
       >
         <footer
-          v-show="!fullContent"
+          v-show="!isFullContent"
           class="flex-shrink-0"
           :class="[
             style['layout-footer'],
@@ -352,7 +352,7 @@ function handleClickMask() {
         </footer>
 
         <div
-          v-show="!fullContent && fixedFooter"
+          v-show="!isFullContent && fixedFooter"
           class="flex-shrink-0 overflow-hidden"
           :class="[style['layout-footer-placement']]"
         />

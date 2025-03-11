@@ -330,8 +330,8 @@ init()
 
     <!-- 全屏切换按钮 -->
     <FullScreen
-      :full="appStore.fullContent"
-      @click="appStore.toggleFullContent"
+      :full="appStore.isFullContent"
+      @click="appStore.isFullContent = !appStore.isFullContent"
     />
   </DarkModeContainer>
 
