@@ -1,3 +1,5 @@
+//  布局组件的上下文状态
+
 import { useRouteStore } from '@/store/modules/route'
 
 import { useContext } from '@sa/hooks'
