@@ -1,6 +1,6 @@
 import type { RequestInstanceState } from './type'
 
-import { useAuthStore } from '@/store/modules/auth'
+// import { useAuthStore } from '@/store/modules/auth'
 
 import { localStg } from '@/utils'
 
@@ -21,7 +21,7 @@ export function getAuthorization() {
 
 /** 刷新令牌 */
 async function handleRefreshToken() {
-  const { resetStore } = useAuthStore()
+  // const { resetStore } = useAuthStore()
 
   const rToken = localStg.get('refreshToken') || ''
 
@@ -33,7 +33,7 @@ async function handleRefreshToken() {
     return true
   }
 
-  resetStore()
+  // resetStore()
   return false
 }
 

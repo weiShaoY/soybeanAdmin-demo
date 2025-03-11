@@ -57,92 +57,92 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   const isLogin = computed(() => Boolean(token.value))
 
   /** 重置认证存储 */
-  async function resetStore() {
-    const authStore = useAuthStore()
+  // async function resetStore() {
+  //   const authStore = useAuthStore()
 
-    clearAuthStorage()
+  //   clearAuthStorage()
 
-    authStore.$reset()
+  //   authStore.$reset()
 
-    if (!route.meta.constant) {
-      await toLogin()
-    }
+  //   if (!route.meta.constant) {
+  //     await toLogin()
+  //   }
 
-    tabStore.cacheTabs()
-    routeStore.resetStore()
-  }
+  //   tabStore.cacheTabs()
+  //   routeStore.resetStore()
+  // }
 
-  /**
-   * 登录
-   *
-   * @param userName 用户名
-   * @param password 密码
-   * @param redirect 登录后是否重定向。默认为 `true`. Default is `true`
-   */
-  async function login(userName: string, password: string, redirect = true) {
-    startLoading()
+  // /**
+  //  * 登录
+  //  *
+  //  * @param userName 用户名
+  //  * @param password 密码
+  //  * @param redirect 登录后是否重定向。默认为 `true`. Default is `true`
+  //  */
+  // async function login(userName: string, password: string, redirect = true) {
+  //   startLoading()
 
-    const { data: loginToken, error } = await fetchLogin(userName, password)
+  //   const { data: loginToken, error } = await fetchLogin(userName, password)
 
-    if (!error) {
-      const pass = await loginByToken(loginToken)
+  //   if (!error) {
+  //     const pass = await loginByToken(loginToken)
 
-      if (pass) {
-        await redirectFromLogin(redirect)
+  //     if (pass) {
+  //       await redirectFromLogin(redirect)
 
-        window.$notification?.success({
-          title: '登录成功',
-          message: `欢迎回来，${userInfo.userName}`,
-          duration: 4500,
-        })
-      }
-    }
-    else {
-      resetStore()
-    }
+  //       window.$notification?.success({
+  //         title: '登录成功',
+  //         message: `欢迎回来，${userInfo.userName}`,
+  //         duration: 4500,
+  //       })
+  //     }
+  //   }
+  //   else {
+  //     resetStore()
+  //   }
 
-    endLoading()
-  }
+  //   endLoading()
+  // }
 
-  /**
-   * 通过 token 登录
-   *
-   * @param loginToken 登录 token
-   */
-  async function loginByToken(loginToken: Api.Auth.LoginToken) {
-    // 1. 将 token 存储在本地存储中，以便后续请求需要在 headers 中使用
-    localStg.set('token', loginToken.token)
-    localStg.set('refreshToken', loginToken.refreshToken)
+  // /**
+  //  * 通过 token 登录
+  //  *
+  //  * @param loginToken 登录 token
+  //  */
+  // async function loginByToken(loginToken: Api.Auth.LoginToken) {
+  //   // 1. 将 token 存储在本地存储中，以便后续请求需要在 headers 中使用
+  //   localStg.set('token', loginToken.token)
+  //   localStg.set('refreshToken', loginToken.refreshToken)
 
-    // 2. 获取用户信息
-    const pass = await getUserInfo()
+  //   // 2. 获取用户信息
+  //   const pass = await getUserInfo()
 
-    if (pass) {
-      token.value = loginToken.token
+  //   if (pass) {
+  //     token.value = loginToken.token
 
-      return true
-    }
+  //     return true
+  //   }
 
-    return false
-  }
+  //   return false
+  // }
 
-  /**
-   * 获取用户信息
-   *
-   * @returns 是否获取成功
-   */
-  async function getUserInfo() {
-    const { data: info, error } = await fetchGetUserInfo()
+  // /**
+  //  * 获取用户信息
+  //  *
+  //  * @returns 是否获取成功
+  //  */
+  // async function getUserInfo() {
+  //   const { data: info, error } = await fetchGetUserInfo()
 
-    if (!error) {
-      // 更新存储
-      Object.assign(userInfo, info)
+  //   if (!error) {
+  //     // 更新存储
+  //     Object.assign(userInfo, info)
 
-      return true
-    }
+  //     return true
+  //   }
 
-    return false
-  }
+  //   return false
+  // }
 
   /** 初始化用户信息 */
   // async function initUserInfo() {
@@ -161,10 +161,13 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     token,
     userInfo,
     isStaticSuper,
-    isLogin,
-    loginLoading,
-    resetStore,
-    login,
+
+    // isLogin,
+
+    // loginLoading,
+    // resetStore,
+
+    // login,
 
     // initUserInfo,
   }

@@ -45,7 +45,6 @@ declare module "@elegant-router/types" {
     "function_request": "/function/request";
     "function_super-page": "/function/super-page";
     "function_tab": "/function/tab";
-    "function_toggle-auth": "/function/toggle-auth";
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
     "manage": "/manage";
@@ -172,7 +171,6 @@ declare module "@elegant-router/types" {
     | "function_request"
     | "function_super-page"
     | "function_tab"
-    | "function_toggle-auth"
     | "home"
     | "manage_menu"
     | "manage_role"

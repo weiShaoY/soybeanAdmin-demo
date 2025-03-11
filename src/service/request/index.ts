@@ -2,7 +2,7 @@ import type { AxiosResponse } from 'axios'
 
 import type { RequestInstanceState } from './type'
 
-import { useAuthStore } from '@/store/modules/auth'
+// import { useAuthStore } from '@/store/modules/auth'
 
 import { getServiceBaseURL, localStg } from '@/utils'
 
@@ -53,13 +53,13 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
 
     /** 后端请求失败时的处理逻辑 */
     async onBackendFail(response, instance) {
-      const authStore = useAuthStore()
+      // const authStore = useAuthStore()
 
       const responseCode = String(response.data.code)
 
       /** 处理注销逻辑 */
       function handleLogout() {
-        authStore.resetStore()
+        // authStore.resetStore()
       }
 
       /** 注销并清理 */

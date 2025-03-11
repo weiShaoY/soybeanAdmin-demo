@@ -166,17 +166,6 @@ export const generatedRoutes: GeneratedRoute[] = [
           order: 1,
           i18nKey: 'route.function_tab'
         }
-      },
-      {
-        name: 'function_toggle-auth',
-        path: '/function/toggle-auth',
-        component: 'view.function_toggle-auth',
-        meta: {
-          title: 'function_toggle-auth',
-          icon: 'ic:round-construction',
-          order: 4,
-          i18nKey: 'route.function_toggle-auth'
-        }
       }
     ]
   },

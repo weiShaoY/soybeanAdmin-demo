@@ -25,7 +25,7 @@ import {
   shallowRef,
 } from 'vue'
 
-import { useAuthStore } from '../auth'
+// import { useAuthStore } from '../auth'
 
 import { useTabStore } from '../tab'
 
@@ -44,7 +44,7 @@ import {
  * 路由状态管理
  */
 export const useRouteStore = defineStore(SetupStoreId.Route, () => {
-  const authStore = useAuthStore()
+  // const authStore = useAuthStore()
 
   const tabStore = useTabStore()
 
@@ -191,18 +191,21 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 初始化静态权限路由
    */
   function initStaticAuthRoute() {
-    const { authRoutes: staticAuthRoutes } = createStaticRoutes()
+    const { authRoutes } = createStaticRoutes()
 
-    if (authStore.isStaticSuper) {
-      addAuthRoutes(staticAuthRoutes)
-    }
-    else {
-      const filteredAuthRoutes = filterAuthRoutesByRoles(staticAuthRoutes, authStore.userInfo.roles)
+    addAuthRoutes(authRoutes)
 
-      addAuthRoutes(filteredAuthRoutes)
-    }
+    // if (authStore.isStaticSuper) {
+    //   addAuthRoutes(staticAuthRoutes)
+    // }
+    // else {
+    //   const filteredAuthRoutes = filterAuthRoutesByRoles(staticAuthRoutes, authStore.userInfo.roles)
+
+    //   addAuthRoutes(filteredAuthRoutes)
+    // }
 
     handleConstantAndAuthRoutes()
+
     setIsInitAuthRoute(true)
   }
 
