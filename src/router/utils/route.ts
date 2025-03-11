@@ -194,7 +194,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
     }
   }
 
-  routeStore.onRouteSwitchWhenLoggedIn()
+  // routeStore.onRouteSwitchWhenLoggedIn()
 
   // 权限路由已初始化
   // 如果不是 "not-found" 路由，则允许访问

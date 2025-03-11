@@ -145,17 +145,17 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   }
 
   /** 初始化用户信息 */
-  async function initUserInfo() {
-    const hasToken = getToken()
+  // async function initUserInfo() {
+  //   const hasToken = getToken()
 
-    if (hasToken) {
-      const pass = await getUserInfo()
+  //   if (hasToken) {
+  //     const pass = await getUserInfo()
 
-      if (!pass) {
-        resetStore()
-      }
-    }
-  }
+  //     if (!pass) {
+  //       resetStore()
+  //     }
+  //   }
+  // }
 
   return {
     token,
@@ -165,6 +165,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     loginLoading,
     resetStore,
     login,
-    initUserInfo,
+
+    // initUserInfo,
   }
 })

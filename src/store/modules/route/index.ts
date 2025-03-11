@@ -179,9 +179,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 初始化权限路由
    */
   async function initAuthRoute() {
-    if (!authStore.userInfo.userId) {
-      await authStore.initUserInfo() // 确保用户信息已初始化
-    }
+    // if (!authStore.userInfo.userId) {
+    //   // await authStore.initUserInfo() // 确保用户信息已初始化
+    // }
 
     initStaticAuthRoute()
     tabStore.initHomeTab() // 初始化首页标签页
@@ -275,9 +275,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   /**
    * 登录后执行路由切换操作
    */
-  async function onRouteSwitchWhenLoggedIn() {
-    await authStore.initUserInfo() // 确保用户信息已初始化
-  }
+  // async function onRouteSwitchWhenLoggedIn() {
+  //   // await authStore.initUserInfo() // 确保用户信息已初始化
+  // }
 
   return {
     /**
@@ -368,6 +368,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     /**
      * 登录后执行路由切换操作（初始化用户信息）
      */
-    onRouteSwitchWhenLoggedIn,
+    // onRouteSwitchWhenLoggedIn,
   }
 })
