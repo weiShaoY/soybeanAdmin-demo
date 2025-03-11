@@ -9,8 +9,6 @@ import type {
 
 // import { getRouteName } from '@/router/elegant/transform'
 
-// import { useAuthStore } from '@/store/modules/auth'
-
 import { useRouteStore } from '@/store/modules/route'
 
 // import { localStg } from '@/utils'
@@ -30,8 +28,6 @@ export function createRouteGuard(router: Router) {
       next(location)
       return
     }
-
-    // const authStore = useAuthStore()
 
     /**
      *  根路由名
