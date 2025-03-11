@@ -18,7 +18,6 @@ import { localStg } from '@/utils'
 
 /**
  * 创建路由守卫
- *
  * @param router - 路由实例
  */
 export function createRouteGuard(router: Router) {
@@ -33,28 +32,44 @@ export function createRouteGuard(router: Router) {
 
     const authStore = useAuthStore()
 
-    /** 根路由名 */
+    /**
+     *  根路由名
+     */
     const rootRoute: RouteKey = 'root'
 
-    /** 登录路由名 */
+    /**
+     *  登录路由名
+     */
     const loginRoute: RouteKey = 'login'
 
-    /** 无权限路由名 */
+    /**
+     *  无权限路由名
+     */
     const noAuthorizationRoute: RouteKey = '403'
 
-    /** 是否登录 */
+    /**
+     *  是否登录
+     */
     const isLogin = Boolean(localStg.get('token'))
 
-    /** 是否需要登录 */
+    /**
+     *  是否需要登录
+     */
     const needLogin = !to.meta.constant
 
-    /** 路由角色 */
+    /**
+     *  路由角色
+     */
     const routeRoles = to.meta.roles || []
 
-    /** 是否有角色权限 */
+    /**
+     *  是否有角色权限
+     */
     const hasRole = authStore.userInfo.roles.some(role => routeRoles.includes(role))
 
-    /** 是否有访问权限 */
+    /**
+     *  是否有访问权限
+     */
     const hasAuth = authStore.isStaticSuper || !routeRoles.length || hasRole
 
     // 如果已登录且是登录路由，则跳转到根页面
@@ -104,10 +119,14 @@ export function createRouteGuard(router: Router) {
 async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw | null> {
   const routeStore = useRouteStore()
 
-  /** 未找到路由的路由名 */
+  /**
+   *  未找到路由的路由名
+   */
   const notFoundRoute: RouteKey = 'not-found'
 
-  /** 是否为未找到路由 */
+  /**
+   *  是否为未找到路由
+   */
   const isNotFoundRoute = to.name === notFoundRoute
 
   // 如果常量路由未初始化，则初始化常量路由
@@ -128,7 +147,9 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
     return location
   }
 
-  /** 是否登录 */
+  /**
+   *  是否登录
+   */
   const isLogin = Boolean(localStg.get('token'))
 
   if (!isLogin) {
@@ -180,10 +201,14 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
     return null
   }
 
-  // 被 "not-found" 路由捕获，检查路由是否存在
+  /**
+   *  被 "not-found" 路由捕获，检查路由是否存在
+   */
   const exist = await routeStore.getIsAuthRouteExist(to.path as RoutePath)
 
-  /** 无权限路由名 */
+  /**
+   *  无权限路由名
+   */
   const noPermissionRoute: RouteKey = '403'
 
   if (exist) {
@@ -230,24 +255,55 @@ function handleRouteSwitch(to: RouteLocationNormalized, from: RouteLocationNorma
  * @returns 登录路由的查询参数
  */
 function getRouteQueryOfLoginRoute(to: RouteLocationNormalized, routeHome: RouteKey) {
+  /**
+   *  登录路由名
+   */
   const loginRoute: RouteKey = 'login'
 
+  /**
+   *  重定向路径
+   */
   const redirect = to.fullPath
 
+  /**
+   *  分割重定向路径和查询参数
+   */
   const [redirectPath, redirectQuery] = redirect.split('?')
 
+  /**
+   *  获取重定向路径的路由名
+   */
   const redirectName = getRouteName(redirectPath as RoutePath)
 
+  /**
+   *  是否重定向到首页
+   */
   const isRedirectHome = routeHome === redirectName
 
+  /**
+   * 定义登录路由的查询参数
+   *
+   * 1. 如果目标路由不是登录路由 (`to.name !== loginRoute`) 且不是重定向到首页 (`!isRedirectHome`)，
+   *    则将 `redirect` 参数设置为目标路由的完整路径 (`redirect`)。
+   * 2. 否则，查询参数为空对象。
+   */
   const query: LocationQueryRaw = to.name !== loginRoute && !isRedirectHome
     ? {
-        redirect,
+        redirect, // 将目标路由的完整路径作为重定向参数
       }
     : {
+        // 如果目标路由是登录路由或重定向到首页，则查询参数为空
       }
 
+  /**
+   * 如果目标路由是重定向到首页 (`isRedirectHome`) 且存在重定向查询参数 (`redirectQuery`)，
+   * 则将 `redirect` 参数设置为首页路径加上查询参数。
+   *
+   * 例如：
+   * - 如果 `redirectQuery` 是 `tab=1`，则 `redirect` 会被设置为 `/?tab=1`。
+   */
   if (isRedirectHome && redirectQuery) {
+    // 将首页路径和查询参数拼接为完整的重定向路径
     query.redirect = `/?${redirectQuery}`
   }
 
