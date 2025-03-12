@@ -43,17 +43,25 @@ import {
 export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   const tabStore = useTabStore()
 
-  // 是否已初始化常量路由
+  /**
+   *  是否已初始化常量路由
+   */
   const { bool: isInitConstantRoute, setBool: setIsInitConstantRoute } = useBoolean()
 
-  // 初始化路由Store
+  /**
+   *  是否已初始化路由Store
+   */
   const { bool: isInitRouteStore, setBool: setIsInitRouteStore } = useBoolean()
 
-  // 首页路由键
+  /**
+   *  首页路由键
+   */
   const routeHome = ref(import.meta.env.VITE_ROUTE_HOME)
 
-  // 权限路由
-  const authRoutes = shallowRef<ElegantConstRoute[]>([])
+  /**
+   *  路由列表 (未转化为 vue 路由)
+   */
+  const routeList = shallowRef<ElegantConstRoute[]>([])
 
   /**
    * 添加路由数组到 authRoutes
@@ -66,7 +74,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     routes.forEach((route) => {
       authRoutesMap.set(route.name, route)
     })
-    authRoutes.value = Array.from(authRoutesMap.values())
+    routeList.value = Array.from(authRoutesMap.values())
+    console.log('%c Line:76 🧀 authRoutes.value', 'color:#6ec1c2', routeList.value)
   }
 
   // 移除路由函数数组
@@ -87,19 +96,23 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     menus.value = getGlobalMenusByAuthRoutes(routes)
   }
 
-  // 缓存路由
-  const cacheRoutes = ref<RouteKey[]>([])
+  /**
+   *  缓存路由数组
+   */
+  const cacheRouteList = ref<RouteKey[]>([])
 
-  // 排除缓存路由（用于重置路由缓存）
-  const excludeCacheRoutes = ref<RouteKey[]>([])
+  /**
+   *  排除缓存路由列表（用于重置路由缓存）
+   */
+  const excludeCacheRouteList = ref<RouteKey[]>([])
 
   /**
    * 获取缓存路由
    *
    * @param routes - Vue 路由数组
    */
-  function getCacheRoutes(routes: RouteRecordRaw[]) {
-    cacheRoutes.value = getCacheRouteNames(routes)
+  function getCacheRouteList(routes: RouteRecordRaw[]) {
+    cacheRouteList.value = getCacheRouteNames(routes)
   }
 
   /**
@@ -110,9 +123,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   async function resetRouteCache(routeKey?: RouteKey) {
     const routeName = routeKey || (router.currentRoute.value.name as RouteKey)
 
-    excludeCacheRoutes.value.push(routeName)
+    excludeCacheRouteList.value.push(routeName)
     await nextTick()
-    excludeCacheRoutes.value = []
+    excludeCacheRouteList.value = []
   }
 
   // 全局面包屑
@@ -199,7 +212,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     // // 计算需要缓存的路由
     // getCacheRoutes(vueRoutes)
 
-    const allRoutes = [...authRoutes.value]
+    const allRoutes = [...routeList.value]
 
     // 对路由进行排序
     const sortRoutes = sortRoutesByOrder(allRoutes)
@@ -221,7 +234,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     getGlobalMenus(sortRoutes)
 
     // 计算需要缓存的路由
-    getCacheRoutes(vueRoutes)
+    getCacheRouteList(vueRoutes)
   }
 
   /**
@@ -298,12 +311,12 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     /**
      * 缓存的路由键列表
      */
-    cacheRoutes,
+    cacheRouteList,
 
     /**
      * 排除缓存的路由键列表（用于重置路由缓存）
      */
-    excludeCacheRoutes,
+    excludeCacheRouteList,
 
     /**
      * 重置指定路由的缓存

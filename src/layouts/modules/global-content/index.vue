@@ -67,8 +67,8 @@ function resetScroll() {
     >
       <!-- 缓存组件 -->
       <KeepAlive
-        :include="routeStore.cacheRoutes"
-        :exclude="routeStore.excludeCacheRoutes"
+        :include="routeStore.cacheRouteList"
+        :exclude="routeStore.excludeCacheRouteList"
       >
 
         <component
