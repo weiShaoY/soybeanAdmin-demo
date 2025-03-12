@@ -70,13 +70,25 @@ const handleSearch = useDebounceFn(search, 300)
  * 执行搜索
  */
 function search() {
+  console.log('%c Line:98 🍯 routeStore.searchMenuList', 'color:#465975', routeStore.searchMenuList)
+
+  // 使用 filter 方法筛选符合条件的菜单项，并将结果存入 resultOptions.value
   resultOptions.value = routeStore.searchMenuList.filter((menu) => {
+    // 获取用户输入的搜索关键字，并转换为小写，同时去除前后空格
     const trimKeyword = keyword.value.toLocaleLowerCase().trim()
 
+    // 获取菜单的显示名 直接使用 menu.label 作为菜单名称
     const title = menu.label.toLocaleLowerCase()
 
+    // 返回匹配的菜单项：
+    // - 只有当 trimKeyword 不为空时才进行匹配
+    // - 判断菜单标题 title 是否包含关键字 trimKeyword
     return trimKeyword && title.includes(trimKeyword)
   })
+
+  // 设置 activePath.value：
+  // - 如果搜索结果存在，则获取第一个匹配菜单的 routePath 作为当前活动路径
+  // - 如果没有匹配项，则默认为空字符串
   activePath.value = resultOptions.value[0]?.routePath ?? ''
 }
 
@@ -94,7 +106,7 @@ function handleClose() {
 
 /**
  * 获取当前激活项的索引
- * @returns {number} - 激活项索引
+ * @returns  激活项索引
  */
 function getActivePathIndex() {
   return resultOptions.value.findIndex(item => item.routePath === activePath.value)
