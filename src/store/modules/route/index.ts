@@ -27,14 +27,15 @@ import {
 
 import { useTabStore } from '../tab'
 
+import { getBreadcrumbsByRoute } from './breadcrumb'
+
+import { getGlobalMenusByAuthRoutes, transformMenuToSearchMenus } from './menu'
+
 import {
-  getBreadcrumbsByRoute,
   getCacheRouteNames,
-  getGlobalMenusByAuthRoutes,
   getSelectedMenuKeyPathByKey,
   isRouteExistByRouteName,
   sortRoutesByOrder,
-  transformMenuToSearchMenus,
 } from './shared'
 
 /**
@@ -94,7 +95,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
   /**
    * 获取全局菜单
-   *
    * @param routes - 路由数组
    */
   function getGlobalMenuList(routes: ElegantConstRoute[]) {
@@ -137,6 +137,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    *  全局面包屑数组（基于当前路由和全局菜单生成
    */
   const breadcrumbList = computed(() => getBreadcrumbsByRoute(router.currentRoute.value, menuList.value))
+
+  console.log('%c Line:141 🥤 breadcrumbList', 'color:#33a5ff', breadcrumbList)
 
   /**
    * 重置存储
@@ -240,20 +242,20 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
   /**
    * 添加路由到 Vue 路由器
-   *
    * @param routes - Vue 路由数组
    */
   function addRoutesToVueRouter(routes: RouteRecordRaw[]) {
     routes.forEach((route) => {
-      const removeFn = router.addRoute(route) // 添加路由并获取移除函数
+      // 添加路由并获取移除函数
+      const removeFn = router.addRoute(route)
 
-      addRemoveRouteFn(removeFn) // 存储移除函数
+      // 存储移除函数
+      addRemoveRouteFn(removeFn)
     })
   }
 
   /**
    * 添加移除路由函数
-   *
    * @param fn - 移除路由函数
    */
   function addRemoveRouteFn(fn: () => void) {
@@ -262,7 +264,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
   /**
    * 检查权限路由是否存在
-   *
    * @param routePath - 路由路径
    * @returns 是否存在
    */
