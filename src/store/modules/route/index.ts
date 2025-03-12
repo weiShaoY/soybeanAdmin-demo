@@ -12,7 +12,7 @@ import { router } from '@/router'
 
 import { getRouteName } from '@/router/elegant/transform'
 
-import { createStaticRoutes, getAuthVueRoutes } from '@/router/routes'
+import { createRoutes, getAuthVueRoutes } from '@/router/routes'
 
 import { useBoolean } from '@sa/hooks'
 
@@ -41,15 +41,13 @@ import {
  * 路由状态管理
  */
 export const useRouteStore = defineStore(SetupStoreId.Route, () => {
-  // const authStore = useAuthStore()
-
   const tabStore = useTabStore()
 
   // 是否已初始化常量路由
   const { bool: isInitConstantRoute, setBool: setIsInitConstantRoute } = useBoolean()
 
-  // 是否已初始化权限路由
-  const { bool: isInitAuthRoute, setBool: setIsInitAuthRoute } = useBoolean()
+  // 初始化路由Store
+  const { bool: isInitRouteStore, setBool: setIsInitRouteStore } = useBoolean()
 
   // 首页路由键
   const routeHome = ref(import.meta.env.VITE_ROUTE_HOME)
@@ -58,9 +56,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   const authRoutes = shallowRef<ElegantConstRoute[]>([])
 
   /**
-   * 添加并去重权限路由
+   * 添加路由数组到 authRoutes
    *
-   * @param routes - 需要添加的权限路由列表
+   * @param routes - 需要添加的路由列表
    */
   function addAuthRoutes(routes: ElegantConstRoute[]) {
     const authRoutesMap = new Map<string, ElegantConstRoute>([])
@@ -157,7 +155,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   /**
    * 初始化权限路由
    */
-  async function initAuthRoute() {
+  async function initRouteStore() {
     initStaticAuthRoute()
     tabStore.initHomeTab() // 初始化首页标签页
   }
@@ -166,13 +164,15 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 初始化静态权限路由
    */
   function initStaticAuthRoute() {
-    const authRoutes = createStaticRoutes()
+    const authRoutes = createRoutes()
+
+    console.log('%c Line:170 🥤 authRoutes', 'color:#ffdd4d', authRoutes)
 
     addAuthRoutes(authRoutes)
 
     handleConstantAndAuthRoutes()
 
-    setIsInitAuthRoute(true)
+    setIsInitRouteStore(true)
   }
 
   /**
@@ -259,7 +259,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       return false
     }
 
-    const authRoutes = createStaticRoutes()
+    const authRoutes = createRoutes()
 
     return isRouteExistByRouteName(routeName, authRoutes)
   }
@@ -328,21 +328,21 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     isInitConstantRoute,
 
     /**
-     * 初始化权限路由
+     * 初始化路由Store
      */
-    initAuthRoute,
+    initRouteStore,
 
     /**
-     * 是否已初始化权限路由
+     * 是否已初始化路由Store
      */
-    isInitAuthRoute,
+    isInitRouteStore,
 
     /**
-     * 设置权限路由初始化状态
+     * 设置是否已初始化路由Store状态
      *
      * @param value - 是否已初始化
      */
-    setIsInitAuthRoute,
+    setIsInitRouteStore,
 
     /**
      * 检查指定路由路径是否存在权限路由

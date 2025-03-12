@@ -184,15 +184,11 @@ const customRoutes: CustomRoute[] = [
 ]
 
 /**
- * 创建静态路由
- *
- * 该函数用于将自定义路由 (`customRoutes`) 和生成的路由 (`generatedRoutes`) 分为两类：
- * 1. 常量路由 (`constantRoutes`)：不需要权限即可访问的路由。
- * 2. 权限路由 (`authRoutes`)：需要特定权限才能访问的路由。
- *
+ * 创建路由数组
+ *  - 转换为 Vue 路由格式前的路由数组
  * @returns 路由数组
  */
-export function createStaticRoutes() {
+export function createRoutes() {
   return [...customRoutes, ...generatedRoutes]
 }
 

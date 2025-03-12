@@ -7,11 +7,7 @@ import type {
   Router,
 } from 'vue-router'
 
-// import { getRouteName } from '@/router/elegant/transform'
-
 import { useRouteStore } from '@/store/modules/route'
-
-// import { localStg } from '@/utils'
 
 /**
  * 创建路由守卫
@@ -69,9 +65,10 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
     return location
   }
 
-  if (!routeStore.isInitAuthRoute) {
+  //  判断  是否已初始化路由Store
+  if (!routeStore.isInitRouteStore) {
     // 初始化权限路由
-    await routeStore.initAuthRoute()
+    await routeStore.initRouteStore()
 
     // 因为权限路由未初始化，路由被 "not-found" 路由捕获
     // 初始化权限路由后，重定向到原始路由
