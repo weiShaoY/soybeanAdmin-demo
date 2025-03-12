@@ -10,7 +10,6 @@ import { getRoutePath } from '@/router/elegant/transform'
 
 /**
  * 获取所有标签页
- *
  * @param tabs 标签页数组
  * @param homeTab 主页标签页
  * @returns 更新后的标签页数组
@@ -33,7 +32,6 @@ export function getAllTabs(tabs: App.Global.Tab[], homeTab?: App.Global.Tab) {
 
 /**
  * 判断是否为固定标签页
- *
  * @param tab 标签页
  * @returns 是否为固定标签页
  */
@@ -43,7 +41,6 @@ function isFixedTab(tab: App.Global.Tab) {
 
 /**
  * 根据路由获取标签页 ID
- *
  * @param route 路由
  * @returns 标签页 ID
  */
@@ -70,7 +67,6 @@ export function getTabIdByRoute(route: App.Global.TabRoute) {
 
 /**
  * 根据路由获取标签页
- *
  * @param route 路由
  * @returns 标签页
  */
@@ -100,7 +96,6 @@ export function getTabByRoute(route: App.Global.TabRoute) {
 
 /**
  * 获取路由图标
- *
  * @param route 路由
  * @returns 图标和本地图标
  */
@@ -128,7 +123,6 @@ export function getRouteIcons(route: App.Global.TabRoute) {
 
 /**
  * 获取默认主页标签页
- *
  * @param router 路由器
  * @param homeRouteName 主页路由名称
  * @returns 主页标签页
@@ -159,7 +153,6 @@ export function getDefaultHomeTab(router: Router, homeRouteName: LastLevelRouteK
 
 /**
  * 判断标签页是否在标签页数组中
- *
  * @param tabId 标签页 ID
  * @param tabs 标签页数组
  * @returns 是否在标签页数组中
@@ -170,7 +163,6 @@ export function isTabInTabs(tabId: string, tabs: App.Global.Tab[]) {
 
 /**
  * 根据 ID 过滤标签页
- *
  * @param tabId 标签页 ID
  * @param tabs 标签页数组
  * @returns 过滤后的标签页数组
@@ -192,7 +184,6 @@ export function filterTabsByIds(tabIds: string[], tabs: App.Global.Tab[]) {
 
 /**
  * 根据所有路由提取标签页
- *
  * @param router 路由器
  * @param tabs 标签页数组
  * @returns 提取后的标签页数组
@@ -207,7 +198,6 @@ export function extractTabsByAllRoutes(router: Router, tabs: App.Global.Tab[]) {
 
 /**
  * 获取固定标签页
- *
  * @param tabs 标签页数组
  * @returns 固定标签页数组
  */
@@ -217,7 +207,6 @@ export function getFixedTabs(tabs: App.Global.Tab[]) {
 
 /**
  * 获取固定标签页 ID
- *
  * @param tabs 标签页数组
  * @returns 固定标签页 ID 数组
  */
@@ -229,7 +218,6 @@ export function getFixedTabIds(tabs: App.Global.Tab[]) {
 
 /**
  * 更新标签页标签
- *
  * @param tabs 标签页数组
  * @returns 更新后的标签页数组
  */
@@ -244,7 +232,6 @@ function updateTabsLabel(tabs: App.Global.Tab[]) {
 
 /**
  * 根据路由名称查找标签页
- *
  * @param name 路由名称
  * @param tabs 标签页数组
  * @returns 找到的标签页

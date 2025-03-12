@@ -70,8 +70,6 @@ const handleSearch = useDebounceFn(search, 300)
  * 执行搜索
  */
 function search() {
-  console.log('%c Line:98 🍯 routeStore.searchMenuList', 'color:#465975', routeStore.searchMenuList)
-
   // 使用 filter 方法筛选符合条件的菜单项，并将结果存入 resultOptions.value
   resultOptions.value = routeStore.searchMenuList.filter((menu) => {
     // 获取用户输入的搜索关键字，并转换为小写，同时去除前后空格

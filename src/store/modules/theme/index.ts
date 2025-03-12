@@ -89,7 +89,6 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
 
   /**
    * 设置灰度值
-   *
    * @param isGrayscale 是否启用灰度模式
    */
   function setGrayscale(isGrayscale: boolean) {
@@ -98,14 +97,15 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
 
   /**
    * 设置色盲值
-   *
    * @param isColourWeakness 是否启用色盲模式
    */
   function setColourWeakness(isColourWeakness: boolean) {
     settings.value.colourWeakness = isColourWeakness
   }
 
-  /** 切换主题方案 */
+  /**
+   * 切换主题方案
+   */
   function toggleThemeScheme() {
     const themeSchemes: UnionKey.ThemeScheme[] = ['light', 'dark', 'auto']
 
@@ -143,14 +143,15 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
 
   /**
    * 设置主题布局
-   *
    * @param mode 主题布局模式
    */
   function setThemeLayout(mode: UnionKey.ThemeLayoutMode) {
     settings.value.layout.mode = mode
   }
 
-  /** 设置主题变量到全局 */
+  /**
+   * 设置主题变量到全局
+   */
   function setupThemeVarsToGlobal() {
     const { themeTokens, darkThemeTokens } = createThemeToken(
       themeColors.value,

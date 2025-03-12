@@ -4,7 +4,6 @@ import { getGlobalMenuByBaseRoute } from './menu'
 
 /**
  * 将菜单转换为面包屑
- *
  * @param  menu 菜单
  * @returns  面包屑
  */
@@ -24,7 +23,6 @@ function transformMenuToBreadcrumb(menu: App.Global.Menu) {
 
 /**
  * 根据路由获取面包屑
- *
  * @param  route 路由
  * @param  menus 全局菜单数组
  * @returns  面包屑数组

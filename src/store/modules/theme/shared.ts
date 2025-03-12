@@ -41,7 +41,6 @@ export function initThemeSettings() {
 
 /**
  * 根据主题设置创建主题令牌 CSS 变量值
- *
  * @param colors 主题颜色
  * @param tokens 主题设置令牌
  * @param recommended 是否使用推荐颜色。默认值为 `false`. Default is `false`
@@ -110,7 +109,6 @@ function createThemePaletteColors(colors: App.Theme.ThemeColor, recommended = fa
 
 /**
  * 根据令牌获取 CSS 变量
- *
  * @param tokens 主题基础令牌
  */
 function getCssVarByTokens(tokens: App.Theme.BaseToken) {
@@ -174,7 +172,6 @@ export function addThemeVarsToGlobal(tokens: App.Theme.BaseToken, darkTokens: Ap
 
 /**
  * 切换 CSS 暗模式
- *
  * @param darkMode 是否为暗模式
  */
 export function toggleCssDarkMode(darkMode = false) {
@@ -190,7 +187,6 @@ export function toggleCssDarkMode(darkMode = false) {
 
 /**
  * 切换辅助色模式
- *
  * @param grayscaleMode 灰度模式
  * @param colourWeakness 色盲模式
  */

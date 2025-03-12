@@ -76,7 +76,6 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   const activeTabId = ref<string>('')
 
   /**
-   *
    * 设置当前激活的 Tab ID
    * @param id Tab ID
    */
@@ -87,7 +86,6 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   /**
    *
    * 初始化 Tab 状态管理
-   *
    * @param currentRoute 当前路由
    */
   function initTabStore(currentRoute: App.Global.TabRoute) {
@@ -105,7 +103,6 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   /**
    *
    * 添加 Tab
-   *
    * @param route 路由信息
    * @param active 是否激活该 Tab
    */
@@ -124,7 +121,6 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   *
    * 移除 Tab
    * @param tabId Tab ID
    */
@@ -158,7 +154,6 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   *
    * 根据路由名称移除 Tab
    * @param routeName 路由名称
    */
@@ -173,7 +168,6 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   *
    * 清除所有 Tab（排除指定的 Tab）
    * @param excludes 需要排除的 Tab ID 列表
    */
@@ -238,9 +232,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   *
    * 清除右侧 Tab
-   *
    * @param tabId 当前 Tab ID
    */
   async function clearRightTabs(tabId: string) {
@@ -265,9 +257,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   *
    * 设置 Tab 的新标签
-   *
    * @param label 新标签
    * @param tabId Tab ID（默认为当前激活的 Tab ID）
    */
@@ -285,9 +275,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   *
    * 重置 Tab 的标签
-   *
    * @param tabId Tab ID（默认为当前激活的 Tab ID）
    */
   function resetTabLabel(tabId?: string) {
@@ -303,9 +291,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
-   *
    * 判断 Tab 是否固定
-   *
    * @param tabId Tab ID
    */
   function isTabRetain(tabId: string) {

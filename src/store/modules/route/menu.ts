@@ -10,7 +10,6 @@ import { useSvgIcon } from '@/hooks/common/icon'
 
 /**
  * 将菜单转换为搜索菜单
- *
  * @param  menus 菜单数组
  * @param  treeMap 树形映射数组. Default is `[]`
  * @returns  搜索菜单数组
@@ -38,7 +37,6 @@ export function transformMenuToSearchMenus(
 
 /**
  * 根据路由获取全局菜单
- *
  * @param  route 路由
  * @returns 全局菜单
  */
@@ -76,7 +74,6 @@ export function getGlobalMenuByBaseRoute(
 
 /**
  * 根据权限路由获取全局菜单
- *
  * @param  routes 权限路由
  * @returns 全局菜单
  */

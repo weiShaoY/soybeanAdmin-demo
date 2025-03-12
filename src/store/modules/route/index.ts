@@ -281,7 +281,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
   /**
    * 获取选中的菜单键路径
-   *
    * @param selectedKey - 选中的菜单键
    * @returns 选中的菜单键路径数组
    */

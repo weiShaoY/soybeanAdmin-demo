@@ -8,7 +8,6 @@ import type { RouteRecordRaw } from 'vue-router'
 
 /**
  * 根据顺序排序路由
- *
  * @param  route 路由
  * @returns  排序后的路由
  */
@@ -26,7 +25,6 @@ function sortRouteByOrder(route: ElegantConstRoute) {
 
 /**
  * 根据顺序排序路由数组
- *
  * @param  routes 路由数组
  * @returns  排序后的路由数组
  */
@@ -42,7 +40,6 @@ export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
 
 /**
  * 获取缓存路由名
- *
  * @param  routes Vue 路由数组（两级）
  * @returns  缓存路由名
  */
@@ -63,7 +60,6 @@ export function getCacheRouteNames(routes: RouteRecordRaw[]) {
 
 /**
  * 根据路由名判断路由是否存在
- *
  * @param  routeName 路由名
  * @param  routes 路由数组
  * @returns  路由是否存在
@@ -79,7 +75,6 @@ export function isRouteExistByRouteName(
 
 /**
  * 递归判断路由是否存在
- *
  * @param  route 路由
  * @param  routeName 路由名
  * @returns  路由是否存在
@@ -105,7 +100,6 @@ function recursiveGetIsRouteExistByRouteName(
 
 /**
  * 根据选中菜单键获取选中菜单键路径
- *
  * @param  selectedKey 选中菜单键
  * @param  menus 全局菜单
  * @returns  选中菜单键路径数组
@@ -133,7 +127,6 @@ export function getSelectedMenuKeyPathByKey(
 
 /**
  * 查找菜单路径
- *
  * @param  targetKey 目标菜单键
  * @param  menu 菜单
  * @returns  菜单路径数组
