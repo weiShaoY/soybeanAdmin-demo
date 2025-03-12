@@ -57,7 +57,7 @@ function handleClickMenu(key: RouteKey) {
 
     <!-- 渲染面包屑项 -->
     <ElBreadcrumbItem
-      v-for="item in routeStore.breadcrumbs"
+      v-for="item in routeStore.breadcrumbList"
       :key="item.key"
     >
       <ElDropdown

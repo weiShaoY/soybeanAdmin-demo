@@ -50,11 +50,11 @@ function useMixMenu() {
   }
 
   /** 所有菜单项 */
-  const allMenus = computed<App.Global.Menu[]>(() => routeStore.menus)
+  const allMenus = computed<App.Global.Menu[]>(() => routeStore.menuList)
 
   /** 一级菜单（去除子菜单，仅保留顶层菜单项） */
   const firstLevelMenus = computed<App.Global.Menu[]>(() =>
-    routeStore.menus.map((menu) => {
+    routeStore.menuList.map((menu) => {
       const { children: _, ...rest } = menu
 
       return rest
@@ -65,7 +65,7 @@ function useMixMenu() {
    *  当前激活的一级菜单下的子菜单
    */
   const childLevelMenus = computed<App.Global.Menu[]>(
-    () => routeStore.menus.find(menu => menu.key === activeFirstLevelMenuKey.value)?.children || [],
+    () => routeStore.menuList.find(menu => menu.key === activeFirstLevelMenuKey.value)?.children || [],
   )
 
   /**

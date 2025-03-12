@@ -78,22 +78,28 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     console.log('%c Line:76 🧀 authRoutes.value', 'color:#6ec1c2', routeList.value)
   }
 
-  // 移除路由函数数组
+  /**
+   *  移除路由函数数组
+   */
   const removeRouteFns: (() => void)[] = []
 
-  // 全局菜单
-  const menus = ref<App.Global.Menu[]>([])
+  /**
+   *  全局菜单
+   */
+  const menuList = ref<App.Global.Menu[]>([])
 
-  // 搜索菜单
-  const searchMenus = computed(() => transformMenuToSearchMenus(menus.value))
+  /**
+   *  搜索菜单
+   */
+  const searchMenuList = computed(() => transformMenuToSearchMenus(menuList.value))
 
   /**
    * 获取全局菜单
    *
    * @param routes - 路由数组
    */
-  function getGlobalMenus(routes: ElegantConstRoute[]) {
-    menus.value = getGlobalMenusByAuthRoutes(routes)
+  function getGlobalMenuList(routes: ElegantConstRoute[]) {
+    menuList.value = getGlobalMenusByAuthRoutes(routes)
   }
 
   /**
@@ -128,8 +134,10 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     excludeCacheRouteList.value = []
   }
 
-  // 全局面包屑
-  const breadcrumbs = computed(() => getBreadcrumbsByRoute(router.currentRoute.value, menus.value))
+  /**
+   *  全局面包屑数组（基于当前路由和全局菜单生成
+   */
+  const breadcrumbList = computed(() => getBreadcrumbsByRoute(router.currentRoute.value, menuList.value))
 
   /**
    * 重置存储
@@ -231,7 +239,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     addRoutesToVueRouter(vueRoutes)
 
     // 生成全局菜单数据
-    getGlobalMenus(sortRoutes)
+    getGlobalMenuList(sortRoutes)
 
     // 计算需要缓存的路由
     getCacheRouteList(vueRoutes)
@@ -284,7 +292,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * @returns 选中的菜单键路径数组
    */
   function getSelectedMenuKeyPath(selectedKey: string) {
-    return getSelectedMenuKeyPathByKey(selectedKey, menus.value)
+    return getSelectedMenuKeyPathByKey(selectedKey, menuList.value)
   }
 
   return {
@@ -301,12 +309,12 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     /**
      * 全局菜单列表
      */
-    menus,
+    menuList,
 
     /**
      * 搜索菜单列表（基于全局菜单生成）
      */
-    searchMenus,
+    searchMenuList,
 
     /**
      * 缓存的路由键列表
@@ -326,9 +334,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     resetRouteCache,
 
     /**
-     * 全局面包屑数据（基于当前路由和全局菜单生成）
+     * 全局面包屑数组（基于当前路由和全局菜单生成）
      */
-    breadcrumbs,
+    breadcrumbList,
 
     /**
      * 初始化常量路由

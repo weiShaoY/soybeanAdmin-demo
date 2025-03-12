@@ -70,7 +70,7 @@ const handleSearch = useDebounceFn(search, 300)
  * 执行搜索
  */
 function search() {
-  resultOptions.value = routeStore.searchMenus.filter((menu) => {
+  resultOptions.value = routeStore.searchMenuList.filter((menu) => {
     const trimKeyword = keyword.value.toLocaleLowerCase().trim()
 
     const title = menu.label.toLocaleLowerCase()
