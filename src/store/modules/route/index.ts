@@ -75,7 +75,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       authRoutesMap.set(route.name, route)
     })
     routeList.value = Array.from(authRoutesMap.values())
-    console.log('%c Line:76 🧀 authRoutes.value', 'color:#6ec1c2', routeList.value)
   }
 
   /**
@@ -187,8 +186,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   function initStaticAuthRoute() {
     const authRoutes = createRoutes()
 
-    console.log('%c Line:170 🥤 authRoutes', 'color:#ffdd4d', authRoutes)
-
     addAuthRoutes(authRoutes)
 
     handleConstantAndAuthRoutes()
@@ -225,12 +222,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     // 对路由进行排序
     const sortRoutes = sortRoutesByOrder(allRoutes)
 
-    console.log('%c Line:206 🍑 sortRoutes', 'color:#ffdd4d', sortRoutes)
-
     // 对路由进行权限过滤
     const vueRoutes = getAuthVueRoutes(sortRoutes)
-
-    console.log('%c Line:211 🥥 vueRoutes', 'color:#33a5ff', vueRoutes)
 
     // 重置 Vue Router 中的所有动态路由
     resetVueRoutes()

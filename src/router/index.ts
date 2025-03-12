@@ -60,7 +60,6 @@ export const router = createRouter({
 export async function setupRouter(app: App) {
   // 在 Vue 应用中使用路由
   app.use(router)
-  console.log('%c Line:36 🍪 createBuiltinVueRoutes', 'color:#42b983', createBuiltinVueRoutes())
 
   // 创建并应用路由守卫
   createRouterGuard(router)

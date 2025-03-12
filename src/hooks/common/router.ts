@@ -135,7 +135,6 @@ export function useRouterPush(inSetup = true) {
    * @param needRedirect 是否在登录后重定向。默认为 `true`. Default is `true`
    */
   async function redirectFromLogin(needRedirect = true) {
-    console.log('%c Line:136 🥤 needRedirect', 'color:#7f2b82', needRedirect)
     const redirect = route.value.query?.redirect as string
 
     if (needRedirect && redirect) {
