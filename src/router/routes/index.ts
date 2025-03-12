@@ -7,8 +7,7 @@ import { layouts, views } from '../elegant/imports'
 
 import { generatedRoutes } from '../elegant/routes'
 
-import { transformElegantRoutesToVueRoutes } from '../elegant/transform'
-
+import type { RouteRecordRaw, RouteComponent } from 'vue-router';
 /**
  * 自定义路由
  *
@@ -192,8 +191,161 @@ export function createRoutes() {
   return [...customRoutes, ...generatedRoutes]
 }
 
+
 /**
- * 获取权限 vue 路由
+ * transform elegant const routes to vue routes
+ * @param routes elegant const routes
+ * @param layouts layout components
+ * @param views view components
+ */
+export function transformElegantRoutesToVueRoutes(
+  routes: ElegantConstRoute[],
+  layouts: Record<string, RouteComponent | (() => Promise<RouteComponent>)>,
+  views: Record<string, RouteComponent | (() => Promise<RouteComponent>)>
+) {
+  return routes.flatMap(route => transformElegantRouteToVueRoute(route, layouts, views));
+}
+
+/**
+ * transform elegant route to vue route
+ * @param route elegant const route
+ * @param layouts layout components
+ * @param views view components
+ */
+function transformElegantRouteToVueRoute(
+  route: ElegantConstRoute,
+  layouts: Record<string, RouteComponent | (() => Promise<RouteComponent>)>,
+  views: Record<string, RouteComponent | (() => Promise<RouteComponent>)>
+) {
+  const LAYOUT_PREFIX = 'layout.';
+  const VIEW_PREFIX = 'view.';
+  const ROUTE_DEGREE_SPLITTER = '_';
+  const FIRST_LEVEL_ROUTE_COMPONENT_SPLIT = '$';
+
+  function isLayout(component: string) {
+    return component.startsWith(LAYOUT_PREFIX);
+  }
+
+  function getLayoutName(component: string) {
+    const layout = component.replace(LAYOUT_PREFIX, '');
+
+    if(!layouts[layout]) {
+      throw new Error(`Layout component "${layout}" not found`);
+    }
+
+    return layout;
+  }
+
+  function isView(component: string) {
+    return component.startsWith(VIEW_PREFIX);
+  }
+
+  function getViewName(component: string) {
+    const view = component.replace(VIEW_PREFIX, '');
+
+    if(!views[view]) {
+      throw new Error(`View component "${view}" not found`);
+    }
+
+    return view;
+  }
+
+  function isFirstLevelRoute(item: ElegantConstRoute) {
+    return !item.name.includes(ROUTE_DEGREE_SPLITTER);
+  }
+
+  function isSingleLevelRoute(item: ElegantConstRoute) {
+    return isFirstLevelRoute(item) && !item.children?.length;
+  }
+
+  function getSingleLevelRouteComponent(component: string) {
+    const [layout, view] = component.split(FIRST_LEVEL_ROUTE_COMPONENT_SPLIT);
+
+    return {
+      layout: getLayoutName(layout),
+      view: getViewName(view)
+    };
+  }
+
+  const vueRoutes: RouteRecordRaw[] = [];
+
+  // add props: true to route
+  if (route.path.includes(':') && !route.props) {
+    route.props = true;
+  }
+
+  const { name, path, component, children, ...rest } = route;
+
+  const vueRoute = { name, path, ...rest } as RouteRecordRaw;
+
+  try {
+    if (component) {
+      if (isSingleLevelRoute(route)) {
+        const { layout, view } = getSingleLevelRouteComponent(component);
+
+        const singleLevelRoute: RouteRecordRaw = {
+          path,
+          component: layouts[layout],
+          meta: {
+            title: route.meta?.title || ''
+          },
+          children: [
+            {
+              name,
+              path: '',
+              component: views[view],
+              ...rest
+            } as RouteRecordRaw
+          ]
+        };
+
+        return [singleLevelRoute];
+      }
+
+      if (isLayout(component)) {
+        const layoutName = getLayoutName(component);
+
+        vueRoute.component = layouts[layoutName];
+      }
+
+      if (isView(component)) {
+        const viewName = getViewName(component);
+
+        vueRoute.component = views[viewName];
+      }
+
+    }
+  } catch (error: any) {
+    console.error(`Error transforming route "${route.name}": ${error.toString()}`);
+    return [];
+  }
+
+  // add redirect to child
+  if (children?.length && !vueRoute.redirect) {
+    vueRoute.redirect = {
+      name: children[0].name
+    };
+  }
+
+  if (children?.length) {
+    const childRoutes = children.flatMap(child => transformElegantRouteToVueRoute(child, layouts, views));
+
+    if(isFirstLevelRoute(route)) {
+      vueRoute.children = childRoutes;
+    } else {
+      vueRoutes.push(...childRoutes);
+    }
+  }
+
+  vueRoutes.unshift(vueRoute);
+
+  return vueRoutes;
+}
+
+
+
+/**
+ * 将 路由列表转换成 vue 路由
  *
  * 该函数用于将 Elegant 格式的路由转换为 Vue 路由格式。
  * 转换过程中会使用布局组件 (`layouts`) 和视图组件 (`views`)。
@@ -201,7 +353,7 @@ export function createRoutes() {
  * @param routes - Elegant 格式的路由数组
  * @returns 返回转换后的 Vue 路由数组
  */
-export function getAuthVueRoutes(routes: ElegantConstRoute[]) {
+export function getVueRoutes(routes: ElegantConstRoute[]) {
   /**
    * 调用 `transformElegantRoutesToVueRoutes` 函数，
    * 将 Elegant 格式的路由转换为 Vue 路由格式。
@@ -211,3 +363,4 @@ export function getAuthVueRoutes(routes: ElegantConstRoute[]) {
    */
   return transformElegantRoutesToVueRoutes(routes, layouts, views)
 }
+////  后续直接导出 vue模版出来
