@@ -2,7 +2,7 @@ import type { Router } from 'vue-router'
 
 import { useTitle } from '@vueuse/core'
 
-import { createRouteGuard } from './route-guard'
+import { createRouteGuard } from './routeGuard'
 
 /**
  * 创建进度条守卫
