@@ -10,25 +10,6 @@ import type {
 import { useRouteStore } from '@/store/modules/route'
 
 /**
- * 创建路由守卫
- * @param router - 路由实例
- */
-export function createRouteGuard(router: Router) {
-  router.beforeEach(async (to, from, next) => {
-    // 初始化路由
-    const location = await initRoute(to)
-
-    if (location) {
-      next(location)
-      return
-    }
-
-    // 正常切换路由
-    handleRouteSwitch(to, from, next)
-  })
-}
-
-/**
  * 初始化路由
  *
  * @param to - 目标路由
@@ -138,4 +119,23 @@ function handleRouteSwitch(to: RouteLocationNormalized, from: RouteLocationNorma
   }
 
   next()
+}
+
+/**
+ * 创建路由守卫
+ * @param router - 路由实例
+ */
+export function createRouteGuard(router: Router) {
+  router.beforeEach(async (to, from, next) => {
+    // 初始化路由
+    const location = await initRoute(to)
+
+    if (location) {
+      next(location)
+      return
+    }
+
+    // 正常切换路由
+    handleRouteSwitch(to, from, next)
+  })
 }
