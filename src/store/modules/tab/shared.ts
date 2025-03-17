@@ -2,11 +2,11 @@ import type {
   LastLevelRouteKey,
   RouteKey,
   RouteMap,
-} from '@elegant-router/types'
+} from '@elegant-router/types' // 导入路由相关的类型
 
-import type { Router } from 'vue-router'
+import type { Router } from 'vue-router' // 导入 Vue Router 类型
 
-import { getRoutePath } from '@/router/elegant/transform'
+import { getRoutePath } from '@/router/elegant/transform' // 导入获取路由路径的工具函数
 
 /**
  * 获取所有标签页
@@ -16,18 +16,18 @@ import { getRoutePath } from '@/router/elegant/transform'
  */
 export function getAllTabs(tabs: App.Global.Tab[], homeTab?: App.Global.Tab) {
   if (!homeTab) {
-    return []
+    return [] // 如果没有主页标签页，返回空数组
   }
 
-  const filterHomeTabs = tabs.filter(tab => tab.id !== homeTab.id)
+  const filterHomeTabs = tabs.filter(tab => tab.id !== homeTab.id) // 过滤掉主页标签页
 
-  const fixedTabs = filterHomeTabs.filter(isFixedTab).sort((a, b) => a.fixedIndex! - b.fixedIndex!)
+  const fixedTabs = filterHomeTabs.filter(isFixedTab).sort((a, b) => a.fixedIndex! - b.fixedIndex!) // 过滤固定标签页并排序
 
-  const remainTabs = filterHomeTabs.filter(tab => !isFixedTab(tab))
+  const remainTabs = filterHomeTabs.filter(tab => !isFixedTab(tab)) // 获取非固定标签页
 
-  const allTabs = [homeTab, ...fixedTabs, ...remainTabs]
+  const allTabs = [homeTab, ...fixedTabs, ...remainTabs] // 重新组合所有标签页
 
-  return updateTabsLabel(allTabs)
+  return updateTabsLabel(allTabs) // 更新标签页标签
 }
 
 /**
@@ -36,7 +36,7 @@ export function getAllTabs(tabs: App.Global.Tab[], homeTab?: App.Global.Tab) {
  * @returns 是否为固定标签页
  */
 function isFixedTab(tab: App.Global.Tab) {
-  return tab.fixedIndex !== undefined && tab.fixedIndex !== null
+  return tab.fixedIndex !== undefined && tab.fixedIndex !== null // 判断标签页是否有固定索引
 }
 
 /**
@@ -52,17 +52,17 @@ export function getTabIdByRoute(route: App.Global.TabRoute) {
     meta,
   } = route
 
-  let id = path
+  let id = path // 默认使用路径作为 ID
 
-  if (meta.multiTab) {
-    const queryKeys = Object.keys(query).sort()
+  if (meta.multiTab) { // 如果路由支持多标签页
+    const queryKeys = Object.keys(query).sort() // 获取查询参数的键并排序
 
-    const qs = queryKeys.map(key => `${key}=${query[key]}`).join('&')
+    const qs = queryKeys.map(key => `${key}=${query[key]}`).join('&') // 将查询参数拼接成字符串
 
-    id = `${path}?${qs}`
+    id = `${path}?${qs}` // 将路径和查询参数拼接成完整的 ID
   }
 
-  return id
+  return id // 返回标签页 ID
 }
 
 /**
@@ -75,23 +75,23 @@ export function getTabByRoute(route: App.Global.TabRoute) {
 
   const { title, fixedIndexInTab } = meta
 
-  // Get icon and localIcon from getRouteIcons function
+  // 从 getRouteIcons 函数中获取图标和本地图标
   const { icon, localIcon } = getRouteIcons(route)
 
-  const label = title || ''
+  const label = title || '' // 获取标签页的标题
 
   const tab: App.Global.Tab = {
-    id: getTabIdByRoute(route),
+    id: getTabIdByRoute(route), // 获取标签页 ID
     label,
-    routeKey: name as LastLevelRouteKey,
-    routePath: path as RouteMap[LastLevelRouteKey],
+    routeKey: name as LastLevelRouteKey, // 路由键
+    routePath: path as RouteMap[LastLevelRouteKey], // 路由路径
     fullPath,
-    fixedIndex: fixedIndexInTab,
+    fixedIndex: fixedIndexInTab, // 固定索引
     icon,
     localIcon,
   }
 
-  return tab
+  return tab // 返回标签页
 }
 
 /**
@@ -100,17 +100,17 @@ export function getTabByRoute(route: App.Global.TabRoute) {
  * @returns 图标和本地图标
  */
 export function getRouteIcons(route: App.Global.TabRoute) {
-  // Set default value for icon at the beginning
+  // 设置图标的默认值
   let icon: string = route?.meta?.icon || import.meta.env.VITE_MENU_ICON
 
   let localIcon: string | undefined = route?.meta?.localIcon
 
-  // Route.matched only appears when there are multiple matches,so check if route.matched exists
+  // 如果路由有匹配的路由记录
   if (route.matched) {
-    // Find the meta of the current route from matched
+    // 从匹配的路由记录中找到当前路由
     const currentRoute = route.matched.find(r => r.name === route.name)
 
-    // If icon exists in currentRoute.meta, it will overwrite the default value
+    // 如果当前路由的 meta 中有图标，则覆盖默认值
     icon = currentRoute?.meta?.icon || icon
     localIcon = currentRoute?.meta?.localIcon
   }
@@ -128,27 +128,27 @@ export function getRouteIcons(route: App.Global.TabRoute) {
  * @returns 主页标签页
  */
 export function getDefaultHomeTab(router: Router, homeRouteName: LastLevelRouteKey) {
-  const homeRoutePath = getRoutePath(homeRouteName)
+  const homeRoutePath = getRoutePath(homeRouteName) // 获取主页路由路径
 
-  const label = `route.${homeRouteName}`
+  const label = `route.${homeRouteName}` // 设置标签页的标签
 
   let homeTab: App.Global.Tab = {
-    id: getRoutePath(homeRouteName),
-    label: label || homeRouteName,
-    routeKey: homeRouteName,
-    routePath: homeRoutePath,
-    fullPath: homeRoutePath,
+    id: getRoutePath(homeRouteName), // 获取主页路由路径作为 ID
+    label: label || homeRouteName, // 设置标签
+    routeKey: homeRouteName, // 路由键
+    routePath: homeRoutePath, // 路由路径
+    fullPath: homeRoutePath, // 完整路径
   }
 
-  const routes = router.getRoutes()
+  const routes = router.getRoutes() // 获取所有路由
 
-  const homeRoute = routes.find(route => route.name === homeRouteName)
+  const homeRoute = routes.find(route => route.name === homeRouteName) // 找到主页路由
 
   if (homeRoute) {
-    homeTab = getTabByRoute(homeRoute)
+    homeTab = getTabByRoute(homeRoute) // 根据路由获取标签页
   }
 
-  return homeTab
+  return homeTab // 返回主页标签页
 }
 
 /**
@@ -158,7 +158,7 @@ export function getDefaultHomeTab(router: Router, homeRouteName: LastLevelRouteK
  * @returns 是否在标签页数组中
  */
 export function isTabInTabs(tabId: string, tabs: App.Global.Tab[]) {
-  return tabs.some(tab => tab.id === tabId)
+  return tabs.some(tab => tab.id === tabId) // 判断标签页是否在数组中
 }
 
 /**
@@ -168,7 +168,7 @@ export function isTabInTabs(tabId: string, tabs: App.Global.Tab[]) {
  * @returns 过滤后的标签页数组
  */
 export function filterTabsById(tabId: string, tabs: App.Global.Tab[]) {
-  return tabs.filter(tab => tab.id !== tabId)
+  return tabs.filter(tab => tab.id !== tabId) // 过滤掉指定 ID 的标签页
 }
 
 /**
@@ -179,7 +179,7 @@ export function filterTabsById(tabId: string, tabs: App.Global.Tab[]) {
  * @returns 过滤后的标签页数组
  */
 export function filterTabsByIds(tabIds: string[], tabs: App.Global.Tab[]) {
-  return tabs.filter(tab => !tabIds.includes(tab.id))
+  return tabs.filter(tab => !tabIds.includes(tab.id)) // 过滤掉指定 ID 数组中的标签页
 }
 
 /**
@@ -189,11 +189,11 @@ export function filterTabsByIds(tabIds: string[], tabs: App.Global.Tab[]) {
  * @returns 提取后的标签页数组
  */
 export function extractTabsByAllRoutes(router: Router, tabs: App.Global.Tab[]) {
-  const routes = router.getRoutes()
+  const routes = router.getRoutes() // 获取所有路由
 
-  const routeNames = routes.map(route => route.name)
+  const routeNames = routes.map(route => route.name) // 获取所有路由的名称
 
-  return tabs.filter(tab => routeNames.includes(tab.routeKey))
+  return tabs.filter(tab => routeNames.includes(tab.routeKey)) // 过滤出路由名称在标签页中的标签页
 }
 
 /**
@@ -202,7 +202,7 @@ export function extractTabsByAllRoutes(router: Router, tabs: App.Global.Tab[]) {
  * @returns 固定标签页数组
  */
 export function getFixedTabs(tabs: App.Global.Tab[]) {
-  return tabs.filter(isFixedTab)
+  return tabs.filter(isFixedTab) // 过滤出固定标签页
 }
 
 /**
@@ -211,9 +211,9 @@ export function getFixedTabs(tabs: App.Global.Tab[]) {
  * @returns 固定标签页 ID 数组
  */
 export function getFixedTabIds(tabs: App.Global.Tab[]) {
-  const fixedTabs = getFixedTabs(tabs)
+  const fixedTabs = getFixedTabs(tabs) // 获取固定标签页
 
-  return fixedTabs.map(tab => tab.id)
+  return fixedTabs.map(tab => tab.id) // 返回固定标签页的 ID 数组
 }
 
 /**
@@ -224,10 +224,10 @@ export function getFixedTabIds(tabs: App.Global.Tab[]) {
 function updateTabsLabel(tabs: App.Global.Tab[]) {
   const updated = tabs.map(tab => ({
     ...tab,
-    label: tab.newLabel || tab.oldLabel || tab.label,
+    label: tab.newLabel || tab.oldLabel || tab.label, // 更新标签页的标签
   }))
 
-  return updated
+  return updated // 返回更新后的标签页数组
 }
 
 /**
@@ -237,11 +237,11 @@ function updateTabsLabel(tabs: App.Global.Tab[]) {
  * @returns 找到的标签页
  */
 export function findTabByRouteName(name: RouteKey, tabs: App.Global.Tab[]) {
-  const routePath = getRoutePath(name)
+  const routePath = getRoutePath(name) // 获取路由路径
 
-  const tabId = routePath
+  const tabId = routePath // 标签页 ID
 
-  const multiTabId = `${routePath}?`
+  const multiTabId = `${routePath}?` // 多标签页 ID
 
-  return tabs.find(tab => tab.id === tabId || tab.id.startsWith(multiTabId))
+  return tabs.find(tab => tab.id === tabId || tab.id.startsWith(multiTabId)) // 查找标签页
 }
