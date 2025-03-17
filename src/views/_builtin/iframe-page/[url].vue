@@ -2,6 +2,10 @@
 import { onActivated, onMounted } from 'vue'
 
 type Props = {
+
+  /**
+   *  网站链接
+   */
   url: string
 }
 
