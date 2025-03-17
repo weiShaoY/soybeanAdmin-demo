@@ -14,7 +14,6 @@ import {
   onScopeDispose,
   reactive,
   ref,
-  watch,
 } from 'vue'
 
 /** 移除只读属性类型 */
@@ -234,15 +233,6 @@ export function useTable<A extends UI.TableApiFn>(config: UI.NaiveTableConfig<A>
 
     await getData()
   }
-
-  scope.run(() => {
-    watch(
-      () => appStore.locale,
-      () => {
-        reloadColumns()
-      },
-    )
-  })
 
   onScopeDispose(() => {
     scope.stop()

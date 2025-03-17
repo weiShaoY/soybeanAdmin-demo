@@ -5,18 +5,28 @@
  */
 export enum SetupStoreId {
 
-  /** 应用程序存储 */
+  /**
+   *  应用程序存储
+   */
   App = 'app-store',
 
-  /** 主题存储 */
+  /**
+   *  主题存储
+   */
   Theme = 'theme-store',
 
-  /** 认证存储 */
+  /**
+   *  认证存储
+   */
   Auth = 'auth-store',
 
-  /** 路由存储 */
+  /**
+   *  路由存储
+   */
   Route = 'route-store',
 
-  /** 标签存储 */
+  /**
+   *  标签存储
+   */
   Tab = 'tab-store',
 }

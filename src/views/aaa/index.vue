@@ -1,26 +1,39 @@
 <!------------------------------------    ------------------------------------------------->
 <script lang="ts" setup>
 const stepList = [
-  "Start(Vincy.Li1)",
-  "Team Head(Rachel.Liu1)",
+  'Start(Vincy.Li1)',
+  'Team Head(Rachel.Liu1)',
+
   // 'Function Head(Fanny.Zhang、Sarah.Xing1、amy.zhang11)',
-  "Finance(Sylvia.Yuan、lina.zhuang)",
-  "FPA Manager(Will.Jiang)",
-  "PTP(leo.bao)",
-  "结束",
-];
+  'Finance(Sylvia.Yuan、lina.zhuang)',
+  'FPA Manager(Will.Jiang)',
+  'PTP(leo.bao)',
+  '结束',
+]
 </script>
 
 <template>
-  <div class="aaa">
+  <div
+    class="aaa"
+  >
     <div
       v-for="(item, index) in stepList"
       :key="item"
       :class="index === 0 ? 'item_1' : 'item_2'"
     >
-      <div class="a"></div>
-      <div class="b">{{ item }}</div>
-      <div class="c"></div>
+      <div
+        class="a"
+      />
+
+      <div
+        class="b"
+      >
+        {{ item }}
+      </div>
+
+      <div
+        class="c"
+      />
     </div>
   </div>
 </template>
@@ -71,7 +84,7 @@ const stepList = [
     height: 50px;
     display: flex;
     align-items: center;
-    background-color: #3E689B;
+    background-color: #3e689b;
 
     .a {
       width: 0;
@@ -100,7 +113,7 @@ const stepList = [
       height: 0;
       border-style: solid;
       border-width: 25px 0 25px 50px; /* 左侧形成箭头 */
-      border-color: #f6f8f9 #f6f8f9 #f6f8f9 #3E689B; /* 左侧箭头颜色 */
+      border-color: #f6f8f9 #f6f8f9 #f6f8f9 #3e689b; /* 左侧箭头颜色 */
     }
   }
 }

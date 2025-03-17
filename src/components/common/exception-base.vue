@@ -9,28 +9,38 @@ defineOptions({
 
 const props = defineProps<Props>()
 
+/**
+ *  异常类型
+ */
 type ExceptionType = '403' | '404' | '500'
 
+// 组件属性定义
 type Props = {
 
   /**
-   * Exception type
+   * 异常类型
    *
-   * - 403: no permission
-   * - 404: not found
-   * - 500: service error
+   * - 403: 无权限访问
+   * - 404: 页面未找到
+   * - 500: 服务器错误
    */
   type: ExceptionType
 }
 
 const { routerPushByKey } = useRouterPush()
 
+/**
+ *  异常类型与图标的映射关系
+ */
 const iconMap: Record<ExceptionType, string> = {
   403: 'no-permission',
   404: 'not-found',
   500: 'service-error',
 }
 
+/**
+ *  计算当前异常对应的图标
+ */
 const icon = computed(() => iconMap[props.type])
 </script>
 

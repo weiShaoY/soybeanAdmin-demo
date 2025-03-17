@@ -32,7 +32,7 @@ export function useFormRules() {
     },
     pwd: {
       pattern: REG_PWD,
-      message: '密码格式不正确，6-18位字符，包含字母、数字、下划线',
+      message: '密码格式不正确,6-18位字符,包含字母、数字、下划线',
       trigger: 'change',
     },
     code: {
