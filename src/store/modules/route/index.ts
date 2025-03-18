@@ -1,7 +1,6 @@
 import type {
   ElegantConstRoute,
   RouteKey,
-  RouteMap,
 } from '@elegant-router/types'
 
 import type { RouteRecordRaw } from 'vue-router'
@@ -9,8 +8,6 @@ import type { RouteRecordRaw } from 'vue-router'
 import { SetupStoreId } from '@/enum'
 
 import { router } from '@/router'
-
-import { getRouteName } from '@/router/elegant/transform'
 
 import { createRouteList, getVueRoutes } from '@/router/routes'
 
@@ -34,7 +31,6 @@ import { getGlobalMenusByAuthRoutes, transformMenuToSearchMenus } from './menu'
 import {
   getCacheRouteNames,
   getSelectedMenuKeyPathByKey,
-  isRouteExistByRouteName,
   sortRoutesByOrder,
 } from './shared'
 
@@ -280,23 +276,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   }
 
   /**
-   * 检查权限路由是否存在
-   * @param routePath - 路由路径
-   * @returns 是否存在
-   */
-  async function getIsAuthRouteExist(routePath: RouteMap[RouteKey]) {
-    const routeName = getRouteName(routePath)
-
-    if (!routeName) {
-      return false
-    }
-
-    const authRoutes = createRouteList()
-
-    return isRouteExistByRouteName(routeName, authRoutes)
-  }
-
-  /**
    * 获取选中的菜单键路径
    * @param selectedKey - 选中的菜单键
    * @returns 选中的菜单键路径数组
@@ -381,7 +360,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
      * @param routePath - 路由路径
      * @returns 是否存在权限路由
      */
-    getIsAuthRouteExist,
+    // getIsAuthRouteExist,
 
     /**
      * 获取选中菜单的键路径

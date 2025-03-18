@@ -1,4 +1,4 @@
-import type { RouteKey, RoutePath } from '@elegant-router/types'
+import type { RouteKey } from '@elegant-router/types'
 
 import type {
   NavigationGuardNext,
@@ -73,24 +73,6 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
   // 如果不是 "not-found" 路由，则允许访问
   if (!isNotFoundRoute) {
     return null
-  }
-
-  /**
-   *  被 "not-found" 路由捕获，检查路由是否存在
-   */
-  const exist = await routeStore.getIsAuthRouteExist(to.path as RoutePath)
-
-  /**
-   *  无权限路由名
-   */
-  const noPermissionRoute: RouteKey = '403'
-
-  if (exist) {
-    const location: RouteLocationRaw = {
-      name: noPermissionRoute,
-    }
-
-    return location
   }
 
   return null
