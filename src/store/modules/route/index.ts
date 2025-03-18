@@ -12,7 +12,7 @@ import { router } from '@/router'
 
 import { getRouteName } from '@/router/elegant/transform'
 
-import { createRoutes, getVueRoutes } from '@/router/routes'
+import { createRouteList, getVueRoutes } from '@/router/routes'
 
 import { useBoolean } from '@sa/hooks'
 
@@ -200,7 +200,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 初始化静态权限路由
    */
   function initStaticAuthRoute() {
-    const authRoutes = createRoutes()
+    const authRoutes = createRouteList()
 
     addAuthRoutes(authRoutes)
 
@@ -289,7 +289,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       return false
     }
 
-    const authRoutes = createRoutes()
+    const authRoutes = createRouteList()
 
     return isRouteExistByRouteName(routeName, authRoutes)
   }
