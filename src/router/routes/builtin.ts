@@ -4,7 +4,9 @@ import { layouts, views } from '../elegant/imports'
 
 import { getRoutePath, transformElegantRoutesToVueRoutes } from '../elegant/transform'
 
-/** 根路由 */
+/**
+ *  根路由
+ */
 export const ROOT_ROUTE: CustomRoute = {
   name: 'root',
   path: '/',
@@ -15,7 +17,9 @@ export const ROOT_ROUTE: CustomRoute = {
   },
 }
 
-/** 未找到路由 */
+/**
+ *  未找到路由
+ */
 const NOT_FOUND_ROUTE: CustomRoute = {
   name: 'not-found',
   path: '/:pathMatch(.*)*',
@@ -26,7 +30,9 @@ const NOT_FOUND_ROUTE: CustomRoute = {
   },
 }
 
-/** 内置路由数组，必须是常量并在 vue-router 中设置 */
+/**
+ *  内置路由数组，必须是常量并在 vue-router 中设置
+ */
 const builtinRoutes: CustomRoute[] = [ROOT_ROUTE, NOT_FOUND_ROUTE]
 
 /**
@@ -34,6 +40,6 @@ const builtinRoutes: CustomRoute[] = [ROOT_ROUTE, NOT_FOUND_ROUTE]
  *
  * @returns 转换后的 vue 路由
  */
-export function createBuiltinVueRoutes() {
+export function createVueRoutes() {
   return transformElegantRoutesToVueRoutes(builtinRoutes, layouts, views)
 }
