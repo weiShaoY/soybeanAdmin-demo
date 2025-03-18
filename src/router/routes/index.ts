@@ -7,7 +7,33 @@ import { layouts, views } from '../elegant/imports'
 
 import { generatedRoutes } from '../elegant/routes'
 
-import { transformElegantRoutesToVueRoutes } from '../utils/getVueRouteTemplate'
+import { transformElegantRoutesToVueRoutes } from '../utils'
+
+/**
+ *  根路由
+ */
+const ROOT_ROUTE: CustomRoute = {
+  name: 'root',
+  path: '/',
+  redirect: '/home',
+  meta: {
+    title: 'root',
+    constant: true,
+  },
+}
+
+/**
+ *  未找到路由
+ */
+const NOT_FOUND_ROUTE: CustomRoute = {
+  name: 'not-found',
+  path: '/:pathMatch(.*)*',
+  component: 'layout.blank$view.404',
+  meta: {
+    title: 'not-found',
+    constant: true,
+  },
+}
 
 /**
  * 自定义路由
@@ -212,4 +238,16 @@ export function getVueRoutes(routes: ElegantConstRoute[]) {
   return transformElegantRoutesToVueRoutes(routes, layouts, views)
 }
 
-// / /  后续直接导出 vue模版出来
+/**
+ *  内置路由数组，必须是常量并在 vue-router 中设置
+ */
+const builtinRoutes: CustomRoute[] = [ROOT_ROUTE, NOT_FOUND_ROUTE]
+
+/**
+ * 创建内置 vue 路由
+ *
+ * @returns 转换后的 vue 路由
+ */
+export function createVueRoutes() {
+  return transformElegantRoutesToVueRoutes(builtinRoutes, layouts, views)
+}

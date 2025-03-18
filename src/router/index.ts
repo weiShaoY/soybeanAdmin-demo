@@ -10,7 +10,7 @@ import {
 
 } from 'vue-router'
 
-import { createVueRoutes } from './routes/builtin'
+import { createVueRoutes } from './routes'
 
 import { createRouterGuard } from './utils'
 
