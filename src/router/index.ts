@@ -37,6 +37,8 @@ const historyCreatorMap: Record<Env.RouterHistoryMode, (base?: string) => Router
   memory: createMemoryHistory,
 }
 
+console.log('%c Line:40 🍑 createVueRoutes()', 'color:#fca650', createVueRoutes())
+
 /**
  * 创建路由实例
  */
