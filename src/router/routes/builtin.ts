@@ -2,7 +2,7 @@ import type { CustomRoute } from '@elegant-router/types'
 
 import { layouts, views } from '../elegant/imports'
 
-import { getRoutePath, transformElegantRoutesToVueRoutes } from '../elegant/transform'
+import { transformElegantRoutesToVueRoutes } from '../utils'
 
 /**
  *  根路由
@@ -10,7 +10,7 @@ import { getRoutePath, transformElegantRoutesToVueRoutes } from '../elegant/tran
 export const ROOT_ROUTE: CustomRoute = {
   name: 'root',
   path: '/',
-  redirect: getRoutePath(import.meta.env.VITE_ROUTE_HOME) || '/home',
+  redirect: '/home',
   meta: {
     title: 'root',
     constant: true,
