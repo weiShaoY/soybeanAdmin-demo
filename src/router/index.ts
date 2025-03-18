@@ -10,7 +10,7 @@ import {
 
 } from 'vue-router'
 
-import { createBuiltinVueRoutes } from './routes/builtin'
+import { createVueRoutes } from './routes/builtin'
 
 import { createRouterGuard } from './utils'
 
@@ -49,7 +49,7 @@ export const router = createRouter({
   /**
    * 设置路由表
    */
-  routes: createBuiltinVueRoutes(),
+  routes: createVueRoutes(),
 })
 
 /**
