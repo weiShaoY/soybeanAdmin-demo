@@ -355,14 +355,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     setIsInitRouteStore,
 
     /**
-     * 检查指定路由路径是否存在权限路由
-     *
-     * @param routePath - 路由路径
-     * @returns 是否存在权限路由
-     */
-    // getIsAuthRouteExist,
-
-    /**
      * 获取选中菜单的键路径
      *
      * @param selectedKey - 选中的菜单键
