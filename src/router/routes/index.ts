@@ -54,6 +54,7 @@ const generatedRouteList: GeneratedRoute[] = [
     meta: {
       title: 'aaa',
       i18nKey: 'route.aaa',
+      order: 20,
     },
   },
   {
@@ -181,7 +182,7 @@ const generatedRouteList: GeneratedRoute[] = [
     meta: {
       title: 'home',
       icon: 'mdi:monitor-dashboard',
-      order: 1,
+      order: 0,
       i18nKey: 'route.home',
     },
   },

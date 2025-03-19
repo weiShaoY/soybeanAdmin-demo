@@ -1,7 +1,4 @@
-import type {
-  ElegantConstRoute,
-  RouteKey,
-} from '@elegant-router/types'
+import type { RouteKey } from '@elegant-router/types'
 
 import { SetupStoreId } from '@/enum'
 
@@ -20,7 +17,6 @@ import {
   computed,
   nextTick,
   ref,
-  shallowRef,
 } from 'vue'
 
 import { useTabStore } from '../tab'
@@ -50,11 +46,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    *  首页路由键
    */
   const routeHome = ref(import.meta.env.VITE_ROUTE_HOME)
-
-  /**
-   *  路由列表 (未转化为 vue 路由)
-   */
-  const routeList = shallowRef<ElegantConstRoute[]>([])
 
   /**
    *  移除路由函数数组
@@ -105,52 +96,33 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
   /**
    * 初始化路由存储
-   * 1. 创建权限路由映射表
-   * 2. 填充静态路由到映射表
-   * 3. 更新路由列表并排序
-   * 4. 生成全局菜单数据
-   * 5. 过滤路由权限并添加到 Vue Router
-   * 6. 计算需要缓存的路由
-   * 7. 标记路由存储已初始化
-   * 8. 初始化首页标签页
+   * 1. 创建权限路由映射表并填充静态路由
+   * 2. 更新路由列表并排序
+   * 3. 生成全局菜单数据
+   * 4. 过滤路由权限并添加到 Vue Router
+   * 5. 计算需要缓存的路由名称列表
+   * 6. 标记路由存储已初始化并初始化首页标签页
    */
   async function initRouteStore() {
-  // 1. 创建权限路由映射表（key: 路由名称, value: 路由对象）
-    const authRoutesMap = new Map<string, ElegantConstRoute>([])
+  // 1. 创建权限路由映射表并填充静态路由
+    const routeListMap = new Map(staticRouteList.map(route => [route.name, route]))
 
-    // 2. 遍历静态路由列表，将每个路由添加到权限路由映射表
-    staticRouteList.forEach((route) => {
-      authRoutesMap.set(route.name, route)
-    })
+    // 2. 更新路由列表并排序
+    const sortedRoutes = sortRoutesByOrder(Array.from(routeListMap.values()))
 
-    // 3. 将权限路由映射表转换为数组，并更新路由列表
-    routeList.value = Array.from(authRoutesMap.values())
+    // 3. 生成全局菜单数据
+    menuList.value = getGlobalMenusByAuthRoutes(sortedRoutes)
 
-    // ////////////////////////////////
+    // 4. 过滤路由权限并添加到 Vue Router
+    const vueRoutes = getVueRoutes(sortedRoutes)
 
-    // 4. 对路由列表进行排序
-    const sortRoutes = sortRoutesByOrder([...routeList.value])
+    vueRoutes.forEach(route => removeRouteFns.push(router.addRoute(route)))
 
-    // 5. 根据排序后的路由生成全局菜单数据
-    menuList.value = getGlobalMenusByAuthRoutes(sortRoutes)
-
-    // 6. 对排序后的路由进行权限过滤，生成 Vue Router 可用的路由
-    const vueRoutes = getVueRoutes(sortRoutes)
-
-    // 7. 将处理后的路由添加到 Vue Router，并存储路由移除函数
-    vueRoutes.forEach((route) => {
-      const removeFn = router.addRoute(route)
-
-      removeRouteFns.push(removeFn)
-    })
-
-    // 8. 计算需要缓存的路由名称列表
+    // 5. 计算需要缓存的路由名称列表
     cacheRouteList.value = getCacheRouteNames(vueRoutes)
 
-    // 9. 标记路由存储已初始化，避免重复初始化
+    // 6. 标记路由存储已初始化并初始化首页标签页
     setIsInitRouteStore(true)
-
-    // 10. 初始化首页标签页
     tabStore.initHomeTab()
   }
 
