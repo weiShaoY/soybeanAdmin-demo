@@ -65,20 +65,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   const routeList = shallowRef<ElegantConstRoute[]>([])
 
   /**
-   * 添加路由数组到 authRoutes
-   *
-   * @param routes - 需要添加的路由列表
-   */
-  function addAuthRoutes(routes: ElegantConstRoute[]) {
-    const authRoutesMap = new Map<string, ElegantConstRoute>([])
-
-    routes.forEach((route) => {
-      authRoutesMap.set(route.name, route)
-    })
-    routeList.value = Array.from(authRoutesMap.values())
-  }
-
-  /**
    *  移除路由函数数组
    */
   const removeRouteFns: (() => void)[] = []
@@ -165,22 +151,34 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   }
 
   /**
-   * 初始化权限路由
+   * 初始化路由存储
+   * 1. 创建一个权限路由映射表
+   * 2. 填充静态路由到映射表
+   * 3. 更新路由列表
+   * 4. 处理常量路由和权限路由
+   * 5. 标记路由存储已初始化
+   * 6. 初始化首页标签页
    */
   async function initRouteStore() {
-    initStaticAuthRoute()
-    tabStore.initHomeTab() // 初始化首页标签页
-  }
+  // 创建一个 Map 用于存储权限路由（key: 路由名称, value: 路由对象）
+    const authRoutesMap = new Map<string, ElegantConstRoute>([])
 
-  /**
-   * 初始化静态权限路由
-   */
-  function initStaticAuthRoute() {
-    addAuthRoutes(staticRouteList)
+    // 遍历静态路由列表，将每个路由添加到 authRoutesMap
+    staticRouteList.forEach((route) => {
+      authRoutesMap.set(route.name, route)
+    })
 
+    // 将 Map 转换为数组，并更新路由列表
+    routeList.value = Array.from(authRoutesMap.values())
+
+    // 处理常量路由和权限路由
     handleConstantAndAuthRoutes()
 
+    // 设置已初始化标志，避免重复初始化
     setIsInitRouteStore(true)
+
+    // 初始化首页标签页
+    tabStore.initHomeTab()
   }
 
   /**
@@ -295,7 +293,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     isInitConstantRoute,
 
     /**
-     * 初始化路由Store
+     * 初始化路由Store函数
      */
     initRouteStore,
 
@@ -303,13 +301,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
      * 是否已初始化路由Store
      */
     isInitRouteStore,
-
-    /**
-     * 设置是否已初始化路由Store状态
-     *
-     * @param value - 是否已初始化
-     */
-    setIsInitRouteStore,
 
     /**
      * 获取选中菜单的键路径
