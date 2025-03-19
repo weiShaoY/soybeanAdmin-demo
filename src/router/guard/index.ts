@@ -9,7 +9,7 @@ import { createRouteGuard } from './route'
  *
  * @param router - 路由实例
  */
-export function createProgressGuard(router: Router) {
+function createProgressGuard(router: Router) {
   // 在路由开始前启动进度条
   router.beforeEach((_to, _from, next) => {
     window.NProgress?.start?.()
@@ -27,7 +27,7 @@ export function createProgressGuard(router: Router) {
  *
  * @param router - 路由实例
  */
-export function createDocumentTitleGuard(router: Router) {
+function createDocumentTitleGuard(router: Router) {
   router.afterEach((to) => {
     /** 路由元信息中的国际化键 */
     const { title } = to.meta
