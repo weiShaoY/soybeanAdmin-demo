@@ -9,7 +9,10 @@ import { SetupStoreId } from '@/enum'
 
 import { router } from '@/router'
 
-import { createRouteList, getVueRoutes } from '@/router/routes'
+import {
+  getVueRoutes,
+  staticRouteList,
+} from '@/router/routes'
 
 import { useBoolean } from '@sa/hooks'
 
@@ -146,29 +149,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   )
 
   /**
-   * 重置存储
-   */
-  // async function resetStore() {
-  //   const routeStore = useRouteStore();
-
-  //   routeStore.$reset();
-
-  //   // 重置 Vue 路由
-  //   resetVueRoutes();
-
-  //   // 重置存储后需要重新初始化常量路由
-  //   await initConstantRoute();
-  // }
-
-  /**
-   * 重置 Vue 路由
-   */
-  // function resetVueRoutes() {
-  //   removeRouteFns.forEach((fn) => fn());
-  //   removeRouteFns.length = 0;
-  // }
-
-  /**
    * 初始化常量路由
    */
   async function initConstantRoute() {
@@ -196,9 +176,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 初始化静态权限路由
    */
   function initStaticAuthRoute() {
-    const authRoutes = createRouteList()
-
-    addAuthRoutes(authRoutes)
+    addAuthRoutes(staticRouteList)
 
     handleConstantAndAuthRoutes()
 
@@ -209,27 +187,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 处理常量路由和权限路由
    */
   function handleConstantAndAuthRoutes() {
-    // const allRoutes = [...authRoutes.value]
-
-    // // 对路由进行排序
-    // const sortRoutes = sortRoutesByOrder(allRoutes)
-
-    // // 对路由进行权限过滤
-    // const vueRoutes = getVueRoutes(sortRoutes)
-
-    // // 重置 Vue Router 中的所有动态路由
-    // resetVueRoutes()
-
-    // // 将处理后的路由添加到 Vue Router
-    // addRoutesToVueRouter(vueRoutes)
-
-    // // 生成全局菜单数据
-    // getGlobalMenus(sortRoutes)
-
-    // // 计算需要缓存的路由
-    // getCacheRoutes(vueRoutes)
-
-    // #////////////////////////////////////
     const allRouteList = [...routeList.value]
 
     // 对路由进行排序

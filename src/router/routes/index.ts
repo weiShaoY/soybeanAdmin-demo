@@ -759,13 +759,9 @@ const customRouteList: CustomRoute[] = [
 ]
 
 /**
- * 创建路由数组
- *  - 转换为 Vue 路由格式前的路由数组
- * @returns 路由数组
+ *  静态路由数组
  */
-export function createRouteList() {
-  return [...customRouteList, ...generatedRouteList]
-}
+export const staticRouteList = [...customRouteList, ...generatedRouteList]
 
 /**
  * 将 路由列表转换成 vue 路由
