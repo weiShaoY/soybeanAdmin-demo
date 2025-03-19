@@ -3,8 +3,6 @@ import type {
   RouteKey,
 } from '@elegant-router/types'
 
-import type { RouteRecordRaw } from 'vue-router'
-
 import { SetupStoreId } from '@/enum'
 
 import { router } from '@/router'
@@ -82,14 +80,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   )
 
   /**
-   * 获取全局菜单
-   * @param routes - 路由数组
-   */
-  function getGlobalMenuList(routes: ElegantConstRoute[]) {
-    menuList.value = getGlobalMenusByAuthRoutes(routes)
-  }
-
-  /**
    *  缓存路由数组
    */
   const cacheRouteList = ref<RouteKey[]>([])
@@ -98,15 +88,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    *  排除缓存路由列表（用于重置路由缓存）
    */
   const excludeCacheRouteList = ref<RouteKey[]>([])
-
-  /**
-   * 获取缓存路由
-   *
-   * @param routes - Vue 路由数组
-   */
-  function getCacheRouteList(routes: RouteRecordRaw[]) {
-    cacheRouteList.value = getCacheRouteNames(routes)
-  }
 
   /**
    * 重置路由缓存
@@ -126,12 +107,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    */
   const breadcrumbList = computed(() =>
     getBreadcrumbsByRoute(router.currentRoute.value, menuList.value),
-  )
-
-  console.log(
-    '%c Line:141 🥤 breadcrumbList 全局面包屑数组',
-    'color:#33a5ff',
-    breadcrumbList,
   )
 
   /**
@@ -185,55 +160,32 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 处理常量路由和权限路由
    */
   function handleConstantAndAuthRoutes() {
-    const allRouteList = [...routeList.value]
-
     // 对路由进行排序
-    const sortRoutes = sortRoutesByOrder(allRouteList)
+    const sortRoutes = sortRoutesByOrder([...routeList.value])
+
+    // 生成全局菜单数据
+    menuList.value = getGlobalMenusByAuthRoutes(sortRoutes)
 
     // 对路由进行权限过滤
     const vueRoutes = getVueRoutes(sortRoutes)
 
-    console.log('%c Line:244 🌭 vueRoutes', 'color:#33a5ff', vueRoutes)
-
-    // 重置 Vue Router 中的所有动态路由
-    // resetVueRoutes();
-
     // 将处理后的路由添加到 Vue Router
-    addRoutesToVueRouter(vueRoutes)
-
-    // 生成全局菜单数据
-    getGlobalMenuList(sortRoutes)
-
-    // 计算需要缓存的路由
-    getCacheRouteList(vueRoutes)
-  }
-
-  /**
-   * 添加路由到 Vue 路由器
-   * @param routes - Vue 路由数组
-   */
-  function addRoutesToVueRouter(routes: RouteRecordRaw[]) {
-    routes.forEach((route) => {
+    vueRoutes.forEach((route) => {
       // 添加路由并获取移除函数
       const removeFn = router.addRoute(route)
 
       // 存储移除函数
-      addRemoveRouteFn(removeFn)
+      removeRouteFns.push(removeFn)
     })
+
+    // 计算需要缓存的路由
+    cacheRouteList.value = getCacheRouteNames(vueRoutes)
   }
 
   /**
-   * 添加移除路由函数
-   * @param fn - 移除路由函数
-   */
-  function addRemoveRouteFn(fn: () => void) {
-    removeRouteFns.push(fn)
-  }
-
-  /**
-   * 获取选中的菜单键路径
-   * @param selectedKey - 选中的菜单键
-   * @returns 选中的菜单键路径数组
+   *  获取选中的菜单键路径
+   *  @param selectedKey - 选中的菜单键
+   *  @returns 选中的菜单键路径数组
    */
   function getSelectedMenuKeyPath(selectedKey: string) {
     return getSelectedMenuKeyPathByKey(selectedKey, menuList.value)
