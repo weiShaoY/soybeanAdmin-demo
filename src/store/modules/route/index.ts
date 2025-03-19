@@ -98,7 +98,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 1. 创建权限路由映射表并填充静态路由
    * 2. 更新路由列表并排序
    * 3. 生成全局菜单数据
-   * 4. 过滤路由权限并添加到 Vue Router
+   * 4. 转化成vue路由并添加到 router
    * 5. 计算需要缓存的路由名称列表
    * 6. 标记路由存储已初始化并初始化首页标签页
    */
@@ -109,7 +109,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     menuList.value = getGlobalMenusByAuthRoutes(sortedRouteList)
     console.log('%c Line:117 🍺 menuList.value', 'color:#2eafb0', menuList.value)
 
-    // 4. 过滤路由权限并添加到 Vue Router
+    // 4. 转化成vue路由并添加到 router
     const vueRoutes = getVueRoutes(sortedRouteList)
 
     vueRoutes.forEach(route => removeRouteFns.push(router.addRoute(route)))
