@@ -8,7 +8,7 @@ import { layouts, views } from '../elegant/imports'
 
 import fallbackRoute from '../modules/fallback'
 
-import { transformElegantRoutesToVueRoutes } from '../utils'
+import { sortRoutesByOrder, transformElegantRoutesToVueRoutes } from '../utils'
 
 /**
  *  生成的路由数组
@@ -762,7 +762,13 @@ const customRouteList: CustomRoute[] = [
 /**
  *  静态路由数组
  */
-export const staticRouteList = [...customRouteList, ...generatedRouteList]
+const staticRouteList = [...customRouteList, ...generatedRouteList]
+
+// 1. 创建权限路由映射表并填充静态路由
+const routeListMap = new Map(staticRouteList.map(route => [route.name, route]))
+
+// 2. 更新路由列表并排序
+export const sortedRouteList = sortRoutesByOrder(Array.from(routeListMap.values()))
 
 /**
  * 将 路由列表转换成 vue 路由

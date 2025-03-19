@@ -6,7 +6,7 @@ import { router } from '@/router'
 
 import {
   getVueRoutes,
-  staticRouteList,
+  sortedRouteList,
 } from '@/router/routes'
 
 import { useBoolean } from '@sa/hooks'
@@ -28,7 +28,6 @@ import { getGlobalMenusByAuthRoutes, transformMenuToSearchMenus } from './menu'
 import {
   getCacheRouteNames,
   getSelectedMenuKeyPathByKey,
-  sortRoutesByOrder,
 } from './shared'
 
 /**
@@ -104,19 +103,17 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 6. 标记路由存储已初始化并初始化首页标签页
    */
   async function initRouteStore() {
-  // 1. 创建权限路由映射表并填充静态路由
-    const routeListMap = new Map(staticRouteList.map(route => [route.name, route]))
-
-    // 2. 更新路由列表并排序
-    const sortedRoutes = sortRoutesByOrder(Array.from(routeListMap.values()))
+    console.log('%c Line:112 🥤 sortedRouteList', 'color:#4fff4B', sortedRouteList)
 
     // 3. 生成全局菜单数据
-    menuList.value = getGlobalMenusByAuthRoutes(sortedRoutes)
+    menuList.value = getGlobalMenusByAuthRoutes(sortedRouteList)
+    console.log('%c Line:117 🍺 menuList.value', 'color:#2eafb0', menuList.value)
 
     // 4. 过滤路由权限并添加到 Vue Router
-    const vueRoutes = getVueRoutes(sortedRoutes)
+    const vueRoutes = getVueRoutes(sortedRouteList)
 
     vueRoutes.forEach(route => removeRouteFns.push(router.addRoute(route)))
+    console.log('%c Line:123 🥃 vueRoutes', 'color:#33a5ff', vueRoutes)
 
     // 5. 计算需要缓存的路由名称列表
     cacheRouteList.value = getCacheRouteNames(vueRoutes)
