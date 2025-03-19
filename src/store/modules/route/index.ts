@@ -42,12 +42,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   const tabStore = useTabStore()
 
   /**
-   *  是否已初始化常量路由
-   */
-  const { bool: isInitConstantRoute, setBool: setIsInitConstantRoute }
-    = useBoolean()
-
-  /**
    *  是否已初始化路由Store
    */
   const { bool: isInitRouteStore, setBool: setIsInitRouteStore } = useBoolean()
@@ -110,76 +104,54 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   )
 
   /**
-   * 初始化常量路由
-   */
-  async function initConstantRoute() {
-    if (isInitConstantRoute.value) {
-      return
-    } // 避免重复初始化
-
-    handleConstantAndAuthRoutes()
-
-    setIsInitConstantRoute(true)
-
-    // 初始化首页标签页
-    tabStore.initHomeTab()
-  }
-
-  /**
    * 初始化路由存储
-   * 1. 创建一个权限路由映射表
+   * 1. 创建权限路由映射表
    * 2. 填充静态路由到映射表
-   * 3. 更新路由列表
-   * 4. 处理常量路由和权限路由
-   * 5. 标记路由存储已初始化
-   * 6. 初始化首页标签页
+   * 3. 更新路由列表并排序
+   * 4. 生成全局菜单数据
+   * 5. 过滤路由权限并添加到 Vue Router
+   * 6. 计算需要缓存的路由
+   * 7. 标记路由存储已初始化
+   * 8. 初始化首页标签页
    */
   async function initRouteStore() {
-  // 创建一个 Map 用于存储权限路由（key: 路由名称, value: 路由对象）
+  // 1. 创建权限路由映射表（key: 路由名称, value: 路由对象）
     const authRoutesMap = new Map<string, ElegantConstRoute>([])
 
-    // 遍历静态路由列表，将每个路由添加到 authRoutesMap
+    // 2. 遍历静态路由列表，将每个路由添加到权限路由映射表
     staticRouteList.forEach((route) => {
       authRoutesMap.set(route.name, route)
     })
 
-    // 将 Map 转换为数组，并更新路由列表
+    // 3. 将权限路由映射表转换为数组，并更新路由列表
     routeList.value = Array.from(authRoutesMap.values())
 
-    // 处理常量路由和权限路由
-    handleConstantAndAuthRoutes()
+    // ////////////////////////////////
 
-    // 设置已初始化标志，避免重复初始化
-    setIsInitRouteStore(true)
-
-    // 初始化首页标签页
-    tabStore.initHomeTab()
-  }
-
-  /**
-   * 处理常量路由和权限路由
-   */
-  function handleConstantAndAuthRoutes() {
-    // 对路由进行排序
+    // 4. 对路由列表进行排序
     const sortRoutes = sortRoutesByOrder([...routeList.value])
 
-    // 生成全局菜单数据
+    // 5. 根据排序后的路由生成全局菜单数据
     menuList.value = getGlobalMenusByAuthRoutes(sortRoutes)
 
-    // 对路由进行权限过滤
+    // 6. 对排序后的路由进行权限过滤，生成 Vue Router 可用的路由
     const vueRoutes = getVueRoutes(sortRoutes)
 
-    // 将处理后的路由添加到 Vue Router
+    // 7. 将处理后的路由添加到 Vue Router，并存储路由移除函数
     vueRoutes.forEach((route) => {
-      // 添加路由并获取移除函数
       const removeFn = router.addRoute(route)
 
-      // 存储移除函数
       removeRouteFns.push(removeFn)
     })
 
-    // 计算需要缓存的路由
+    // 8. 计算需要缓存的路由名称列表
     cacheRouteList.value = getCacheRouteNames(vueRoutes)
+
+    // 9. 标记路由存储已初始化，避免重复初始化
+    setIsInitRouteStore(true)
+
+    // 10. 初始化首页标签页
+    tabStore.initHomeTab()
   }
 
   /**
@@ -233,16 +205,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
      * 全局面包屑数组（基于当前路由和全局菜单生成）
      */
     breadcrumbList,
-
-    /**
-     * 初始化常量路由
-     */
-    initConstantRoute,
-
-    /**
-     * 是否已初始化常量路由
-     */
-    isInitConstantRoute,
 
     /**
      * 初始化路由Store函数

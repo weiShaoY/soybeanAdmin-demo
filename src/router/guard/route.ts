@@ -28,24 +28,6 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
    */
   const isNotFoundRoute = to.name === notFoundRoute
 
-  // 如果常量路由未初始化，则初始化常量路由
-  if (!routeStore.isInitConstantRoute) {
-    await routeStore.initConstantRoute()
-
-    // 因为常量路由未初始化，路由被 "not-found" 路由捕获
-    // 初始化常量路由后，重定向到原始路由
-    const path = to.fullPath
-
-    const location: RouteLocationRaw = {
-      path,
-      replace: true,
-      query: to.query,
-      hash: to.hash,
-    }
-
-    return location
-  }
-
   //  判断  是否已初始化路由Store
   if (!routeStore.isInitRouteStore) {
     // 初始化权限路由
