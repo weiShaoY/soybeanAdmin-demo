@@ -14,6 +14,10 @@ import { createVueRoutes } from './routes'
 
 import { createRouterGuard } from './utils'
 
+import { vueRouteList } from './vueRouteList'
+
+console.log('%c Line:18 🥔 vueRouteList', 'color:#e41a6a', vueRouteList)
+
 // 从环境变量中获取路由历史模式和基本 URL，默认为 'history' 模式
 const { VITE_ROUTER_HISTORY_MODE = 'history', VITE_BASE_URL } = import.meta.env
 
