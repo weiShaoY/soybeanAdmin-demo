@@ -66,9 +66,9 @@ export function getMenuObject(
   const label = title || '' // 确保 `label` 不为空
 
   const menu: App.Global.Menu = {
-    key: name as string, // 以路由名称作为菜单的唯一 key
+    key: path as string, // 以路由名称作为菜单的唯一 key
     label, // 设置菜单的显示名称
-    routeKey: name as RouteKey, // 绑定路由 key
+    routeKey: path as RouteKey, // 绑定路由 key
     routePath: path as RouteMap[RouteKey], // 绑定路由路径
     icon: SvgIconVNode({
       icon, // 传入图标

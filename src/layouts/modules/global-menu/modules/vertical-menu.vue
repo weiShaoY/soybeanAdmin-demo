@@ -58,6 +58,7 @@ watch(
     immediate: true,
   },
 )
+console.log("%c Line:62 🥛 routeStore.menuList", "color:#93c0a4", routeStore.menuList);
 </script>
 
 <template>
@@ -76,11 +77,13 @@ watch(
         <!-- 渲染菜单项 -->
         <MenuItem
           v-for="item in routeStore.menuList"
-          :key="item.key"
+          :key="item.routePath"
           :item="item"
-          :index="item.key"
+          :index="item.routePath"
         />
       </ElMenu>
+      22222222
+
     </SimpleScrollbar>
   </Teleport>
 </template>

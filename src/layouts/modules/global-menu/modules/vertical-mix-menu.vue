@@ -180,9 +180,9 @@ watch(
               <!-- 子级菜单项 -->
               <MenuItem
                 v-for="item in childLevelMenus"
-                :key="item.key"
+                :key="item.routePath"
                 :item="item"
-                :index="item.key"
+                :index="item.routePath"
               />
             </ElMenu>
           </SimpleScrollbar>

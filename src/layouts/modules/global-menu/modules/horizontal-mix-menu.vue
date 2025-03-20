@@ -57,9 +57,9 @@ function handleSelectMixMenu(menu: App.Global.Menu) {
       <!-- 渲染子级菜单项 -->
       <MenuItem
         v-for="item in childLevelMenus"
-        :key="item.key"
-        :item="item"
-        :index="item.key"
+        :key="item.routePath"
+          :item="item"
+          :index="item.routePath"
       />
     </ElMenu>
   </Teleport>

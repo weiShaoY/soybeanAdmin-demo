@@ -69,7 +69,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * @param routeKey - 路由键，默认值为当前路由名
    */
   async function resetRouteCache(routeKey?: RouteKey) {
-    const routeName = routeKey || (router.currentRoute.value.name as RouteKey);
+    const routeName = routeKey || (router.currentRoute.value.path as RouteKey);
+    console.log("%c Line:73 🌽 routeName", "color:#93c0a4", routeName);
 
     excludeCacheRouteList.value.push(routeName);
 

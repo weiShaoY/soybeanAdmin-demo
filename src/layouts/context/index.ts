@@ -3,6 +3,7 @@
 import { useRouteStore } from '@/store/modules/route'
 
 import { useContext } from '@sa/hooks'
+import { set } from 'nprogress'
 
 import {
   computed,
@@ -44,9 +45,13 @@ function useMixMenu() {
    * 获取当前激活的一级菜单 key，并更新 `activeFirstLevelMenuKey`
    */
   function getActiveFirstLevelMenuKey() {
-    const [firstLevelRouteName] = selectedKey.value.split('_')
+    console.log("%c Line:48 🥪 selectedKey.value", "color:#465975", selectedKey.value);
 
-    setActiveFirstLevelMenuKey(firstLevelRouteName)
+    // const [firstLevelRouteName] = selectedKey.value.split('_')
+
+    // setActiveFirstLevelMenuKey(firstLevelRouteName)
+
+    setActiveFirstLevelMenuKey(selectedKey.value)
   }
 
   /** 所有菜单项 */
@@ -143,11 +148,14 @@ export function useMenu() {
   const selectedKey = computed(() => {
     const { hideInMenu, activeMenu } = route.meta
 
-    const name = route.name as string
+    const path = route.path as string
 
-    return (hideInMenu ? activeMenu : name) || name
+    return (hideInMenu ? activeMenu : path) || path
+
+
   })
 
+  console.log("%c Line:156 🍒 selectedKey", "color:#e41a6a", selectedKey);
   return {
     selectedKey,
   }

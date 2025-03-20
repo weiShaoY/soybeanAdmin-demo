@@ -41,14 +41,13 @@ export function getBreadcrumbList(
   /**
    *  获取当前路由的名称作为匹配 key
    */
-  const key = route.name as string
+  const key = route.path as string
 
   /**
    *  获取路由的 `activeMenu`（用于高亮父级菜单）
    */
   const activeKey = route.meta?.activeMenu
 
-  console.log('%c Line:50 🍓 activeKey', 'color:#93c0a4', activeKey)
 
   for (const menu of menus) {
     if (menu.key === key) {

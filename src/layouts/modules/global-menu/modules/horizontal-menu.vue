@@ -37,9 +37,9 @@ const { selectedKey } = useMenu()
       <!-- 渲染菜单项 -->
       <MenuItem
         v-for="item in routeStore.menuList"
-        :key="item.key"
-        :item="item"
-        :index="item.key"
+        :key="item.routePath"
+          :item="item"
+          :index="item.routePath"
       />
     </ElMenu>
   </Teleport>

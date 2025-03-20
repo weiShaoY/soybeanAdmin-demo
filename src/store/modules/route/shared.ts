@@ -112,6 +112,7 @@ export function getSelectedMenuKeyPathByKey(
 
   menus.some((menu) => {
     const path = findMenuPath(selectedKey, menu)
+    console.log("%c Line:115 🍬 path", "color:#fca650", path);
 
     const find = Boolean(path?.length)
 

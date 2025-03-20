@@ -83,7 +83,7 @@ export function getTabByRoute(route: App.Global.TabRoute) {
   const tab: App.Global.Tab = {
     id: getTabIdByRoute(route), // 获取标签页 ID
     label,
-    routeKey: name as LastLevelRouteKey, // 路由键
+    routeKey: path as LastLevelRouteKey, // 路由键
     routePath: path as RouteMap[LastLevelRouteKey], // 路由路径
     fullPath,
     fixedIndex: fixedIndexInTab, // 固定索引
