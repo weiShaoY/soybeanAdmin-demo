@@ -41,12 +41,12 @@ export function transformMenuToSearchMenus(
 }
 
 /**
- * 根据路由获取全局菜单
+ * 根据路由获取全局菜单对象
  * @param route 路由对象
  * @returns 解析后的全局菜单对象
  */
 export function getGlobalMenuByBaseRoute(
-  route: RouteLocationNormalizedLoaded | ElegantConstRoute, // 可接受 `vue-router` 的 `RouteLocationNormalizedLoaded` 或 `ElegantConstRoute`
+  route: RouteLocationNormalizedLoaded | ElegantConstRoute,
 ) {
   const { SvgIconVNode } = useSvgIcon() // 获取 SVG 图标渲染方法
 
@@ -78,11 +78,11 @@ export function getGlobalMenuByBaseRoute(
 }
 
 /**
- * 根据权限路由获取全局菜单
- * @param routes 权限路由数组
+ * 获取全局菜单数组
+ * @param routes 路由数组
  * @returns 解析后的全局菜单数组
  */
-export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
+export function getMenuList(routes: ElegantConstRoute[]) {
   /**
    *  初始化全局菜单数组
    */
@@ -98,7 +98,7 @@ export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
 
       if (route.children?.some(child => !child.meta?.hideInMenu)) {
         // 如果当前路由的子路由中有可显示的菜单项，则递归处理子菜单
-        menu.children = getGlobalMenusByAuthRoutes(route.children)
+        menu.children = getMenuList(route.children)
       }
 
       // 将菜单添加到 `menus` 数组

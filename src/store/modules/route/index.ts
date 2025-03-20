@@ -21,9 +21,9 @@ import {
 
 import { useTabStore } from '../tab'
 
-import { getBreadcrumbsByRoute } from './breadcrumb'
+import { getBreadcrumbList } from './breadcrumb'
 
-import { getGlobalMenusByAuthRoutes, transformMenuToSearchMenus } from './menu'
+import { getMenuList, transformMenuToSearchMenus } from './menu'
 
 import {
   getCacheRouteNames,
@@ -82,7 +82,9 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     const routeName = routeKey || (router.currentRoute.value.name as RouteKey)
 
     excludeCacheRouteList.value.push(routeName)
+
     await nextTick()
+
     excludeCacheRouteList.value = []
   }
 
@@ -90,8 +92,10 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    *  全局面包屑数组（基于当前路由和全局菜单生成
    */
   const breadcrumbList = computed(() =>
-    getBreadcrumbsByRoute(router.currentRoute.value, menuList.value),
+    getBreadcrumbList(router.currentRoute.value, menuList.value),
   )
+
+  console.log('%c Line:96 🥝 breadcrumbList', 'color:#fca650', breadcrumbList.value)
 
   /**
    * 初始化路由存储
@@ -106,7 +110,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     console.log('%c Line:112 🥤 sortedRouteList', 'color:#4fff4B', sortedRouteList)
 
     // 3. 生成全局菜单数据
-    menuList.value = getGlobalMenusByAuthRoutes(sortedRouteList)
+    menuList.value = getMenuList(sortedRouteList)
     console.log('%c Line:117 🍺 menuList.value', 'color:#2eafb0', menuList.value)
 
     // 4. 转化成vue路由并添加到 router

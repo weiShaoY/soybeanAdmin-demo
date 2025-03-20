@@ -29,12 +29,12 @@ function transformMenuToBreadcrumb(menu: App.Global.Menu) {
 }
 
 /**
- * 根据路由获取面包屑
+ * 获取面包屑列表
  * @param route 当前路由对象
  * @param menus 全局菜单数组
  * @returns 面包屑数组
  */
-export function getBreadcrumbsByRoute(
+export function getBreadcrumbList(
   route: RouteLocationNormalizedLoaded, // 当前激活的路由
   menus: App.Global.Menu[], // 全局菜单列表
 ): App.Global.Breadcrumb[] {
@@ -47,6 +47,8 @@ export function getBreadcrumbsByRoute(
    *  获取路由的 `activeMenu`（用于高亮父级菜单）
    */
   const activeKey = route.meta?.activeMenu
+
+  console.log('%c Line:50 🍓 activeKey', 'color:#93c0a4', activeKey)
 
   for (const menu of menus) {
     if (menu.key === key) {
@@ -87,7 +89,7 @@ export function getBreadcrumbsByRoute(
 
     if (menu.children?.length) {
       // 如果当前菜单存在子菜单，则递归查找匹配项
-      const result = getBreadcrumbsByRoute(route, menu.children)
+      const result = getBreadcrumbList(route, menu.children)
 
       if (result.length > 0) {
         // 如果找到了匹配项，则将当前菜单添加到面包屑路径中
