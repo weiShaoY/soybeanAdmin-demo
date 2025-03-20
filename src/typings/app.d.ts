@@ -333,10 +333,10 @@ declare namespace App {
       oldLabel?: string
 
       /** 标签页路由键 */
-      routeKey: LastLevelRouteKey
+      routeKey: string
 
       /** 标签页路由路径 */
-      routePath: RouteMap[LastLevelRouteKey]
+      routePath: string
 
       /** 标签页完整路径 */
       fullPath: string

@@ -1,77 +1,67 @@
-import type { RouteKey } from '@elegant-router/types'
+import type { RouteKey } from "@elegant-router/types";
 
-import { SetupStoreId } from '@/enum'
+import { SetupStoreId } from "@/enum";
 
-import { router } from '@/router'
+import { router } from "@/router";
 
-import {
-  getVueRoutes,
-  sortedRouteList,
-} from '@/router/routes'
+import { blogChildRouterList } from "@/router/modules/blog";
 
-import { useBoolean } from '@sa/hooks'
+import { useBoolean } from "@sa/hooks";
 
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
-import {
-  computed,
-  nextTick,
-  ref,
-} from 'vue'
+import { computed, nextTick, ref } from "vue";
 
-import { useTabStore } from '../tab'
+import { useTabStore } from "../tab";
 
-import { getBreadcrumbList } from './breadcrumb'
+import { getBreadcrumbList } from "./breadcrumb";
 
-import { getMenuList, transformMenuToSearchMenus } from './menu'
+import { getMenuList, transformMenuToSearchMenus } from "./menu";
 
-import {
-  getCacheRouteNames,
-  getSelectedMenuKeyPathByKey,
-} from './shared'
+import { getCacheRouteNames, getSelectedMenuKeyPathByKey } from "./shared";
 
 /**
  * 路由状态管理
  */
 export const useRouteStore = defineStore(SetupStoreId.Route, () => {
-  const tabStore = useTabStore()
+  const tabStore = useTabStore();
 
   /**
    *  是否已初始化路由Store
    */
-  const { bool: isInitRouteStore, setBool: setIsInitRouteStore } = useBoolean()
+  const { bool: isInitRouteStore, setBool: setIsInitRouteStore } = useBoolean();
 
   /**
    *  首页路由键
    */
-  const routeHome = ref(import.meta.env.VITE_ROUTE_HOME)
+  const routeHome = ref(import.meta.env.VITE_ROUTE_HOME);
 
   /**
    *  移除路由函数数组
    */
-  const removeRouteFns: (() => void)[] = []
+  const removeRouteFns: (() => void)[] = [];
 
   /**
    *  全局菜单
    */
-  const menuList = ref<App.Global.Menu[]>([])
+  const menuList = ref<App.Global.Menu[]>([]);
 
   /**
    *  搜索菜单
    */
   const searchMenuList = computed(() =>
     transformMenuToSearchMenus(menuList.value),
-  )
+  );
 
   /**
    *  缓存路由数组
    */
-  const cacheRouteList = ref<RouteKey[]>([])
+  const cacheRouteList = ref<RouteKey[]>([]);
 
   /**
    *  排除缓存路由列表（用于重置路由缓存）
    */
-  const excludeCacheRouteList = ref<RouteKey[]>([])
+  const excludeCacheRouteList = ref<RouteKey[]>([]);
 
   /**
    * 重置路由缓存
@@ -79,13 +69,13 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * @param routeKey - 路由键，默认值为当前路由名
    */
   async function resetRouteCache(routeKey?: RouteKey) {
-    const routeName = routeKey || (router.currentRoute.value.name as RouteKey)
+    const routeName = routeKey || (router.currentRoute.value.name as RouteKey);
 
-    excludeCacheRouteList.value.push(routeName)
+    excludeCacheRouteList.value.push(routeName);
 
-    await nextTick()
+    await nextTick();
 
-    excludeCacheRouteList.value = []
+    excludeCacheRouteList.value = [];
   }
 
   /**
@@ -93,9 +83,13 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    */
   const breadcrumbList = computed(() =>
     getBreadcrumbList(router.currentRoute.value, menuList.value),
-  )
+  );
 
-  console.log('%c Line:96 🥝 breadcrumbList', 'color:#fca650', breadcrumbList.value)
+  console.log(
+    "%c Line:96 🥝 breadcrumbList",
+    "color:#fca650",
+    breadcrumbList.value,
+  );
 
   /**
    * 初始化路由存储
@@ -107,24 +101,28 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * 6. 标记路由存储已初始化并初始化首页标签页
    */
   async function initRouteStore() {
-    console.log('%c Line:112 🥤 sortedRouteList', 'color:#4fff4B', sortedRouteList)
-
     // 3. 生成全局菜单数据
-    menuList.value = getMenuList(sortedRouteList)
-    console.log('%c Line:117 🍺 menuList.value', 'color:#2eafb0', menuList.value)
+    menuList.value = getMenuList(blogChildRouterList);
+
+    console.log(
+      "%c Line:117 🍺 menuList.value",
+      "color:#2eafb0",
+      menuList.value,
+    );
 
     // 4. 转化成vue路由并添加到 router
-    const vueRoutes = getVueRoutes(sortedRouteList)
 
-    vueRoutes.forEach(route => removeRouteFns.push(router.addRoute(route)))
-    console.log('%c Line:123 🥃 vueRoutes', 'color:#33a5ff', vueRoutes)
+    blogChildRouterList.forEach((route) =>
+      removeRouteFns.push(router.addRoute(route)),
+    );
 
     // 5. 计算需要缓存的路由名称列表
-    cacheRouteList.value = getCacheRouteNames(vueRoutes)
+    cacheRouteList.value = getCacheRouteNames(blogChildRouterList);
 
     // 6. 标记路由存储已初始化并初始化首页标签页
-    setIsInitRouteStore(true)
-    tabStore.initHomeTab()
+    setIsInitRouteStore(true);
+
+    tabStore.initHomeTab();
   }
 
   /**
@@ -133,7 +131,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    *  @returns 选中的菜单键路径数组
    */
   function getSelectedMenuKeyPath(selectedKey: string) {
-    return getSelectedMenuKeyPathByKey(selectedKey, menuList.value)
+    return getSelectedMenuKeyPathByKey(selectedKey, menuList.value);
   }
 
   return {
@@ -196,5 +194,5 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
      * @returns 选中菜单的键路径数组
      */
     getSelectedMenuKeyPath,
-  }
-})
+  };
+});

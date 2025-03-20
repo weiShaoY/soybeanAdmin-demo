@@ -126,7 +126,14 @@ declare namespace Env {
 
     /** 在配置应用程序打包后是否自动检测更新 */
     readonly VITE_AUTOMATICALLY_DETECT_UPDATE?: CommonType.YesOrNo
+
+
+    /** 博客首页的路由路径 */
+    readonly VITE_Router_BLOG_HOME: string
   } & ImportMetaEnv
+
+
+
 }
 
 // eslint-disable-next-line ts/consistent-type-definitions

@@ -1,14 +1,14 @@
-import type { CustomRoute } from '@elegant-router/types'
+import type { AppRouteRecordRaw } from '@/router/types'
 
 /**
  *  根路由和未找到路由
  */
-const fallbackRoute: CustomRoute[] = [
+const fallbackRoute: AppRouteRecordRaw[] = [
   {
 
     name: 'root',
     path: '/',
-    redirect: '/home',
+    redirect: '/blog/workbench',
     meta: {
       title: 'root',
       constant: true,
@@ -17,7 +17,7 @@ const fallbackRoute: CustomRoute[] = [
   {
     name: 'not-found',
     path: '/:pathMatch(.*)*',
-    component: 'layout.blank$view.404',
+    component: () => import('@/pages/error/404/index.vue'),
     meta: {
       title: 'not-found',
       constant: true,

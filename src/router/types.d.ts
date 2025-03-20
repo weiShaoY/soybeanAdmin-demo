@@ -1,5 +1,7 @@
 import type { Component } from 'vue'
 
+import type { RouteLocationRaw, RouteRecordRaw } from 'vue-router'
+
  type RouteMeta = {
 
    /**
@@ -71,8 +73,8 @@ import type { Component } from 'vue'
 
 export type AppRouteRecordRaw = {
   name: string
-  path: string
-  redirect?: string
+  redirect?: RouteLocationRaw | null // 确保符合 Vue Router 允许的类型
   component?: Component | (() => Promise<Component>)
   meta: RouteMeta
-}
+  children?: AppRouteRecordRaw[]
+} & Omit<RouteRecordRaw, 'meta' | 'component'>

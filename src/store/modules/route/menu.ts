@@ -8,6 +8,8 @@ import type { RouteLocationNormalizedLoaded } from 'vue-router'
 
 import { useSvgIcon } from '@/hooks/common/icon'
 
+import {getParentPathByChildName} from '@/router/utils'
+
 /**
  * 将菜单转换为搜索菜单
  * @param menus 菜单数组
@@ -51,6 +53,7 @@ export function getMenuObject(
   const { SvgIconVNode } = useSvgIcon() // 获取 SVG 图标渲染方法
 
   const { name, path } = route // 获取路由的名称和路径
+  console.log("%c Line:54 🍢 name", "color:#465975", name);
 
   const {
     title, // 菜单标题
@@ -73,7 +76,7 @@ export function getMenuObject(
       fontSize: iconFontSize || 20, // 设置图标大小，默认 20
     }),
   }
-
+  console.log("%c Line:78 🥚 menu", "color:#3f7cff", menu);
   return menu // 返回生成的菜单对象
 }
 
@@ -91,6 +94,16 @@ export function getMenuList(routes: ElegantConstRoute[]) {
   routes.forEach((route) => {
     // 过滤掉 `meta.hideInMenu` 为 `true` 的路由，不显示在菜单中
     if (!route.meta?.hideInMenu) {
+
+      //  如果当前路由 的children只有一项,并且  子路由的 path为 '' 则次路由为一级路由
+      if (route.children?.length === 1 && route.children[0].path === '') {
+        const path = route.path
+        route = route.children[0]
+        route.path = path
+      }
+
+
+
       /**
        *  解析当前路由的菜单
        */

@@ -127,28 +127,31 @@ export function getRouteIcons(route: App.Global.TabRoute) {
  * @param homeRouteName 主页路由名称
  * @returns 主页标签页
  */
-export function getDefaultHomeTab(router: Router, homeRouteName: LastLevelRouteKey) {
-  const homeRoutePath = getRoutePath(homeRouteName) // 获取主页路由路径
+export function getDefaultHomeTab(router: Router, homeRouteName?: LastLevelRouteKey) {
 
-  const label = `route.${homeRouteName}` // 设置标签页的标签
 
-  let homeTab: App.Global.Tab = {
-    id: getRoutePath(homeRouteName), // 获取主页路由路径作为 ID
-    label: label || homeRouteName, // 设置标签
-    routeKey: homeRouteName, // 路由键
-    routePath: homeRoutePath, // 路由路径
-    fullPath: homeRoutePath, // 完整路径
-  }
+//   let homeTab: App.Global.Tab = {
+//     id: import.meta.env.VITE_Router_BLOG_HOME, // 获取主页路由路径作为 ID
+//     label: '工作台', // 设置标签
+//     routeKey:  import.meta.env.VITE_Router_BLOG_HOME, // 路由键
+//     routePath:  import.meta.env.VITE_Router_BLOG_HOME, // 路由路径
+//     fullPath:  import.meta.env.VITE_Router_BLOG_HOME, // 完整路径
+//   }
 
-  const routes = router.getRoutes() // 获取所有路由
+//   const routes = router.getRoutes() // 获取所有路由
 
-  const homeRoute = routes.find(route => route.name === homeRouteName) // 找到主页路由
+//     /**
+//      *  找到主页路由
+//      */
+//   const homeRoute = routes.find(route => route.name === homeRouteName)
+//   console.log("%c Line:147 🍖 homeRoute", "color:#2eafb0", homeRoute);
 
-  if (homeRoute) {
-    homeTab = getTabByRoute(homeRoute) // 根据路由获取标签页
-  }
-
-  return homeTab // 返回主页标签页
+//  // 根据路由获取标签页
+//   if (homeRoute) {
+//     homeTab = getTabByRoute(homeRoute)
+//   }
+//   console.log("%c Line:153 🍓 homeTab", "color:#ea7e5c", homeTab);
+//   return homeTab // 返回主页标签页
 }
 
 /**

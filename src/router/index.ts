@@ -10,8 +10,6 @@ import {
 
 } from 'vue-router'
 
-import { createVueRoutes } from './routes'
-
 import { createRouterGuard } from './utils'
 
 import { vueRouteList } from './vueRouteList'
@@ -41,8 +39,6 @@ const historyCreatorMap: Record<Env.RouterHistoryMode, (base?: string) => Router
   memory: createMemoryHistory,
 }
 
-console.log('%c Line:40 🍑 createVueRoutes()', 'color:#fca650', createVueRoutes())
-
 /**
  * 创建路由实例
  */
@@ -55,7 +51,8 @@ export const router = createRouter({
   /**
    * 设置路由表
    */
-  routes: createVueRoutes(),
+  // routes: createVueRoutes(),
+  routes: vueRouteList,
 })
 
 /**

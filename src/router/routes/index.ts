@@ -6,7 +6,7 @@ import type {
 
 import { layouts, views } from '../elegant/imports'
 
-import fallbackRoute from '../modules/fallback'
+// import fallbackRoute from '../modules/fallback'
 
 import { sortRoutesByOrder, transformElegantRoutesToVueRoutes } from '../utils'
 
@@ -768,7 +768,7 @@ const staticRouteList = [...customRouteList, ...generatedRouteList]
 const routeListMap = new Map(staticRouteList.map(route => [route.name, route]))
 
 // 2. 更新路由列表并排序
-export const sortedRouteList = sortRoutesByOrder(Array.from(routeListMap.values()))
+// export const sortedRouteList = sortRoutesByOrder(Array.from(routeListMap.values()))
 
 /**
  * 将 路由列表转换成 vue 路由
@@ -795,6 +795,6 @@ export function getVueRoutes(routes: ElegantConstRoute[]) {
  *
  * @returns 转换后的 vue 路由
  */
-export function createVueRoutes() {
-  return transformElegantRoutesToVueRoutes(fallbackRoute, layouts, views)
-}
+// export function createVueRoutes() {
+//   return transformElegantRoutesToVueRoutes(fallbackRoute, layouts, views)
+// }

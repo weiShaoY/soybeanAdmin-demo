@@ -62,7 +62,16 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    *  初始化首页 Tab
    */
   function initHomeTab() {
-    homeTab.value = getDefaultHomeTab(router, routeStore.routeHome)
+    // homeTab.value = getDefaultHomeTab(router)
+    homeTab.value ={
+        id: import.meta.env.VITE_Router_BLOG_HOME, // 获取主页路由路径作为 ID
+        label: '工作台', // 设置标签
+        routeKey:  'workbench', // 路由键
+        routePath:  import.meta.env.VITE_Router_BLOG_HOME, // 路由路径
+        fullPath:  import.meta.env.VITE_Router_BLOG_HOME, // 完整路径
+    }
+    console.log("%c Line:66 🍰 homeTab.value", "color:#b03734", homeTab.value);
+
   }
 
   /**
@@ -204,6 +213,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param tab Tab 信息
    */
   async function switchRouteByTab(tab: App.Global.Tab) {
+    console.log("%c Line:216 🥓 tab", "color:#93c0a4", tab.fullPath);
     const fail = await routerPush(tab.fullPath)
 
     if (!fail) {
