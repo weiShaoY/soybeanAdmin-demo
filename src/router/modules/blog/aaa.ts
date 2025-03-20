@@ -3,20 +3,20 @@ import { BLOG_BASE_Layout } from '@/layouts'
 /**
  *  根路由和未找到路由
  */
-const workbenchRoute = [
+const aaaRoute = [
   {
-    path: '/blog/workbench',
+    path: '/blog/aaa',
     component: BLOG_BASE_Layout,
     meta: {
-      title: '工作台',
+      title: '测试aaa',
     },
     children: [
       {
-        name: 'workbench',
+        name: 'aaa',
         path: '',
-        component: () => import('@/pages/blog/workbench/index.vue'),
+        component: () => import('@/pages/blog/aaa/index.vue'),
         meta: {
-          title: '工作台',
+          title: '测试aaa',
           icon: 'mdi:monitor-dashboard',
           order: 0,
         },
@@ -25,4 +25,4 @@ const workbenchRoute = [
   },
 ]
 
-export default workbenchRoute
+export default aaaRoute

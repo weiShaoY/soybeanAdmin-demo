@@ -48,7 +48,6 @@ export function getBreadcrumbList(
    */
   const activeKey = route.meta?.activeMenu
 
-
   for (const menu of menus) {
     if (menu.key === key) {
       // 如果菜单 key 与路由 key 匹配，则返回转换后的面包屑

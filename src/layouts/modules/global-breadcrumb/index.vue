@@ -1,23 +1,22 @@
 <script setup lang="ts">
 import type { RouteKey } from '@elegant-router/types'
 
-import { useRouterPush } from '@/hooks/common/router'
-
 import { useRouteStore } from '@/store/modules/route'
 
 import { useThemeStore } from '@/store/modules/theme'
 
 import { createReusableTemplate } from '@vueuse/core'
 
+import { useRouter } from 'vue-router'
+
 defineOptions({
   name: 'GlobalBreadcrumb',
 })
+const router = useRouter()
 
 const themeStore = useThemeStore()
 
 const routeStore = useRouteStore()
-
-const { routerPushByKey } = useRouterPush()
 
 type BreadcrumbContentProps = {
   breadcrumb: App.Global.Menu
@@ -30,7 +29,8 @@ const [DefineBreadcrumbContent, BreadcrumbContent] = createReusableTemplate<Brea
  * @param key 路由键
  */
 function handleClickMenu(key: RouteKey) {
-  routerPushByKey(key)
+  console.log('%c Line:33 🥓 breadcrumb', 'color:#33a5ff', routeStore.breadcrumbList)
+  router.push(key)
 }
 </script>
 

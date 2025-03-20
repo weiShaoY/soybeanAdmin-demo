@@ -64,7 +64,7 @@ function updateExpandedKeys() {
     return
   }
 
-  expandedKeys.value = routeStore.getSelectedMenuKeyPath(selectedKey.value)
+  expandedKeys.value = [selectedKey.value]
 }
 
 watch(

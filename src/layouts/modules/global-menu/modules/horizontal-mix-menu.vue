@@ -58,8 +58,8 @@ function handleSelectMixMenu(menu: App.Global.Menu) {
       <MenuItem
         v-for="item in childLevelMenus"
         :key="item.routePath"
-          :item="item"
-          :index="item.routePath"
+        :item="item"
+        :index="item.routePath"
       />
     </ElMenu>
   </Teleport>

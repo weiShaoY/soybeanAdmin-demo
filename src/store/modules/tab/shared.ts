@@ -19,14 +19,22 @@ export function getAllTabs(tabs: App.Global.Tab[], homeTab?: App.Global.Tab) {
     return [] // 如果没有主页标签页，返回空数组
   }
 
-  const filterHomeTabs = tabs.filter(tab => tab.id !== homeTab.id) // 过滤掉主页标签页
+  /**
+   *  过滤掉主页标签页
+   */
+  const filterHomeTabs = tabs.filter(tab => tab.id !== homeTab.id)
 
-  const fixedTabs = filterHomeTabs.filter(isFixedTab).sort((a, b) => a.fixedIndex! - b.fixedIndex!) // 过滤固定标签页并排序
+  /**
+   *  过滤固定标签页并排序
+   */
+  const fixedTabs = filterHomeTabs.filter(isFixedTab).sort((a, b) => a.fixedIndex! - b.fixedIndex!)
 
-  const remainTabs = filterHomeTabs.filter(tab => !isFixedTab(tab)) // 获取非固定标签页
+  /**
+   *  非固定标签页
+   */
+  const remainTabs = filterHomeTabs.filter(tab => !isFixedTab(tab))
 
   const allTabs = [homeTab, ...fixedTabs, ...remainTabs] // 重新组合所有标签页
-  console.log("%c Line:29 🍯 allTabs", "color:#7f2b82", allTabs);
 
   return updateTabsLabel(allTabs) // 更新标签页标签
 }
@@ -72,7 +80,9 @@ export function getTabIdByRoute(route: App.Global.TabRoute) {
  * @returns 标签页
  */
 export function getTabByRoute(route: App.Global.TabRoute) {
-  const { name, path, fullPath = path, meta } = route
+  const { path, fullPath = path, meta } = route
+
+  console.log('%c Line:84 🎂 meta', 'color:#f5ce50', meta)
 
   const { title, fixedIndexInTab } = meta
 
@@ -123,39 +133,6 @@ export function getRouteIcons(route: App.Global.TabRoute) {
 }
 
 /**
- * 获取默认主页标签页
- * @param router 路由器
- * @param homeRouteName 主页路由名称
- * @returns 主页标签页
- */
-export function getDefaultHomeTab(router: Router, homeRouteName?: LastLevelRouteKey) {
-
-
-//   let homeTab: App.Global.Tab = {
-//     id: import.meta.env.VITE_Router_BLOG_HOME, // 获取主页路由路径作为 ID
-//     label: '工作台', // 设置标签
-//     routeKey:  import.meta.env.VITE_Router_BLOG_HOME, // 路由键
-//     routePath:  import.meta.env.VITE_Router_BLOG_HOME, // 路由路径
-//     fullPath:  import.meta.env.VITE_Router_BLOG_HOME, // 完整路径
-//   }
-
-//   const routes = router.getRoutes() // 获取所有路由
-
-//     /**
-//      *  找到主页路由
-//      */
-//   const homeRoute = routes.find(route => route.name === homeRouteName)
-//   console.log("%c Line:147 🍖 homeRoute", "color:#2eafb0", homeRoute);
-
-//  // 根据路由获取标签页
-//   if (homeRoute) {
-//     homeTab = getTabByRoute(homeRoute)
-//   }
-//   console.log("%c Line:153 🍓 homeTab", "color:#ea7e5c", homeTab);
-//   return homeTab // 返回主页标签页
-}
-
-/**
  * 判断标签页是否在标签页数组中
  * @param tabId 标签页 ID
  * @param tabs 标签页数组
@@ -195,7 +172,11 @@ export function filterTabsByIds(tabIds: string[], tabs: App.Global.Tab[]) {
 export function extractTabsByAllRoutes(router: Router, tabs: App.Global.Tab[]) {
   const routes = router.getRoutes() // 获取所有路由
 
+  console.log('%c Line:172 🍌 routes', 'color:#2eafb0', routes)
+
   const routeNames = routes.map(route => route.name) // 获取所有路由的名称
+
+  console.log('%c Line:174 🍋 routeNames', 'color:#e41a6a', routeNames)
 
   return tabs.filter(tab => routeNames.includes(tab.routeKey)) // 过滤出路由名称在标签页中的标签页
 }

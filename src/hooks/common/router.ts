@@ -64,22 +64,6 @@ export function useRouterPush(inSetup = true) {
    * @param key 路由键名
    */
   function routerPushByKeyWithMetaQuery(key: RouteKey) {
-    console.log("%c Line:67 🎂 key", "color:#b03734", key);
-    const allRoutes = router.getRoutes()
-
-    const meta = allRoutes.find(item => item.name === key)?.meta || null
-
-    const query: Record<string, string> = {
-    }
-
-    meta?.query?.forEach((item) => {
-      query[item.key] = item.value
-    })
-
-    // return routerPushByKey(key, {
-    //   query,
-    // })
-
     return routerPush(key)
   }
 

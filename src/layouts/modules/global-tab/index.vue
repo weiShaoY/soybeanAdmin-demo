@@ -242,6 +242,7 @@ async function handleContextMenu(e: MouseEvent, tabId: string) {
  * 初始化标签页存储
  */
 function init() {
+  console.log('%c Line:246 🥕 route', 'color:#6ec1c2', route)
   tabStore.initTabStore(route)
 }
 
@@ -252,7 +253,8 @@ function removeFocus() {
   (document.activeElement as HTMLElement)?.blur()
 }
 
-watch(() => route.fullPath, () => {
+watch(() => route.path, () => {
+  console.log('%c Line:258 🥚 route', 'color:#4fff4B', route)
   tabStore.addTab(route)
 })
 
@@ -261,6 +263,9 @@ watch(() => tabStore.activeTabId, () => {
 })
 
 init()
+
+console.log('%c Line:266 🥛 tabStore.tabs', 'color:#7f2b82', tabStore.tabs)
+
 </script>
 
 <template>

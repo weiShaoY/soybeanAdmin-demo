@@ -20,6 +20,11 @@ const routeStore = useRouteStore()
 const { routerPushByKeyWithMetaQuery } = useRouterPush()
 
 const { selectedKey } = useMenu()
+
+// function routerPushByKeyWithMetaQuery(key: RouteKey) {
+//   console.log('%c Line:66 🎂 key', 'color:#e41a6a', key)
+// }
+
 </script>
 
 <template>
@@ -38,8 +43,8 @@ const { selectedKey } = useMenu()
       <MenuItem
         v-for="item in routeStore.menuList"
         :key="item.routePath"
-          :item="item"
-          :index="item.routePath"
+        :item="item"
+        :index="item.routePath"
       />
     </ElMenu>
   </Teleport>

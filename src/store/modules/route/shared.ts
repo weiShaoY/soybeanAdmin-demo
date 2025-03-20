@@ -7,38 +7,6 @@ import type {
 import type { RouteRecordRaw } from 'vue-router'
 
 /**
- * 根据顺序排序路由
- * @param  route 路由
- * @returns  排序后的路由
- */
-// function sortRouteByOrder(route: ElegantConstRoute) {
-//   if (route.children?.length) {
-//     route.children.sort(
-//       (next, prev) =>
-//         (Number(next.meta?.order) || 0) - (Number(prev.meta?.order) || 0),
-//     )
-//     route.children.forEach(sortRouteByOrder)
-//   }
-
-//   return route
-// }
-
-// /**
-//  * 根据顺序排序路由数组
-//  * @param  routes 路由数组
-//  * @returns  排序后的路由数组
-//  */
-// export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
-//   routes.sort(
-//     (next, prev) =>
-//       (Number(next.meta?.order) || 0) - (Number(prev.meta?.order) || 0),
-//   )
-//   routes.forEach(sortRouteByOrder)
-
-//   return routes
-// }
-
-/**
  * 获取缓存路由名
  * @param  routes Vue 路由数组（两级）
  * @returns  缓存路由名
@@ -96,80 +64,4 @@ function recursiveGetIsRouteExistByRouteName(
   }
 
   return isExist
-}
-
-/**
- * 根据选中菜单键获取选中菜单键路径
- * @param  selectedKey 选中菜单键
- * @param  menus 全局菜单
- * @returns  选中菜单键路径数组
- */
-export function getSelectedMenuKeyPathByKey(
-  selectedKey: string,
-  menus: App.Global.Menu[],
-) {
-  const keyPath: string[] = []
-
-  menus.some((menu) => {
-    // const path = findMenuPath(selectedKey, menu)
-    // console.log("%c Line:115 🍬 path", "color:#fca650", path);
-
-    // const find = Boolean(path?.length)
-
-    // if (find) {
-    //   keyPath.push(...path!)
-    // }
-
-        const find = Boolean(selectedKey?.length)
-        console.log("%c Line:124 🍕 find", "color:#ea7e5c", find);
-
-    if (find) {
-      keyPath.push(...selectedKey!)
-    }
-
-
-    return find
-  })
-  keyPath
-  console.log("%c Line:133 🧀 keyPath", "color:#93c0a4", keyPath);
-  return keyPath
-}
-
-/**
- * 查找菜单路径
- * @param  targetKey 目标菜单键
- * @param  menu 菜单
- * @returns  菜单路径数组
- */
-function findMenuPath(
-  targetKey: string,
-  menu: App.Global.Menu,
-): string[] | null {
-  const path: string[] = []
-
-  function dfs(item: App.Global.Menu): boolean {
-    path.push(item.key)
-
-    if (item.key === targetKey) {
-      return true
-    }
-
-    if (item.children) {
-      for (const child of item.children) {
-        if (dfs(child)) {
-          return true
-        }
-      }
-    }
-
-    path.pop()
-
-    return false
-  }
-
-  if (dfs(menu)) {
-    return path
-  }
-
-  return null
 }

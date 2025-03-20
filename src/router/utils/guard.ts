@@ -62,7 +62,7 @@ function createRouteGuard(router: Router) {
       if (isNotFoundRoute) {
         const rootRoute: RouteKey = 'root'
 
-        const path = to.redirectedFrom?.name === rootRoute ? '/' : to.fullPath
+        const path = to.redirectedFrom?.name === rootRoute ? '/' : to.path
 
         next({
           path,
