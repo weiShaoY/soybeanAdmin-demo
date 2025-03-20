@@ -1,6 +1,6 @@
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 
-import { getGlobalMenuByBaseRoute } from './menu'
+import { getMenuObject } from './menu'
 
 /**
  * 将菜单转换为面包屑
@@ -71,7 +71,7 @@ export function getBreadcrumbList(
       /**
        *  根据基础路由获取对应的菜单项
        */
-      const breadcrumbMenu = getGlobalMenuByBaseRoute(route)
+      const breadcrumbMenu = getMenuObject(route)
 
       if (parentKey !== activeKey) {
         // 如果 `parentKey` 不是 `activeKey`，说明它是独立的父级菜单

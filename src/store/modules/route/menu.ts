@@ -41,11 +41,11 @@ export function transformMenuToSearchMenus(
 }
 
 /**
- * 根据路由获取全局菜单对象
+ * 根据路由获取菜单对象
  * @param route 路由对象
- * @returns 解析后的全局菜单对象
+ * @returns 解析后的菜单对象
  */
-export function getGlobalMenuByBaseRoute(
+export function getMenuObject(
   route: RouteLocationNormalizedLoaded | ElegantConstRoute,
 ) {
   const { SvgIconVNode } = useSvgIcon() // 获取 SVG 图标渲染方法
@@ -94,7 +94,7 @@ export function getMenuList(routes: ElegantConstRoute[]) {
       /**
        *  解析当前路由的菜单
        */
-      const menu = getGlobalMenuByBaseRoute(route)
+      const menu = getMenuObject(route)
 
       if (route.children?.some(child => !child.meta?.hideInMenu)) {
         // 如果当前路由的子路由中有可显示的菜单项，则递归处理子菜单
