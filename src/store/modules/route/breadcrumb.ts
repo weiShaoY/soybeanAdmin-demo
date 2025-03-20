@@ -77,8 +77,11 @@ export function getBreadcrumbsByRoute(
       }
 
       return [
-        transformMenuToBreadcrumb(menu), // 添加当前菜单的面包屑
-        transformMenuToBreadcrumb(breadcrumbMenu), // 添加父级菜单的面包屑
+        // 添加当前菜单的面包屑
+        transformMenuToBreadcrumb(menu),
+
+        // 添加父级菜单的面包屑
+        transformMenuToBreadcrumb(breadcrumbMenu),
       ]
     }
 
