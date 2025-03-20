@@ -111,18 +111,27 @@ export function getSelectedMenuKeyPathByKey(
   const keyPath: string[] = []
 
   menus.some((menu) => {
-    const path = findMenuPath(selectedKey, menu)
-    console.log("%c Line:115 🍬 path", "color:#fca650", path);
+    // const path = findMenuPath(selectedKey, menu)
+    // console.log("%c Line:115 🍬 path", "color:#fca650", path);
 
-    const find = Boolean(path?.length)
+    // const find = Boolean(path?.length)
+
+    // if (find) {
+    //   keyPath.push(...path!)
+    // }
+
+        const find = Boolean(selectedKey?.length)
+        console.log("%c Line:124 🍕 find", "color:#ea7e5c", find);
 
     if (find) {
-      keyPath.push(...path!)
+      keyPath.push(...selectedKey!)
     }
+
 
     return find
   })
-
+  keyPath
+  console.log("%c Line:133 🧀 keyPath", "color:#93c0a4", keyPath);
   return keyPath
 }
 

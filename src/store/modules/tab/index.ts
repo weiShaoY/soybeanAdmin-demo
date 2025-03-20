@@ -66,7 +66,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     homeTab.value ={
         id: import.meta.env.VITE_Router_BLOG_HOME, // 获取主页路由路径作为 ID
         label: '工作台', // 设置标签
-        routeKey:  'workbench', // 路由键
+        routeKey:  import.meta.env.VITE_Router_BLOG_HOME, // 路由键
         routePath:  import.meta.env.VITE_Router_BLOG_HOME, // 路由路径
         fullPath:  import.meta.env.VITE_Router_BLOG_HOME, // 完整路径
     }
@@ -213,8 +213,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param tab Tab 信息
    */
   async function switchRouteByTab(tab: App.Global.Tab) {
-    console.log("%c Line:216 🥓 tab", "color:#93c0a4", tab.fullPath);
-    const fail = await routerPush(tab.fullPath)
+    console.log("%c Line:216 🥓 tab", "color:#93c0a4", tab);
+    const fail = await routerPush(tab.routePath)
 
     if (!fail) {
       setActiveTabId(tab.id)

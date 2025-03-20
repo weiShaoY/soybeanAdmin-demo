@@ -32,6 +32,7 @@ const routeStore = useRouteStore()
 const { routerPushByKeyWithMetaQuery } = useRouterPush()
 
 const { selectedKey } = useMenu()
+console.log("%c Line:35 🥛 selectedKey", "color:#93c0a4", selectedKey);
 
 // const inverted = computed(() => !themeStore.darkMode && themeStore.sider.inverted);
 

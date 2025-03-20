@@ -26,6 +26,7 @@ export function getAllTabs(tabs: App.Global.Tab[], homeTab?: App.Global.Tab) {
   const remainTabs = filterHomeTabs.filter(tab => !isFixedTab(tab)) // 获取非固定标签页
 
   const allTabs = [homeTab, ...fixedTabs, ...remainTabs] // 重新组合所有标签页
+  console.log("%c Line:29 🍯 allTabs", "color:#7f2b82", allTabs);
 
   return updateTabsLabel(allTabs) // 更新标签页标签
 }
