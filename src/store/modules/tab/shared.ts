@@ -170,6 +170,8 @@ export function filterTabsByIds(tabIds: string[], tabs: App.Global.Tab[]) {
 export function extractTabsByAllRoutes(router: Router, tabs: App.Global.Tab[]) {
   const routes = router.getRoutes() // 获取所有路由
 
+  console.log('%c Line:172 🥑 router', 'color:#ed9ec7', routes)
+
   const routeNames = routes.map(route => route.name) // 获取所有路由的名称
 
   return tabs.filter(tab => routeNames.includes(tab.routeKey)) // 过滤出路由名称在标签页中的标签页

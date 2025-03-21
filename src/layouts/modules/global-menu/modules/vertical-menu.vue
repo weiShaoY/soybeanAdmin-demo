@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import type { RouteKey } from '@elegant-router/types'
 
 import { GLOBAL_SIDER_MENU_ID } from '@/constants/app'
-
-import { useRouterPush } from '@/hooks/common/router'
 
 import { useAppStore } from '@/store/modules/app'
 
@@ -13,7 +10,7 @@ import { SimpleScrollbar } from '@sa/materials'
 
 import { ref, watch } from 'vue'
 
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import { useMenu } from '../../../context'
 
@@ -29,13 +26,15 @@ const appStore = useAppStore()
 
 const routeStore = useRouteStore()
 
-const { routerPushByKeyWithMetaQuery } = useRouterPush()
+// const { routerPushByKeyWithMetaQuery } = useRouterPush()
 
 const { selectedKey } = useMenu()
 
 // const inverted = computed(() => !themeStore.darkMode && themeStore.sider.inverted);
 
 const expandedKeys = ref<string[]>([])
+
+const router = useRouter()
 
 /**
  * 更新展开的菜单项
@@ -59,6 +58,10 @@ watch(
   },
 )
 
+function getSelectedKey(value: string) {
+  router.push(value)
+}
+
 </script>
 
 <template>
@@ -72,7 +75,7 @@ watch(
         :default-active="selectedKey"
         :default-openeds="expandedKeys"
         :collapse="appStore.isSiderCollapse"
-        @select="val => routerPushByKeyWithMetaQuery(val as RouteKey)"
+        @select="val => getSelectedKey(val)"
       >
         <!-- 渲染菜单项 -->
         <MenuItem

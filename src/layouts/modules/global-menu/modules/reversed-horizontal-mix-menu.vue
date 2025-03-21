@@ -3,17 +3,13 @@ import type { RouteKey } from '@elegant-router/types'
 
 import { GLOBAL_HEADER_MENU_ID, GLOBAL_SIDER_MENU_ID } from '@/constants/app'
 
-import { useRouterPush } from '@/hooks/common/router'
-
 import { useAppStore } from '@/store/modules/app'
-
-import { useRouteStore } from '@/store/modules/route'
 
 import { SimpleScrollbar } from '@sa/materials'
 
 import { ref, watch } from 'vue'
 
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import { useMenu, useMixMenuContext } from '../../../context'
 
@@ -27,9 +23,7 @@ const route = useRoute()
 
 const appStore = useAppStore()
 
-const routeStore = useRouteStore()
-
-const { routerPushByKeyWithMetaQuery } = useRouterPush()
+const router = useRouter()
 
 const {
   firstLevelMenus,
@@ -49,7 +43,7 @@ function handleSelectMixMenu(key: RouteKey) {
   setActiveFirstLevelMenuKey(key)
 
   if (!isActiveFirstLevelMenuHasChildren.value) {
-    routerPushByKeyWithMetaQuery(key)
+    getSelectedKey(key)
   }
 }
 
@@ -76,6 +70,10 @@ watch(
     immediate: true,
   },
 )
+
+function getSelectedKey(value: string) {
+  router.push(value)
+}
 </script>
 
 <template>
@@ -109,7 +107,7 @@ watch(
         mode="vertical"
         :default-active="selectedKey"
         :collapse="appStore.isSiderCollapse"
-        @select="val => routerPushByKeyWithMetaQuery(val as RouteKey)"
+        @select="val => getSelectedKey(val)"
       >
         <!-- 渲染子级菜单项 -->
         <MenuItem

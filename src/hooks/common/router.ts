@@ -64,6 +64,7 @@ export function useRouterPush(inSetup = true) {
    * @param key 路由键名
    */
   function routerPushByKeyWithMetaQuery(key: RouteKey) {
+    console.log('%c Line:67 🍊 key', 'color:#6ec1c2', key)
     return routerPush(key)
   }
 

@@ -3,9 +3,9 @@ import type { RouteKey } from '@elegant-router/types'
 
 import { GLOBAL_HEADER_MENU_ID } from '@/constants/app'
 
-import { useRouterPush } from '@/hooks/common/router'
-
 import { useRouteStore } from '@/store/modules/route'
+
+import { useRouter } from 'vue-router'
 
 import { useMenu } from '../../../context'
 
@@ -17,10 +17,13 @@ defineOptions({
 
 const routeStore = useRouteStore()
 
-const { routerPushByKeyWithMetaQuery } = useRouterPush()
+const router = useRouter()
 
 const { selectedKey } = useMenu()
 
+function getSelectedKey(value: string) {
+  router.push(value)
+}
 </script>
 
 <template>
@@ -33,7 +36,7 @@ const { selectedKey } = useMenu()
       class="w-full"
       mode="horizontal"
       :default-active="selectedKey"
-      @select="val => routerPushByKeyWithMetaQuery(val as RouteKey)"
+      @select="val => getSelectedKey(val as RouteKey)"
     >
       <!-- 渲染菜单项 -->
       <MenuItem

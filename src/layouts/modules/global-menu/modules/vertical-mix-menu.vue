@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import type { RouteKey } from '@elegant-router/types'
 
 import { GLOBAL_SIDER_MENU_ID } from '@/constants/app'
 
-import { useRouterPush } from '@/hooks/common/router'
-
 import { useAppStore } from '@/store/modules/app'
-
-import { useRouteStore } from '@/store/modules/route'
 
 import { useThemeStore } from '@/store/modules/theme'
 
@@ -21,7 +16,7 @@ import {
   watch,
 } from 'vue'
 
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import { useMenu, useMixMenuContext } from '../../../context'
 
@@ -41,9 +36,7 @@ const appStore = useAppStore()
 
 const themeStore = useThemeStore()
 
-const routeStore = useRouteStore()
-
-const { routerPushByKeyWithMetaQuery } = useRouterPush()
+const router = useRouter()
 
 const { bool: drawerVisible, setBool: setDrawerVisible } = useBoolean()
 
@@ -76,7 +69,7 @@ function handleSelectMixMenu(menu: App.Global.Menu) {
     setDrawerVisible(true)
   }
   else {
-    routerPushByKeyWithMetaQuery(menu.routeKey)
+    getSelectedKey(menu.routeKey)
   }
 }
 
@@ -114,6 +107,10 @@ watch(
     immediate: true,
   },
 )
+
+function getSelectedKey(value: string) {
+  router.push(value)
+}
 </script>
 
 <template>
@@ -175,7 +172,7 @@ watch(
             <ElMenu
               mode="vertical"
               :default-active="selectedKey"
-              @select="val => routerPushByKeyWithMetaQuery(val as RouteKey)"
+              @select="val => getSelectedKey(val)"
             >
               <!-- 子级菜单项 -->
               <MenuItem

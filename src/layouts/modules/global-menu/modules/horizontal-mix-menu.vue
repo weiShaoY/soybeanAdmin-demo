@@ -3,11 +3,11 @@ import type { RouteKey } from '@elegant-router/types'
 
 import { GLOBAL_HEADER_MENU_ID, GLOBAL_SIDER_MENU_ID } from '@/constants/app'
 
-import { useRouterPush } from '@/hooks/common/router'
-
 import { useAppStore } from '@/store/modules/app'
 
 import { useThemeStore } from '@/store/modules/theme'
+
+import { useRouter } from 'vue-router'
 
 import { useMenu, useMixMenuContext } from '../../../context'
 
@@ -19,11 +19,11 @@ defineOptions({
   name: 'HorizontalMixMenu',
 })
 
+const router = useRouter()
+
 const appStore = useAppStore()
 
 const themeStore = useThemeStore()
-
-const { routerPushByKeyWithMetaQuery } = useRouterPush()
 
 const { allMenus, childLevelMenus, activeFirstLevelMenuKey, setActiveFirstLevelMenuKey } = useMixMenuContext()
 
@@ -37,8 +37,12 @@ function handleSelectMixMenu(menu: App.Global.Menu) {
   setActiveFirstLevelMenuKey(menu.key)
 
   if (!menu.children?.length) {
-    routerPushByKeyWithMetaQuery(menu.routeKey)
+    getSelectedKey(menu.routeKey)
   }
+}
+
+function getSelectedKey(value: string) {
+  router.push(value)
 }
 </script>
 
@@ -52,7 +56,7 @@ function handleSelectMixMenu(menu: App.Global.Menu) {
       class="w-full"
       mode="horizontal"
       :default-active="selectedKey"
-      @select="val => routerPushByKeyWithMetaQuery(val as RouteKey)"
+      @select="val => getSelectedKey(val as RouteKey)"
     >
       <!-- 渲染子级菜单项 -->
       <MenuItem
