@@ -6,7 +6,7 @@ import { useRouterPush } from '@/hooks/common/router'
 
 import { router } from '@/router'
 
-import { useRouteStore } from '@/store/modules/route'
+// import { useRouteStore } from '@/store/modules/route'
 
 import { localStg } from '@/utils'
 
@@ -32,11 +32,6 @@ import {
 
 /** Tab 状态管理 */
 export const useTabStore = defineStore(SetupStoreId.Tab, () => {
-  /**
-   *  路由状态管理
-   */
-  const routeStore = useRouteStore()
-
   /**
    *  主题状态管理
    */
@@ -95,15 +90,10 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param currentRoute 当前路由
    */
   function initTabStore(currentRoute: App.Global.TabRoute) {
-    console.log('%c Line:98 🥐 currentRoute', 'color:#fca650', currentRoute)
     const storageTabs = localStg.get('globalTabs')
-
-    console.log('%c Line:99 🌶 storageTabs', 'color:#93c0a4', storageTabs)
 
     if (themeStore.tab.cache && storageTabs) {
       const extractedTabs = extractTabsByAllRoutes(router, storageTabs)
-
-      console.log('%c Line:103 🍖 extractedTabs', 'color:#7f2b82', extractedTabs)
 
       tabs.value = extractedTabs
     }
@@ -118,18 +108,12 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param active 是否激活该 Tab
    */
   function addTab(route: App.Global.TabRoute, active = true) {
-    console.log('%c Line:116 🌮 route', 'color:#f5ce50', route)
     const tab = getTabByRoute(route)
-
-    console.log('%c Line:122 🥛 tab', 'color:#42b983', tab)
-
-    console.log('%c Line:118 🍐 tab', 'color:#ffdd4d', tab)
 
     const isHomeTab = tab.id === homeTab.value?.id
 
     if (!isHomeTab && !isTabInTabs(tab.id, tabs.value)) {
       tabs.value.push(tab)
-      console.log('%c Line:125 🍉 tabs.value', 'color:#93c0a4', tabs.value)
     }
 
     if (active) {
@@ -221,7 +205,6 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param tab Tab 信息
    */
   async function switchRouteByTab(tab: App.Global.Tab) {
-    console.log('%c Line:213 🧀 tab', 'color:#ffdd4d', tab)
     const fail = await routerPush(tab.routePath)
 
     if (!fail) {
@@ -280,7 +263,6 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param tabId Tab ID（默认为当前激活的 Tab ID）
    */
   function setTabLabel(label: string, tabId?: string) {
-    console.log('%c Line:280 🥓 label', 'color:#fca650', label)
     const id = tabId || activeTabId.value
 
     const tab = tabs.value.find(item => item.id === id)
@@ -343,7 +325,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     /**
      *  所有 Tab
      */
-    tabs: allTabs,
+    tabList: allTabs,
 
     /**
      *  当前激活的 Tab ID

@@ -242,7 +242,6 @@ async function handleContextMenu(e: MouseEvent, tabId: string) {
  * 初始化标签页存储
  */
 function init() {
-  console.log('%c Line:246 🥕 route', 'color:#6ec1c2', route)
   tabStore.initTabStore(route)
 }
 
@@ -254,7 +253,6 @@ function removeFocus() {
 }
 
 watch(() => route.path, () => {
-  console.log('%c Line:258 🥚 route', 'color:#4fff4B', route)
   tabStore.addTab(route)
 })
 
@@ -263,8 +261,6 @@ watch(() => tabStore.activeTabId, () => {
 })
 
 init()
-
-console.log('%c Line:266 🥛 tabStore.tabs', 'color:#7f2b82', tabStore.tabs)
 
 </script>
 
@@ -292,7 +288,7 @@ console.log('%c Line:266 🥛 tabStore.tabs', 'color:#7f2b82', tabStore.tabs)
         >
           <!-- 遍历所有 Tab 并渲染 -->
           <PageTab
-            v-for="tab in tabStore.tabs"
+            v-for="tab in tabStore.tabList"
             :key="tab.id"
             :[TAB_DATA_ID]="tab.id"
             :mode="themeStore.tab.mode"

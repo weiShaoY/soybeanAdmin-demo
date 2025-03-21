@@ -33,8 +33,6 @@ const { routerPushByKeyWithMetaQuery } = useRouterPush()
 
 const { selectedKey } = useMenu()
 
-console.log('%c Line:35 🥛 selectedKey', 'color:#93c0a4', selectedKey)
-
 // const inverted = computed(() => !themeStore.darkMode && themeStore.sider.inverted);
 
 const expandedKeys = ref<string[]>([])
@@ -60,11 +58,7 @@ watch(
     immediate: true,
   },
 )
-console.log('%c Line:62 🥛 routeStore.menuList', 'color:#93c0a4', routeStore.menuList)
 
-// function routerPushByKeyWithMetaQuery(key: RouteKey) {
-//   console.log('%c Line:66 🎂 key', 'color:#e41a6a', key)
-// }
 </script>
 
 <template>

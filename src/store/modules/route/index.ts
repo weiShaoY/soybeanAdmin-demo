@@ -75,8 +75,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   async function resetRouteCache(routeKey?: string) {
     const routeName = routeKey || (router.currentRoute.value.path as RouteKey)
 
-    console.log('%c Line:73 🌽 routeName', 'color:#93c0a4', routeName)
-
     excludeCacheRouteList.value.push(routeName)
 
     await nextTick()
@@ -89,12 +87,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    */
   const breadcrumbList = computed(() =>
     getBreadcrumbList(router.currentRoute.value, menuList.value),
-  )
-
-  console.log(
-    '%c Line:96 🥝 breadcrumbList',
-    'color:#fca650',
-    breadcrumbList.value,
   )
 
   /**

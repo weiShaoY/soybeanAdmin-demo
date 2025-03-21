@@ -21,10 +21,6 @@ const { routerPushByKeyWithMetaQuery } = useRouterPush()
 
 const { selectedKey } = useMenu()
 
-// function routerPushByKeyWithMetaQuery(key: RouteKey) {
-//   console.log('%c Line:66 🎂 key', 'color:#e41a6a', key)
-// }
-
 </script>
 
 <template>

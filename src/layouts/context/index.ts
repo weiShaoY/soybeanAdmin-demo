@@ -46,12 +46,6 @@ function useMixMenu() {
    * 获取当前激活的一级菜单 key，并更新 `activeFirstLevelMenuKey`
    */
   function getActiveFirstLevelMenuKey() {
-    console.log('%c Line:48 🥪 selectedKey.value', 'color:#465975', selectedKey.value)
-
-    // const [firstLevelRouteName] = selectedKey.value.split('_')
-
-    // setActiveFirstLevelMenuKey(firstLevelRouteName)
-
     setActiveFirstLevelMenuKey(selectedKey.value)
   }
 
@@ -154,7 +148,6 @@ export function useMenu() {
     return (hideInMenu ? activeMenu : path) || path
   })
 
-  console.log('%c Line:156 🍒 selectedKey', 'color:#e41a6a', selectedKey)
   return {
     selectedKey,
   }

@@ -82,8 +82,6 @@ export function getTabIdByRoute(route: App.Global.TabRoute) {
 export function getTabByRoute(route: App.Global.TabRoute) {
   const { path, fullPath = path, meta } = route
 
-  console.log('%c Line:84 🎂 meta', 'color:#f5ce50', meta)
-
   const { title, fixedIndexInTab } = meta
 
   // 从 getRouteIcons 函数中获取图标和本地图标
@@ -172,11 +170,7 @@ export function filterTabsByIds(tabIds: string[], tabs: App.Global.Tab[]) {
 export function extractTabsByAllRoutes(router: Router, tabs: App.Global.Tab[]) {
   const routes = router.getRoutes() // 获取所有路由
 
-  console.log('%c Line:172 🍌 routes', 'color:#2eafb0', routes)
-
   const routeNames = routes.map(route => route.name) // 获取所有路由的名称
-
-  console.log('%c Line:174 🍋 routeNames', 'color:#e41a6a', routeNames)
 
   return tabs.filter(tab => routeNames.includes(tab.routeKey)) // 过滤出路由名称在标签页中的标签页
 }

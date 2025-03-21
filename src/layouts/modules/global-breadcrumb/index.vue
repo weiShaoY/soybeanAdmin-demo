@@ -29,7 +29,6 @@ const [DefineBreadcrumbContent, BreadcrumbContent] = createReusableTemplate<Brea
  * @param key 路由键
  */
 function handleClickMenu(key: RouteKey) {
-  console.log('%c Line:33 🥓 breadcrumb', 'color:#33a5ff', routeStore.breadcrumbList)
   router.push(key)
 }
 </script>

@@ -10,11 +10,13 @@ import {
 
 } from 'vue-router'
 
-import { createRouterGuard } from './utils'
+import { createRouterGuard, formatModules } from './utils'
 
-import { vueRouteList } from './vueRouteList'
+const appModules = import.meta.glob('./modules/*/index.ts', {
+  eager: true,
+})
 
-console.log('%c Line:18 🥔 vueRouteList', 'color:#e41a6a', vueRouteList)
+const routeList = formatModules(appModules, [])
 
 // 从环境变量中获取路由历史模式和基本 URL，默认为 'history' 模式
 const { VITE_ROUTER_HISTORY_MODE = 'history', VITE_BASE_URL } = import.meta.env
@@ -51,8 +53,7 @@ export const router = createRouter({
   /**
    * 设置路由表
    */
-  // routes: createVueRoutes(),
-  routes: vueRouteList,
+  routes: [...routeList],
 })
 
 /**
