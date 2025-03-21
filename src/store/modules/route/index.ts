@@ -16,8 +16,6 @@ import {
   ref,
 } from 'vue'
 
-import { useTabStore } from '../tab'
-
 import { getBreadcrumbList } from './breadcrumb'
 
 import { getMenuList, transformMenuToSearchMenus } from './menu'
@@ -28,8 +26,6 @@ import { getCacheRouteNames } from './shared'
  * 路由状态管理
  */
 export const useRouteStore = defineStore(SetupStoreId.Route, () => {
-  const tabStore = useTabStore()
-
   /**
    *  是否已初始化路由Store
    */
@@ -119,8 +115,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
     // 6. 标记路由存储已初始化并初始化首页标签页
     setIsInitRouteStore(true)
-
-    tabStore.initHomeTab()
   }
 
   /**

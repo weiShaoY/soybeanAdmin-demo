@@ -14,7 +14,7 @@ import { getRoutePath } from '@/router/elegant/transform' // 导入获取路由�
  * @param homeTab 主页标签页
  * @returns 更新后的标签页数组
  */
-export function getAllTabs(tabs: App.Global.Tab[], homeTab?: App.Global.Tab) {
+export function getTabList(tabs: App.Global.Tab[], homeTab?: App.Global.Tab) {
   if (!homeTab) {
     return [] // 如果没有主页标签页，返回空数组
   }

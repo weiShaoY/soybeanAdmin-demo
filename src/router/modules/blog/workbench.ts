@@ -1,8 +1,5 @@
 import { BLOG_BASE_Layout } from '@/layouts'
 
-/**
- *  根路由和未找到路由
- */
 const workbenchRoute = [
   {
     path: '/blog/workbench',

@@ -23,10 +23,10 @@ import {
   filterTabsById,
   filterTabsByIds,
   findTabByRouteName,
-  getAllTabs,
   getFixedTabIds,
   getTabByRoute,
   getTabIdByRoute,
+  getTabList,
   isTabInTabs,
 } from './shared'
 
@@ -50,26 +50,18 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   /**
    *  首页 Tab
    */
-  const homeTab = ref<App.Global.Tab>()
-
-  /**
-   *  初始化首页 Tab
-   */
-  function initHomeTab() {
-    // homeTab.value = getDefaultHomeTab(router)
-    homeTab.value = {
-      id: import.meta.env.VITE_Router_BLOG_HOME, // 获取主页路由路径作为 ID
-      label: '工作台', // 设置标签
-      routeKey: import.meta.env.VITE_Router_BLOG_HOME, // 路由键
-      routePath: import.meta.env.VITE_Router_BLOG_HOME, // 路由路径
-      fullPath: import.meta.env.VITE_Router_BLOG_HOME, // 完整路径
-    }
-  }
+  const homeTab = ref<App.Global.Tab>({
+    id: import.meta.env.VITE_Router_BLOG_HOME, // 获取主页路由路径作为 ID
+    label: '工作台', // 设置标签
+    routeKey: import.meta.env.VITE_Router_BLOG_HOME, // 路由键
+    routePath: import.meta.env.VITE_Router_BLOG_HOME, // 路由路径
+    fullPath: import.meta.env.VITE_Router_BLOG_HOME, // 完整路径
+  })
 
   /**
    *  所有 Tab（包括首页 Tab）
    */
-  const allTabs = computed(() => getAllTabs(tabs.value, homeTab.value))
+  const tabList = computed(() => getTabList(tabs.value, homeTab.value))
 
   /**
    *  当前激活的 Tab ID
@@ -94,6 +86,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
 
     if (themeStore.tab.cache && storageTabs) {
       const extractedTabs = extractTabsByAllRoutes(router, storageTabs)
+
+      console.log('%c Line:89 🍭 extractedTabs', 'color:#42b983', extractedTabs)
 
       tabs.value = extractedTabs
     }
@@ -325,7 +319,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     /**
      *  所有 Tab
      */
-    tabList: allTabs,
+    tabList,
 
     /**
      *  当前激活的 Tab ID
@@ -335,7 +329,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     /**
      *  初始化首页 Tab
      */
-    initHomeTab,
+    // initHomeTab,
 
     /**
      *  初始化 Tab 状态管理
